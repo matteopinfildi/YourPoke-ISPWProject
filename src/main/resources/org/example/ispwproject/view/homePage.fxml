@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="rootContainer" prefHeight="600" prefWidth="900" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ispwproject.control.HomePageController">
+    <fx:include source="sidebar.fxml" fx:id="sidebarInclude"/>
+
+    <VBox id="mainContent" layoutX="200" layoutY="0" prefWidth="600" spacing="20">
+        <StackPane id="banner">
+            <ImageView fx:id="bannerImage" fitWidth="600" preserveRatio="true"/>
+            <VBox alignment="TOP_LEFT"  style="-fx-background-color: rgba(255, 255, 255, 0.5);">
+                <Label id="bannerTitle" style="-fx-font-size: 36px; -fx-text-fill: black; -fx-font-weight: bold;" text="YourPokè" />
+                <Label id="bannerSubtitle" style="-fx-font-size: 18px; -fx-text-fill: black" text="Create, Taste, Share!" />
+            </VBox>
+        </StackPane>
+    </VBox>
+
+</AnchorPane>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ispwproject.control.SidebarController">
+    <VBox  id="sidebar" layoutX="0" layoutY="0" prefHeight="681.0" prefWidth="200">
+        <ListView id="menuList" prefHeight="550">
+            <Label onMouseClicked="#handleHomeCLick" text="Home"  />
+            <Label onMouseClicked="#handleLogInCLick" text="Log-In" />
+            <Label text="Buy Classic Pokè"  />
+            <Label onMouseClicked="#handleBuyPokeLabCLick" text="Buy Pokè Lab"  />
+            <Label onMouseClicked="#handlePostOnPokeWallCLick" text="Post on Pokè Wall"  />
+            <Label  text="Leave rating"  />
+        </ListView>
+    </VBox>
+</AnchorPane>
