@@ -18,17 +18,52 @@
         <Label text="Compose your pokè" style="-fx-font-size: 18px; -fx-text-fill: black;" styleClass="subtitle"/>
     </VBox>
 
+<!--    Sistemare altezze, si sovrappongono!!!-->
     <HBox layoutX="200" layoutY="200" spacing="20">
-        <VBox id="selectRice" prefWidth="160" spacing="10">
+        <VBox id="selectRice" prefHeight="100"  prefWidth="160" spacing="10">
             <VBox>
                 <ImageView fx:id="riceImage" fitWidth="150" preserveRatio="true"/>
             </VBox>
             <Button onAction="#handleRice" text="Select Rice"/>
-            <Label text="Select your favourite rice! " wrapText="true"/>
+        </VBox>
+
+        <VBox id="selectProtein" prefHeight="100"  prefWidth="160" spacing="10">
+            <VBox>
+                <ImageView fx:id="proteinImage" fitWidth="150" preserveRatio="true"/>
+            </VBox>
+            <Button onAction="#handleProtein" text="Select Protein"/>
+        </VBox>
+
+        <VBox id="selectFruit" prefHeight="100"  prefWidth="160" spacing="10">
+            <VBox>
+                <ImageView fx:id="fruitImage" fitWidth="150" preserveRatio="true"/>
+            </VBox>
+            <Button onAction="#handleFruit" text="Select Fruit"/>
         </VBox>
     </HBox>
 
+    <HBox layoutX="200" layoutY="400" spacing="20">
+        <VBox id="selectCrunchy" prefHeight="100" prefWidth="160" spacing="10">
+            <VBox>
+                <ImageView fx:id="crunchyImage" fitWidth="150" preserveRatio="true"/>
+            </VBox>
+            <Button onAction="#handleCrunchy" text="Select Crunchy"/>
+        </VBox>
 
+        <VBox id="selectSauces" prefHeight="100" prefWidth="160" spacing="10">
+            <VBox>
+                <ImageView fx:id="saucesImage" fitWidth="150" preserveRatio="true"/>
+            </VBox>
+            <Button onAction="#handleSauces" text="Select Sauces"/>
+        </VBox>
+
+        <VBox id="selectExtra" prefHeight="100" prefWidth="160" spacing="10">
+            <VBox>
+                <ImageView fx:id="extraImage" fitWidth="150" preserveRatio="true"/>
+            </VBox>
+            <Button onAction="#handleExtra" text="Select Extra"/>
+        </VBox>
+    </HBox>
 
 
 </AnchorPane>
