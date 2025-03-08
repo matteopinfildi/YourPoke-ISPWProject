@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class YourPoke extends Application {
@@ -18,6 +19,8 @@ public class YourPoke extends Application {
             // Caricamento del CSS
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/org/example/ispwproject/style.css").toExternalForm());
+
+            primaryStage.getIcons().add(new Image("logoApp.PNG"));
 
             // Configura la finestra
             primaryStage.setTitle("YourPoké");

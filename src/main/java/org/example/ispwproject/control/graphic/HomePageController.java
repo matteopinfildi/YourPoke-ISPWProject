@@ -1,10 +1,9 @@
-package org.example.ispwproject.control;
+package org.example.ispwproject.control.graphic;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 
 public class HomePageController {

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootContainer" prefHeight="600" prefWidth="900" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ispwproject.control.HomePageController">
+<AnchorPane fx:id="rootContainer" prefHeight="600" prefWidth="900" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ispwproject.control.graphic.HomePageController">
     <fx:include source="sidebar.fxml" fx:id="sidebarInclude"/>
 
     <VBox id="mainContent" layoutX="200" layoutY="0" prefWidth="600" spacing="20">
