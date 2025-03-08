@@ -20,6 +20,7 @@ public class SidebarController {
     @FXML
     public void handleLogInCLick(MouseEvent event) {
         System.out.println("Logging in...");
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/login.fxml");
     }
 
 
