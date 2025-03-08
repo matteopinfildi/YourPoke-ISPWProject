@@ -2,8 +2,10 @@ package org.example.ispwproject.control.graphic.buyPokeLab;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.example.ispwproject.ChangePage;
 
 public class BuyPokeLabController {
 
@@ -26,6 +28,7 @@ public class BuyPokeLabController {
     private ImageView extraImage;
 
     public void initialize() {
+
         Image rice = new Image(getClass().getResource("/org/example/ispwproject/image/rice.jpg").toExternalForm());
         riceImage.setImage(rice);
 
@@ -73,5 +76,15 @@ public class BuyPokeLabController {
     @FXML
     public void handleExtra(ActionEvent event) {
         System.out.println("Extra");
+    }
+
+    @FXML
+    public void handleAddNameClick(ActionEvent event) {
+        System.out.println("nome");
+    }
+
+    @FXML
+    public void handleBackClick(ActionEvent event) {
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/homePage.fxml");
     }
 }

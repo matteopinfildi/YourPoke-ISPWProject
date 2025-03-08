@@ -13,7 +13,7 @@ public class SidebarController {
     @FXML
     public void handleHomeCLick(MouseEvent event) {
         System.out.println("Vai alla home");
-        // Logica per caricare la homepage
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/homePage.fxml");
     }
 
 

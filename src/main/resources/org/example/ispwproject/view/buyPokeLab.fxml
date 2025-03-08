@@ -18,52 +18,57 @@
         <Label text="Compose your pokè" style="-fx-font-size: 18px; -fx-text-fill: black;" styleClass="subtitle"/>
     </VBox>
 
-<!--    Sistemare altezze, si sovrappongono!!!-->
-    <HBox layoutX="200" layoutY="200" spacing="20">
-        <VBox id="selectRice" prefHeight="100"  prefWidth="160" spacing="10">
-            <VBox>
-                <ImageView fx:id="riceImage" fitWidth="150" preserveRatio="true"/>
+    <VBox layoutX="200" layoutY="180" spacing="20" style="-fx-background-color: transparent;">
+        <HBox alignment="CENTER" prefHeight="100" spacing="20" style="-fx-background-color: transparent;">
+            <VBox id="selectRice" prefHeight="60"  prefWidth="120" spacing="10">
+                <VBox>
+                    <ImageView fx:id="riceImage" fitWidth="90" preserveRatio="true"/>
+                </VBox>
+                <Button onAction="#handleRice" text="Select Rice"/>
             </VBox>
-            <Button onAction="#handleRice" text="Select Rice"/>
-        </VBox>
 
-        <VBox id="selectProtein" prefHeight="100"  prefWidth="160" spacing="10">
-            <VBox>
-                <ImageView fx:id="proteinImage" fitWidth="150" preserveRatio="true"/>
+            <VBox id="selectProtein" prefHeight="60"  prefWidth="120" spacing="10">
+                <VBox>
+                    <ImageView fx:id="proteinImage" fitWidth="80" preserveRatio="true"/>
+                </VBox>
+                <Button onAction="#handleProtein" text="Select Protein"/>
             </VBox>
-            <Button onAction="#handleProtein" text="Select Protein"/>
-        </VBox>
 
-        <VBox id="selectFruit" prefHeight="100"  prefWidth="160" spacing="10">
-            <VBox>
-                <ImageView fx:id="fruitImage" fitWidth="150" preserveRatio="true"/>
+            <VBox id="selectFruit" prefHeight="60"  prefWidth="120" spacing="10">
+                <VBox>
+                    <ImageView fx:id="fruitImage" fitWidth="90" preserveRatio="true"/>
+                </VBox>
+                <Button onAction="#handleFruit" text="Select Fruit"/>
             </VBox>
-            <Button onAction="#handleFruit" text="Select Fruit"/>
-        </VBox>
+        </HBox>
+
+        <HBox alignment="CENTER" spacing="20" style="-fx-background-color: transparent;">
+            <VBox id="selectCrunchy" prefHeight="60" prefWidth="120" spacing="10">
+                <VBox>
+                    <ImageView fx:id="crunchyImage" fitWidth="90" preserveRatio="true"/>
+                </VBox>
+                <Button onAction="#handleCrunchy" text="Select Crunchy"/>
+            </VBox>
+
+            <VBox id="selectSauces" prefHeight="60" prefWidth="120" spacing="10">
+                <VBox>
+                    <ImageView fx:id="saucesImage" fitWidth="90" preserveRatio="true"/>
+                </VBox>
+                <Button onAction="#handleSauces" text="Select Sauces"/>
+            </VBox>
+
+            <VBox id="selectExtra" prefHeight="60" prefWidth="120" spacing="10">
+                <VBox>
+                    <ImageView fx:id="extraImage" fitWidth="90" preserveRatio="true"/>
+                </VBox>
+                <Button onAction="#handleExtra" text="Select Extra"/>
+            </VBox>
+        </HBox>
+    </VBox>
+
+    <HBox alignment="BOTTOM_RIGHT" layoutX="199.0" layoutY="623.0" prefHeight="25.0" prefWidth="673.0" spacing="10">
+        <Button fx:id="backButtonStart" onAction="#handleBackClick" text="Back" />
+        <Button fx:id="addNameButton" onAction="#handleAddNameClick" text="Add a name" />
     </HBox>
-
-    <HBox layoutX="200" layoutY="400" spacing="20">
-        <VBox id="selectCrunchy" prefHeight="100" prefWidth="160" spacing="10">
-            <VBox>
-                <ImageView fx:id="crunchyImage" fitWidth="150" preserveRatio="true"/>
-            </VBox>
-            <Button onAction="#handleCrunchy" text="Select Crunchy"/>
-        </VBox>
-
-        <VBox id="selectSauces" prefHeight="100" prefWidth="160" spacing="10">
-            <VBox>
-                <ImageView fx:id="saucesImage" fitWidth="150" preserveRatio="true"/>
-            </VBox>
-            <Button onAction="#handleSauces" text="Select Sauces"/>
-        </VBox>
-
-        <VBox id="selectExtra" prefHeight="100" prefWidth="160" spacing="10">
-            <VBox>
-                <ImageView fx:id="extraImage" fitWidth="150" preserveRatio="true"/>
-            </VBox>
-            <Button onAction="#handleExtra" text="Select Extra"/>
-        </VBox>
-    </HBox>
-
 
 </AnchorPane>

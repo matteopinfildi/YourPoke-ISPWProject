@@ -2,8 +2,10 @@ package org.example.ispwproject.control.graphic;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.example.ispwproject.ChangePage;
 
 
 public class HomePageController {
@@ -35,7 +37,7 @@ public class HomePageController {
 
     @FXML
     public void handleBuyPokeLab(ActionEvent event) {
-        System.out.println("Crea il tuo pokè!");
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml");
     }
 
     @FXML
