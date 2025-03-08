@@ -17,4 +17,30 @@
         </StackPane>
     </VBox>
 
+    <HBox layoutX="200" layoutY="300" spacing="20">
+        <VBox id="postPokeWall" prefWidth="160" spacing="10">
+            <VBox>
+                <ImageView fx:id="postPWImage" fitWidth="150" preserveRatio="true"/>
+            </VBox>
+            <Button onAction="#handlePostOnPokeWall" text="Post on Pokè Wall"/>
+            <Label text="The Pokè Wall is the social section of YourPokè, where premium users share their custom creations." wrapText="true"/>
+        </VBox>
+
+        <VBox id="buyClassicPoke" prefWidth="160" spacing="10">
+            <VBox>
+                <ImageView fx:id="buyCPImage" fitWidth="150" preserveRatio="true"/>
+            </VBox>
+            <Button text="Buy Classic Pokè"/>
+            <Label text="With Buy Classic Pokè, you can quickly order one of the ready-made pokè bowls. " wrapText="true"/>
+        </VBox>
+
+        <VBox id="buyPokeLab" prefWidth="160" spacing="10">
+            <VBox>
+                <ImageView fx:id="buyPLImage" fitWidth="150" preserveRatio="true"/>
+            </VBox>
+            <Button onAction="#handleBuyPokeLab" text="Buy Pokè Lab"/>
+            <Label text="The Buy Pokè Lab lets you create your own custom pokè, selecting every ingredient. " wrapText="true"/>
+        </VBox>
+    </HBox>
+
 </AnchorPane>
