@@ -60,7 +60,7 @@ public class BuyPokeLabController {
 
     @FXML
     public void handleFruit(ActionEvent event) {
-        System.out.println("Frutta");
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabFruit.fxml");
     }
 
     @FXML
