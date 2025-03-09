@@ -55,7 +55,7 @@ public class BuyPokeLabController {
 
     @FXML
     public void handleProtein(ActionEvent event) {
-        System.out.println("Proteine");
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabProtein.fxml");
     }
 
     @FXML
