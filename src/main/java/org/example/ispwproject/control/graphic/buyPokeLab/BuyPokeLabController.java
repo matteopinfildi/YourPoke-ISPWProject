@@ -50,7 +50,7 @@ public class BuyPokeLabController {
 
     @FXML
     public void handleRice(ActionEvent event) {
-        System.out.println("Risoooo");
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabRice.fxml");
     }
 
     @FXML
