@@ -23,7 +23,7 @@
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
             <ImageView fx:id="sushiRiceImage" fitHeight="100" fitWidth="100"/>
-            <Label text="Sushi Rice - Soft, sticky, and slightly seasoned with vinegar, perfect for making sushi rolls and Japanese dishes" wrapText="true" maxWidth="300"/>
+            <Label text="Sushi Rice - Soft, sticky, and slightly seasoned with vinegar, perfect for making sushi rolls and Japanese dishes." wrapText="true" maxWidth="300"/>
             <Button text="Select"/>
             <Button fx:id="sushiNutriButton" text="Nutritional Values" onAction="#toggleSushiNutritional"/>
             <VBox fx:id="sushiNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">

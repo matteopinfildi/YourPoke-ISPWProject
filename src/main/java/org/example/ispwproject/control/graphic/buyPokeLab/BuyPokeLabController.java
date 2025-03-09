@@ -65,7 +65,7 @@ public class BuyPokeLabController {
 
     @FXML
     public void handleCrunchy(ActionEvent event) {
-        System.out.println("Crunchy");
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabCrunchy.fxml");
     }
 
     @FXML
