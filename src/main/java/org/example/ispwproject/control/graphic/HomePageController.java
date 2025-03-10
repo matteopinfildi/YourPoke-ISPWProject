@@ -13,7 +13,7 @@ public class HomePageController {
     private ImageView bannerImage;
 
     @FXML
-    private ImageView postPWImage;
+    private ImageView PWImage;
 
     @FXML
     private ImageView buyCPImage;
@@ -26,7 +26,7 @@ public class HomePageController {
             bannerImage.setImage(banner);
 
             Image pokeWall = new Image(getClass().getResource("/org/example/ispwproject/image/pokeWall.JPG").toExternalForm());
-            postPWImage.setImage(pokeWall);
+            PWImage.setImage(pokeWall);
 
             Image classicPoke = new Image(getClass().getResource("/org/example/ispwproject/image/buyClassicPoke.JPG").toExternalForm());
             buyCPImage.setImage(classicPoke);
@@ -41,8 +41,8 @@ public class HomePageController {
     }
 
     @FXML
-    public void handlePostOnPokeWall(ActionEvent event) {
-        System.out.println("Posta su pokè wall");
+    public void handlePokeWall(ActionEvent event) {
+        System.out.println("Pokè wall");
     }
 
 }

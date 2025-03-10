@@ -19,11 +19,11 @@
     </VBox>
 
     <HBox layoutX="200" layoutY="300" spacing="20">
-        <VBox id="postPokeWall" prefWidth="160" spacing="10">
+        <VBox id="PokeWall" prefWidth="160" spacing="10">
             <VBox>
-                <ImageView fx:id="postPWImage" fitWidth="150" preserveRatio="true"/>
+                <ImageView fx:id="PWImage" fitWidth="150" preserveRatio="true"/>
             </VBox>
-            <Button onAction="#handlePostOnPokeWall" text="Post on Pokè Wall"/>
+            <Button onAction="#handlePokeWall" text="Pokè Wall"/>
             <Label text="The Pokè Wall is the social section of YourPokè, where premium users share their custom creations." wrapText="true"/>
         </VBox>
 
