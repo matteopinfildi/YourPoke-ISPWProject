@@ -80,7 +80,7 @@ public class BuyPokeLabController {
 
     @FXML
     public void handleAddNameClick(ActionEvent event) {
-        System.out.println("nome");
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addName.fxml");
     }
 
     @FXML

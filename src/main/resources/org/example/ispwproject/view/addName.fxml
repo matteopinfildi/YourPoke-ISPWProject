@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@../style.css" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.ispwproject.control.graphic.buyPokeLab.AddNameController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox alignment="CENTER" spacing="10" layoutX="50" layoutY="50">
+        <Label text="Enter your Poké name:" style="-fx-font-size: 18px; -fx-text-fill: black;"/>
+
+        <TextField fx:id="pokeNameField" promptText="Type a name..."/>
+
+        <Label fx:id="errorLabel" text="" style="-fx-text-fill: red;"/>
+
+        <HBox alignment="BOTTOM_RIGHT" layoutX="199.0" layoutY="623.0" prefHeight="25.0" prefWidth="673.0" spacing="10">
+            <Button fx:id="backButton" onAction="#handleBackClick" text="Back" />
+            <Button fx:id="showPokeButton" onAction="#handleShowPokeLab" text="ShowPokeLab" />
+        </HBox>
+    </VBox>
+
+</AnchorPane>
