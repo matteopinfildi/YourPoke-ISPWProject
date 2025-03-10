@@ -9,24 +9,24 @@
 
 <AnchorPane stylesheets="@../style.css" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.ispwproject.control.graphic.buyPokeLab.BuyPokeLabCrunchyController"
+            fx:controller="org.example.ispwproject.control.graphic.buyPokeLab.BuyPokeLabSaucesController"
             prefHeight="400.0" prefWidth="600.0">
 
     <fx:include source="sidebar.fxml"/>
 
     <VBox fx:id="mainContent" spacing="10" alignment="TOP_CENTER" prefWidth="700" layoutX="210" layoutY="20">
-        <Label text="Crunchy" style="-fx-font-size: 36px; -fx-text-fill: black; -fx-font-weight: bold;" styleClass="title"/>
-        <Label text="Select your favourite type of crunchy!" style="-fx-font-size: 18px; -fx-text-fill: black;" styleClass="subtitle"/>
+        <Label text="Sauces" style="-fx-font-size: 36px; -fx-text-fill: black; -fx-font-weight: bold;" styleClass="title"/>
+        <Label text="Select your favourite sauce!" style="-fx-font-size: 18px; -fx-text-fill: black;" styleClass="subtitle"/>
     </VBox>
 
     <VBox layoutX="200" layoutY="180" alignment="CENTER" spacing="15">
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="onionImage" fitHeight="100" fitWidth="100"/>
-            <Label text="Crispy onion - Light and crunchy, crispy onions add a savory, deep-fried flavor and texture to enhance poké bowls, sushi rolls, and Japanese-inspired dishes." wrapText="true" maxWidth="300"/>
+            <ImageView fx:id="teriyakiImage" fitHeight="100" fitWidth="100"/>
+            <Label text="Teriyaki sauce - A sweet and savory sauce made from soy sauce, sugar, and mirin, perfect for glazing fish, chicken, and adding a rich flavor to poké bowls and sushi rolls." wrapText="true" maxWidth="300"/>
             <Button text="Select"/>
-            <Button fx:id="onionNutriButton" text="Nutritional Values" onAction="#toggleOnionNutritional"/>
-            <VBox fx:id="onionNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
+            <Button fx:id="teriyakiNutriButton" text="Nutritional Values" onAction="#toggleTeriyakiNutritional"/>
+            <VBox fx:id="teriyakiNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 450 kcal" />
                 <Label text="Protein: 3g" />
                 <Label text="Carbs: 60g" />
@@ -36,11 +36,11 @@
 
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="nutsImage" fitHeight="100" fitWidth="100"/>
-            <Label text="Nuts – Rich in texture and healthy fats, mixed nuts add a delightful crunch and a boost of protein to poké bowls and Japanese rice dishes." wrapText="true" maxWidth="300"/>
+            <ImageView fx:id="soyImage" fitHeight="100" fitWidth="100"/>
+            <Label text="Soy sauce – A salty, umami-packed sauce made from fermented soybeans, essential in Japanese cuisine, adding depth of flavor to sushi, poké bowls, and sashimi." wrapText="true" maxWidth="300"/>
             <Button text="Select"/>
-            <Button fx:id="nutsNutriButton" text="Nutritional Values" onAction="#toggleNutsNutritional"/>
-            <VBox fx:id="nutsNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
+            <Button fx:id="soyNutriButton" text="Nutritional Values" onAction="#toggleSoyNutritional"/>
+            <VBox fx:id="soyNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 600 kcal" />
                 <Label text="Protein: 15g" />
                 <Label text="Carbs: 20g" />
@@ -49,11 +49,11 @@
         </HBox>
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="almondsImage" fitHeight="100" fitWidth="100"/>
-            <Label text="Almonds – Crunchy and slightly sweet, almonds bring a nutty richness to poké bowls and Japanese-inspired salads, enhancing both flavor and texture." wrapText="true" maxWidth="300"/>
+            <ImageView fx:id="wasabiImage" fitHeight="100" fitWidth="100"/>
+            <Label text="Wasabi – A spicy, pungent paste made from Japanese horseradish, often served alongside sushi and poké bowls to add a sharp heat and complement the flavors of the dish." wrapText="true" maxWidth="300"/>
             <Button text="Select"/>
-            <Button fx:id="almondsNutriButton" text="Nutritional Values" onAction="#toggleAlmondsNutritional"/>
-            <VBox fx:id="almondsNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
+            <Button fx:id="wasabiNutriButton" text="Nutritional Values" onAction="#toggleWasabiNutritional"/>
+            <VBox fx:id="wasabiNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 580 kcal" />
                 <Label text="Protein: 21g" />
                 <Label text="Carbs: 22g" />

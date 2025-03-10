@@ -70,7 +70,7 @@ public class BuyPokeLabController {
 
     @FXML
     public void handleSauces(ActionEvent event) {
-        System.out.println("Sauces");
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabSauces.fxml");
     }
 
     @FXML
