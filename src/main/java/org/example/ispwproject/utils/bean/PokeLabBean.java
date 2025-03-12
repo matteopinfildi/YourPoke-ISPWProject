@@ -32,7 +32,7 @@ public class PokeLabBean {
 
     public Map<String, GenericAlternative> getAllIngredients(){return ingredients;}
 
-    public boolean isFull() {return ingredients.size() == 5;}
+    public boolean isFull() {return ingredients.size() == 5;} //controllo se ho inserito tutti gli ingredienti
 
     public double getPrice() {return price;}
     public void setPrice(double price) {this.price = price;}
