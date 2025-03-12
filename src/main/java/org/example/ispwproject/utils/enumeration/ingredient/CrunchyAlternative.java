@@ -1,4 +1,4 @@
-package org.example.ispwproject.utils.enumeration;
+package org.example.ispwproject.utils.enumeration.ingredient;
 
 public enum CrunchyAlternative implements GenericAlternative{
 
