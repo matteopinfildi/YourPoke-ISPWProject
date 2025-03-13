@@ -35,7 +35,7 @@ public class SessionManager {
         return null;
     }
 
-//    public int getCurrentId() {return nextId;}
+   public int getCurrentId() {return nextId;}
     public int curPokeId() {return ++pokeId;}
     public void addSession(Session session) {activeSessions.add(session);}
     public void removeSession(int id) {activeSessions.removeIf(session -> session.getSessionId() == id);}

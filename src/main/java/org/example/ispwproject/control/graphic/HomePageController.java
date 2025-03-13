@@ -6,9 +6,13 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.example.ispwproject.ChangePage;
+import org.example.ispwproject.Session;
+import org.example.ispwproject.SessionManager;
+import org.example.ispwproject.control.application.BuyPokeLabAppController;
+import org.example.ispwproject.utils.bean.PokeLabBean;
 
 
-public class HomePageController {
+public class HomePageController extends GraphicController{
     @FXML
     private ImageView bannerImage;
 
@@ -21,7 +25,8 @@ public class HomePageController {
     @FXML
     private ImageView buyPLImage;
 
-    public void initialize() {
+
+    public void initialize(int id, PokeLabBean pokeLabBean) {
             Image banner = new Image(getClass().getResource("/org/example/ispwproject/image/banner.JPG").toExternalForm());
             bannerImage.setImage(banner);
 
@@ -35,9 +40,18 @@ public class HomePageController {
             buyPLImage.setImage(pokeLab);
     }
 
+    private int id = -1;
+
     @FXML
     public void handleBuyPokeLab(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml");
+
+        BuyPokeLabAppController buyPokeLabAppController = new BuyPokeLabAppController();
+        PokeLabBean pokeLabBean = buyPokeLabAppController.newPokeLab();
+
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSessionFromId(id);
+
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
     }
 
     @FXML

@@ -8,6 +8,7 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ispwproject.control.graphic.SidebarController">
     <VBox  id="sidebar" layoutX="0" layoutY="0" prefHeight="681.0" prefWidth="200">
+        <Label fx:id="userLabel" text="Guest" />
         <ListView id="menuList" prefHeight="550">
             <Label onMouseClicked="#handleHomeCLick" text="Home"  />
             <Label onMouseClicked="#handleLogInCLick" text="Log-In" />

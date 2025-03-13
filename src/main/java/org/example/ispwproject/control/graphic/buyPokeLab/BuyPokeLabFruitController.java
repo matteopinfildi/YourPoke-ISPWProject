@@ -7,9 +7,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import org.example.ispwproject.ChangePage;
+import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
+import org.example.ispwproject.utils.bean.PokeLabBean;
 
-public class BuyPokeLabFruitController  {
+public class BuyPokeLabFruitController  extends GraphicController{
     @FXML
     private ImageView avocadoImage;
 
@@ -19,7 +21,11 @@ public class BuyPokeLabFruitController  {
     @FXML
     private ImageView strawbarriesImage;
 
-    public void initialize(){
+    private BuyPokeLabAppController pokeLabAppController;
+    private PokeLabBean pokeLabBean;
+    private int id;
+
+    public void initialize(int id, PokeLabBean pokeLabBean){
         Image avocado = new Image(getClass().getResource("/org/example/ispwproject/image/avocado.jpg").toExternalForm());
         avocadoImage.setImage(avocado);
 
@@ -58,11 +64,11 @@ public class BuyPokeLabFruitController  {
 
     @FXML
     public void handleNextClick(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml");
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
     }
 
     @FXML
     public void handleBackClick(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml");
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
     }
 }

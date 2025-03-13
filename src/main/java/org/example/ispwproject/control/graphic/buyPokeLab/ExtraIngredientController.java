@@ -6,8 +6,11 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.example.ispwproject.ChangePage;
+import org.example.ispwproject.control.application.BuyPokeLabAppController;
+import org.example.ispwproject.control.graphic.GraphicController;
+import org.example.ispwproject.utils.bean.PokeLabBean;
 
-public class ExtraIngredientController {
+public class ExtraIngredientController extends GraphicController {
     @FXML
     private ImageView octopusImage;
 
@@ -20,7 +23,11 @@ public class ExtraIngredientController {
     @FXML
     private ImageView mayoImage;
 
-    public void initialize(){
+    private BuyPokeLabAppController pokeLabAppController;
+    private PokeLabBean pokeLabBean;
+    private int id;
+
+    public void initialize(int id, PokeLabBean pokeLabBean){
         Image octopus = new Image(getClass().getResource("/org/example/ispwproject/image/octopus.jpg").toExternalForm());
         octopusImage.setImage(octopus);
 
@@ -35,6 +42,6 @@ public class ExtraIngredientController {
     }
     @FXML
     public void handleBackClick(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/extra.fxml", null, 0);
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/extra.fxml", pokeLabBean, id);
     }
 }
