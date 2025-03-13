@@ -20,7 +20,7 @@
 
         <HBox alignment="BOTTOM_RIGHT" layoutX="199.0" layoutY="623.0" prefHeight="25.0" prefWidth="673.0" spacing="10">
             <Button fx:id="backButton" onAction="#handleBackClick" text="Back" />
-            <Button fx:id="showPokeButton" onAction="#handleShowPokeLab" text="ShowPokeLab" />
+            <Button fx:id="extraButton" onAction="#handleExtra" text="Extra" />
         </HBox>
     </VBox>
 

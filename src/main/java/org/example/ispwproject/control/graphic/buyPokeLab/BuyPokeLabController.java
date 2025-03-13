@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.example.ispwproject.ChangePage;
+import org.example.ispwproject.control.graphic.GraphicController;
 
 public class BuyPokeLabController {
 
@@ -44,8 +45,8 @@ public class BuyPokeLabController {
         Image sauces = new Image(getClass().getResource("/org/example/ispwproject/image/sauces.jpg").toExternalForm());
         saucesImage.setImage(sauces);
 
-        Image extra = new Image(getClass().getResource("/org/example/ispwproject/image/extra.jpg").toExternalForm());
-        extraImage.setImage(extra);
+//        Image extra = new Image(getClass().getResource("/org/example/ispwproject/image/extra.jpg").toExternalForm());
+//        extraImage.setImage(extra);
     }
 
     @FXML

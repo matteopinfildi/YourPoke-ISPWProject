@@ -7,8 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import org.example.ispwproject.ChangePage;
+import org.example.ispwproject.control.graphic.GraphicController;
 
-public class BuyPokeLabCrunchyController {
+public class BuyPokeLabCrunchyController  {
     @FXML
     private ImageView onionImage;
 

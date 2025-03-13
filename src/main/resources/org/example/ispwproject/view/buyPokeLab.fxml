@@ -57,12 +57,6 @@
                 <Button onAction="#handleSauces" text="Select Sauces"/>
             </VBox>
 
-            <VBox id="selectExtra" prefHeight="60" prefWidth="120" spacing="10">
-                <VBox>
-                    <ImageView fx:id="extraImage" fitWidth="90" preserveRatio="true"/>
-                </VBox>
-                <Button onAction="#handleExtra" text="Select Extra"/>
-            </VBox>
         </HBox>
     </VBox>
 

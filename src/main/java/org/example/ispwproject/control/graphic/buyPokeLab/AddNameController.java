@@ -7,8 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.example.ispwproject.ChangePage;
+import org.example.ispwproject.control.graphic.GraphicController;
 
-public class AddNameController {
+public class AddNameController  {
 
     @FXML
     private TextField pokeNameField;
@@ -17,7 +18,7 @@ public class AddNameController {
     private Label errorLabel;
 
     @FXML
-    public void handleShowPokeLab() {
+    public void handleExtra(ActionEvent event) {
         String name = pokeNameField.getText().trim();
 
         if (name.length() < 4) {
@@ -25,7 +26,7 @@ public class AddNameController {
         } else {
             errorLabel.setText(""); // Rimuove eventuali messaggi di errore
             System.out.println("Poké name set to: " + name);
-            // Qui puoi aggiungere codice per salvare il nome o passarlo ad un'altra finestra
+            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/extra.fxml");
         }
     }
 
