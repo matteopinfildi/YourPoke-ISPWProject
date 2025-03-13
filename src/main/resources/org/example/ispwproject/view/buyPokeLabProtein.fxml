@@ -24,7 +24,7 @@
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
             <ImageView fx:id="salmonImage" fitHeight="100" fitWidth="100"/>
             <Label text="Salmon – Rich in omega-3 fatty acids, tender and flavorful, perfect for sushi and grilled dishes." wrapText="true" maxWidth="300"/>
-            <Button text="Select"/>
+            <CheckBox fx:id="checkSalmon" />
             <Button fx:id="salmonNutriButton" text="Nutritional Values" onAction="#toggleSalmonNutritional"/>
             <VBox fx:id="salmonNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 208 kcal" />
@@ -38,7 +38,7 @@
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
             <ImageView fx:id="shrimpImage" fitHeight="100" fitWidth="100"/>
             <Label text="Shrimp – Sweet and delicate, a versatile seafood choice that pairs well with various seasonings." wrapText="true" maxWidth="300"/>
-            <Button text="Select"/>
+            <CheckBox fx:id="checkShrimp" />
             <Button fx:id="shrimpNutriButton" text="Nutritional Values" onAction="#toggleShrimpNutritional"/>
             <VBox fx:id="shrimpNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 85 kcal" />
@@ -51,7 +51,7 @@
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
             <ImageView fx:id="tunaImage" fitHeight="100" fitWidth="100"/>
             <Label text="Tuna – Lean and protein-packed, with a firm texture and deep umami flavor, ideal for sashimi and poke bowls." wrapText="true" maxWidth="300"/>
-            <Button text="Select"/>
+            <CheckBox fx:id="checkTuna" />
             <Button fx:id="tunaNutriButton" text="Nutritional Values" onAction="#toggleTunaNutritional"/>
             <VBox fx:id="tunaNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 144 kcal" />
