@@ -35,6 +35,6 @@ public class ExtraIngredientController {
     }
     @FXML
     public void handleBackClick(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/extra.fxml");
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/extra.fxml", null, 0);
     }
 }

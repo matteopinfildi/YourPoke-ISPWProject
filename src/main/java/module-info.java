@@ -1,6 +1,7 @@
 module org.example.ispwproject {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens org.example.ispwproject to javafx.fxml;

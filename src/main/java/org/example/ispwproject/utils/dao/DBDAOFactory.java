@@ -1,5 +1,8 @@
 package org.example.ispwproject.utils.dao;
 
+import org.example.ispwproject.model.user.InMemoryUserDAO;
+import org.example.ispwproject.model.user.UserDAO;
+
 public class DBDAOFactory extends DAOFactory{
 //    @Override
 //    public PokelabDAO getPokeLabDAO(){return InMemoryPokeLabDAO.getInstance();}
@@ -11,5 +14,5 @@ public class DBDAOFactory extends DAOFactory{
 //    public ExtraIngredientDAO getExtraIngredientDAO(){return InMemoryExtraIngredientDAO.getIstance();}
 //
 //    @Override
-//    public UserDAO getUserDAO(){return InMemoryUserDAO.getIstance();}
+    public UserDAO getUserDAO(){return InMemoryUserDAO.getInstance();}
 }

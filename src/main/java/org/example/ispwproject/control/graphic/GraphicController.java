@@ -4,5 +4,5 @@ import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.exception.SystemException;
 
 public abstract class GraphicController {
-    public abstract void init(int sessionId, PokeLabBean pokeLabBean) throws SystemException;
+    public abstract void initialize(int sessionId, PokeLabBean pokeLabBean) throws SystemException;
 }
