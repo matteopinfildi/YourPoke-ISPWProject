@@ -1,5 +1,6 @@
 package org.example.ispwproject.utils.dao;
 
+import org.example.ispwproject.model.decorator.PokeLabDAO;
 import org.example.ispwproject.model.user.UserDAO;
 import org.example.ispwproject.utils.enumeration.PersistenceProvider;
 import org.example.ispwproject.utils.exception.PersistenceProviderNotFoundException;
@@ -12,7 +13,7 @@ public abstract class DAOFactory {
 
     protected DAOFactory() {}
 
-//    public abstract PokeLabDAO getPokeLabDAO();
+    public abstract PokeLabDAO getPokeLabDAO();
 //    public abstract ColorDAO getColorDAO();
 //    public abstract ExtraIngredientDAO getExtraIngredientDAO();
     public abstract UserDAO getUserDAO();
