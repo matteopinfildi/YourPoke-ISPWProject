@@ -1,12 +1,13 @@
-package org.example.ispwproject.model;
+package org.example.ispwproject.model.decorator;
 
+import org.example.ispwproject.model.Ingredient;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.enumeration.ingredient.GenericAlternative;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class PokeLab extends Ingredient{
+public class PokeLab extends Ingredient {
 
     private int id;
     private double totalPrice;
