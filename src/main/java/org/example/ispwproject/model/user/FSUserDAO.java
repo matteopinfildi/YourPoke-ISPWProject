@@ -1,7 +1,6 @@
 package org.example.ispwproject.model.user;
 
 import org.example.ispwproject.model.decorator.PokeLab;
-import org.example.ispwproject.model.decorator.PokeLabDAO;
 import org.example.ispwproject.utils.enumeration.UserType;
 import org.example.ispwproject.utils.exception.SystemException;
 
