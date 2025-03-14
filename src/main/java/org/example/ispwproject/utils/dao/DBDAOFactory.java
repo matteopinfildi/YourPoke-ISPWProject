@@ -15,6 +15,6 @@ public class DBDAOFactory extends DAOFactory{
 //    @Override
 //    public ExtraIngredientDAO getExtraIngredientDAO(){return InMemoryExtraIngredientDAO.getIstance();}
 //
-//    @Override
+    @Override
     public UserDAO getUserDAO(){return InMemoryUserDAO.getInstance();}
 }
