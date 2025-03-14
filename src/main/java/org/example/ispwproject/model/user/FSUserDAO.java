@@ -1,5 +1,6 @@
 package org.example.ispwproject.model.user;
 
+import org.example.ispwproject.model.decorator.DBPokeLabDAO;
 import org.example.ispwproject.model.decorator.PokeLab;
 import org.example.ispwproject.utils.enumeration.UserType;
 import org.example.ispwproject.utils.exception.SystemException;
@@ -46,10 +47,10 @@ public class FSUserDAO implements UserDAO{
                 String[] data = line.split(DELIMITER);
                 if (data[0].equals(Uid)) {
                     int plid = Integer.parseInt(data[5]);
-//                    PokeLab pokeLab = (plid != -1) ? new DBPokeLabDAO().read(plid) : null;
+                    PokeLab pokeLab = (plid != -1) ? new DBPokeLabDAO().read(plid) : null;
 
                     User user = new User(data[0], data[1], data[2], UserType.valueOf(data[3]), data[4]);
-//                    user.setPokeLab(pokeLab);
+                    user.setPokeLab(pokeLab);
                     return user;
                 }
             }
