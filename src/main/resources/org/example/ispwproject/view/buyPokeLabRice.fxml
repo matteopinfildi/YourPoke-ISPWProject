@@ -25,6 +25,7 @@
             <ImageView fx:id="sushiRiceImage" fitHeight="100" fitWidth="100"/>
             <Label text="Sushi Rice - Soft, sticky, and slightly seasoned with vinegar, perfect for making sushi rolls and Japanese dishes." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkSushi" />
+            <Label text="+3.00$" />
             <Button fx:id="sushiNutriButton" text="Nutritional Values" onAction="#toggleSushiNutritional"/>
             <VBox fx:id="sushiNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 340 kcal" />
@@ -39,6 +40,7 @@
             <ImageView fx:id="venusRiceImage" fitHeight="100" fitWidth="100"/>
             <Label text="Venus Rice – Aromatic and naturally black, rich in antioxidants with a slightly nutty flavor." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkVenus" />
+            <Label text="+4.00$" />
             <Button fx:id="venusNutriButton" text="Nutritional Values" onAction="#toggleVenusNutritional"/>
             <VBox fx:id="venusNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 360 kcal" />
@@ -52,6 +54,7 @@
             <ImageView fx:id="basmatiRiceImage" fitHeight="100" fitWidth="100"/>
             <Label text="Basmati Rice – Long-grain and fragrant, light and fluffy when cooked, ideal for Indian and Middle Eastern dishes." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkBasmati" />
+            <Label text="+3.50$" />
             <Button fx:id="basmatiNutriButton" text="Nutritional Values" onAction="#toggleBasmatiNutritional"/>
             <VBox fx:id="basmatiNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 350 kcal" />

@@ -25,6 +25,7 @@
             <ImageView fx:id="avocadoImage" fitHeight="100" fitWidth="100"/>
             <Label text="Avocado - A creamy and nutritious ingredient, adding richness and a smooth texture to poké bowls and sushi rolls." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkAvocado" />
+            <Label text="+2.00$" />
             <Button fx:id="avocadNutriButton" text="Nutritional Values" onAction="#toggleAvocadoNutritional"/>
             <VBox fx:id="avocadoNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 160 kcal" />
@@ -39,6 +40,7 @@
             <ImageView fx:id="mangoImage" fitHeight="100" fitWidth="100"/>
             <Label text="Mango – A tropical and juicy fruit that brings a perfect balance of sweetness and acidity to poké bowls and sashimi dishes." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkMango" />
+            <Label text="+1.50$" />
             <Button fx:id="mangoNutriButton" text="Nutritional Values" onAction="#toggleMangoNutritional"/>
             <VBox fx:id="mangoNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 60 kcal" />
@@ -52,6 +54,7 @@
             <ImageView fx:id="strawbarriesImage" fitHeight="100" fitWidth="100"/>
             <Label text="Strawbarries – A fresh and slightly tangy fruit, offering a unique contrast of flavors in sushi rolls, poké bowls, and Japanese-inspired salads." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkStrawbarries" />
+            <Label text="+1.00$" />
             <Button fx:id="strawbarriesNutriButton" text="Nutritional Values" onAction="#toggleStrawbarriesNutritional"/>
             <VBox fx:id="strawbarriesNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 32 kcal" />

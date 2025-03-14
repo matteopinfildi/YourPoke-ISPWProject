@@ -3,13 +3,22 @@ package org.example.ispwproject.control.graphic.buyPokeLab;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import org.example.ispwproject.ChangePage;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
+import org.example.ispwproject.utils.bean.AddIngredientBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
+import org.example.ispwproject.utils.enumeration.ingredient.CrunchyAlternative;
+import org.example.ispwproject.utils.enumeration.ingredient.RiceAlternative;
+import org.example.ispwproject.utils.exception.SystemException;
+
+import javax.security.auth.login.LoginException;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class BuyPokeLabCrunchyController  extends GraphicController{
     @FXML
@@ -25,7 +34,7 @@ public class BuyPokeLabCrunchyController  extends GraphicController{
     private PokeLabBean pokeLabBean;
     private int id;
 
-    public void initialize(int id, PokeLabBean pokeLabBean){
+    public void initialize(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
         Image onion = new Image(getClass().getResource("/org/example/ispwproject/image/onion.jpg").toExternalForm());
         onionImage.setImage(onion);
 
@@ -34,6 +43,11 @@ public class BuyPokeLabCrunchyController  extends GraphicController{
 
         Image almonds = new Image(getClass().getResource("/org/example/ispwproject/image/almonds.jpg").toExternalForm());
         almondsImage.setImage(almonds);
+
+        pokeLabAppController = new BuyPokeLabAppController();
+        this.pokeLabBean = pokeLabBean;
+        this.id = id;
+
     }
 
 
@@ -61,10 +75,31 @@ public class BuyPokeLabCrunchyController  extends GraphicController{
         almondsNutritionalValues.setVisible(!almondsNutritionalValues.isVisible());
     }
 
+    @FXML private CheckBox checkOnion;
+
+    @FXML private CheckBox checkNuts;
+
+    @FXML private CheckBox checkAlmonds;
 
     @FXML
     public void handleNextClick(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
+        try {
+            CrunchyAlternative crunchyAlternative = null;
+            if (checkOnion.isSelected()) {
+                crunchyAlternative = CrunchyAlternative.ONION;
+            } else if (checkNuts.isSelected()) {
+                crunchyAlternative = CrunchyAlternative.NUTS;
+            } else if (checkAlmonds.isSelected()) {
+                crunchyAlternative = CrunchyAlternative.ALMONDS;
+            }
+
+            AddIngredientBean addIngredientBean = new AddIngredientBean("crunchy", crunchyAlternative);
+            pokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
+            
+            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

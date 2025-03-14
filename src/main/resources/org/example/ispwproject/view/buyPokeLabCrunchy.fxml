@@ -25,6 +25,7 @@
             <ImageView fx:id="onionImage" fitHeight="100" fitWidth="100"/>
             <Label text="Crispy onion - Light and crunchy, crispy onions add a savory, deep-fried flavor and texture to enhance poké bowls, sushi rolls, and Japanese-inspired dishes." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkOnion" />
+            <Label text="+2.00$" />
             <Button fx:id="onionNutriButton" text="Nutritional Values" onAction="#toggleOnionNutritional"/>
             <VBox fx:id="onionNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 450 kcal" />
@@ -39,6 +40,7 @@
             <ImageView fx:id="nutsImage" fitHeight="100" fitWidth="100"/>
             <Label text="Nuts – Rich in texture and healthy fats, mixed nuts add a delightful crunch and a boost of protein to poké bowls and Japanese rice dishes." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkNuts" />
+            <Label text="+1.00$" />
             <Button fx:id="nutsNutriButton" text="Nutritional Values" onAction="#toggleNutsNutritional"/>
             <VBox fx:id="nutsNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 600 kcal" />
@@ -52,6 +54,7 @@
             <ImageView fx:id="almondsImage" fitHeight="100" fitWidth="100"/>
             <Label text="Almonds – Crunchy and slightly sweet, almonds bring a nutty richness to poké bowls and Japanese-inspired salads, enhancing both flavor and texture." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkAlmonds" />
+            <Label text="+1.50$" />
             <Button fx:id="almondsNutriButton" text="Nutritional Values" onAction="#toggleAlmondsNutritional"/>
             <VBox fx:id="almondsNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 580 kcal" />

@@ -25,6 +25,7 @@
             <ImageView fx:id="teriyakiImage" fitHeight="100" fitWidth="100"/>
             <Label text="Teriyaki sauce - A sweet and savory sauce made from soy sauce, sugar, and mirin, perfect for glazing fish, chicken, and adding a rich flavor to poké bowls and sushi rolls." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkTeriyaki" />
+            <Label text="+2.00$" />
             <Button fx:id="teriyakiNutriButton" text="Nutritional Values" onAction="#toggleTeriyakiNutritional"/>
             <VBox fx:id="teriyakiNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 450 kcal" />
@@ -39,6 +40,7 @@
             <ImageView fx:id="soyImage" fitHeight="100" fitWidth="100"/>
             <Label text="Soy sauce – A salty, umami-packed sauce made from fermented soybeans, essential in Japanese cuisine, adding depth of flavor to sushi, poké bowls, and sashimi." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkSoy" />
+            <Label text="+1.00$" />
             <Button fx:id="soyNutriButton" text="Nutritional Values" onAction="#toggleSoyNutritional"/>
             <VBox fx:id="soyNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 600 kcal" />
@@ -52,6 +54,7 @@
             <ImageView fx:id="wasabiImage" fitHeight="100" fitWidth="100"/>
             <Label text="Wasabi – A spicy, pungent paste made from Japanese horseradish, often served alongside sushi and poké bowls to add a sharp heat and complement the flavors of the dish." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkWasabi" />
+            <Label text="+1.50$" />
             <Button fx:id="wasabiNutriButton" text="Nutritional Values" onAction="#toggleWasabiNutritional"/>
             <VBox fx:id="wasabiNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 580 kcal" />

@@ -3,13 +3,22 @@ package org.example.ispwproject.control.graphic.buyPokeLab;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import org.example.ispwproject.ChangePage;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
+import org.example.ispwproject.utils.bean.AddIngredientBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
+import org.example.ispwproject.utils.enumeration.ingredient.FruitAlternative;
+import org.example.ispwproject.utils.enumeration.ingredient.ProteinAlternative;
+import org.example.ispwproject.utils.exception.SystemException;
+
+import javax.security.auth.login.LoginException;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class BuyPokeLabProteinController extends GraphicController {
 
@@ -26,7 +35,7 @@ public class BuyPokeLabProteinController extends GraphicController {
     private PokeLabBean pokeLabBean;
     private int id;
 
-    public void initialize(int id, PokeLabBean pokeLabBean){
+    public void initialize(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
         Image salmon = new Image(getClass().getResource("/org/example/ispwproject/image/salmon.jpg").toExternalForm());
         salmonImage.setImage(salmon);
 
@@ -63,9 +72,32 @@ public class BuyPokeLabProteinController extends GraphicController {
     }
 
 
+    @FXML private CheckBox checkSalmon;
+
+    @FXML private CheckBox checkShrimp;
+
+    @FXML private CheckBox checkTuna;
+
+
     @FXML
     public void handleNextClick(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
+        try{
+            ProteinAlternative proteinAlternative = null;
+            if (checkSalmon.isSelected()) {
+                proteinAlternative = ProteinAlternative.SALMON;
+            } else if (checkShrimp.isSelected()) {
+                proteinAlternative = ProteinAlternative.SHRIMP;
+            } else if (checkTuna.isSelected()) {
+                proteinAlternative = ProteinAlternative.TUNA;
+            }
+
+            AddIngredientBean addIngredientBean = new AddIngredientBean("protein", proteinAlternative);
+            pokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
+
+            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
