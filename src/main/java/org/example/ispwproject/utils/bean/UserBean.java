@@ -3,23 +3,23 @@ package org.example.ispwproject.utils.bean;
 import org.example.ispwproject.utils.enumeration.UserType;
 
 public class UserBean {
-    private String Uid;
+    private String uid;
     private String plid;
     private String email;
     private String password;
     private UserType uType;
     private String address;
 
-    public UserBean(String Uid, String password, String email, UserType uType, String address) {
-        this.Uid = Uid;
+    public UserBean(String uid, String password, String email, UserType uType, String address) {
+        this.uid = uid;
         this.password = password;
         this.email = email;
         this.uType = uType;
         this.address = address;
     }
 
-    public String getUid() {return Uid;}
-    public void setUid() {this.Uid = Uid;}
+    public String getUid() {return uid;}
+    public void setUid() {this.uid = uid;}
 
     public String getPassword() {return password;}
     public void setPassword(String password) {this.password = password;}

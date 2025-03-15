@@ -3,9 +3,8 @@ package org.example.ispwproject.model.user;
 import org.example.ispwproject.model.decorator.DBPokeLabDAO;
 import org.example.ispwproject.model.decorator.PokeLab;
 import org.example.ispwproject.utils.enumeration.UserType;
-import org.example.ispwproject.utils.enumeration.ingredient.GenericAlternative;
 import org.example.ispwproject.utils.exception.SystemException;
-import org.example.ispwproject.utils.database.dbConnection;
+import org.example.ispwproject.utils.database.DBConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +18,7 @@ public class DBUserDAO implements UserDAO{
 
         String checkUserQuery = "SELECT COUNT(*) FROM users WHERE username = ?";
         String insertUserQuery = "INSERT INTO users (username, password, email, utype, address, plid) VALUES (?, ?, ?, ?, ?, NULL)";
-        try (Connection connection = dbConnection.getDBConnection(); PreparedStatement preparedStatementCheck = connection.prepareStatement(checkUserQuery); PreparedStatement preparedStatementInsert = connection.prepareStatement(insertUserQuery)){
+        try (Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatementCheck = connection.prepareStatement(checkUserQuery); PreparedStatement preparedStatementInsert = connection.prepareStatement(insertUserQuery)){
             preparedStatementCheck.setString(1, user.getUsername());
             ResultSet resultSet = preparedStatementCheck.executeQuery();
             resultSet.next();
@@ -39,10 +38,10 @@ public class DBUserDAO implements UserDAO{
     }
 
     @Override
-    public User read(String Uid) throws SystemException{
+    public User read(String uid) throws SystemException{
         String queryRead = "SELECT * FROM users WHERE username = ?";
-        try(Connection connection = dbConnection.getDBConnection(); PreparedStatement preparedStatement =connection.prepareStatement(queryRead)){
-            preparedStatement.setString(1, Uid);
+        try(Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatement =connection.prepareStatement(queryRead)){
+            preparedStatement.setString(1, uid);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()){
@@ -70,7 +69,7 @@ public class DBUserDAO implements UserDAO{
     @Override
     public void update(User user, int plid) throws SystemException {
         String queryUpdate = "UPDATE users SET plid = ? WHERE username = ?";
-        try (Connection connection = dbConnection.getDBConnection(); PreparedStatement preparedStatement = connection.prepareStatement(queryUpdate)) {
+        try (Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatement = connection.prepareStatement(queryUpdate)) {
             deletePokeLab(user);
             preparedStatement.setInt(1, plid);
             preparedStatement.setString(2, user.getUsername());
@@ -82,7 +81,7 @@ public class DBUserDAO implements UserDAO{
 
     private void deletePokeLab(User user) throws SystemException {
         String query = "UPDATE users SET plid = NULL WHERE username = ?";
-        try (Connection connection = dbConnection.getDBConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -91,10 +90,10 @@ public class DBUserDAO implements UserDAO{
     }
 
     @Override
-    public void delete (String Uid) throws SystemException {
+    public void delete (String uid) throws SystemException {
         String queryDelete = "DELETE FROM users WHERE username = ?";
-        try (Connection connection = dbConnection.getDBConnection(); PreparedStatement preparedStatement = connection.prepareStatement(queryDelete)){
-            preparedStatement.setString(1, Uid);
+        try (Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatement = connection.prepareStatement(queryDelete)){
+            preparedStatement.setString(1, uid);
             preparedStatement.executeUpdate();
         }catch (SQLException e) {
             throw new SystemException("Errore delete user!");

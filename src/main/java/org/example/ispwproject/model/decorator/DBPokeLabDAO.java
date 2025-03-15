@@ -2,7 +2,7 @@ package org.example.ispwproject.model.decorator;
 
 import org.example.ispwproject.utils.enumeration.ingredient.*;
 import org.example.ispwproject.utils.exception.SystemException;
-import org.example.ispwproject.utils.database.dbConnection;
+import org.example.ispwproject.utils.database.DBConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +18,7 @@ public class DBPokeLabDAO implements PokeLabDAO{
         String insertPokeLabQuery = "Insert into pokeLab (id, price) VALUES (?, ?)";
         String insertIngredientQuery = "Insert into pokeLabIngredients (plid, ingredientName, ingredientAlternative) VALUES (?, ?, ?)";
 
-        try (Connection connection = dbConnection.getDBConnection(); PreparedStatement preparedStatementPoke = connection.prepareStatement(insertPokeLabQuery)){
+        try (Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatementPoke = connection.prepareStatement(insertPokeLabQuery)){
             int plid = pokeLab.id();
             if(plid == -1){
                 throw new SystemException("The pokè lab id is null");
@@ -46,7 +46,7 @@ public class DBPokeLabDAO implements PokeLabDAO{
         String selectPokeLabQuery = "SELECT price FROM pokeLab WHERE id = ?";
         String selectIngredientQuery = "SELECT ingredientName, ingredientAlternative FROM pokeLabIngredients WHERE plid = ?";
 
-        try (Connection connection = dbConnection.getDBConnection(); PreparedStatement preparedStatementPoke = connection.prepareStatement(selectPokeLabQuery); PreparedStatement preparedStatementIngredient = connection.prepareStatement(selectIngredientQuery)){
+        try (Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatementPoke = connection.prepareStatement(selectPokeLabQuery); PreparedStatement preparedStatementIngredient = connection.prepareStatement(selectIngredientQuery)){
             preparedStatementPoke.setInt(1, plid);
             ResultSet resultSetPoke = preparedStatementPoke.executeQuery();
 
@@ -89,7 +89,7 @@ public class DBPokeLabDAO implements PokeLabDAO{
     public void delete(int plid) throws SystemException {
         String deletePokeQuery = "DELETE FROM pokeLab WHERE id = ?";
 
-        try (Connection connection = dbConnection.getDBConnection();
+        try (Connection connection = DBConnection.getDBConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(deletePokeQuery)) {
 
             preparedStatement.setInt(1, plid);

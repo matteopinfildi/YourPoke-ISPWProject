@@ -10,9 +10,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class dbConnection {
+public class DBConnection {
 
-    private  dbConnection(){}
+    private DBConnection(){}
 
     public static Connection getDBConnection() throws SystemException{
         try (InputStream input = new FileInputStream("src/main/resources/config.properties")) {
