@@ -1,18 +1,14 @@
-package org.example.ispwproject.model;
+    package org.example.ispwproject.model;
 
-public class Decorator extends  Ingredient{
+    public class Decorator extends  Ingredient{
 
-    private Ingredient ingredient;
+        private Ingredient ingredient;
 
-    //Questo vuol dire che stiamo decorando Ingredient, ma io voglio decorare pure bowl
-    // o cambio logica o aggiungo una classe Bowl da decorare
-    // forse arrivati a questo punto è meglio cambiare logica!!!
-    protected Decorator(Ingredient ingredient){this.ingredient = ingredient;}
+        protected Decorator(Ingredient ingredient){this.ingredient = ingredient;}
 
-    //modificare
-    @Override
-    public double price(){
-        double resultsFromRedirection = this.ingredient.price();
-        return resultsFromRedirection;
+        @Override
+        public double price(){
+            double ingredientPrice = this.ingredient.price();
+            return ingredientPrice;
+        }
     }
-}
