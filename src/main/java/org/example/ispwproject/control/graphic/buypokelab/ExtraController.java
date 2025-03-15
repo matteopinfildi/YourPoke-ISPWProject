@@ -1,4 +1,4 @@
-package org.example.ispwproject.control.graphic.buyPokeLab;
+package org.example.ispwproject.control.graphic.buypokelab;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

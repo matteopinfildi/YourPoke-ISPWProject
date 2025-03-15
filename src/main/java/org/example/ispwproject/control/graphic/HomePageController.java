@@ -17,7 +17,7 @@ public class HomePageController extends GraphicController{
     private ImageView bannerImage;
 
     @FXML
-    private ImageView PWImage;
+    private ImageView pwImage;
 
     @FXML
     private ImageView buyCPImage;
@@ -31,7 +31,7 @@ public class HomePageController extends GraphicController{
             bannerImage.setImage(banner);
 
             Image pokeWall = new Image(getClass().getResource("/org/example/ispwproject/image/pokeWall.JPG").toExternalForm());
-            PWImage.setImage(pokeWall);
+            pwImage.setImage(pokeWall);
 
             Image classicPoke = new Image(getClass().getResource("/org/example/ispwproject/image/buyClassicPoke.JPG").toExternalForm());
             buyCPImage.setImage(classicPoke);
@@ -50,6 +50,10 @@ public class HomePageController extends GraphicController{
 
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(id);
+
+//        SaveOrRecoverBean dataBean = new SaveOrRecoverBean(session.getUserId());
+//        boolean value = controller.checkGuitar(dataBean);
+//        BuyDreamGuitarControllerStart.setToRecover(value);
 
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
     }

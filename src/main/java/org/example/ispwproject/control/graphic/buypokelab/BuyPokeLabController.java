@@ -1,4 +1,4 @@
-package org.example.ispwproject.control.graphic.buyPokeLab;
+package org.example.ispwproject.control.graphic.buypokelab;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +13,10 @@ import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.enumeration.ingredient.*;
 import org.example.ispwproject.utils.exception.SystemException;
+
+import javax.security.auth.login.LoginException;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class BuyPokeLabController extends GraphicController{
 
@@ -46,8 +50,8 @@ public class BuyPokeLabController extends GraphicController{
     // per vedere poke vecchi potrebbe servirmi questo, DA SISTEMARE!
     // private static boolean toRecover = false;
 
-    // sistemare le eccezioni, mancano IO, Login e SQL
-    public void initialize(int id, PokeLabBean pokeLabBean) throws SystemException {
+
+    public void initialize(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
 
         Image rice = new Image(getClass().getResource("/org/example/ispwproject/image/rice.jpg").toExternalForm());
         riceImage.setImage(rice);

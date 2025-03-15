@@ -1,10 +1,9 @@
-package org.example.ispwproject.control.graphic.buyPokeLab;
+package org.example.ispwproject.control.graphic.buypokelab;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;

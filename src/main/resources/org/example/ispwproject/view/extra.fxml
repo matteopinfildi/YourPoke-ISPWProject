@@ -9,7 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <AnchorPane stylesheets="@../style.css" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.ispwproject.control.graphic.buyPokeLab.ExtraController"
+            fx:controller="org.example.ispwproject.control.graphic.buypokelab.ExtraController"
             prefHeight="400.0" prefWidth="600.0">
     <fx:include source="sidebar.fxml"/>
 

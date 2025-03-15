@@ -7,6 +7,11 @@ import javafx.scene.input.MouseEvent;
 import org.example.ispwproject.ChangePage;
 import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
+import org.example.ispwproject.control.application.BuyPokeLabAppController;
+import org.example.ispwproject.control.application.LoginAppController;
+import org.example.ispwproject.utils.bean.PokeLabBean;
+import org.example.ispwproject.utils.bean.UserTypeBean;
+import org.example.ispwproject.utils.enumeration.UserType;
 
 public class SidebarController {
     @FXML
@@ -43,7 +48,23 @@ public class SidebarController {
     @FXML
     public void handleBuyPokeLabCLick(MouseEvent event) {
         System.out.println("Crea il tuo pokè!");
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", null, id);
+
+        LoginAppController loginAppController = new LoginAppController();
+        if (session != null){
+            UserTypeBean userTypeBean = new UserTypeBean(session.getUserId(), UserType.PREMIUMUSER);
+            if (loginAppController.userType(userTypeBean)){
+                BuyPokeLabAppController buyPokeLabAppController = new BuyPokeLabAppController();
+                PokeLabBean pokeLabBean = buyPokeLabAppController.newPokeLab();
+
+                //SaveOrRecoverBean dataBean = new SaveOrRecoverBean(session.getUserId());
+               // boolean value = buyPokeLabAppController.checkGuitar(dataBean);
+                //BuyDreamGuitarControllerStart.setToRecover(value);
+                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", null, id);
+            }
+        } else{
+            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/login.fxml", null, id);
+        }
+
     }
 
     @FXML

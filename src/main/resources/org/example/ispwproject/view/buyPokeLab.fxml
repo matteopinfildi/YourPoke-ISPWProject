@@ -9,7 +9,7 @@
 
 <AnchorPane stylesheets="@../style.css" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.ispwproject.control.graphic.buyPokeLab.BuyPokeLabController"
+            fx:controller="org.example.ispwproject.control.graphic.buypokelab.BuyPokeLabController"
             prefHeight="400.0" prefWidth="600.0">
     <fx:include source="sidebar.fxml"/>
 

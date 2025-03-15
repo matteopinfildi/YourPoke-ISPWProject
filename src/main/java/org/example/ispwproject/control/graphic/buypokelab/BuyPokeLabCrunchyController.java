@@ -1,4 +1,4 @@
-package org.example.ispwproject.control.graphic.buyPokeLab;
+package org.example.ispwproject.control.graphic.buypokelab;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +13,6 @@ import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.AddIngredientBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.enumeration.ingredient.CrunchyAlternative;
-import org.example.ispwproject.utils.enumeration.ingredient.RiceAlternative;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;

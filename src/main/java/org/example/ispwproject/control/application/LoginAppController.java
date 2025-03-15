@@ -54,15 +54,14 @@ public class LoginAppController {
     public boolean userType(UserTypeBean userTypeBean) {
         User userA = null;
 
-        String Uid = userTypeBean.getUid();
+        String uid = userTypeBean.getUid();
         UserType uType = userTypeBean.getuType();
         try {
-            userA = userDAO.read(Uid);
+            userA = userDAO.read(uid);
         } catch (org.example.ispwproject.utils.exception.SystemException e) {
             throw new RuntimeException(e);
         }
-        if (uType != userA.getuType()){
-            return false;
-        } else {return true;}
+
+        return uType == userA.getuType();
     }
 }

@@ -36,17 +36,17 @@ public class LoginController extends GraphicController{
 
     public void registerUser(String Uid, String password, String email, UserType uType, String address){
         UserBean userBean = new UserBean(Uid, password, email, uType, address);
-        LoginAppController LAController = new LoginAppController();
-        LAController.register(userBean);
+        LoginAppController loginAppController = new LoginAppController();
+        loginAppController.register(userBean);
     }
 
     public void handleLogin(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        LoginAppController LAController =new LoginAppController();
+        LoginAppController loginAppController =new LoginAppController();
         CredentialBean credentialBean = new CredentialBean(username, password);
-        sessionId = LAController.login(credentialBean);
+        sessionId = loginAppController.login(credentialBean);
         if(sessionId != -1){
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/homePage.fxml", null, sessionId);
         } else{
