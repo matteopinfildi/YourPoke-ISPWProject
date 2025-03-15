@@ -9,4 +9,10 @@ public class Decorator extends  Ingredient{
     // forse arrivati a questo punto è meglio cambiare logica!!!
     protected Decorator(Ingredient ingredient){this.ingredient = ingredient;}
 
+    //modificare
+    @Override
+    public double price(){
+        double resultsFromRedirection = this.ingredient.price();
+        return resultsFromRedirection;
+    }
 }
