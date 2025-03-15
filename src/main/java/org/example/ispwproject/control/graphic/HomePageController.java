@@ -10,6 +10,7 @@ import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
+import org.example.ispwproject.utils.bean.SaveBean;
 
 
 public class HomePageController extends GraphicController{
@@ -51,9 +52,10 @@ public class HomePageController extends GraphicController{
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(id);
 
-//        SaveOrRecoverBean dataBean = new SaveOrRecoverBean(session.getUserId());
-//        boolean value = controller.checkGuitar(dataBean);
-//        BuyDreamGuitarControllerStart.setToRecover(value);
+        SaveBean saveBean = new SaveBean(session.getUserId());
+        boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
+       // BuyDreamGuitarControllerStart.setToRecover(value);
+        // devo aggiungere un pulsante save da qualche parte!!!
 
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
     }

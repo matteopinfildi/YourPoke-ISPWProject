@@ -10,6 +10,7 @@ import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.application.LoginAppController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
+import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.bean.UserTypeBean;
 import org.example.ispwproject.utils.enumeration.UserType;
 
@@ -56,8 +57,8 @@ public class SidebarController {
                 BuyPokeLabAppController buyPokeLabAppController = new BuyPokeLabAppController();
                 PokeLabBean pokeLabBean = buyPokeLabAppController.newPokeLab();
 
-                //SaveOrRecoverBean dataBean = new SaveOrRecoverBean(session.getUserId());
-               // boolean value = buyPokeLabAppController.checkGuitar(dataBean);
+                SaveBean saveBean = new SaveBean(session.getUserId());
+                boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
                 //BuyDreamGuitarControllerStart.setToRecover(value);
                 ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", null, id);
             }
