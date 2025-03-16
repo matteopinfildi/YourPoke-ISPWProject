@@ -84,22 +84,22 @@ public class BuyPokeLabController extends GraphicController{
 
             genericAlternative = pokeLabBean.getIngredient("protein");
             if(genericAlternative != null){
-                riceButton.setText(((ProteinAlternative)genericAlternative).name());
+                proteinButton.setText(((ProteinAlternative)genericAlternative).name());
             }
 
             genericAlternative = pokeLabBean.getIngredient("fruit");
             if(genericAlternative != null){
-                riceButton.setText(((FruitAlternative)genericAlternative).name());
+                fruitButton.setText(((FruitAlternative)genericAlternative).name());
             }
 
             genericAlternative = pokeLabBean.getIngredient("crunchy");
             if(genericAlternative != null){
-                riceButton.setText(((CrunchyAlternative)genericAlternative).name());
+                crunchyButton.setText(((CrunchyAlternative)genericAlternative).name());
             }
 
             genericAlternative = pokeLabBean.getIngredient("sauces");
             if(genericAlternative != null){
-                riceButton.setText(((SaucesAlternative)genericAlternative).name());
+                saucesButton.setText(((SaucesAlternative)genericAlternative).name());
             }
         }
 

@@ -49,11 +49,11 @@ public class HomePageController extends GraphicController{
         BuyPokeLabAppController buyPokeLabAppController = new BuyPokeLabAppController();
         PokeLabBean pokeLabBean = buyPokeLabAppController.newPokeLab();
 
-        SessionManager sessionManager = SessionManager.getSessionManager();
-        Session session = sessionManager.getSessionFromId(id);
+//        SessionManager sessionManager = SessionManager.getSessionManager();
+//        Session session = sessionManager.getSessionFromId(id);
 
-        SaveBean saveBean = new SaveBean(session.getUserId());
-        boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
+//        SaveBean saveBean = new SaveBean(session.getUserId());
+//        boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
        // BuyDreamGuitarControllerStart.setToRecover(value);
         // devo aggiungere un pulsante save da qualche parte!!!
 
