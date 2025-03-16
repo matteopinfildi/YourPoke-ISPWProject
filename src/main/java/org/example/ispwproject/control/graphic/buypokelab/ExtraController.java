@@ -20,10 +20,15 @@ public class ExtraController extends GraphicController {
     @FXML private ImageView edemameImage;
     @FXML private ImageView cucumberImage;
     @FXML private ImageView carrotImage;
-    @FXML private ImageView saucesImage;
+    @FXML private ImageView spicyImage;
+    @FXML private ImageView chiliImage;
+    @FXML private ImageView harissaImage;
+    @FXML private ImageView hebaneroImage;
 
     private PokeLabBean pokeLabBean;
     private int id;
+
+    // DA FINIRE!!!
 
     @Override
     public void initialize(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
@@ -38,6 +43,18 @@ public class ExtraController extends GraphicController {
 
         Image carrot = new Image(getClass().getResource("/org/example/ispwproject/image/carrot.jpg").toExternalForm());
         carrotImage.setImage(carrot);
+
+        Image spicy = new Image(getClass().getResource("/org/example/ispwproject/image/spicySauce.jpg").toExternalForm());
+        spicyImage.setImage(spicy);
+
+        Image chili = new Image(getClass().getResource("/org/example/ispwproject/image/chili.jpg").toExternalForm());
+        chiliImage.setImage(chili);
+
+        Image harissa = new Image(getClass().getResource("/org/example/ispwproject/image/harissa.jpg").toExternalForm());
+        harissaImage.setImage(harissa);
+
+        Image hebanero = new Image(getClass().getResource("/org/example/ispwproject/image/hebanero.jpg").toExternalForm());
+        hebaneroImage.setImage(hebanero);
     }
 
     @FXML
