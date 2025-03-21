@@ -5,17 +5,17 @@ import java.util.HashMap;
 public class ExtraBean {
 
     private int id;
-    private String topping; // da valutare se usare un array
+    private boolean[][] topping; // da valutare se usare un array
     private HashMap<String, Integer> spicyMap;
 
-    public ExtraBean(String toppings, HashMap<String, Integer> spicy){
+    public ExtraBean(boolean[][] toppings, HashMap<String, Integer> spicy){
         this.topping = toppings;
         this.spicyMap = spicy;
     }
 
     public int getId() {return id;}
 
-    public String getTopping() {return topping;} // da vedere
+    public boolean[][]  getTopping() {return topping;}
 
     public HashMap<String, Integer> getSpicyMap() {return spicyMap;}
 

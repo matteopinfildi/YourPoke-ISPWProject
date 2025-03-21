@@ -54,7 +54,7 @@
                             <ToggleGroup fx:id="emptyGroup" />
                         </toggleGroup>
                     </RadioButton>
-                    <RadioButton fx:id="edemameRadio" layoutX="10.0" layoutY="88.0" mnemonicParsing="false"  style="-fx-font-weight: bold;" text="+2.00$" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <RadioButton fx:id="edemameRadio" layoutX="10.0" layoutY="88.0" mnemonicParsing="false" onAction="handleEdemame" style="-fx-font-weight: bold;" text="+2.00$" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <RadioButton fx:id="cucumberRadio" layoutX="170.0" layoutY="88.0" mnemonicParsing="false"  style="-fx-font-weight: bold;" text="+1.00$" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                     <RadioButton fx:id="carrotRadio" layoutX="325.0" layoutY="88.0" mnemonicParsing="false"  style="-fx-font-weight: bold;" text="+1.50$" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                 </children>
@@ -127,7 +127,7 @@
                         <Font size ="20.0" />
                     </font>
                 </Label>
-                <Button fx:id="extraButton" layoutX="264.0" layoutY="5.0" mnemonicParsing="false"  style="-fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 10; -fx-background-color: #333;" text="Caclulate Extra" />
+                <Button fx:id="extraButton" layoutX="264.0" layoutY="5.0" mnemonicParsing="false" onAction="#handleExtraPrice" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 10; -fx-background-color: #333;" text="Caclulate Extra" />
             </children>
         </AnchorPane>
     </VBox>
