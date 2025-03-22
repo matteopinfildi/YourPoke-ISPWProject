@@ -3,7 +3,9 @@ package org.example.ispwproject.control.application;
 import org.example.ispwproject.model.Ingredient;
 import org.example.ispwproject.model.decorator.pokelab.PokeLab;
 import org.example.ispwproject.model.decorator.pokelab.PokeLabDAO;
+import org.example.ispwproject.model.decorator.spicy.SpicyDAO;
 import org.example.ispwproject.model.decorator.spicy.SpicyDecorator;
+import org.example.ispwproject.model.decorator.topping.ToppingDAO;
 import org.example.ispwproject.model.decorator.topping.ToppingDecorator;
 import org.example.ispwproject.model.user.User;
 import org.example.ispwproject.model.user.UserDAO;
@@ -25,15 +27,15 @@ public class BuyPokeLabAppController {
     private DAOFactory daoFactory;
     private UserDAO userDAO;
     private PokeLabDAO pokeLabDAO;
-//    private ColorDAO colorDAO;
-//    private ExtraIngredientDAO extraIngredientDAO;
+    private ToppingDAO toppingDAO;
+    private SpicyDAO spicyDAO;
 
     public BuyPokeLabAppController() {
         daoFactory = DAOFactory.getInstance();
         userDAO = daoFactory.getUserDAO();
         pokeLabDAO = daoFactory.getPokeLabDAO();
-//        colorDAO = daoFactory.getColorDAO();
-//        extraIngredientDAO = daoFactory.getExtraIngredientDAO();
+        toppingDAO = daoFactory.getToppingDAO();
+        spicyDAO = daoFactory.getSpicyDAO();
     }
 
     public PokeLabBean newPokeLab() {return new PokeLabBean();}

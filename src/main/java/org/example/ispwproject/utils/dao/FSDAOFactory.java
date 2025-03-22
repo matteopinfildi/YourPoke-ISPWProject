@@ -2,19 +2,23 @@ package org.example.ispwproject.utils.dao;
 
 import org.example.ispwproject.model.decorator.pokelab.InMemoryPokeLabDAO;
 import org.example.ispwproject.model.decorator.pokelab.PokeLabDAO;
+import org.example.ispwproject.model.decorator.spicy.InMemorySpicyDAO;
+import org.example.ispwproject.model.decorator.spicy.SpicyDAO;
+import org.example.ispwproject.model.decorator.topping.InMemoryToppingDAO;
+import org.example.ispwproject.model.decorator.topping.ToppingDAO;
 import org.example.ispwproject.model.user.InMemoryUserDAO;
 import org.example.ispwproject.model.user.UserDAO;
 
 public class FSDAOFactory extends DAOFactory{
     @Override
     public PokeLabDAO getPokeLabDAO(){return InMemoryPokeLabDAO.getInstance();}
-//
-//    @Override
-//    public ColorDAO getColorDAO(){return InMemoryColorDAO.getIstance();}
-//
-//    @Override
-//    public ExtraIngredientDAO getExtraIngredientDAO(){return InMemoryExtraIngredientDAO.getIstance();}
-//
+
+    @Override
+    public ToppingDAO getToppingDAO(){return InMemoryToppingDAO.getInstance();}
+
+    @Override
+    public SpicyDAO getSpicyDAO(){return InMemorySpicyDAO.getInstance();}
+
     @Override
     public UserDAO getUserDAO(){return InMemoryUserDAO.getInstance();}
 }
