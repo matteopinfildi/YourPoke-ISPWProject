@@ -73,7 +73,7 @@ public class ExtraController extends GraphicController {
     private int id;
 
 
-    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
+    public void initialize() throws SystemException, IOException, LoginException, SQLException {
         Image noSel = new Image(getClass().getResource("/org/example/ispwproject/image/noSelection.png").toExternalForm());
         noSelImage.setImage(noSel);
 
@@ -116,7 +116,7 @@ public class ExtraController extends GraphicController {
                 carrotCrispyBox.setSelected(false);
                 // disabilita i CheckBox
                 edemameCrispyBox.setDisable(true);
-                cucumberRadio.setDisable(true);
+                cucumberCrispyBox.setDisable(true);
                 carrotCrispyBox.setDisable(true);
 
                 for (int i=0; i < toppings.length; i++){
@@ -127,10 +127,10 @@ public class ExtraController extends GraphicController {
     }
 
     @Override
-    public void initialize(int sessionId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
+    public void init(int sessionId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
         buyPokeLabAppController = new BuyPokeLabAppController();
         this.pokeLabBean = pokeLabBean;
-        this.id = id;
+        this.id = sessionId;
 
         extraPrice.setText("Extra price: " + pokeLabBean.getPrice() + "$");
 
@@ -162,11 +162,11 @@ public class ExtraController extends GraphicController {
         if (cucumberRadio.isSelected()) {
             cucumberCrispyBox.setDisable(false); // Abilita il CheckBox
             emptyRadio.setSelected(false); // Deseleziona "Vuoto" se un topping è selezionato
-            updateTopping(0, true, false);
+            updateTopping(1, true, false);
         } else {
             cucumberCrispyBox.setDisable(true); // Disabilita il CheckBox
             cucumberCrispyBox.setSelected(false); // Deseleziona il CheckBox
-            updateTopping(0, false, false);
+            updateTopping(1, false, false);
         }
     }
 
@@ -174,11 +174,11 @@ public class ExtraController extends GraphicController {
         if (carrotRadio.isSelected()) {
             carrotCrispyBox.setDisable(false); // Abilita il CheckBox
             emptyRadio.setSelected(false); // Deseleziona "Vuoto" se un topping è selezionato
-            updateTopping(0, true, false);
+            updateTopping(2, true, false);
         } else {
             carrotCrispyBox.setDisable(true); // Disabilita il CheckBox
             carrotCrispyBox.setSelected(false); // Deseleziona il CheckBox
-            updateTopping(0, false, false);
+            updateTopping(2, false, false);
         }
     }
 

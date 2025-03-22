@@ -30,7 +30,7 @@ public class LoginController extends GraphicController{
 
     private int sessionId = -1;
 
-    public void initialize(int sessionId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
+    public void init(int sessionId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
         this.sessionId = sessionId;
     }
 

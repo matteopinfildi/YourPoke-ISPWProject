@@ -33,7 +33,7 @@ public class BuyPokeLabCrunchyController  extends GraphicController{
     private PokeLabBean pokeLabBean;
     private int id;
 
-    public void initialize(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
+    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
         Image onion = new Image(getClass().getResource("/org/example/ispwproject/image/onion.jpg").toExternalForm());
         onionImage.setImage(onion);
 

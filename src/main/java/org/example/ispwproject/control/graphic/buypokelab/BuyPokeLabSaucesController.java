@@ -33,7 +33,7 @@ public class BuyPokeLabSaucesController extends GraphicController {
     private PokeLabBean pokeLabBean;
     private int id;
 
-    public void initialize(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
+    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
         Image teriyaki = new Image(getClass().getResource("/org/example/ispwproject/image/teriyaki.jpg").toExternalForm());
         teriyakiImage.setImage(teriyaki);
 

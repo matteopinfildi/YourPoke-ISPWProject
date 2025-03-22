@@ -26,7 +26,7 @@ public class AddNameController  extends GraphicController{
     private int id;
 
     @Override
-    public void initialize(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {}
+    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {}
 
 
     @FXML

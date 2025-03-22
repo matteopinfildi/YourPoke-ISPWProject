@@ -74,7 +74,7 @@
                     <Label alignment="CENTER" prefHeight="17.0" prefWidth="238.0" style="-fx-font-weight: bold;" text="do you want the extra crispy ingredient? (x0.5$ each)" GridPane.columnIndex="1" />
                     <CheckBox fx:id="edemameCrispyBox" mnemonicParsing="false" onAction="#handleEdemameCrispy" text="Edemame Crispy" GridPane.rowIndex="1" />
                     <CheckBox fx:id="cucumberCrispyBox" layoutX="47.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleCucumberCrispy" text="Cucumber Crispy" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <CheckBox fx:id="carrotCrispysBox" layoutX="288.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleCarrotCrispy" text="Carrot Crispy" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <CheckBox fx:id="carrotCrispyBox" layoutX="288.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleCarrotCrispy" text="Carrot Crispy" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                 </children>
             </GridPane>
 

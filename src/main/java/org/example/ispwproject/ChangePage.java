@@ -35,7 +35,7 @@ public class ChangePage {
 
                 GraphicController controller = loader.getController();
             try {
-                controller.initialize(id, pokeLabBean);
+                controller.init(id, pokeLabBean);
             } catch (org.example.ispwproject.utils.exception.SystemException e) {
                 throw new RuntimeException(e);
             } catch (java.io.IOException e) {

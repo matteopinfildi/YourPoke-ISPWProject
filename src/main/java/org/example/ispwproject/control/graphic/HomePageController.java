@@ -27,7 +27,7 @@ public class HomePageController extends GraphicController{
     private ImageView buyPLImage;
 
 
-    public void initialize(int id, PokeLabBean pokeLabBean) {
+    public void init(int id, PokeLabBean pokeLabBean) {
             Image banner = new Image(getClass().getResource("/org/example/ispwproject/image/banner.JPG").toExternalForm());
             bannerImage.setImage(banner);
 

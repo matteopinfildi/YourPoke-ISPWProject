@@ -8,5 +8,5 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public abstract class GraphicController {
-    public abstract void initialize(int sessionId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException;
+    public abstract void init(int sessionId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException;
 }

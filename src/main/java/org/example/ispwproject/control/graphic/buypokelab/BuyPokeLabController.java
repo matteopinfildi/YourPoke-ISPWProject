@@ -51,7 +51,7 @@ public class BuyPokeLabController extends GraphicController{
     // private static boolean toRecover = false;
 
 
-    public void initialize(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
+    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
 
         Image rice = new Image(getClass().getResource("/org/example/ispwproject/image/rice.jpg").toExternalForm());
         riceImage.setImage(rice);
