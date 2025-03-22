@@ -8,9 +8,12 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.example.ispwproject.ChangePage;
+import org.example.ispwproject.Session;
+import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
+import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.enumeration.ingredient.*;
 import org.example.ispwproject.utils.exception.SystemException;
 
@@ -154,6 +157,19 @@ public class BuyPokeLabController extends GraphicController{
 
     @FXML
     public void handleAddNameClick(ActionEvent event) {
+//        SessionManager sessionManager = SessionManager.getSessionManager();
+//        Session session = sessionManager.getSessionFromId(id);
+//        String userId = session.getUserId();
+//
+//        SaveBean saveBean = new SaveBean(userId);
+//
+//        if (!pokeLabAppController.savePokeLab(pokeLabBean, saveBean)){
+//            System.out.println("Save failed");
+//            return;
+//        } else {
+//            System.out.println("Save successfull");
+//        }
+
         if (!addNameButton.isDisabled()) { // Controlla se il pulsante è attivo prima di cambiare scena
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addName.fxml", pokeLabBean, id);
         }

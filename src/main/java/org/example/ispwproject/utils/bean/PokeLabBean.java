@@ -11,6 +11,7 @@ public class PokeLabBean {
     private Map<String, GenericAlternative> ingredients=new HashMap<>(); //sfrutto una hash map per memorizzare tutti gli ingredienti
     private int plId;
     private double price;
+    private String pokeName;
 
     public PokeLabBean(){
         plId= SessionManager.getSessionManager().curPokeId();
@@ -21,6 +22,14 @@ public class PokeLabBean {
         this.plId = pokeLab.id();
         this.price = pokeLab.price();
         this.ingredients =new HashMap<>(pokeLab.allIngredients());
+    }
+
+    public String getPokeName() {
+        return pokeName;
+    }
+
+    public void setPokeName(String pokeName){
+        this.pokeName = pokeName;
     }
 
     public GenericAlternative getIngredient(String ingredientName) {return ingredients.get(ingredientName);}
