@@ -1,4 +1,4 @@
-package org.example.ispwproject.model.decorator;
+package org.example.ispwproject.model.decorator.pokelab;
 
 import org.example.ispwproject.utils.enumeration.ingredient.*;
 import org.example.ispwproject.utils.exception.SystemException;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DBPokeLabDAO implements PokeLabDAO{
+public class DBPokeLabDAO implements PokeLabDAO {
 
     @Override
     public void create(PokeLab pokeLab) throws SystemException {

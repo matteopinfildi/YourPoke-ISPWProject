@@ -1,11 +1,11 @@
-package org.example.ispwproject.model.decorator;
+package org.example.ispwproject.model.decorator.pokelab;
 
 import org.example.ispwproject.utils.exception.SystemException;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class InMemoryPokeLabDAO implements PokeLabDAO{
+public class InMemoryPokeLabDAO implements PokeLabDAO {
     private static InMemoryPokeLabDAO instance;
     private Collection<PokeLab> listOfPokeLab = new ArrayList<>();
 

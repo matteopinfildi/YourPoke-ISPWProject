@@ -1,10 +1,10 @@
 package org.example.ispwproject.control.application;
 
 import org.example.ispwproject.model.Ingredient;
-import org.example.ispwproject.model.decorator.PokeLab;
-import org.example.ispwproject.model.decorator.PokeLabDAO;
-import org.example.ispwproject.model.decorator.SpicyDecorator;
-import org.example.ispwproject.model.decorator.ToppingDecorator;
+import org.example.ispwproject.model.decorator.pokelab.PokeLab;
+import org.example.ispwproject.model.decorator.pokelab.PokeLabDAO;
+import org.example.ispwproject.model.decorator.spicy.SpicyDecorator;
+import org.example.ispwproject.model.decorator.topping.ToppingDecorator;
 import org.example.ispwproject.model.user.User;
 import org.example.ispwproject.model.user.UserDAO;
 import org.example.ispwproject.utils.bean.AddIngredientBean;

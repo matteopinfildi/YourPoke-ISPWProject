@@ -1,4 +1,4 @@
-package org.example.ispwproject.model.decorator;
+package org.example.ispwproject.model.decorator.topping;
 
 import org.example.ispwproject.model.Decorator;
 import org.example.ispwproject.model.Ingredient;

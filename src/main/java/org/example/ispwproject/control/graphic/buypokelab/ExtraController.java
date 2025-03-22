@@ -3,10 +3,7 @@ package org.example.ispwproject.control.graphic.buypokelab;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.example.ispwproject.ChangePage;
@@ -24,36 +21,59 @@ import java.util.HashMap;
 
 public class ExtraController extends GraphicController {
 
-    @FXML private ImageView noSelImage;
-    @FXML private ImageView edemameImage;
-    @FXML private ImageView cucumberImage;
-    @FXML private ImageView carrotImage;
-    @FXML private ImageView spicyImage;
-    @FXML private ImageView chiliImage;
-    @FXML private ImageView harissaImage;
-    @FXML private ImageView hebaneroImage;
+    @FXML
+    private ImageView noSelImage;
+    @FXML
+    private ImageView edemameImage;
+    @FXML
+    private ImageView cucumberImage;
+    @FXML
+    private ImageView carrotImage;
+    @FXML
+    private ImageView spicyImage;
+    @FXML
+    private ImageView chiliImage;
+    @FXML
+    private ImageView harissaImage;
+    @FXML
+    private ImageView hebaneroImage;
 
-    @FXML private ToggleGroup emptyGroup;
-    @FXML private RadioButton edemameRadio;
-    @FXML private RadioButton cucumberRadio;
-    @FXML private RadioButton carrotRadio;
-    @FXML private RadioButton emptyRadio;
+    @FXML
+    private ToggleGroup emptyGroup;
+    @FXML
+    private RadioButton edemameRadio;
+    @FXML
+    private RadioButton cucumberRadio;
+    @FXML
+    private RadioButton carrotRadio;
+    @FXML
+    private RadioButton emptyRadio;
 
-    @FXML private Label extraPrice;
+    @FXML
+    private CheckBox edemameCrispyBox;
+    @FXML
+    private CheckBox cucumberCrispyBox;
+    @FXML
+    private CheckBox carrotCrispyBox;
 
-    @FXML private ComboBox comboBoxSpicySauce;
-    @FXML private ComboBox comboBoxChili;
-    @FXML private ComboBox comboBoxHarissa;
-    @FXML private ComboBox comboBoxHebanero;
+    @FXML
+    private Label extraPrice;
+
+    @FXML
+    private ComboBox comboBoxSpicySauce;
+    @FXML
+    private ComboBox comboBoxChili;
+    @FXML
+    private ComboBox comboBoxHarissa;
+    @FXML
+    private ComboBox comboBoxHebanero;
 
     private BuyPokeLabAppController buyPokeLabAppController;
     private PokeLabBean pokeLabBean;
     private int id;
 
 
-
-    @Override
-    public void initialize(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
+    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
         Image noSel = new Image(getClass().getResource("/org/example/ispwproject/image/noSelection.png").toExternalForm());
         noSelImage.setImage(noSel);
 
@@ -78,25 +98,43 @@ public class ExtraController extends GraphicController {
         Image hebanero = new Image(getClass().getResource("/org/example/ispwproject/image/hebanero.jpg").toExternalForm());
         hebaneroImage.setImage(hebanero);
 
+        if (emptyRadio.isSelected()) {
+            edemameCrispyBox.setDisable(true);
+            cucumberCrispyBox.setDisable(true);
+            carrotCrispyBox.setDisable(true);
+        }
+
         emptyGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == emptyRadio) {
-            // se "empty" è selezionato, deseleziona tutti gli altri RadioButton
+                // se "empty" è selezionato, deseleziona tutti gli altri RadioButton
                 edemameRadio.setSelected(false);
                 cucumberRadio.setSelected(false);
                 carrotRadio.setSelected(false);
+
+                edemameCrispyBox.setSelected(false);
+                cucumberCrispyBox.setSelected(false);
+                carrotCrispyBox.setSelected(false);
+                // disabilita i CheckBox
+                edemameCrispyBox.setDisable(true);
+                cucumberRadio.setDisable(true);
+                carrotCrispyBox.setDisable(true);
+
+                for (int i=0; i < toppings.length; i++){
+                    updateTopping(i, false, false);
+                }
             }
         });
     }
 
     @Override
-    public void init(int sessionId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException{
+    public void initialize(int sessionId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
         buyPokeLabAppController = new BuyPokeLabAppController();
         this.pokeLabBean = pokeLabBean;
         this.id = id;
 
         extraPrice.setText("Extra price: " + pokeLabBean.getPrice() + "$");
 
-        for (SpicyType spicyType : SpicyType.values()){
+        for (SpicyType spicyType : SpicyType.values()) {
             updateSpicyType(spicyType.name(), 0);
         }
 
@@ -106,21 +144,90 @@ public class ExtraController extends GraphicController {
         comboBoxHebanero.setValue(0);
     }
 
+    private boolean[][] toppings = new boolean[3][2];
+
+    public void handleEdemame(ActionEvent event) {
+        if (edemameRadio.isSelected()) {
+            edemameCrispyBox.setDisable(false); // Abilita il CheckBox
+            emptyRadio.setSelected(false); // Deseleziona "Vuoto" se un topping è selezionato
+            updateTopping(0, true, false);
+        } else {
+            edemameCrispyBox.setDisable(true); // Disabilita il CheckBox
+            edemameCrispyBox.setSelected(false); // Deseleziona il CheckBox
+            updateTopping(0, false, false);
+        }
+    }
+
+    public void handleCucumber(ActionEvent event) {
+        if (cucumberRadio.isSelected()) {
+            cucumberCrispyBox.setDisable(false); // Abilita il CheckBox
+            emptyRadio.setSelected(false); // Deseleziona "Vuoto" se un topping è selezionato
+            updateTopping(0, true, false);
+        } else {
+            cucumberCrispyBox.setDisable(true); // Disabilita il CheckBox
+            cucumberCrispyBox.setSelected(false); // Deseleziona il CheckBox
+            updateTopping(0, false, false);
+        }
+    }
+
+    public void handleCarrot(ActionEvent event) {
+        if (carrotRadio.isSelected()) {
+            carrotCrispyBox.setDisable(false); // Abilita il CheckBox
+            emptyRadio.setSelected(false); // Deseleziona "Vuoto" se un topping è selezionato
+            updateTopping(0, true, false);
+        } else {
+            carrotCrispyBox.setDisable(true); // Disabilita il CheckBox
+            carrotCrispyBox.setSelected(false); // Deseleziona il CheckBox
+            updateTopping(0, false, false);
+        }
+    }
+
+    public void handleEdemameCrispy(ActionEvent event) {
+        if (edemameCrispyBox.isSelected()) {
+            updateTopping(0, true, true);
+        } else {
+            updateTopping(0, true, false);
+        }
+    }
+
+    public void handleCucumberCrispy(ActionEvent event) {
+        if (cucumberCrispyBox.isSelected()) {
+            updateTopping(1, true, true);
+        } else {
+            updateTopping(1, true, false);
+        }
+    }
+
+    public void handleCarrotCrispy(ActionEvent event) {
+        if (carrotCrispyBox.isSelected()) {
+            updateTopping(2, true, true);
+        } else {
+            updateTopping(2, true, false);
+        }
+    }
+
+    public void updateTopping(int tid, boolean select, boolean crispy) {
+        toppings[tid][0] = select;
+        toppings[tid][1] = crispy;
+    }
+
     private HashMap<String, Integer> spicy = new HashMap<String, Integer>();
 
-    public void updateSpicyType(String name, int quantity) { spicy.put(name, quantity);}
+    public void updateSpicyType(String name, int quantity) {
+        spicy.put(name, quantity);
+    }
 
-    public void handleCalculate(ActionEvent event){
+    public void handleExtraPrice(ActionEvent event) {
         spicy.put(SpicyType.SPICYSAUCE.name(), (Integer) comboBoxSpicySauce.getValue());
         spicy.put(SpicyType.CHILI.name(), (Integer) comboBoxChili.getValue());
         spicy.put(SpicyType.HARISSA.name(), (Integer) comboBoxHarissa.getValue());
         spicy.put(SpicyType.HEBANERO.name(), (Integer) comboBoxHebanero.getValue());
 
-        //aggiungere i controlli per il crispy e in teoria ho finito
-
-//        ExtraBean extraBean = new ExtraBean(spicy, toppings);
-//        double extraPrice = buyPokeLabAppController.addIngredient();
+        ExtraBean extraBean = new ExtraBean( toppings, spicy);
+        double newPrice = buyPokeLabAppController.putDecoration(pokeLabBean, extraBean);
+        extraPrice.setText("Extra price: " + newPrice + "$");
     }
+
 
     @FXML
     public void handleNextClick(ActionEvent event) {

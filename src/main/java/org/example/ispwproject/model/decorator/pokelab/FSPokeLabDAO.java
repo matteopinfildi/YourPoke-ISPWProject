@@ -1,8 +1,8 @@
-package org.example.ispwproject.model.decorator;
+package org.example.ispwproject.model.decorator.pokelab;
 
 import org.example.ispwproject.utils.exception.SystemException;
 
-public class FSPokeLabDAO implements PokeLabDAO{
+public class FSPokeLabDAO implements PokeLabDAO {
     @Override
     public void create(PokeLab pokeLab) throws SystemException {
         // da implementare

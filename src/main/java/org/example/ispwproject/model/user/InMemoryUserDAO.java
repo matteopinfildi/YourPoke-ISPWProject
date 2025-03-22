@@ -1,6 +1,6 @@
 package org.example.ispwproject.model.user;
 
-import org.example.ispwproject.model.decorator.InMemoryPokeLabDAO;
+import org.example.ispwproject.model.decorator.pokelab.InMemoryPokeLabDAO;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import java.util.ArrayList;

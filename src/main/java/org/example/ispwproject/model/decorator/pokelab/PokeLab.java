@@ -1,4 +1,4 @@
-package org.example.ispwproject.model.decorator;
+package org.example.ispwproject.model.decorator.pokelab;
 
 import org.example.ispwproject.model.Ingredient;
 import org.example.ispwproject.utils.bean.PokeLabBean;
