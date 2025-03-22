@@ -11,6 +11,11 @@ import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
+import org.example.ispwproject.utils.exception.SystemException;
+
+import javax.security.auth.login.LoginException;
+import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class HomePageController extends GraphicController{
@@ -27,7 +32,7 @@ public class HomePageController extends GraphicController{
     private ImageView buyPLImage;
 
 
-    public void init(int id, PokeLabBean pokeLabBean) {
+    public void init(int id, PokeLabBean pokeLabBean)  throws SystemException, IOException, LoginException, SQLException {
             Image banner = new Image(getClass().getResource("/org/example/ispwproject/image/banner.JPG").toExternalForm());
             bannerImage.setImage(banner);
 
@@ -39,6 +44,8 @@ public class HomePageController extends GraphicController{
 
             Image pokeLab = new Image(getClass().getResource("/org/example/ispwproject/image/buyPokeLab.JPG").toExternalForm());
             buyPLImage.setImage(pokeLab);
+
+            this.id = id;
     }
 
     private int id = -1;
@@ -49,13 +56,12 @@ public class HomePageController extends GraphicController{
         BuyPokeLabAppController buyPokeLabAppController = new BuyPokeLabAppController();
         PokeLabBean pokeLabBean = buyPokeLabAppController.newPokeLab();
 
-//        SessionManager sessionManager = SessionManager.getSessionManager();
-//        Session session = sessionManager.getSessionFromId(id);
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSessionFromId(id);
 
-//        SaveBean saveBean = new SaveBean(session.getUserId());
-//        boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
-       // BuyDreamGuitarControllerStart.setToRecover(value);
-        // devo aggiungere un pulsante save da qualche parte!!!
+        SaveBean saveBean = new SaveBean(session.getUserId());
+        boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
+//        BuyDreamGuitarControllerStart.setToRecover(value);
 
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
     }

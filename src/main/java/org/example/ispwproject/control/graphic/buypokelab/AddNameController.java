@@ -42,11 +42,24 @@ public class AddNameController extends GraphicController{
     public void handleExtra(ActionEvent event) {
         String name = pokeNameField.getText().trim();
 
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSessionFromId(id);
+        String userId = session.getUserId();
+
         if (name.length() < 4) {
             errorLabel.setText("The name must be at least 4 characters long!");
         } else {
             //associo il nome del poke alla rispettiva bean
             pokeLabBean.setPokeName(name);
+
+            SaveBean saveBean = new SaveBean(userId);
+
+            if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)){
+                System.out.println("Save failed");
+                return;
+            } else {
+                System.out.println("Save successfull");
+            }
 
             errorLabel.setText(""); // Rimuove eventuali messaggi di errore
             System.out.println("Poké name set to: " + name);

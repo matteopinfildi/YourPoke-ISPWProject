@@ -68,6 +68,8 @@ public class ExtraController extends GraphicController {
     @FXML
     private ComboBox comboBoxHebanero;
 
+    @FXML private Label pokeNameLabel;
+
     private BuyPokeLabAppController buyPokeLabAppController;
     private PokeLabBean pokeLabBean;
     private int id;
@@ -131,6 +133,13 @@ public class ExtraController extends GraphicController {
         buyPokeLabAppController = new BuyPokeLabAppController();
         this.pokeLabBean = pokeLabBean;
         this.id = sessionId;
+
+        String pokeName = pokeLabBean.getPokeName();
+        if (pokeName != null && !pokeName.isEmpty()) {
+            pokeNameLabel.setText("Add extra to " + pokeName + " pokè");
+        } else {
+            pokeNameLabel.setText("Add extra");
+        }
 
         extraPrice.setText("Extra price: " + pokeLabBean.getPrice() + "$");
 
