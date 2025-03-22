@@ -30,7 +30,7 @@ public class CliHomePage extends CliController{
             int selection = userSelection("HomePage");
             switch (selection){
                 case 1:
-                    //cosa del login
+                    new CliLogin().login(sID, pokeLabBean);
                     break;
 
                 case 2:
