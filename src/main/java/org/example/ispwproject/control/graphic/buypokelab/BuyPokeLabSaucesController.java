@@ -42,6 +42,10 @@ public class BuyPokeLabSaucesController extends GraphicController {
 
         Image wasabi = new Image(getClass().getResource("/org/example/ispwproject/image/wasabi.jpg").toExternalForm());
         wasabiImage.setImage(wasabi);
+
+        pokeLabAppController = new BuyPokeLabAppController();
+        this.pokeLabBean = pokeLabBean;
+        this.id = id;
     }
 
 

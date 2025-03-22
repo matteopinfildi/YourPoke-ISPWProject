@@ -43,6 +43,10 @@ public class BuyPokeLabProteinController extends GraphicController {
 
         Image tuna = new Image(getClass().getResource("/org/example/ispwproject/image/tuna.jpg").toExternalForm());
         tunaImage.setImage(tuna);
+
+        pokeLabAppController = new BuyPokeLabAppController();
+        this.pokeLabBean = pokeLabBean;
+        this.id = id;
     }
 
 

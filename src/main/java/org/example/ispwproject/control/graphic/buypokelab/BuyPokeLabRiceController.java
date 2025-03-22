@@ -43,6 +43,10 @@ public class BuyPokeLabRiceController extends GraphicController {
 
         Image basmatiRice = new Image(getClass().getResource("/org/example/ispwproject/image/basmatiRice.jpeg").toExternalForm());
         basmatiRiceImage.setImage(basmatiRice);
+
+        pokeLabAppController = new BuyPokeLabAppController();
+        this.pokeLabBean = pokeLabBean;
+        this.id = id;
     }
 
 

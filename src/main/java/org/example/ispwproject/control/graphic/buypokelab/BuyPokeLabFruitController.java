@@ -42,6 +42,10 @@ public class BuyPokeLabFruitController  extends GraphicController{
 
         Image strawbarries = new Image(getClass().getResource("/org/example/ispwproject/image/strawbarries.jpeg").toExternalForm());
         strawbarriesImage.setImage(strawbarries);
+
+        pokeLabAppController = new BuyPokeLabAppController();
+        this.pokeLabBean = pokeLabBean;
+        this.id = id;
     }
 
 
