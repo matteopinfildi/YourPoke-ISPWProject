@@ -14,7 +14,7 @@ import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class AddNameController  extends GraphicController{
+public class AddNameController extends GraphicController{
 
     @FXML
     private TextField pokeNameField;
@@ -26,7 +26,10 @@ public class AddNameController  extends GraphicController{
     private int id;
 
     @Override
-    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {}
+    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
+        this.pokeLabBean = pokeLabBean;
+        this.id = id;
+    }
 
 
     @FXML

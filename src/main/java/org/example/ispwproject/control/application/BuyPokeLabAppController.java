@@ -78,7 +78,7 @@ public class BuyPokeLabAppController {
         boolean[][] toppings = extraBean.getTopping();
         topping = new ArrayList<>(Arrays.asList(Topping.values()));
         for (int x = 0; x < toppings.length; x++) {
-            // se il colore è selezionato
+            // se il topping è selezionato
             if (toppings[x][0]) {
                 boolean crispy = toppings[x][1];
                 allIngredient = new ToppingDecorator(allIngredient, topping.get(x), crispy);

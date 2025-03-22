@@ -40,6 +40,7 @@ public class BuyPokeLabController extends GraphicController{
     @FXML private Button fruitButton;
     @FXML private Button crunchyButton;
     @FXML private Button saucesButton;
+    @FXML private Button addNameButton;
 
     private BuyPokeLabAppController pokeLabAppController;
     private PokeLabBean pokeLabBean;
@@ -103,39 +104,61 @@ public class BuyPokeLabController extends GraphicController{
             }
         }
 
+        checkIngredientSelection();
+
         //manca la parte per recuperare i vecchi poke, da vedere!
+    }
+
+    //metodo per controllare se tutti gli ingredienti sono stati selezionati
+    private void checkIngredientSelection(){
+        boolean allSelected = pokeLabBean.getIngredient("rice") != null &&
+                pokeLabBean.getIngredient("protein") != null &&
+                pokeLabBean.getIngredient("fruit") != null &&
+                pokeLabBean.getIngredient("crunchy") != null &&
+                pokeLabBean.getIngredient("sauces") != null;
+
+        addNameButton.setDisable(!allSelected); // Disabilita se manca almeno un ingrediente
+
     }
 
     @FXML
     public void handleRice(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabRice.fxml", pokeLabBean, id);
+        checkIngredientSelection();
     }
 
     @FXML
     public void handleProtein(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabProtein.fxml", pokeLabBean, id);
+        checkIngredientSelection();
     }
 
     @FXML
     public void handleFruit(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabFruit.fxml", pokeLabBean, id);
+        checkIngredientSelection();
     }
 
     @FXML
     public void handleCrunchy(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabCrunchy.fxml", pokeLabBean, id);
+        checkIngredientSelection();
     }
 
     @FXML
     public void handleSauces(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabSauces.fxml", pokeLabBean, id);
+        checkIngredientSelection();
     }
 
 
     @FXML
     public void handleAddNameClick(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addName.fxml", pokeLabBean, id);
+        if (!addNameButton.isDisabled()) { // Controlla se il pulsante è attivo prima di cambiare scena
+            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addName.fxml", pokeLabBean, id);
+        }
     }
+
 
     @FXML
     public void handleBackClick(ActionEvent event) {

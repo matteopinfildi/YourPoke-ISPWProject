@@ -73,7 +73,7 @@ public class ExtraController extends GraphicController {
     private int id;
 
 
-    public void initialize() throws SystemException, IOException, LoginException, SQLException {
+    public void initialize() {
         Image noSel = new Image(getClass().getResource("/org/example/ispwproject/image/noSelection.png").toExternalForm());
         noSelImage.setImage(noSel);
 
