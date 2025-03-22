@@ -137,5 +137,21 @@ public class BuyPokeLabAppController {
         return pokeLab != null;
     }
 
-    //IMPLEMENTARE LA PARTE SUL RECUPERO DEI VECCHI POKE LAB MA NON SI POSSONO MODIFICARE
+    public PokeLabBean recoverPokeLab(SaveBean saveBean){
+        User user = null;
+        String uID = saveBean.getUid();
+        try{
+            user = userDAO.read(uID);
+        } catch (SystemException systemException){
+            throw new RuntimeException(systemException);
+        }
+
+        PokeLab pokeLab = user.getPokeLab();
+        if (pokeLab != null) {
+            PokeLabBean pokeLabBean = new PokeLabBean(pokeLab);
+            return pokeLabBean;
+        }
+        return null;
+    }
+
 }

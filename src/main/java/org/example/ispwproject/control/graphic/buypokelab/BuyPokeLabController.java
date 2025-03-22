@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import org.example.ispwproject.ChangePage;
 import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
@@ -50,9 +51,9 @@ public class BuyPokeLabController extends GraphicController{
     private int id;
 
     @FXML private Label totalPriceLabel;
+    @FXML private Pane popup;
 
-    // per vedere poke vecchi potrebbe servirmi questo, DA SISTEMARE!
-    // private static boolean toRecover = false;
+     private static boolean recover = false; // se è false è perchè non ho poke da recuperare
 
 
     public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
@@ -109,8 +110,14 @@ public class BuyPokeLabController extends GraphicController{
 
         checkIngredientSelection();
 
-        //manca la parte per recuperare i vecchi poke, da vedere!
+        if (recover){
+            showPopUp();
+            boolean value = false;
+            setRecover(value);
+        }
     }
+
+    public static void setRecover (boolean value) {recover = value;}
 
     //metodo per controllare se tutti gli ingredienti sono stati selezionati
     private void checkIngredientSelection(){
@@ -157,19 +164,6 @@ public class BuyPokeLabController extends GraphicController{
 
     @FXML
     public void handleAddNameClick(ActionEvent event) {
-//        SessionManager sessionManager = SessionManager.getSessionManager();
-//        Session session = sessionManager.getSessionFromId(id);
-//        String userId = session.getUserId();
-//
-//        SaveBean saveBean = new SaveBean(userId);
-//
-//        if (!pokeLabAppController.savePokeLab(pokeLabBean, saveBean)){
-//            System.out.println("Save failed");
-//            return;
-//        } else {
-//            System.out.println("Save successfull");
-//        }
-
         if (!addNameButton.isDisabled()) { // Controlla se il pulsante è attivo prima di cambiare scena
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addName.fxml", pokeLabBean, id);
         }
@@ -179,5 +173,39 @@ public class BuyPokeLabController extends GraphicController{
     @FXML
     public void handleBackClick(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/homePage.fxml", pokeLabBean, id);
+    }
+
+    @FXML
+    public void showPopUp() {popup.setVisible(true);}
+
+    @FXML
+    private void handleRecover() {
+        popup.setVisible(false);
+
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSessionFromId(id);
+        String userId = session.getUserId();
+
+        SaveBean saveBean = new SaveBean(userId);
+
+        PokeLabBean oldPokeLabBean = pokeLabAppController.recoverPokeLab(saveBean);
+        if (oldPokeLabBean != null) {
+            try{
+                init(id, oldPokeLabBean);
+            } catch (SystemException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (LoginException e) {
+                throw new RuntimeException(e);
+            } catch (SQLException throwables) {
+                throw new RuntimeException(throwables);
+            }
+        } else {System.out.println("Pokè Lab not found");}
+    }
+
+    @FXML
+    private void handleNewPoke() {
+        popup.setVisible(false);
     }
 }
