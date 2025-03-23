@@ -9,8 +9,12 @@ import org.example.ispwproject.ChangePage;
 import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
+import org.example.ispwproject.control.application.LoginAppController;
+import org.example.ispwproject.control.graphic.buypokelab.BuyPokeLabController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
+import org.example.ispwproject.utils.bean.UserTypeBean;
+import org.example.ispwproject.utils.enumeration.UserType;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -32,6 +36,9 @@ public class HomePageController extends GraphicController{
     private ImageView buyPLImage;
 
 
+    private Session session;
+
+
     public void init(int id, PokeLabBean pokeLabBean)  throws SystemException, IOException, LoginException, SQLException {
             Image banner = new Image(getClass().getResource("/org/example/ispwproject/image/banner.JPG").toExternalForm());
             bannerImage.setImage(banner);
@@ -46,6 +53,10 @@ public class HomePageController extends GraphicController{
             buyPLImage.setImage(pokeLab);
 
             this.id = id;
+            SessionManager sessionManager = SessionManager.getSessionManager();
+            this.id = sessionManager.getCurrentId();
+            session = sessionManager.getSessionFromId(id);
+
     }
 
     private int id = -1;
@@ -53,17 +64,22 @@ public class HomePageController extends GraphicController{
     @FXML
     public void handleBuyPokeLab(ActionEvent event) {
 
-        BuyPokeLabAppController buyPokeLabAppController = new BuyPokeLabAppController();
-        PokeLabBean pokeLabBean = buyPokeLabAppController.newPokeLab();
+        LoginAppController loginAppController = new LoginAppController();
+        if (session != null){
+            UserTypeBean userTypeBean = new UserTypeBean(session.getUserId(), UserType.PREMIUMUSER);
+            if (loginAppController.userType(userTypeBean)){
+                BuyPokeLabAppController buyPokeLabAppController = new BuyPokeLabAppController();
+                PokeLabBean pokeLabBean = buyPokeLabAppController.newPokeLab();
 
-        SessionManager sessionManager = SessionManager.getSessionManager();
-        Session session = sessionManager.getSessionFromId(id);
+                SaveBean saveBean = new SaveBean(session.getUserId());
+                boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
+                BuyPokeLabController.setRecover(value);
 
-        SaveBean saveBean = new SaveBean(session.getUserId());
-        boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
-//        BuyDreamGuitarControllerStart.setToRecover(value);
-
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
+                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
+            }
+        } else{
+            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/login.fxml", null, id);
+        }
     }
 
     @FXML

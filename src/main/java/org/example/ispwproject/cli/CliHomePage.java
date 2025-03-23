@@ -2,6 +2,7 @@ package org.example.ispwproject.cli;
 
 import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
+import org.example.ispwproject.cli.pokelab.CliPokeLab;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
@@ -41,7 +42,7 @@ public class CliHomePage extends CliController{
                     buyPokeLabAppController = new BuyPokeLabAppController();
                     pokeLabBean = buyPokeLabAppController.newPokeLab();
                     checkRecover();
-                    //cosa della cli poke lab
+                    new CliPokeLab().init(sID, pokeLabBean);
                     break;
 
                 case 4:

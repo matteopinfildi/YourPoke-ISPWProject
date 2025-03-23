@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.example.ispwproject.cli.CliHomePage;
+import org.example.ispwproject.cli.CliLogin;
 import org.example.ispwproject.control.graphic.LoginController;
 import org.example.ispwproject.utils.enumeration.UserType;
 import org.example.ispwproject.utils.exception.SystemException;
@@ -56,8 +58,13 @@ public class YourPoke extends Application {
                 launch();
                 break;
 
-//            case CLI:
-//                break;
+            case CLI:
+                CliLogin cliLogin = new CliLogin();
+                cliLogin.register("matteoP", "ciao123", "matteoP@gmail.com", UserType.USER, "via Domenico Modugno 8");
+                cliLogin.register("marcoB", "hola123", "marcoB@gmail.com", UserType.PREMIUMUSER, "via Massimo Troisi 11");
+
+                new CliHomePage().init(-1, null);
+                break;
         }
     }
 }

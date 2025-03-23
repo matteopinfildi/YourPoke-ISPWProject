@@ -9,6 +9,7 @@ import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.application.LoginAppController;
+import org.example.ispwproject.control.graphic.buypokelab.BuyPokeLabController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.bean.UserTypeBean;
@@ -59,8 +60,9 @@ public class SidebarController {
 
                 SaveBean saveBean = new SaveBean(session.getUserId());
                 boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
-                //BuyDreamGuitarControllerStart.setToRecover(value);
-                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", null, id);
+                BuyPokeLabController.setRecover(value);
+
+                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
             }
         } else{
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/login.fxml", null, id);
