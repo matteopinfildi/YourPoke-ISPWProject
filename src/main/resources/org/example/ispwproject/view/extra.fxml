@@ -145,7 +145,7 @@
                         <Font size ="20.0" />
                     </font>
                 </Label>
-                <Button fx:id="extraButton" layoutX="264.0" layoutY="5.0" mnemonicParsing="false" onAction="#handleExtraPrice" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 10; -fx-background-color: #333;" text="Caclulate Extra" />
+                <Button fx:id="extraButton" layoutX="264.0" layoutY="5.0" mnemonicParsing="false" onAction="#handleExtraPrice" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 10; -fx-background-color: #333;" text="Add Extra" />
             </children>
         </AnchorPane>
     </VBox>

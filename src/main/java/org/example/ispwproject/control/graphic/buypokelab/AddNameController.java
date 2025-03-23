@@ -39,7 +39,7 @@ public class AddNameController extends GraphicController{
 
 
     @FXML
-    public void handleExtra(ActionEvent event) {
+    public void handleNextClick(ActionEvent event) {
         String name = pokeNameField.getText().trim();
 
         SessionManager sessionManager = SessionManager.getSessionManager();
