@@ -111,6 +111,7 @@ public class BuyPokeLabController extends GraphicController{
         }
 
         checkIngredientSelection();
+        checkBowlSizeSelection();
 
         if (recover){
             showPopUp();
@@ -131,9 +132,18 @@ public class BuyPokeLabController extends GraphicController{
                 pokeLabBean.getIngredient("crunchy") != null &&
                 pokeLabBean.getIngredient("sauces") != null;
 
-        addNameButton.setDisable(!allSelected); // Disabilita se manca almeno un ingrediente
+        bowlSizeButton.setDisable(!allSelected); // Disabilita se manca almeno un ingrediente
 
     }
+
+    private void checkBowlSizeSelection() {
+        // Verifica se la dimensione della bowl è stata selezionata
+        boolean sizeSelected = pokeLabBean.getBowlSize() != null && !pokeLabBean.getBowlSize().isEmpty();
+
+        // Disabilita il pulsante se la bowl size non è selezionata
+        addNameButton.setDisable(!sizeSelected);
+    }
+
 
     @FXML
     public void handleRice(ActionEvent event) {
@@ -166,8 +176,10 @@ public class BuyPokeLabController extends GraphicController{
     }
 
     @FXML
-    public void handleBowlSizeClick(ActionEvent event){
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/bowlSize.fxml", pokeLabBean, id);
+    public void handleBowlSizeClick(ActionEvent event) {
+        if (!bowlSizeButton.isDisabled()){ // Controlla se il pulsante è attivo prima di cambiare scena
+            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/bowlSize.fxml", pokeLabBean, id);
+        }
     }
 
     private void updateSizeLabel() {
@@ -183,7 +195,6 @@ public class BuyPokeLabController extends GraphicController{
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addName.fxml", pokeLabBean, id);
         }
     }
-
 
     @FXML
     public void handleBackClick(ActionEvent event) {

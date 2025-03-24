@@ -8,8 +8,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import org.example.ispwproject.ChangePage;
+import org.example.ispwproject.Session;
+import org.example.ispwproject.SessionManager;
+import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
+import org.example.ispwproject.utils.bean.SaveBean;
 
 public class BowlSizeController extends GraphicController {
 
@@ -20,10 +24,15 @@ public class BowlSizeController extends GraphicController {
 
     private ToggleGroup sizeToggleGroup; // Non è più @FXML, viene gestito manualmente
     private PokeLabBean pokeLabBean;
+    private BuyPokeLabAppController buyPokeLabAppController;
+    private int sessionId;
 
     @Override
     public void init(int sessionId, PokeLabBean pokeLabBean) {
         this.pokeLabBean = pokeLabBean;
+        this.buyPokeLabAppController = new BuyPokeLabAppController();
+        this.sessionId = sessionId;
+
 
         // Imposta la selezione corrente in base al valore salvato
         if (pokeLabBean != null) {
@@ -79,7 +88,29 @@ public class BowlSizeController extends GraphicController {
 
         // Se la selezione è valida, aggiorna il bean
         if (selectedSize != null && pokeLabBean != null) {
+            if (selectedSize.equals(pokeLabBean.getBowlSize())) {
+                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, pokeLabBean.getId());
+                return;
+            }
+
             pokeLabBean.setBowlSize(selectedSize);  // Aggiorna solo il bean
+
+            SessionManager sessionManager = SessionManager.getSessionManager();
+            Session session = sessionManager.getSessionFromId(sessionId);
+            String userId = session.getUserId();
+
+            SaveBean saveBean = new SaveBean(userId);
+
+            try {
+                if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
+                    System.out.println("Error saving bowl size");
+                    return;
+                }
+                System.out.println("Bowl size saved: " + selectedSize);
+            } catch (Exception e) {
+                System.out.println("Error saving bowl size: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
 
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, pokeLabBean.getId());

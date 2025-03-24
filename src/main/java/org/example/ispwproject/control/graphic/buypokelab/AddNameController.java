@@ -35,6 +35,10 @@ public class AddNameController extends GraphicController{
         buyPokeLabAppController = new BuyPokeLabAppController();
         this.pokeLabBean = pokeLabBean;
         this.id = id;
+
+        if (pokeLabBean.getPokeName() != null) {
+            pokeNameField.setText(pokeLabBean.getPokeName());
+        }
     }
 
 
@@ -49,6 +53,11 @@ public class AddNameController extends GraphicController{
         if (name.length() < 4) {
             errorLabel.setText("The name must be at least 4 characters long!");
         } else {
+            // Se il nome è lo stesso di prima, non serve salvare di nuovo
+            if (name.equals(pokeLabBean.getPokeName())) {
+                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/extra.fxml", pokeLabBean, id);
+                return;
+            }
             //associo il nome del poke alla rispettiva bean
             pokeLabBean.setPokeName(name);
 

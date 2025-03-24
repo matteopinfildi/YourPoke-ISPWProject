@@ -110,11 +110,19 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
             preparedStatement.setString(1, bowlSize);
             preparedStatement.setInt(2, plid);
-            preparedStatement.executeUpdate();
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            if (rowsUpdated == 0) {
+                System.out.println("Nessun record trovato con ID: " + plid);
+            } else {
+                System.out.println("Bowl size aggiornato per ID: " + plid);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
 }

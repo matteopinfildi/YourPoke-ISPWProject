@@ -98,7 +98,8 @@ public class BuyPokeLabAppController {
         // aggiungo il nome del poke al pokeLab
         String pokeName = pokeLabBean.getPokeName();
         String bowlSize = pokeLabBean.getBowlSize();
-        System.out.println("Saving Poké with name: " + pokeName + " and bowl size: " + bowlSize);
+        System.out.println("Saving Poké with name: " + pokeName);
+        System.out.println("Saving Poké with size: " + bowlSize);
 
         System.out.println(pokeLabBean.getId());
         PokeLab pokeLab = new PokeLab(pokeLabBean);
