@@ -65,9 +65,9 @@ public class CliPokeLab extends CliController{
 
 
     @Override
-    public void init(int sID, PokeLabBean pokeLabB) throws SystemException, IOException, LoginException, SQLException {
+    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
         buyPokeLabAppController = new BuyPokeLabAppController();
-        this.pokeLabBean = pokeLabB;
+        this.pokeLabBean = pokeLabBean;
         this.id = sID;
 
         if (recover) {
@@ -103,22 +103,22 @@ public class CliPokeLab extends CliController{
             condition = true;
             int selection = userSelection("Select an ingredient for your Poke Lab");
             switch (selection) {
-//                case 1:
-//                    new CliRice().init(sessionId, dreamGuitarBean);
-//                    break;
-//                case 2:
-//                    new CliBridge().init(sessionId, dreamGuitarBean);
-//                    break;
-//                case 3:
-//                    new CliFretboard().init(sessionId, dreamGuitarBean);
-//                    break;
-//                case 4:
-//                    new CliNes().init(sessionId, dreamGuitarBean);
-//                    break;
-//                case 5:
-//                    new CliPickup().init(sessionId, dreamGuitarBean);
-//                    break;
-//
+                case 1:
+                    new CliRice().init(sID, pokeLabBean);
+                    break;
+                case 2:
+                    new CliProtein().init(sID, pokeLabBean);
+                    break;
+                case 3:
+                    new CliFruit().init(sID, pokeLabBean);
+                    break;
+                case 4:
+                    new CliCrunchy().init(sID, pokeLabBean);
+                    break;
+                case 5:
+                    new CliSauces().init(sID, pokeLabBean);
+                    break;
+
                 case 6:
                     new CliHomePage().init(sID, pokeLabBean);
                     break;
