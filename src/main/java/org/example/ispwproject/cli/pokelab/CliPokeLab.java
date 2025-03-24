@@ -136,7 +136,7 @@ public class CliPokeLab extends CliController{
                         break;
                     } else {
                         System.out.println("Save successfull\n");
-                        // mettere il ristorante
+                        // mettere add name
                     }
                     break;
 
