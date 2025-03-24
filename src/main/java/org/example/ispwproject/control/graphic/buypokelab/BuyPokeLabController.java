@@ -45,6 +45,8 @@ public class BuyPokeLabController extends GraphicController{
     @FXML private Button crunchyButton;
     @FXML private Button saucesButton;
     @FXML private Button addNameButton;
+    @FXML private Button bowlSizeButton;
+    @FXML private Label sizeLabel;
 
     private BuyPokeLabAppController pokeLabAppController;
     private PokeLabBean pokeLabBean;
@@ -115,6 +117,8 @@ public class BuyPokeLabController extends GraphicController{
             boolean value = false;
             setRecover(value);
         }
+
+        updateSizeLabel();
     }
 
     public static void setRecover (boolean value) {recover = value;}
@@ -159,6 +163,17 @@ public class BuyPokeLabController extends GraphicController{
     public void handleSauces(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabSauces.fxml", pokeLabBean, id);
         checkIngredientSelection();
+    }
+
+    @FXML
+    public void handleBowlSizeClick(ActionEvent event){
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/bowlSize.fxml", pokeLabBean, id);
+    }
+
+    private void updateSizeLabel() {
+        if (sizeLabel != null && pokeLabBean.getBowlSize() != null) {
+            sizeLabel.setText("Bowl Size: " + pokeLabBean.getBowlSize());
+        }
     }
 
 

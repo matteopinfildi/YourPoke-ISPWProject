@@ -12,6 +12,7 @@ public class PokeLabBean {
     private int plId;
     private double price;
     private String pokeName;
+    private String bowlSize;
 
     public PokeLabBean(){
         plId= SessionManager.getSessionManager().curPokeId();
@@ -30,6 +31,14 @@ public class PokeLabBean {
 
     public void setPokeName(String pokeName){
         this.pokeName = pokeName;
+    }
+
+    public String getBowlSize(){
+        return bowlSize;
+    }
+
+    public void setBowlSize(String bowlSize) {
+        this.bowlSize = bowlSize;
     }
 
     public GenericAlternative getIngredient(String ingredientName) {return ingredients.get(ingredientName);}

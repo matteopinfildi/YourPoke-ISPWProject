@@ -13,6 +13,7 @@ public class PokeLab extends Ingredient {
     private double totalPrice;
 
     private Map<String, GenericAlternative> items=new HashMap<>();
+    private String bowlSize;
 
     public PokeLab(double price) {this.totalPrice = price;}
 
@@ -22,10 +23,11 @@ public class PokeLab extends Ingredient {
         this.items = new HashMap<>(pokeLab.getAllIngredients());
     }
 
-    public PokeLab(double price, int id, Map<String, GenericAlternative> items) {
+    public PokeLab(double price, int id, Map<String, GenericAlternative> items, String bowlSize) {
         this.totalPrice = price;
         this.id = id;
         this.items = items;
+        this.bowlSize = bowlSize;
     }
 
     @Override
@@ -36,5 +38,13 @@ public class PokeLab extends Ingredient {
     public int id(){return this.id;}
 
     public Map<String, GenericAlternative> allIngredients(){return items;}
+
+    public String getBowlSize() {
+        return bowlSize;
+    }
+
+    public void setBowlSize(String bowlSize) {
+        this.bowlSize = bowlSize;
+    }
 
 }

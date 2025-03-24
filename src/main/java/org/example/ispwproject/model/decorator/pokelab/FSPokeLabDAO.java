@@ -17,4 +17,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
     public void delete(int plid) throws SystemException {
         // da implementare
     }
+
+    @Override
+    public void updateBowlSize(int plid, String bowlSize){}
 }

@@ -97,7 +97,8 @@ public class BuyPokeLabAppController {
 
         // aggiungo il nome del poke al pokeLab
         String pokeName = pokeLabBean.getPokeName();
-        System.out.println("Saving Poké with name: " + pokeName);
+        String bowlSize = pokeLabBean.getBowlSize();
+        System.out.println("Saving Poké with name: " + pokeName + " and bowl size: " + bowlSize);
 
         System.out.println(pokeLabBean.getId());
         PokeLab pokeLab = new PokeLab(pokeLabBean);
@@ -153,5 +154,14 @@ public class BuyPokeLabAppController {
         }
         return null;
     }
+
+    public void updateBowlSize(PokeLabBean pokeLabBean) {
+        try {
+            pokeLabDAO.updateBowlSize(pokeLabBean.getId(), pokeLabBean.getBowlSize());
+        } catch (SystemException e) {
+            throw new RuntimeException("Errore nell'aggiornamento della taglia della bowl", e);
+        }
+    }
+
 
 }

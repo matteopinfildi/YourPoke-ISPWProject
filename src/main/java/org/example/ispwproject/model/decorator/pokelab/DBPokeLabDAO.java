@@ -15,7 +15,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
     @Override
     public void create(PokeLab pokeLab) throws SystemException {
-        String insertPokeLabQuery = "Insert into pokeLab (id, price) VALUES (?, ?)";
+        String insertPokeLabQuery = "Insert into pokeLab (id, price, size) VALUES (?, ?, ?)";
         String insertIngredientQuery = "Insert into pokeLabIngredients (plid, ingredientName, ingredientAlternative) VALUES (?, ?, ?)";
 
         try (Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatementPoke = connection.prepareStatement(insertPokeLabQuery)){
@@ -26,6 +26,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
             preparedStatementPoke.setInt(1, plid);
             preparedStatementPoke.setDouble(2, pokeLab.price());
+            preparedStatementPoke.setString(3, pokeLab.getBowlSize());
             preparedStatementPoke.executeUpdate();
 
             try (PreparedStatement preparedStatementIngredient = connection.prepareStatement(insertIngredientQuery)){
@@ -52,6 +53,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
             if (resultSetPoke.next()){
                 double price = resultSetPoke.getDouble("price");
+                String size = resultSetPoke.getString("size");
                 Map<String, GenericAlternative> ingredients =new HashMap<>();
 
                 preparedStatementIngredient.setInt(1, plid);
@@ -77,7 +79,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
                     }
                 }
 
-                return new PokeLab(price, plid, ingredients);
+                return new PokeLab(price, plid, ingredients, size);
             }
         }catch (SQLException e) {
             e.printStackTrace();
@@ -98,4 +100,21 @@ public class DBPokeLabDAO implements PokeLabDAO {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void updateBowlSize(int plid, String bowlSize) throws SystemException {
+        String query = "UPDATE pokeLab SET bowl_size = ? WHERE id = ?";
+
+        try (Connection connection = DBConnection.getDBConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, bowlSize);
+            preparedStatement.setInt(2, plid);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
