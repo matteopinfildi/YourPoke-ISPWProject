@@ -12,11 +12,13 @@ import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
+import org.example.ispwproject.utils.enumeration.ingredient.GenericAlternative;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class AddNameController extends GraphicController{
 
@@ -90,15 +92,32 @@ public class AddNameController extends GraphicController{
             return;
         }
 
+        // Recupera l'utente dalla sessione
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSessionFromId(id);
+        String username = session.getUserId();
+
         // Associa il nome del poke alla rispettiva bean
         pokeLabBean.setPokeName(name);
 
-        // Crea il contenuto del post
-        String postContent = "User posted a new PokéLab: " + name;
-        pokeLabBean.addPost(postContent); // Aggiunge il post alla lista
+        // Costruisci il contenuto del post
+        StringBuilder postContent = new StringBuilder();
+        postContent.append(username).append(" created a new PokéLab: ").append(name).append("\n");
+        postContent.append("Bowl Size: ").append(pokeLabBean.getBowlSize()).append("\n");
+        postContent.append("Ingredients:\n");
+
+        // Aggiungi gli ingredienti al post
+        for (Map.Entry<String, GenericAlternative> entry : pokeLabBean.getAllIngredients().entrySet()) {
+            postContent.append("- ").append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        }
+
+        postContent.append("Total Price: $").append(pokeLabBean.getPrice());
+
+        // Aggiungi il post alla lista
+        pokeLabBean.addPost(postContent.toString());
 
         // Salva il PokéLab
-        SaveBean saveBean = new SaveBean(SessionManager.getSessionManager().getSessionFromId(id).getUserId());
+        SaveBean saveBean = new SaveBean(session.getUserId());
         if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
             errorLabel.setText("Failed to post PokéLab to Poke Wall.");
             return;

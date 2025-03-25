@@ -9,16 +9,19 @@
 <AnchorPane stylesheets="@../style.css" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.ispwproject.control.graphic.pokewall.PokeWallController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="400.0" prefWidth="900.0">
 
     <fx:include source="sidebar.fxml"/>
 
-    <VBox alignment="CENTER" spacing="10" layoutX="50" layoutY="50">
+    <!-- VBox con allineamento e spaziatura regolata -->
+    <VBox alignment="TOP_CENTER" spacing="10" layoutX="200" layoutY="50" prefWidth="700.0" AnchorPane.topAnchor="50" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="0" VBox.vgrow="ALWAYS">
+        <!-- Titolo Poke Wall -->
         <Label text="Poke Wall" style="-fx-font-size: 24px; -fx-text-fill: black;"/>
 
         <!-- ListView per visualizzare i post -->
-        <ListView fx:id="pokeWallListView" layoutX="50.0" layoutY="80.0" prefHeight="300.0" prefWidth="500.0"/>
+        <ListView fx:id="pokeWallListView" prefHeight="300.0" prefWidth="800.0" VBox.vgrow="ALWAYS"/>
 
+        <!-- Contenitore per il pulsante Back -->
         <HBox alignment="BOTTOM_RIGHT" layoutX="199.0" layoutY="623.0" prefHeight="25.0" prefWidth="673.0" spacing="10">
             <Button fx:id="backButton" onAction="#handleBackClick" text="Back" />
         </HBox>
