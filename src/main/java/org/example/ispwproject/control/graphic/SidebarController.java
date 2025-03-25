@@ -71,8 +71,25 @@ public class SidebarController {
     }
 
     @FXML
-    public void handlePostOnPokeWallCLick(MouseEvent event) {
-        System.out.println("Posta su pokè wall");
+    public void handlePokeWallCLick(MouseEvent event) {
+        System.out.println("Pokè Wall");
+
+        LoginAppController loginAppController = new LoginAppController();
+        if (session != null){
+            UserTypeBean userTypeBean = new UserTypeBean(session.getUserId(), UserType.PREMIUMUSER);
+            if (loginAppController.userType(userTypeBean)){
+                BuyPokeLabAppController buyPokeLabAppController = new BuyPokeLabAppController();
+                PokeLabBean pokeLabBean = buyPokeLabAppController.newPokeLab();
+
+                SaveBean saveBean = new SaveBean(session.getUserId());
+                boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
+                BuyPokeLabController.setRecover(value);
+
+                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/pokeWall.fxml", pokeLabBean, id);
+            }
+        } else{
+            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/login.fxml", null, id);
+        }
     }
 
 
