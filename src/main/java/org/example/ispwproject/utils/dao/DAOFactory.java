@@ -3,6 +3,7 @@ package org.example.ispwproject.utils.dao;
 import org.example.ispwproject.model.decorator.pokelab.PokeLabDAO;
 import org.example.ispwproject.model.decorator.spicy.SpicyDAO;
 import org.example.ispwproject.model.decorator.topping.ToppingDAO;
+import org.example.ispwproject.model.pokewall.PokeWallDAO;
 import org.example.ispwproject.model.user.UserDAO;
 import org.example.ispwproject.utils.enumeration.PersistenceProvider;
 import org.example.ispwproject.utils.exception.PersistenceProviderNotFoundException;
@@ -19,6 +20,7 @@ public abstract class DAOFactory {
     public abstract ToppingDAO getToppingDAO();
     public abstract SpicyDAO getSpicyDAO();
     public abstract UserDAO getUserDAO();
+    public abstract PokeWallDAO getPokeWallDAO();
 
 
     public static DAOFactory getInstance() throws PersistenceProviderNotFoundException {

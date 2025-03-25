@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import org.example.ispwproject.ChangePage;
+import org.example.ispwproject.control.application.PokeWallAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.exception.SystemException;
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class PokeWallController extends GraphicController {
 
+
     private PokeLabBean pokeLabBean;
     private int id;
     // ListView per visualizzare i post
@@ -29,11 +31,13 @@ public class PokeWallController extends GraphicController {
         this.pokeLabBean = pokeLabBean;
         this.id = id;
 
-        // Carica i post esistenti nella ListView
-        List<String> posts = pokeLabBean.getPosts();
+        PokeWallAppController pokeWallAppController = new PokeWallAppController();
+
+        // Carica i post esistenti nel PokeWall (dal DAO o dal file)
+        List<String> posts = pokeWallAppController.getAllPosts();  // Recupera tutti i post
         if (posts != null && !posts.isEmpty()) {
             ObservableList<String> postObservableList = FXCollections.observableArrayList(posts);
-            pokeWallListView.getItems().setAll(posts);
+            pokeWallListView.setItems(postObservableList);  // Popola la ListView con i post
         } else {
             System.out.println("No post available!!!");
         }

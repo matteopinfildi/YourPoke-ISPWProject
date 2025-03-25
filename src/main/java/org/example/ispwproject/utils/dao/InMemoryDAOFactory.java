@@ -7,6 +7,8 @@ import org.example.ispwproject.model.decorator.spicy.InMemorySpicyDAO;
 import org.example.ispwproject.model.decorator.spicy.SpicyDAO;
 import org.example.ispwproject.model.decorator.topping.InMemoryToppingDAO;
 import org.example.ispwproject.model.decorator.topping.ToppingDAO;
+import org.example.ispwproject.model.pokewall.InMemoryPokeWallDAO;
+import org.example.ispwproject.model.pokewall.PokeWallDAO;
 import org.example.ispwproject.model.user.InMemoryUserDAO;
 import org.example.ispwproject.model.user.UserDAO;
 
@@ -23,4 +25,7 @@ public class InMemoryDAOFactory extends DAOFactory{
 
     @Override
     public UserDAO getUserDAO(){return InMemoryUserDAO.getInstance();}
+
+    @Override
+    public PokeWallDAO getPokeWallDAO() {return InMemoryPokeWallDAO.getInstance();}
 }
