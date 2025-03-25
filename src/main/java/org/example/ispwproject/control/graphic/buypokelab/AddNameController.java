@@ -80,4 +80,33 @@ public class AddNameController extends GraphicController{
     public void handleBackClick(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
     }
+
+    @FXML
+    public void handlePostToPokeWall(ActionEvent event) {
+        String name = pokeNameField.getText().trim();
+
+        if (name.length() < 4) {
+            errorLabel.setText("The name must be at least 4 characters long!");
+            return;
+        }
+
+        // Associa il nome del poke alla rispettiva bean
+        pokeLabBean.setPokeName(name);
+
+        // Crea il contenuto del post
+        String postContent = "User posted a new PokéLab: " + name;
+        pokeLabBean.addPost(postContent); // Aggiunge il post alla lista
+
+        // Salva il PokéLab
+        SaveBean saveBean = new SaveBean(SessionManager.getSessionManager().getSessionFromId(id).getUserId());
+        if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
+            errorLabel.setText("Failed to post PokéLab to Poke Wall.");
+            return;
+        }
+
+        System.out.println("PokéLab posted to Poke Wall!");
+
+        // Reindirizza alla PokeWall
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/pokeWall.fxml", pokeLabBean, id);
+    }
 }

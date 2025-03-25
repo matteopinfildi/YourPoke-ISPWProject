@@ -4,7 +4,9 @@ import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.model.decorator.pokelab.PokeLab;
 import org.example.ispwproject.utils.enumeration.ingredient.GenericAlternative;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PokeLabBean {
@@ -13,6 +15,7 @@ public class PokeLabBean {
     private double price;
     private String pokeName;
     private String bowlSize;
+    private List<String> posts = new ArrayList<>();
 
     public PokeLabBean(){
         plId= SessionManager.getSessionManager().curPokeId();
@@ -57,6 +60,26 @@ public class PokeLabBean {
 
     public int getId() {return plId;}
     public void setId(int id) {this.plId = id;}
+
+    // Metodi per i post
+    public List<String> getPosts() {
+        return posts;
+    }
+
+    // Aggiunge un post alla lista
+    public void addPost(String post) {
+        posts.add(post);
+    }
+
+//    // Aggiungi più post alla lista
+//    public void addPosts(List<String> newPosts) {
+//        posts.addAll(newPosts);
+//    }
+
+    // Controlla se ci sono post
+    public boolean hasPosts() {
+        return !posts.isEmpty();
+    }
 
 }
 
