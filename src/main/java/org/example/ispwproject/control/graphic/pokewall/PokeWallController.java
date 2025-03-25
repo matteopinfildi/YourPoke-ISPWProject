@@ -1,5 +1,7 @@
 package org.example.ispwproject.control.graphic.pokewall;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
@@ -18,7 +20,7 @@ public class PokeWallController extends GraphicController {
 
     private PokeLabBean pokeLabBean;
     private int id;
-    // Aggiungi una ListView per visualizzare i post
+    // ListView per visualizzare i post
     @FXML private ListView<String> pokeWallListView;
 
     // Questo metodo è usato per inizializzare i dati del controller
@@ -30,13 +32,13 @@ public class PokeWallController extends GraphicController {
         // Carica i post esistenti nella ListView
         List<String> posts = pokeLabBean.getPosts();
         if (posts != null && !posts.isEmpty()) {
+            ObservableList<String> postObservableList = FXCollections.observableArrayList(posts);
             pokeWallListView.getItems().setAll(posts);
         } else {
             System.out.println("No post available!!!");
         }
     }
 
-    // Altri metodi per interagire con i dati dei post (aggiungere, rimuovere post, etc.)
 
     @FXML
     public void handleBackClick (ActionEvent event) {
