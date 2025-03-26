@@ -59,7 +59,7 @@ public class PokeWallAppController {
     //Metodo per eliminare un post dalla PokeWall
     public boolean deletePost(int postId) throws SystemException {
         try {
-             pokeWallDAO.delete(postId);
+            pokeWallDAO.delete(postId);
             System.out.println("Post deleted successfully!");
             return true;
         } catch (SystemException e) {

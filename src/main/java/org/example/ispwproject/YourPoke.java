@@ -54,6 +54,7 @@ public class YourPoke extends Application {
                 LoginController loginController = new LoginController();
                 loginController.registerUser("matteoP", "ciao123", "matteoP@gmail.com", UserType.USER, "via Domenico Modugno 8");
                 loginController.registerUser("marcoB", "hola123", "marcoB@gmail.com", UserType.PREMIUMUSER, "via Massimo Troisi 11");
+                loginController.registerUser("pinfoM", "hello123", "pinfoM@gmail.com", UserType.PREMIUMUSER, "via Massimo Troisi 10");
 
                 launch();
                 break;
