@@ -19,7 +19,7 @@ public class InMemoryPokeWallDAO implements PokeWallDAO {
 
     @Override
     public void create(PokeWall pokeWall) {
-        pokeWall = new PokeWall(pokeWall.getContent(), pokeWall.getUsername(), pokeWall.getIngredients());
+        pokeWall = new PokeWall(pokeWall.getPokeName(), pokeWall.getSize(), pokeWall.getUsername(), pokeWall.getIngredients());
         posts.add(pokeWall);
     }
 

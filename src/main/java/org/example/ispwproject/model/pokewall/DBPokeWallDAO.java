@@ -13,7 +13,7 @@ import java.util.Map;
 public class DBPokeWallDAO implements PokeWallDAO {
     @Override
     public void create(PokeWall pokeWall) throws SystemException {
-        String insertPostSQL = "INSERT INTO poke_wall_posts (content, username) VALUES (?, ?) RETURNING id";
+        String insertPostSQL = "INSERT INTO poke_wall_posts (pokeName, size, username) VALUES (?, ?, ?) RETURNING id";
         String insertIngredientSQL = "INSERT INTO poke_wall_ingredients (post_id, ingredient) VALUES (?, ?)";
 
         try (Connection connection = DBConnection.getDBConnection();
@@ -21,8 +21,9 @@ public class DBPokeWallDAO implements PokeWallDAO {
              PreparedStatement ingredientStmt = connection.prepareStatement(insertIngredientSQL)) {
 
             // Salva il post e ottieni l'ID generato
-            postStmt.setString(1, pokeWall.getContent());
-            postStmt.setString(2, pokeWall.getUsername());
+            postStmt.setString(1, pokeWall.getPokeName());
+            postStmt.setString(2, pokeWall.getSize());
+            postStmt.setString(3, pokeWall.getUsername());
             ResultSet rs = postStmt.executeQuery();
 
             if (rs.next()) {
@@ -44,7 +45,7 @@ public class DBPokeWallDAO implements PokeWallDAO {
     @Override
     public List<PokeWall> getAllPosts() throws SystemException {
         List<PokeWall> posts = new ArrayList<>();
-        String query = "SELECT p.id, p.content, p.username, i.ingredient " +
+        String query = "SELECT p.id, p.pokeName, p.size, p.username, i.ingredient " +
                 "FROM poke_wall_posts p " +
                 "LEFT JOIN poke_wall_ingredients i ON p.id = i.post_id " +
                 "ORDER BY p.id, i.id";
@@ -54,15 +55,15 @@ public class DBPokeWallDAO implements PokeWallDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             Map<Integer, PokeWall> postMap = new HashMap<>();
-
             while (rs.next()) {
                 int postId = rs.getInt("id");
-                String content = rs.getString("content");
+                String pokeName = rs.getString("pokeName");
+                String size = rs.getString("size");
                 String username = rs.getString("username");
                 String ingredient = rs.getString("ingredient");
 
                 if (!postMap.containsKey(postId)) {
-                    postMap.put(postId, new PokeWall(content, username, new ArrayList<>()));
+                    postMap.put(postId, new PokeWall(pokeName, size, username, new ArrayList<>()));
                 }
 
                 if (ingredient != null) {
@@ -74,8 +75,10 @@ public class DBPokeWallDAO implements PokeWallDAO {
         } catch (SQLException e) {
             throw new SystemException("Error retrieving posts from database");
         }
+
         return posts;
     }
+
 
 
     @Override

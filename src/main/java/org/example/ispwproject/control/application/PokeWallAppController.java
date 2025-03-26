@@ -26,44 +26,38 @@ public class PokeWallAppController {
         userDAO = daoFactory.getUserDAO();
     }
 
-    /**
-     * Metodo per creare un nuovo post sulla PokeWall
-     * @param saveBean - informazioni sull'utente che sta creando il post
-     * @param content - contenuto del post
-     * @return true se il post è stato creato con successo, false altrimenti
-     */
-    public boolean createPost(SaveBean saveBean, String content, List<String> ingredients) throws SystemException {
+    public boolean createPost(SaveBean saveBean, String pokeName, String size, List<String> ingredients) throws SystemException {
         String userId = saveBean.getUid();
         User user = userDAO.read(userId);
-
         if (user == null) {
             System.out.println("User not found!");
             return false;
         }
 
-        PokeWall pokeWall = new PokeWall(content, user.getUsername(), ingredients);
+        // Crea il post
+        PokeWall pokeWall = new PokeWall(pokeName, size, user.getUsername(), ingredients);
         pokeWallDAO.create(pokeWall);
         System.out.println("Post created successfully!");
         return true;
     }
 
 
+
     /**
      * Metodo per recuperare tutti i post presenti nel PokeWall
      * @return una lista di tutti i post
      */
-    public List<String> getAllPosts() throws SystemException {
-        List<PokeWall> posts = pokeWallDAO.getAllPosts(); // Ottieni i post dalla persistenza
-        List<String> postStrings = new ArrayList<>();
-
-        // Converte ogni post in una stringa
-        for (PokeWall post : posts) {
-            String postContent = post.getContent() + " (by " + post.getUsername() + ")";
-            postStrings.add(postContent);  // Aggiungi la stringa alla lista
+    public List<PokeWall> getAllPosts() throws SystemException {
+        List<PokeWall> posts = pokeWallDAO.getAllPosts();
+        if (posts == null || posts.isEmpty()) {
+            System.out.println("No posts returned from DAO!");
+        } else {
+            System.out.println("Retrieved posts: " + posts.size());
         }
-
-        return postStrings;
+        return posts;
     }
+
+
 
     /**
      * Metodo per eliminare un post dalla PokeWall

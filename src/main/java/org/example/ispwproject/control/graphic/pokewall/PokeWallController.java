@@ -1,13 +1,16 @@
 package org.example.ispwproject.control.graphic.pokewall;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import org.example.ispwproject.ChangePage;
 import org.example.ispwproject.control.application.PokeWallAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
+import org.example.ispwproject.model.pokewall.PokeWall;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.exception.SystemException;
 
@@ -24,6 +27,7 @@ public class PokeWallController extends GraphicController {
     private int id;
     // ListView per visualizzare i post
     @FXML private ListView<String> pokeWallListView;
+    @FXML private Button deleteButton;
 
     // Questo metodo è usato per inizializzare i dati del controller
     @Override
@@ -32,14 +36,27 @@ public class PokeWallController extends GraphicController {
         this.id = id;
 
         PokeWallAppController pokeWallAppController = new PokeWallAppController();
+        List<PokeWall> posts = pokeWallAppController.getAllPosts();
 
-        // Carica i post esistenti nel PokeWall (dal DAO o dal file)
-        List<String> posts = pokeWallAppController.getAllPosts();  // Recupera tutti i post
-        if (posts != null && !posts.isEmpty()) {
-            ObservableList<String> postObservableList = FXCollections.observableArrayList(posts);
-            pokeWallListView.setItems(postObservableList);  // Popola la ListView con i post
-        } else {
-            System.out.println("No post available!!!");
+        ObservableList<String> postObservableList = FXCollections.observableArrayList();
+
+        for (PokeWall pokeWall : posts) {
+            StringBuilder postText = new StringBuilder();
+            postText.append(pokeWall.getUsername()).append(" created the Poke Lab: ").append(pokeWall.getPokeName()).append("\n");
+            postText.append("Poke size: ").append(pokeWall.getSize()).append("\n");
+
+            // Aggiungi gli ingredienti
+            for (String ingredient : pokeWall.getIngredients()) {
+                postText.append("- ").append(ingredient).append("\n");
+            }
+
+            postObservableList.add(postText.toString());
+        }
+
+        pokeWallListView.setItems(postObservableList);
+
+        if (postObservableList.isEmpty()) {
+            System.out.println("No posts available!");
         }
     }
 

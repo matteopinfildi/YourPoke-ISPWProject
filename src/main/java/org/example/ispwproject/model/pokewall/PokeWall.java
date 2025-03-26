@@ -6,13 +6,15 @@ import java.util.List;
 public class PokeWall {
     private static int counter = 0;  // Counter per generare ID univoci
     private int id;  // Identificatore univoco
-    private String content;
+    private String pokeName;
+    private String size;
     private String username;
     private List<String> ingredients;
 
-    public PokeWall(String content, String username, List<String> ingredients) {
+    public PokeWall(String pokeName, String size, String username, List<String> ingredients) {
         this.id = counter++; // genero un ID univoco, incrementando il counter
-        this.content = content;
+        this.pokeName = pokeName;
+        this.size = size;
         this.username = username;
         this.ingredients = ingredients;
     }
@@ -26,13 +28,17 @@ public class PokeWall {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getPokeName() {
+        return pokeName;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPokeName(String pokeName) {
+        this.pokeName = pokeName;
     }
+
+    public String getSize(){return size;}
+
+    public void setSize(String size) {this.size = size;}
 
     public String getUsername() {
         return username;

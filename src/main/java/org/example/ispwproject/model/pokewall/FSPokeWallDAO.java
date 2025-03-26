@@ -15,21 +15,20 @@ public class FSPokeWallDAO implements PokeWallDAO {
     @Override
     public void create(PokeWall pokeWall) throws SystemException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-            StringBuilder postLine = new StringBuilder();
-            postLine.append(pokeWall.getUsername()).append(DELIMITER)
-                    .append(pokeWall.getContent());
+            // Scriviamo i dati nell'ordine: username,pokeName,size,ingredients
+            writer.write(pokeWall.getUsername() + DELIMITER +
+                    pokeWall.getPokeName() + DELIMITER +
+                    pokeWall.getSize());
 
+            // Aggiungi gli ingredienti se presenti
             if (pokeWall.getIngredients() != null && !pokeWall.getIngredients().isEmpty()) {
-                writer.write(DELIMITER + String.join("|", pokeWall.getIngredients()));  // Separiamo gli ingredienti con "|"
+                writer.write(DELIMITER + String.join("|", pokeWall.getIngredients()));
             }
-
-           writer.write("\n");
+            writer.newLine();
         } catch (IOException e) {
-            throw new SystemException("Error");
+            throw new SystemException("Error saving post to file");
         }
     }
-
-
 
     @Override
     public List<PokeWall> getAllPosts() throws SystemException {
@@ -37,24 +36,19 @@ public class FSPokeWallDAO implements PokeWallDAO {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] data = line.split(DELIMITER);
+                String[] data = line.split(DELIMITER, -1); // -1 per mantenere campi vuoti
 
-                // Verifica se la riga ha almeno 3 colonne (contenuto, username, timestamp)
-                if (data.length >= 2) {
-                    String content = data[0];  // Nome poke + size
-                    String username = data[1];
+                if (data.length >= 3) {
+                    String username = data[0];
+                    String pokeName = data[1];
+                    String size = data[2];
 
-                    // Leggi gli ingredienti, se ci sono
                     List<String> ingredients = new ArrayList<>();
-                    if (data.length > 2) {
-                        String[] ingredientArray = data[2].split("\\|");  // Separiamo gli ingredienti con "|"
-                        ingredients = Arrays.asList(ingredientArray);
+                    if (data.length > 3) {
+                        ingredients = Arrays.asList(data[3].split("\\|"));
                     }
 
-                    // Crea un nuovo oggetto PokeWall
-                    posts.add(new PokeWall(content, username, ingredients));
-                } else {
-                    System.out.println("Riga malformattata, ignorata: " + line);
+                    posts.add(new PokeWall(pokeName, size, username, ingredients));
                 }
             }
         } catch (IOException e) {
@@ -62,8 +56,6 @@ public class FSPokeWallDAO implements PokeWallDAO {
         }
         return posts;
     }
-
-
 
 
 
