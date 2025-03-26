@@ -12,6 +12,7 @@ import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.application.PokeWallAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
+import org.example.ispwproject.utils.bean.PokeWallBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.enumeration.ingredient.GenericAlternative;
 import org.example.ispwproject.utils.exception.SystemException;
@@ -19,9 +20,7 @@ import org.example.ispwproject.utils.exception.SystemException;
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
 
 public class AddNameController extends GraphicController{
 
@@ -86,51 +85,11 @@ public class AddNameController extends GraphicController{
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
     }
 
-//    @FXML
-//    public void handlePostToPokeWall(ActionEvent event) {
-//        String name = pokeNameField.getText().trim();
-//
-//        if (name.length() < 4) {
-//            errorLabel.setText("The name must be at least 4 characters long!");
-//            return;
-//        }
-//
-//        // Recupera l'utente dalla sessione
-//        SessionManager sessionManager = SessionManager.getSessionManager();
-//        Session session = sessionManager.getSessionFromId(id);
-//        String username = session.getUserId();
-//
-//        pokeLabBean.setPokeName(name);
-//
-//        // Costruisci il contenuto del post
-//        StringBuilder postContent = new StringBuilder();
-//        postContent.append(username).append(" created a new PokéLab: ").append(name).append("\n");
-//        postContent.append("Bowl Size: ").append(pokeLabBean.getBowlSize()).append("\n");
-//
-//        List<String> ingredientList = new ArrayList<>();
-//        for (Map.Entry<String, GenericAlternative> entry : pokeLabBean.getAllIngredients().entrySet()) {
-//            String ingredientLine = entry.getKey() + ": " + entry.getValue();
-//            ingredientList.add(ingredientLine);
-//            postContent.append("- ").append(ingredientLine).append("\n");
-//        }
-//
-//        postContent.append("Total Price: $").append(pokeLabBean.getPrice());
-//
-//        // Aggiungi il post alla lista
-//        pokeLabBean.addPost(postContent.toString());
-//
-//        PokeWallAppController pokeWallAppController = new PokeWallAppController();
-//        try {
-//            pokeWallAppController.createPost(new SaveBean(session.getUserId()), postContent.toString(), ingredientList);
-//            System.out.println("PokéLab posted to Poke Wall!");
-//            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/pokeWall.fxml", pokeLabBean, id);
-//        } catch (SystemException e) {
-//            errorLabel.setText("Failed to post PokéLab to Poke Wall.");
-//        }
-//    }
+
 
     @FXML
     public void handlePostToPokeWall(ActionEvent event) {
+        PokeWallAppController pokeWallAppController = new PokeWallAppController();
         String name = pokeNameField.getText().trim();
         if (name.length() < 4) {
             errorLabel.setText("The name must be at least 4 characters long!");
@@ -141,32 +100,27 @@ public class AddNameController extends GraphicController{
         Session session = sessionManager.getSessionFromId(id);
         String userId = session.getUserId();
 
-        pokeLabBean.setPokeName(name);
+        // Crea la PokeWallBean invece di passare i parametri singolarmente
+        PokeWallBean pokeWallBean = new PokeWallBean();
+        pokeWallBean.setPokeName(name);
+        pokeWallBean.setSize(pokeLabBean.getBowlSize());
+        pokeWallBean.setIngredients(
+                pokeLabBean.getAllIngredients().entrySet().stream()
+                        .map(entry -> entry.getKey() + ": " + entry.getValue().toString().toLowerCase())
+                        .toList()
+        );
 
-        // Formatta gli ingredienti nel formato richiesto (es. "rice: white")
-        List<String> formattedIngredients = new ArrayList<>();
-        for (Map.Entry<String, GenericAlternative> entry : pokeLabBean.getAllIngredients().entrySet()) {
-            formattedIngredients.add(entry.getKey() + ": " + entry.getValue().toString().toLowerCase());
-        }
-
-        PokeWallAppController pokeWallAppController = new PokeWallAppController();
         try {
             boolean success = pokeWallAppController.createPost(
                     new SaveBean(userId),
-                    pokeLabBean.getPokeName(),
-                    pokeLabBean.getBowlSize(),
-                    formattedIngredients
+                    pokeWallBean // Passa l'intero bean invece dei singoli campi
             );
 
             if (success) {
-                System.out.println("PokéLab posted to Poke Wall!");
                 ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/pokeWall.fxml", pokeLabBean, id);
-            } else {
-                errorLabel.setText("Failed to post PokéLab to Poke Wall.");
             }
         } catch (SystemException e) {
-            errorLabel.setText("An error occurred while posting. Please try again.");
-            System.err.println("Error posting to PokeWall: " + e.getMessage());
+            errorLabel.setText("Error during post creation");
         }
     }
 

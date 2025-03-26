@@ -71,15 +71,11 @@ public class PokeLabBean {
         posts.add(post);
     }
 
-//    // Aggiungi più post alla lista
-//    public void addPosts(List<String> newPosts) {
-//        posts.addAll(newPosts);
-//    }
-
     // Controlla se ci sono post
     public boolean hasPosts() {
         return !posts.isEmpty();
     }
+
 
 }
 

@@ -3,6 +3,7 @@ package org.example.ispwproject.control.application;
 import org.example.ispwproject.model.pokewall.PokeWall;
 import org.example.ispwproject.model.pokewall.PokeWallDAO;
 import org.example.ispwproject.model.pokewall.FSPokeWallDAO;
+import org.example.ispwproject.utils.bean.PokeWallBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.model.user.User;
 import org.example.ispwproject.model.user.UserDAO;
@@ -26,7 +27,7 @@ public class PokeWallAppController {
         userDAO = daoFactory.getUserDAO();
     }
 
-    public boolean createPost(SaveBean saveBean, String pokeName, String size, List<String> ingredients) throws SystemException {
+    public boolean createPost(SaveBean saveBean, PokeWallBean pokeWallBean) throws SystemException {
         String userId = saveBean.getUid();
         User user = userDAO.read(userId);
         if (user == null) {
@@ -34,13 +35,17 @@ public class PokeWallAppController {
             return false;
         }
 
-        // Crea il post
-        PokeWall pokeWall = new PokeWall(pokeName, size, user.getUsername(), ingredients);
+        // Crea il model dal bean
+        PokeWall pokeWall = new PokeWall(
+                pokeWallBean.getPokeName(),
+                pokeWallBean.getSize(),
+                user.getUsername(),
+                pokeWallBean.getIngredients()
+        );
+
         pokeWallDAO.create(pokeWall);
-        System.out.println("Post created successfully!");
         return true;
     }
-
 
 
 
