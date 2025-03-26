@@ -69,27 +69,20 @@ public class FSPokeWallDAO implements PokeWallDAO {
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(DELIMITER, -1);
                 if (data.length >= 3) {
-                    try {
-                        int currentId = Integer.parseInt(data[0].trim());
-                        if (currentId == postId) {
-                            deleted = true;
-                            continue;
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("Errore nel parsing ID, riga ignorata: " + line);
-                    }
+                    lines.add(line);
                 }
-                lines.add(line);
             }
         } catch (IOException e) {
             throw new SystemException("Errore durante la lettura del file per la cancellazione");
         }
 
-        if (deleted) {
+        if (postId >= 0 && postId < lines.size()) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
-                for (String line : lines) {
-                    writer.write(line);
-                    writer.newLine();
+                for (int i = 0; i < lines.size(); i++) {
+                    if (i != postId) {  // Saltiamo la riga da eliminare
+                        writer.write(lines.get(i));
+                        writer.newLine();
+                    }
                 }
             } catch (IOException e) {
                 throw new SystemException("Errore durante la riscrittura del file dopo la cancellazione");

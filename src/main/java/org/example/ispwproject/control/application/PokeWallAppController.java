@@ -43,30 +43,23 @@ public class PokeWallAppController {
 
 
 
-    /**
-     * Metodo per recuperare tutti i post presenti nel PokeWall
-     * @return una lista di tutti i post
-     */
+
+    // Metodo per recuperare tutti i post presenti nel PokeWall
     public List<PokeWall> getAllPosts() throws SystemException {
         List<PokeWall> posts = pokeWallDAO.getAllPosts();
         if (posts == null || posts.isEmpty()) {
             System.out.println("No posts returned from DAO!");
-        } else {
-            System.out.println("Retrieved posts: " + posts.size());
         }
         return posts;
     }
 
 
 
-    /**
-     * Metodo per eliminare un post dalla PokeWall
-     * @param postId - ID del post da eliminare
-     * @return true se il post è stato eliminato con successo, false altrimenti
-     */
+
+    //Metodo per eliminare un post dalla PokeWall
     public boolean deletePost(int postId) throws SystemException {
         try {
-            pokeWallDAO.delete(postId);
+             pokeWallDAO.delete(postId);
             System.out.println("Post deleted successfully!");
             return true;
         } catch (SystemException e) {
@@ -75,11 +68,8 @@ public class PokeWallAppController {
         }
     }
 
-    /**
-     * Metodo per recuperare un singolo post dalla PokeWall tramite ID
-     * @param postId - ID del post
-     * @return il post richiesto
-     */
+
+    //Metodo per recuperare un singolo post dalla PokeWall tramite ID
     public PokeWall getPostById(int postId) throws SystemException {
         List<PokeWall> posts = pokeWallDAO.getAllPosts();
         for (PokeWall pokeWall : posts) {

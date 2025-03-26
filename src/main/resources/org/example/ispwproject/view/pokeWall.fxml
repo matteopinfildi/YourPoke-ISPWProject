@@ -22,7 +22,7 @@
         <ListView fx:id="pokeWallListView" prefHeight="300.0" prefWidth="800.0" VBox.vgrow="ALWAYS"/>
 
         <!-- Pulsante per eliminare il post -->
-<!--        <Button text="Elimina Post" onAction="#handleDeletePost" prefWidth="150.0" fx:id="deleteButton"/>-->
+        <Button text="Elimina Post" onAction="#handleDeletePost" prefWidth="150.0" fx:id="deleteButton"/>
 
         <!-- Contenitore per il pulsante Back -->
         <HBox alignment="BOTTOM_RIGHT" layoutX="199.0" layoutY="623.0" prefHeight="25.0" prefWidth="673.0" spacing="10">
