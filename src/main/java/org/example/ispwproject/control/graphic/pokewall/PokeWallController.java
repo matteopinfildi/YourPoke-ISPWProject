@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -13,6 +14,8 @@ import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.PokeWallAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
+import org.example.ispwproject.model.PokeWallObserver;
+import org.example.ispwproject.model.observer.UserNotifier;
 import org.example.ispwproject.model.pokewall.PokeWall;
 import org.example.ispwproject.model.user.User;
 import org.example.ispwproject.model.user.UserDAO;
@@ -26,7 +29,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class PokeWallController extends GraphicController {
+public class PokeWallController extends GraphicController implements PokeWallObserver {
 
 
     private PokeLabBean pokeLabBean;
@@ -34,6 +37,8 @@ public class PokeWallController extends GraphicController {
     private String currentUsername;
     private List<PokeWall> currentPosts;
     private PokeWallAppController pokeWallAppController;
+    private UserNotifier userNotifier;
+
     // ListView per visualizzare i post
     @FXML private ListView<String> pokeWallListView;
     @FXML private Button deleteButton;
@@ -48,6 +53,11 @@ public class PokeWallController extends GraphicController {
         this.deleteButton.setDisable(true);
         pokeWallAppController = new PokeWallAppController();
 
+        pokeWallAppController.registerObserver(this);
+
+        userNotifier = new UserNotifier();
+        pokeWallAppController.registerObserver(userNotifier);
+
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(id);
         UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
@@ -56,7 +66,6 @@ public class PokeWallController extends GraphicController {
 
         this.pokeWallListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         this.deleteButton.setDisable(true);
-        pokeWallAppController = new PokeWallAppController();
 
         PokeWallAppController pokeWallAppController = new PokeWallAppController();
         List<PokeWall> posts = pokeWallAppController.getAllPosts();
@@ -88,6 +97,23 @@ public class PokeWallController extends GraphicController {
         });
 
         refreshPosts();
+    }
+
+
+    @Override
+    public void update(PokeWall newPost) {
+        // Questo metodo viene chiamato quando viene aggiunto un nuovo post
+        Platform.runLater(() -> {
+            try {
+                refreshPosts(); // Aggiorna la lista dei post
+
+                // Mostra una notifica all'utente
+                System.out.println("Nuovo post disponibile: " + newPost.getPokeName());
+                // Potresti anche mostrare un alert o una notifica nell'UI
+            } catch (SystemException e) {
+                System.err.println("Error updating posts: " + e.getMessage());
+            }
+        });
     }
 
     private void refreshPosts() throws SystemException {
@@ -144,4 +170,5 @@ public class PokeWallController extends GraphicController {
             }
         }
     }
+
 }

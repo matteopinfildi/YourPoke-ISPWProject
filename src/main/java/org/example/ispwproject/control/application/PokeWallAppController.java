@@ -1,5 +1,7 @@
 package org.example.ispwproject.control.application;
 
+import org.example.ispwproject.model.PokeWallObserver;
+import org.example.ispwproject.model.PokeWallSubject;
 import org.example.ispwproject.model.pokewall.PokeWall;
 import org.example.ispwproject.model.pokewall.PokeWallDAO;
 import org.example.ispwproject.model.pokewall.FSPokeWallDAO;
@@ -13,10 +15,11 @@ import org.example.ispwproject.utils.exception.SystemException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PokeWallAppController {
+public class PokeWallAppController implements PokeWallSubject {
 
     private PokeWallDAO pokeWallDAO;
     private UserDAO userDAO;
+    private List<PokeWallObserver> observers = new ArrayList<>();
 
     // Costruttore che inizializza le DAO (scegliendo quella in memoria o su file system)
     public PokeWallAppController() {
@@ -25,6 +28,23 @@ public class PokeWallAppController {
         // Inizializza il DAO per gli utenti
         DAOFactory daoFactory = DAOFactory.getInstance();
         userDAO = daoFactory.getUserDAO();
+    }
+
+    @Override
+    public void registerObserver(PokeWallObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(PokeWallObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(PokeWall newPost) {
+        for (PokeWallObserver observer : observers) {
+            observer.update(newPost);
+        }
     }
 
     public boolean createPost(SaveBean saveBean, PokeWallBean pokeWallBean) throws SystemException {
@@ -44,6 +64,10 @@ public class PokeWallAppController {
         );
 
         pokeWallDAO.create(pokeWall);
+
+        // Notifica tutti gli observer del nuovo post
+        notifyObservers(pokeWall);
+
         return true;
     }
 
