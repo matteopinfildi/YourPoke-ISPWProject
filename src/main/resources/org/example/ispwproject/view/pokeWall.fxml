@@ -19,13 +19,20 @@
         <Label text="Poke Wall" style="-fx-font-size: 24px; -fx-text-fill: black;"/>
 
         <!-- ListView per visualizzare i post -->
-        <ListView fx:id="pokeWallListView" prefHeight="300.0" prefWidth="800.0" VBox.vgrow="ALWAYS"/>
+        <ListView fx:id="pokeWallListView" prefHeight="300.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+        <placeholder>
+            <Label text="No posts available"/>
+        </placeholder>
+    </ListView>
 
+    <!-- Contenitore per i pulsanti -->
+    <HBox alignment="CENTER" spacing="10">
         <!-- Pulsante per eliminare il post -->
-        <Button fx:id="deleteButton" text="Delete" onAction="#handleDeletePost" disable="true"/>
+        <Button fx:id="deleteButton" text="Delete Post" onAction="#handleDeletePost" disable="true"
+                style="-fx-background-color: #ff4444; -fx-text-fill: white;"/>
 
         <!-- Contenitore per il pulsante Back -->
-        <HBox alignment="BOTTOM_RIGHT" layoutX="199.0" layoutY="623.0" prefHeight="25.0" prefWidth="673.0" spacing="10">
+    <!--        <HBox alignment="BOTTOM_RIGHT" layoutX="199.0" layoutY="623.0" prefHeight="25.0" prefWidth="673.0" spacing="10">-->
             <Button fx:id="backButton" onAction="#handleBackClick" text="Back" />
         </HBox>
     </VBox>

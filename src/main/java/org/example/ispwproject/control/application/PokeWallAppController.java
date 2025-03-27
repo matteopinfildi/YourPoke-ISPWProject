@@ -62,14 +62,26 @@ public class PokeWallAppController {
 
 
     //Metodo per eliminare un post dalla PokeWall
-    public boolean deletePost(int postId) throws SystemException {
+    public boolean deletePost(int postId, String requestingUsername) throws SystemException {
         try {
+            // Prima verifichiamo che il post esista e appartenga all'utente
+            PokeWall postToDelete = getPostById(postId);
+            if (postToDelete == null) {
+                System.out.println("Post not found!");
+                return false;
+            }
+
+            if (!postToDelete.getUsername().equals(requestingUsername)) {
+                System.out.println("User is not authorized to delete this post!");
+                return false;
+            }
+
             pokeWallDAO.delete(postId);
             System.out.println("Post deleted successfully!");
             return true;
         } catch (SystemException e) {
-            System.out.println("Failed to delete post.");
-            return false;
+            System.out.println("Failed to delete post: " + e.getMessage());
+            throw e; // Rilancia l'eccezione per gestione superiore
         }
     }
 
@@ -82,6 +94,6 @@ public class PokeWallAppController {
                 return pokeWall;
             }
         }
-        return null; // Se non trovato
+        return null;
     }
 }

@@ -4,7 +4,6 @@ import org.example.ispwproject.utils.exception.SystemException;
 import org.example.ispwproject.utils.database.DBConnection;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,13 +82,16 @@ public class DBPokeWallDAO implements PokeWallDAO {
 
     @Override
     public void delete(int postId) throws SystemException {
-        String query = "DELETE FROM posts WHERE id = ?";
+        String query = "DELETE FROM poke_wall_posts WHERE id = ?";  // Assicurati che la colonna si chiami 'id'
         try (Connection connection = DBConnection.getDBConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, postId);
-            preparedStatement.executeUpdate();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, postId);
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SystemException("Post with ID " + postId + " not found");
+            }
         } catch (SQLException e) {
-            throw new SystemException("Error deleting post.");
+            throw new SystemException("Error deleting post: " + e.getMessage());
         }
     }
 }

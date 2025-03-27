@@ -2,7 +2,6 @@ package org.example.ispwproject.model.pokewall;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class InMemoryPokeWallDAO implements PokeWallDAO {
     private static InMemoryPokeWallDAO instance;

@@ -123,6 +123,4 @@ public class AddNameController extends GraphicController{
             errorLabel.setText("Error during post creation");
         }
     }
-
-
 }

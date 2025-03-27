@@ -9,10 +9,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import org.example.ispwproject.ChangePage;
+import org.example.ispwproject.Session;
+import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.PokeWallAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.model.pokewall.PokeWall;
+import org.example.ispwproject.model.user.User;
+import org.example.ispwproject.model.user.UserDAO;
 import org.example.ispwproject.utils.bean.PokeLabBean;
+import org.example.ispwproject.utils.dao.DAOFactory;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -26,6 +31,7 @@ public class PokeWallController extends GraphicController {
 
     private PokeLabBean pokeLabBean;
     private int id;
+    private String currentUsername;
     private List<PokeWall> currentPosts;
     private PokeWallAppController pokeWallAppController;
     // ListView per visualizzare i post
@@ -38,6 +44,16 @@ public class PokeWallController extends GraphicController {
     public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
         this.pokeLabBean = pokeLabBean;
         this.id = id;
+        this.pokeWallListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        this.deleteButton.setDisable(true);
+        pokeWallAppController = new PokeWallAppController();
+
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSessionFromId(id);
+        UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
+        User user = userDAO.read(session.getUserId());
+        this.currentUsername = user.getUsername();
+
         this.pokeWallListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         this.deleteButton.setDisable(true);
         pokeWallAppController = new PokeWallAppController();
@@ -106,9 +122,17 @@ public class PokeWallController extends GraphicController {
         int selectedIndex = pokeWallListView.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0 && selectedIndex < currentPosts.size()) {
+            PokeWall selectedPost = currentPosts.get(selectedIndex);
+
+            // Verifica se l'utente corrente è il creatore del post
+            if (!selectedPost.getUsername().equals(currentUsername)) {
+                System.out.println("You can only delete your own posts!");
+                return;
+            }
+
             try {
-                // Passiamo l'indice invece dell'ID
-                boolean success = pokeWallAppController.deletePost(selectedIndex);
+                // Passiamo l'ID del post invece dell'indice
+                boolean success = pokeWallAppController.deletePost(selectedPost.getId(), currentUsername);
                 if (success) {
                     refreshPosts();
                     System.out.println("Post deleted successfully!");

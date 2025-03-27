@@ -1,10 +1,8 @@
 package org.example.ispwproject.model.pokewall;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class PokeWall {
-    private static int counter = 0;  // Counter per generare ID univoci
     private int id;  // Identificatore univoco
     private String pokeName;
     private String size;
@@ -12,19 +10,18 @@ public class PokeWall {
     private List<String> ingredients;
 
     public PokeWall(String pokeName, String size, String username, List<String> ingredients) {
-        this.id = counter++; // genero un ID univoco, incrementando il counter
         this.pokeName = pokeName;
         this.size = size;
         this.username = username;
         this.ingredients = ingredients;
     }
 
-
+    // Getter e Setter
     public int getId() {
         return id;
     }
 
-    public void setId (int id){
+    public void setId(int id) {
         this.id = id;
     }
 
