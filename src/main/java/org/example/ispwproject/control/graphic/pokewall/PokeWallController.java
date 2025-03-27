@@ -51,7 +51,7 @@ public class PokeWallController extends GraphicController implements PokeWallObs
         this.id = id;
         this.pokeWallListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         this.deleteButton.setDisable(true);
-        pokeWallAppController = new PokeWallAppController();
+        this.pokeWallAppController = new PokeWallAppController();
 
         pokeWallAppController.registerObserver(this);
 
@@ -117,7 +117,6 @@ public class PokeWallController extends GraphicController implements PokeWallObs
     }
 
     private void refreshPosts() throws SystemException {
-        PokeWallAppController pokeWallAppController = new PokeWallAppController();
         currentPosts = pokeWallAppController.getAllPosts();
 
         ObservableList<String> postObservableList = FXCollections.observableArrayList();
