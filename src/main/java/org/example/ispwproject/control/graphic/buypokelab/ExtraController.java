@@ -240,8 +240,10 @@ public class ExtraController extends GraphicController {
 
     @FXML
     public void handleNextClick(ActionEvent event) {
-        System.out.println("Fattooo!");
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/orderPokeLab.fxml", pokeLabBean, id);
     }
+
+    @FXML
     public void handleBackClick(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addName.fxml", pokeLabBean, id);
     }

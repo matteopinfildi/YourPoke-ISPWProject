@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@../style.css" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.ispwproject.control.graphic.buypokelab.OrderPokeLabController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <fx:include source="sidebar.fxml"/>
+
+    <VBox fx:id="mainContent" spacing="10" alignment="TOP_CENTER" prefWidth="700" layoutX="210" layoutY="20">
+        <Label text="Confirm order" style="-fx-font-size: 36px; -fx-text-fill: black; -fx-font-weight: bold;" styleClass="title"/>
+    </VBox>
+
+    <VBox spacing="10" alignment="CENTER" layoutX="210" layoutY="50" prefWidth="400.0" AnchorPane.topAnchor="30" AnchorPane.leftAnchor="50">
+
+        <!-- Campo per l'indirizzo -->
+        <Label text="Insert your adress:"/>
+        <TextField fx:id="addressField" promptText="Insert your address.."/>
+
+        <!-- Sezione metodo di pagamento -->
+        <Label text="Type of payment:"/>
+        <HBox spacing="10">
+            <RadioButton fx:id="cashRadioButton" text="Payment on delivery"/>
+            <RadioButton fx:id="cardRadioButton" text="Credit card"/>
+            <RadioButton fx:id="paypalRadioButton" text="PayPal" />
+        </HBox>
+
+        <!-- Campo per note extra -->
+        <Label text="Note extra:"/>
+        <TextArea fx:id="notesArea" promptText="Add any requests or info..."/>
+
+<!--        <Button fx:id="backButton" onAction="#handleBackClick" text="Back" />-->
+
+        <!-- Pulsante di conferma -->
+        <Button fx:id="confirmButton" text="Conferma Ordine" onAction="#handleConfirmOrder"/>
+
+    </VBox>
+
+</AnchorPane>
