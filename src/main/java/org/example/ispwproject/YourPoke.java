@@ -63,6 +63,7 @@ public class YourPoke extends Application {
                 CliLogin cliLogin = new CliLogin();
                 cliLogin.register("matteoP", "ciao123", "matteoP@gmail.com", UserType.USER, "via Domenico Modugno 8");
                 cliLogin.register("marcoB", "hola123", "marcoB@gmail.com", UserType.PREMIUMUSER, "via Massimo Troisi 11");
+                cliLogin.register("pinfoM", "hello123", "pinfoM@gmail.com", UserType.PREMIUMUSER, "via Massimo Troisi 10");
 
                 new CliHomePage().init(-1, null);
                 break;
