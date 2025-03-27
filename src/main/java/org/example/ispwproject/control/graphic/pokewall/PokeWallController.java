@@ -139,7 +139,7 @@ public class PokeWallController extends GraphicController implements PokeWallObs
 
     @FXML
     public void handleBackClick (ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addName.fxml", pokeLabBean, id);
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/homePage.fxml", pokeLabBean, id);
 
     }
 

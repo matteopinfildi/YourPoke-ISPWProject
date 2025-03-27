@@ -29,6 +29,7 @@ public class CliPokeLab extends CliController{
     String fruitName;
     String crunchyName;
     String saucesName;
+    String bowlSize;
 
 
     public static void setRecover (boolean value) {recover =  value;}
@@ -97,6 +98,8 @@ public class CliPokeLab extends CliController{
         genericAlternative = pokeLabBean.getIngredient("sauces");
         saucesName = (genericAlternative != null) ? ((SaucesAlternative) genericAlternative).name() : "No selection";
 
+        bowlSize = pokeLabBean.getBowlSize() != null ? pokeLabBean.getBowlSize() : "No selection";
+
         boolean condition;
 
         do{
@@ -120,10 +123,14 @@ public class CliPokeLab extends CliController{
                     break;
 
                 case 6:
-                    new CliHomePage().init(sID, pokeLabBean);
+                    new CliBowlSize().init(sID, pokeLabBean);
                     break;
 
                 case 7:
+                    new CliHomePage().init(sID, pokeLabBean);
+                    break;
+
+                case 8:
                     SessionManager sessionManager = SessionManager.getSessionManager();
                     Session session = sessionManager.getSessionFromId(id);
                     String userId = session.getUserId();
@@ -155,6 +162,7 @@ public class CliPokeLab extends CliController{
                 "Fruit: " + fruitName,
                 "Crunchy: " + crunchyName,
                 "Sauces: " + saucesName,
+                "Bowl size: " + bowlSize,
                 "Back",
                 "Add Name"
         );

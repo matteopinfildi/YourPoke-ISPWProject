@@ -12,7 +12,7 @@ import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
- // sistemare alcune cose
+
 public class CliHomePage extends CliController{
 
     public CliHomePage(){}
