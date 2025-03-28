@@ -39,6 +39,16 @@ public class CliHomePage extends CliController{
                     break;
 
                 case 3:
+                    SessionManager sessionManager = SessionManager.getSessionManager();
+                    Session session = sessionManager.getSessionFromId(sID);
+
+                    // Controllo se l'utente è loggato
+                    if (session == null) {
+                        System.out.println("You need to log in first!");
+                        break;
+                    }
+
+
                     buyPokeLabAppController = new BuyPokeLabAppController();
                     pokeLabBean = buyPokeLabAppController.newPokeLab();
                     checkRecover();

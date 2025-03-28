@@ -23,8 +23,6 @@
     </HBox>
 
 
-    <VBox spacing="10" style="-fx-padding: 20;" />
-
     <!-- Main Content -->
     <VBox layoutX="199.0" layoutY="30.0" prefHeight="575.0" prefWidth="673.0" spacing="15" style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-width: 1;">
         <Label fx:id="pokeNameLabel" alignment="CENTER" prefHeight="30.0" prefWidth="653.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Add extra to" />
