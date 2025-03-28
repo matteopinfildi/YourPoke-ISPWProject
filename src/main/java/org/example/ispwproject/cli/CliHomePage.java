@@ -12,11 +12,16 @@ import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
+
 
 public class CliHomePage extends CliController{
 
-    public CliHomePage(){}
+    public CliHomePage(){
+        // costruttore vuoto
+    }
 
+    private static final Logger logger = Logger.getLogger(CliHomePage.class.getName());
     private int sID;
     private PokeLabBean pokeLabBean;
     private BuyPokeLabAppController buyPokeLabAppController;
@@ -35,7 +40,7 @@ public class CliHomePage extends CliController{
                     break;
 
                 case 2:
-                    System.out.println("Buy Classic Pokè");
+                    logger.info("Buy Classic Pokè");
                     break;
 
                 case 3:
@@ -44,7 +49,7 @@ public class CliHomePage extends CliController{
 
                     // Controllo se l'utente è loggato
                     if (session == null) {
-                        System.out.println("You need to log in first!");
+                        logger.severe("You need to log in first!");
                         break;
                     }
 
@@ -56,7 +61,7 @@ public class CliHomePage extends CliController{
                     break;
 
                 case 4:
-                    System.out.println("Pokè Wall");
+                    logger.info("Pokè Wall");
                     break;
 
                 case 5:
@@ -64,7 +69,7 @@ public class CliHomePage extends CliController{
                     condition = false;
                     break;
                 default:
-                    System.out.println("Select a valid option!");
+                    logger.warning("Select a valid option!");
             }
         }while(condition);
     }
@@ -75,7 +80,7 @@ public class CliHomePage extends CliController{
 
         SaveBean saveBean = new SaveBean(session.getUserId());
         boolean v = buyPokeLabAppController.checkPokeLab(saveBean);
-        //roba sulla cli poke lab
+        CliPokeLab.setRecover(v);
     }
 
     @Override
@@ -84,7 +89,7 @@ public class CliHomePage extends CliController{
     }
 
     private void exit() {
-        System.out.println("Exit");
+        logger.info("Exit");
         System.exit(0);
     }
 }
