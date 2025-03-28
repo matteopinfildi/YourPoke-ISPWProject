@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import org.example.ispwproject.cli.CliHomePage;
 import org.example.ispwproject.cli.CliLogin;
 import org.example.ispwproject.control.graphic.LoginController;
+import org.example.ispwproject.utils.enumeration.UI;
 import org.example.ispwproject.utils.enumeration.UserType;
 import org.example.ispwproject.utils.exception.SystemException;
 
@@ -49,24 +50,25 @@ public class YourPoke extends Application {
             System.exit(0);
         }
 
-        switch (setUp.setUI()) {
-            case GUI:
-                LoginController loginController = new LoginController();
-                loginController.registerUser("matteoP", "ciao123", "matteoP@gmail.com", UserType.USER, "via Domenico Modugno 8");
-                loginController.registerUser("marcoB", "hola123", "marcoB@gmail.com", UserType.PREMIUMUSER, "via Massimo Troisi 11");
-                loginController.registerUser("pinfoM", "hello123", "pinfoM@gmail.com", UserType.PREMIUMUSER, "via Massimo Troisi 10");
+        UI uiType = setUp.setUI(); // recupera l'UI scelta dall'utente
 
-                launch();
-                break;
+        if(uiType == UI.GUI) {
+            LoginController loginController = new LoginController();
+            loginController.registerUser("matteoP", "ciao123", "matteoP@gmail.com", UserType.USER, "via Domenico Modugno 8");
+            loginController.registerUser("marcoB", "hola123", "marcoB@gmail.com", UserType.PREMIUMUSER, "via Massimo Troisi 11");
+            loginController.registerUser("pinfoM", "hello123", "pinfoM@gmail.com", UserType.PREMIUMUSER, "via Massimo Troisi 10");
 
-            case CLI:
-                CliLogin cliLogin = new CliLogin();
-                cliLogin.register("matteoP", "ciao123", "matteoP@gmail.com", UserType.USER, "via Domenico Modugno 8");
-                cliLogin.register("marcoB", "hola123", "marcoB@gmail.com", UserType.PREMIUMUSER, "via Massimo Troisi 11");
-                cliLogin.register("pinfoM", "hello123", "pinfoM@gmail.com", UserType.PREMIUMUSER, "via Massimo Troisi 10");
+            launch();
+        } else if (uiType == UI.CLI) {
+            CliLogin cliLogin = new CliLogin();
+            cliLogin.register("matteoP", "ciao123", "matteoP@gmail.com", UserType.USER, "via Domenico Modugno 8");
+            cliLogin.register("marcoB", "hola123", "marcoB@gmail.com", UserType.PREMIUMUSER, "via Massimo Troisi 11");
+            cliLogin.register("pinfoM", "hello123", "pinfoM@gmail.com", UserType.PREMIUMUSER, "via Massimo Troisi 10");
 
-                new CliHomePage().init(-1, null);
-                break;
+            new CliHomePage().init(-1, null);
+        } else if (uiType == UI.NONE) {
+            System.out.println("Exit");
+            System.exit(0);
         }
     }
 }
