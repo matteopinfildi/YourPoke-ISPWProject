@@ -12,16 +12,17 @@ import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class CliHomePage extends CliController{
+    private static final Logger logger = Logger.getLogger(CliHomePage.class.getName());
 
     public CliHomePage(){
         // costruttore vuoto
     }
 
-    private static final Logger logger = Logger.getLogger(CliHomePage.class.getName());
     private int sID;
     private PokeLabBean pokeLabBean;
     private BuyPokeLabAppController buyPokeLabAppController;
@@ -30,6 +31,8 @@ public class CliHomePage extends CliController{
     public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException{
         this.sID = sID;
         this.pokeLabBean = pokeLabBean;
+
+        logger.setLevel(Level.INFO);
 
         boolean condition = true;
         do{

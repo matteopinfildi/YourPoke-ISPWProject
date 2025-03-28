@@ -15,9 +15,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class CliPokeLab extends CliController{
 
+    private static final Logger logger = Logger.getLogger(CliPokeLab.class.getName());
     private int id;
     private PokeLabBean pokeLabBean;
     private BuyPokeLabAppController buyPokeLabAppController;
@@ -32,7 +34,6 @@ public class CliPokeLab extends CliController{
     String bowlSize;
     String pokeName;
 
-
     public static void setRecover (boolean value) {recover =  value;}
 
     private void popup() {
@@ -40,12 +41,12 @@ public class CliPokeLab extends CliController{
         int selection = -1;
         boolean flag = false;
         do{
-            System.out.println("1) Recover Pokè Lab");
-            System.out.println("2) New Pokè Lab");
-            System.out.println("\nSelect an option: ");
+            logger.info("1) Recover Pokè Lab");
+            logger.info("2) New Pokè Lab");
+            logger.info("\nSelect an option: ");
             if(scanner.hasNextInt()) {
                 selection = scanner.nextInt();
-                if(selection == 1){ 
+                if(selection == 1){
                     SessionManager sessionManager = SessionManager.getSessionManager();
                     Session session = sessionManager.getSessionFromId(id);
                     String userId = session.getUserId();
@@ -55,9 +56,9 @@ public class CliPokeLab extends CliController{
                     PokeLabBean oldPokeLabBean = buyPokeLabAppController.recoverPokeLab(saveBean);
                     if (oldPokeLabBean != null) {
                         this.pokeLabBean = oldPokeLabBean;
-                    } else {System.out.println("Pokè Lab not found!");}
+                    } else {logger.info("Pokè Lab not found!");}
                 } else if (selection == 2) {
-                    
+
                 } else {
                     flag = true;
                 }
@@ -144,17 +145,17 @@ public class CliPokeLab extends CliController{
                     SaveBean saveBean = new SaveBean(userId);
 
                     if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
-                        System.out.println("Save failed\n");
+                        logger.info("Save failed\n");
                         condition = false;
                         break;
                     } else {
-                        System.out.println("Save successfull\n");
+                        logger.info("Save successfull\n");
                         // mettere add name
                     }
                     break;
 
                 default:
-                    System.out.println("Select a valid option!");
+                    logger.info("Select a valid option!");
                     condition = false;
             }
         }while(!condition);
