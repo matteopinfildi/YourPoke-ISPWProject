@@ -65,11 +65,11 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
                     GenericAlternative genericAlternative = null;
                     switch (ingredientName){
-                        case "rice" -> genericAlternative = RiceAlternative.valueOf(RiceAlternative.class, ingredientAlternative);
-                        case "protein" -> genericAlternative = ProteinAlternative.valueOf(ProteinAlternative.class, ingredientAlternative);
-                        case "fruit" -> genericAlternative = FruitAlternative.valueOf(FruitAlternative.class, ingredientAlternative);
-                        case "crunchy" -> genericAlternative = CrunchyAlternative.valueOf(CrunchyAlternative.class, ingredientAlternative);
-                        case "sauces" -> genericAlternative = SaucesAlternative.valueOf(SaucesAlternative.class, ingredientAlternative);
+                        case "rice" -> genericAlternative = Enum.valueOf(RiceAlternative.class, ingredientAlternative);
+                        case "protein" -> genericAlternative = Enum.valueOf(ProteinAlternative.class, ingredientAlternative);
+                        case "fruit" -> genericAlternative = Enum.valueOf(FruitAlternative.class, ingredientAlternative);
+                        case "crunchy" -> genericAlternative = Enum.valueOf(CrunchyAlternative.class, ingredientAlternative);
+                        case "sauces" -> genericAlternative = Enum.valueOf(SaucesAlternative.class, ingredientAlternative);
                         default -> {
                             //non succede nulla
                         }
