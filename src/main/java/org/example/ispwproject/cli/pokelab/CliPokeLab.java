@@ -25,6 +25,7 @@ public class CliPokeLab extends CliController{
     private BuyPokeLabAppController buyPokeLabAppController;
     private String total = "Total = 0.0 $";
     private static boolean recover = false;
+    private static final String NO_SELECTION = "No selection";
 
     String riceName;
     String proteinName;
@@ -86,21 +87,21 @@ public class CliPokeLab extends CliController{
         GenericAlternative genericAlternative;
 
         genericAlternative = pokeLabBean.getIngredient("rice");
-        riceName = (genericAlternative != null) ? ((RiceAlternative) genericAlternative).name() : "No selection";
+        riceName = (genericAlternative != null) ? ((RiceAlternative) genericAlternative).name() : NO_SELECTION;
 
         genericAlternative = pokeLabBean.getIngredient("protein");
-        proteinName = (genericAlternative != null) ? ((ProteinAlternative) genericAlternative).name() : "No selection";
+        proteinName = (genericAlternative != null) ? ((ProteinAlternative) genericAlternative).name() : NO_SELECTION;
 
         genericAlternative = pokeLabBean.getIngredient("fruit");
-        fruitName = (genericAlternative != null) ? ((FruitAlternative) genericAlternative).name() : "No selection";
+        fruitName = (genericAlternative != null) ? ((FruitAlternative) genericAlternative).name() : NO_SELECTION;
 
         genericAlternative = pokeLabBean.getIngredient("crunchy");
-        crunchyName = (genericAlternative != null) ? ((CrunchyAlternative) genericAlternative).name() : "No selection";
+        crunchyName = (genericAlternative != null) ? ((CrunchyAlternative) genericAlternative).name() : NO_SELECTION;
 
         genericAlternative = pokeLabBean.getIngredient("sauces");
-        saucesName = (genericAlternative != null) ? ((SaucesAlternative) genericAlternative).name() : "No selection";
+        saucesName = (genericAlternative != null) ? ((SaucesAlternative) genericAlternative).name() : NO_SELECTION;
 
-        bowlSize = pokeLabBean.getBowlSize() != null ? pokeLabBean.getBowlSize() : "No selection";
+        bowlSize = pokeLabBean.getBowlSize() != null ? pokeLabBean.getBowlSize() : NO_SELECTION;
 
         pokeName = pokeLabBean.getPokeName() != null ? pokeLabBean.getPokeName() : "No name set";
 
