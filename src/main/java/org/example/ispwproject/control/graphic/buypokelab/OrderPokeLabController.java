@@ -5,28 +5,48 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import org.example.ispwproject.ChangePage;
+import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
+import org.example.ispwproject.utils.exception.SystemException;
 
-public class OrderPokeLabController {
+import javax.security.auth.login.LoginException;
+import java.io.IOException;
+import java.sql.SQLException;
+
+public class OrderPokeLabController extends GraphicController {
+
+    private int id;
+    PokeLabBean pokeLabBean;
 
     @FXML private TextField addressField;
     @FXML private RadioButton cashRadioButton;
     @FXML private RadioButton cardRadioButton;
+    @FXML private RadioButton paypalRadioButton;
     @FXML private TextArea notesArea;
     @FXML private Button confirmButton;
 
-    @FXML
-    public void initialize() {
-        // Crea un ToggleGroup per i RadioButton in modo che solo uno possa essere selezionato
+    @Override
+    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
+        this.id = id;
+        this.pokeLabBean = pokeLabBean;
+
         ToggleGroup paymentGroup = new ToggleGroup();
         cashRadioButton.setToggleGroup(paymentGroup);
         cardRadioButton.setToggleGroup(paymentGroup);
+        paypalRadioButton.setToggleGroup(paymentGroup);
     }
 
     @FXML
     private void handleConfirmOrder() {
         String address = addressField.getText();
-        String paymentMethod = cashRadioButton.isSelected() ? "Pagamento alla consegna" : "Carta di credito";
+        String paymentMethod;
+        if (cashRadioButton.isSelected()) {
+            paymentMethod = "Payment on delivery";
+        } else if (cardRadioButton.isSelected()) {
+            paymentMethod = "Credit card";
+        } else {
+            paymentMethod = "PayPal";
+        }
         String notes = notesArea.getText();
 
         // Controllo se l'indirizzo è stato inserito
@@ -36,7 +56,7 @@ public class OrderPokeLabController {
         }
 
         // Controllo se è stato selezionato un metodo di pagamento
-        if (!cashRadioButton.isSelected() && !cardRadioButton.isSelected()) {
+        if (!cashRadioButton.isSelected() && !cardRadioButton.isSelected() && !paypalRadioButton.isSelected()) {
             showAlert("Errore", "Seleziona un metodo di pagamento.");
             return;
         }
@@ -60,8 +80,8 @@ public class OrderPokeLabController {
         alert.showAndWait();
     }
 
-//    @FXML
-//    public void handleBackClick(ActionEvent event) {
-//        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/extra.fxml");
-//    }
+    @FXML
+    public void handleBackClick(ActionEvent event) {
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/extra.fxml", pokeLabBean, id);
+    }
 }
