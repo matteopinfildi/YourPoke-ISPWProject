@@ -22,6 +22,8 @@ public class SidebarController {
     private int id = -1;
     private Session session;
 
+    private static final String LOGIN_SCENE_PATH = "/org/example/ispwproject/view/login.fxml";
+
     public void initialize(){
         SessionManager sessionManager = SessionManager.getSessionManager();
         this.id = sessionManager.getCurrentId();
@@ -43,7 +45,7 @@ public class SidebarController {
     @FXML
     public void handleLogInCLick(MouseEvent event) {
         System.out.println("Logging in...");
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/login.fxml", null, id);
+        ChangePage.changeScene((Node) event.getSource(), LOGIN_SCENE_PATH, null, id);
     }
 
 
@@ -65,7 +67,7 @@ public class SidebarController {
                 ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
             }
         } else{
-            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/login.fxml", null, id);
+            ChangePage.changeScene((Node) event.getSource(), LOGIN_SCENE_PATH, null, id);
         }
 
     }
@@ -88,7 +90,7 @@ public class SidebarController {
                 ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/pokeWall.fxml", pokeLabBean, id);
             }
         } else{
-            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/login.fxml", null, id);
+            ChangePage.changeScene((Node) event.getSource(), LOGIN_SCENE_PATH, null, id);
         }
     }
 
