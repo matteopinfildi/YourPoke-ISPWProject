@@ -24,21 +24,21 @@
         <HBox alignment="CENTER" prefHeight="100" spacing="20" style="-fx-background-color: transparent;">
             <VBox styleClass="vbox" id="selectRice" prefHeight="60"  prefWidth="120" spacing="10">
                 <VBox styleClass="vbox">
-                    <ImageView fx:id="riceImage" fitWidth="90" preserveRatio="true"/>
+                    <ImageView styleClass="myImageView" fx:id="riceImage" fitWidth="90" preserveRatio="true"/>
                 </VBox>
                 <Button fx:id="riceButton" onAction="#handleRice" text="Select Rice"/>
             </VBox>
 
             <VBox styleClass="vbox" id="selectProtein" prefHeight="60"  prefWidth="120" spacing="10">
                 <VBox styleClass="vbox">
-                    <ImageView fx:id="proteinImage" fitWidth="80" preserveRatio="true"/>
+                    <ImageView styleClass="myImageView" fx:id="proteinImage" fitWidth="80" preserveRatio="true"/>
                 </VBox>
                 <Button fx:id="proteinButton" onAction="#handleProtein" text="Select Protein"/>
             </VBox>
 
             <VBox styleClass="vbox" id="selectFruit" prefHeight="60"  prefWidth="120" spacing="10">
                 <VBox styleClass="vbox">
-                    <ImageView fx:id="fruitImage" fitWidth="90" preserveRatio="true"/>
+                    <ImageView styleClass="myImageView" fx:id="fruitImage" fitWidth="90" preserveRatio="true"/>
                 </VBox>
                 <Button fx:id="fruitButton" onAction="#handleFruit" text="Select Fruit"/>
             </VBox>
@@ -47,14 +47,14 @@
         <HBox alignment="CENTER" spacing="20" style="-fx-background-color: transparent;">
             <VBox styleClass="vbox" id="selectCrunchy" prefHeight="60" prefWidth="120" spacing="10">
                 <VBox styleClass="vbox">
-                    <ImageView fx:id="crunchyImage" fitWidth="90" preserveRatio="true"/>
+                    <ImageView styleClass="myImageView" fx:id="crunchyImage" fitWidth="90" preserveRatio="true"/>
                 </VBox>
                 <Button fx:id="crunchyButton" onAction="#handleCrunchy" text="Select Crunchy"/>
             </VBox>
 
             <VBox styleClass="vbox" id="selectSauces" prefHeight="60" prefWidth="120" spacing="10">
                 <VBox styleClass="vbox">
-                    <ImageView fx:id="saucesImage" fitWidth="90" preserveRatio="true"/>
+                    <ImageView styleClass="myImageView" fx:id="saucesImage" fitWidth="90" preserveRatio="true"/>
                 </VBox>
                 <Button fx:id="saucesButton" onAction="#handleSauces" text="Select Sauces"/>
             </VBox>

@@ -43,10 +43,10 @@
                     <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
                 </rowConstraints>
                 <children>
-                    <ImageView fx:id="noSelImage" fitHeight="47.0" fitWidth="47.0" preserveRatio="true" GridPane.halignment="CENTER"/>
-                    <ImageView fx:id="edemameImage" fitHeight="47.0" fitWidth="58.0" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
-                    <ImageView fx:id="cucumberImage" fitHeight="47.0" fitWidth="47.0" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER"/>
-                    <ImageView fx:id="carrotImage" fitHeight="47.0" fitWidth="47.0" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER"/>
+                    <ImageView styleClass="myImageView" fx:id="noSelImage" fitHeight="47.0" fitWidth="47.0" preserveRatio="true" GridPane.halignment="CENTER"/>
+                    <ImageView styleClass="myImageView" fx:id="edemameImage" fitHeight="47.0" fitWidth="58.0" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
+                    <ImageView styleClass="myImageView" fx:id="cucumberImage" fitHeight="47.0" fitWidth="47.0" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER"/>
+                    <ImageView styleClass="myImageView" fx:id="carrotImage" fitHeight="47.0" fitWidth="47.0" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER"/>
                     <RadioButton fx:id="emptyRadio" mnemonicParsing="false" selected="true" style="-fx-font-weight: bold;" text="+0$" GridPane.rowIndex="1">
                         <toggleGroup>
                             <ToggleGroup fx:id="emptyGroup" />
@@ -89,10 +89,10 @@
                     <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
                 </rowConstraints>
                 <children>
-                    <ImageView fx:id="spicyImage" fitHeight="70.0" fitWidth="70.0" preserveRatio="true"/>
-                    <ImageView fx:id="chiliImage" fitHeight="67.0" fitWidth="56.0" preserveRatio="true" GridPane.columnIndex="1"/>
-                    <ImageView fx:id="harissaImage" fitHeight="65.0" fitWidth="41.0" preserveRatio="true" GridPane.columnIndex="2"/>
-                    <ImageView fx:id="hebaneroImage" fitHeight="62.0" fitWidth="62.0" preserveRatio="true" GridPane.columnIndex="3"/>
+                    <ImageView styleClass="myImageView" fx:id="spicyImage" fitHeight="70.0" fitWidth="70.0" preserveRatio="true"/>
+                    <ImageView styleClass="myImageView" fx:id="chiliImage" fitHeight="67.0" fitWidth="56.0" preserveRatio="true" GridPane.columnIndex="1"/>
+                    <ImageView styleClass="myImageView" fx:id="harissaImage" fitHeight="65.0" fitWidth="41.0" preserveRatio="true" GridPane.columnIndex="2"/>
+                    <ImageView styleClass="myImageView" fx:id="hebaneroImage" fitHeight="62.0" fitWidth="62.0" preserveRatio="true" GridPane.columnIndex="3"/>
                     <ComboBox fx:id="comboBoxSpicySauce" prefHeight="25.0" prefWidth="17.0" promptText="0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                         <items>
                             <FXCollections fx:factory="observableArrayList">

@@ -22,7 +22,7 @@
     <VBox styleClass="vbox" layoutX="200" layoutY="180" alignment="CENTER" spacing="15">
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="sushiRiceImage" fitHeight="100" fitWidth="100"/>
+            <ImageView styleClass="myImageView" fx:id="sushiRiceImage" fitHeight="100" fitWidth="100"/>
             <Label text="Sushi Rice - Soft, sticky, and slightly seasoned with vinegar, perfect for making sushi rolls and Japanese dishes." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkSushi" />
             <Label text="+3.00$" />
@@ -37,7 +37,7 @@
 
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="venusRiceImage" fitHeight="100" fitWidth="100"/>
+            <ImageView styleClass="myImageView" fx:id="venusRiceImage" fitHeight="100" fitWidth="100"/>
             <Label text="Venus Rice – Aromatic and naturally black, rich in antioxidants with a slightly nutty flavor." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkVenus" />
             <Label text="+4.00$" />
@@ -51,7 +51,7 @@
         </HBox>
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="basmatiRiceImage" fitHeight="100" fitWidth="100"/>
+            <ImageView styleClass="myImageView" fx:id="basmatiRiceImage" fitHeight="100" fitWidth="100"/>
             <Label text="Basmati Rice – Long-grain and fragrant, light and fluffy when cooked, ideal for Indian and Middle Eastern dishes." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkBasmati" />
             <Label text="+3.50$" />

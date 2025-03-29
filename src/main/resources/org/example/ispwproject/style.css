@@ -54,6 +54,6 @@ Label {
     -fx-alignment: center;
 }
 
-ImageView {
+.imageview {
     -fx-border-radius: 10px;
 }

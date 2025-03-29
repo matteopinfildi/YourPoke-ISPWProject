@@ -22,7 +22,7 @@
     <VBox styleClass="vbox" layoutX="200" layoutY="180" alignment="CENTER" spacing="15">
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="onionImage" fitHeight="100" fitWidth="100"/>
+            <ImageView styleClass="myImageView" fx:id="onionImage" fitHeight="100" fitWidth="100"/>
             <Label text="Crispy onion - Light and crunchy, crispy onions add a savory, deep-fried flavor and texture to enhance poké bowls, sushi rolls, and Japanese-inspired dishes." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkOnion" />
             <Label text="+2.00$" />
@@ -37,7 +37,7 @@
 
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="nutsImage" fitHeight="100" fitWidth="100"/>
+            <ImageView styleClass="myImageView" fx:id="nutsImage" fitHeight="100" fitWidth="100"/>
             <Label text="Nuts – Rich in texture and healthy fats, mixed nuts add a delightful crunch and a boost of protein to poké bowls and Japanese rice dishes." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkNuts" />
             <Label text="+1.00$" />
@@ -51,7 +51,7 @@
         </HBox>
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="almondsImage" fitHeight="100" fitWidth="100"/>
+            <ImageView styleClass="myImageView" fx:id="almondsImage" fitHeight="100" fitWidth="100"/>
             <Label text="Almonds – Crunchy and slightly sweet, almonds bring a nutty richness to poké bowls and Japanese-inspired salads, enhancing both flavor and texture." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkAlmonds" />
             <Label text="+1.50$" />

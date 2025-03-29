@@ -22,7 +22,7 @@
     <VBox styleClass="vbox" layoutX="200" layoutY="180" alignment="CENTER" spacing="15">
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="teriyakiImage" fitHeight="100" fitWidth="100"/>
+            <ImageView styleClass="myImageView" fx:id="teriyakiImage" fitHeight="100" fitWidth="100"/>
             <Label text="Teriyaki sauce - A sweet and savory sauce made from soy sauce, sugar, and mirin, perfect for glazing fish, chicken, and adding a rich flavor to poké bowls and sushi rolls." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkTeriyaki" />
             <Label text="+2.00$" />
@@ -37,7 +37,7 @@
 
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="soyImage" fitHeight="100" fitWidth="100"/>
+            <ImageView styleClass="myImageView" fx:id="soyImage" fitHeight="100" fitWidth="100"/>
             <Label text="Soy sauce – A salty, umami-packed sauce made from fermented soybeans, essential in Japanese cuisine, adding depth of flavor to sushi, poké bowls, and sashimi." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkSoy" />
             <Label text="+1.00$" />
@@ -51,7 +51,7 @@
         </HBox>
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="wasabiImage" fitHeight="100" fitWidth="100"/>
+            <ImageView styleClass="myImageView" fx:id="wasabiImage" fitHeight="100" fitWidth="100"/>
             <Label text="Wasabi – A spicy, pungent paste made from Japanese horseradish, often served alongside sushi and poké bowls to add a sharp heat and complement the flavors of the dish." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkWasabi" />
             <Label text="+1.50$" />

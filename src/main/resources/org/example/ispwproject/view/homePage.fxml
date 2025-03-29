@@ -10,7 +10,7 @@
 
     <VBox styleClass="vbox" id="mainContent" layoutX="200" layoutY="0" prefWidth="600" spacing="20">
         <StackPane id="banner">
-            <ImageView fx:id="bannerImage" fitWidth="600" preserveRatio="true"/>
+            <ImageView styleClass="myImageView" fx:id="bannerImage" fitWidth="600" preserveRatio="true"/>
             <VBox styleClass="vbox" alignment="TOP_LEFT"  style="-fx-background-color: rgba(255, 255, 255, 0.5);">
                 <Label id="bannerTitle" style="-fx-font-size: 36px; -fx-text-fill: black; -fx-font-weight: bold;" text="YourPokè" />
                 <Label id="bannerSubtitle" style="-fx-font-size: 18px; -fx-text-fill: black" text="Create, Taste, Share!" />
@@ -21,7 +21,7 @@
     <HBox layoutX="200" layoutY="300" spacing="20">
         <VBox styleClass="vbox" id="PokeWall" prefWidth="160" spacing="10">
             <VBox styleClass="vbox">
-                <ImageView fx:id="pwImage" fitWidth="150" preserveRatio="true"/>
+                <ImageView styleClass="myImageView" fx:id="pwImage" fitWidth="150" preserveRatio="true"/>
             </VBox>
             <Button onAction="#handlePokeWall" text="Pokè Wall"/>
             <Label text="The Pokè Wall is the social section of YourPokè, where premium users share their custom creations." wrapText="true"/>
@@ -29,7 +29,7 @@
 
         <VBox styleClass="vbox" id="buyClassicPoke" prefWidth="160" spacing="10">
             <VBox styleClass="vbox">
-                <ImageView fx:id="buyCPImage" fitWidth="150" preserveRatio="true"/>
+                <ImageView styleClass="myImageView" fx:id="buyCPImage" fitWidth="150" preserveRatio="true"/>
             </VBox>
             <Button text="Buy Classic Pokè"/>
             <Label text="With Buy Classic Pokè, you can quickly order one of the ready-made pokè bowls. " wrapText="true"/>
@@ -37,7 +37,7 @@
 
         <VBox styleClass="vbox" id="buyPokeLab" prefWidth="160" spacing="10">
             <VBox styleClass="vbox">
-                <ImageView fx:id="buyPLImage" fitWidth="150" preserveRatio="true"/>
+                <ImageView styleClass="myImageView" fx:id="buyPLImage" fitWidth="150" preserveRatio="true"/>
             </VBox>
             <Button onAction="#handleBuyPokeLab" text="Buy Pokè Lab"/>
             <Label text="The Buy Pokè Lab lets you create your own custom pokè, selecting every ingredient. " wrapText="true"/>

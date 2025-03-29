@@ -22,7 +22,7 @@
     <VBox styleClass="vbox" layoutX="200" layoutY="180" alignment="CENTER" spacing="15">
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="salmonImage" fitHeight="100" fitWidth="100"/>
+            <ImageView styleClass="myImageView" fx:id="salmonImage" fitHeight="100" fitWidth="100"/>
             <Label text="Salmon – Rich in omega-3 fatty acids, tender and flavorful, perfect for sushi and grilled dishes." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkSalmon" />
             <Label text="+4.00$" />
@@ -37,7 +37,7 @@
 
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="shrimpImage" fitHeight="100" fitWidth="100"/>
+            <ImageView styleClass="myImageView" fx:id="shrimpImage" fitHeight="100" fitWidth="100"/>
             <Label text="Shrimp – Sweet and delicate, a versatile seafood choice that pairs well with various seasonings." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkShrimp" />
             <Label text="+3.00$" />
@@ -51,7 +51,7 @@
         </HBox>
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
-            <ImageView fx:id="tunaImage" fitHeight="100" fitWidth="100"/>
+            <ImageView styleClass="myImageView" fx:id="tunaImage" fitHeight="100" fitWidth="100"/>
             <Label text="Tuna – Lean and protein-packed, with a firm texture and deep umami flavor, ideal for sashimi and poke bowls." wrapText="true" maxWidth="300"/>
             <CheckBox fx:id="checkTuna" />
             <Label text="+3.50$" />
