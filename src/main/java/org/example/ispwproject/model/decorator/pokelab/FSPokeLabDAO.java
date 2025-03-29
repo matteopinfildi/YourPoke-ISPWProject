@@ -19,5 +19,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
     }
 
     @Override
-    public void updateBowlSize(int plid, String bowlSize){}
+    public void updateBowlSize(int plid, String bowlSize){
+        // da implementare
+    }
 }
