@@ -40,10 +40,10 @@ public class ChangePage {
             GraphicController controller = loader.getController();
             initController(controller, id, pokeLabBean);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, e, () -> "Error loading FXML: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error loading FXML", e);
             e.printStackTrace();
         } catch (ChangePageException e) {
-            logger.log(Level.SEVERE, e, () ->"Error initializing controller: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error loading FXML", e);
             e.printStackTrace();
         }
     }
