@@ -16,7 +16,8 @@ public class FSPokeWallDAO implements PokeWallDAO {
     public void create(PokeWall pokeWall) throws SystemException {
         // Assicurati che l'ID sia univoco e incrementale
         if (pokeWall.getId() <= lastId) {
-            pokeWall.setId(++lastId);
+            lastId++;
+            pokeWall.setId(lastId);
         } else {
             lastId = pokeWall.getId();
         }
