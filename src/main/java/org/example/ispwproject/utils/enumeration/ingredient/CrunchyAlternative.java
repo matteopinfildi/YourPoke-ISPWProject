@@ -2,9 +2,9 @@ package org.example.ispwproject.utils.enumeration.ingredient;
 
 public enum CrunchyAlternative implements GenericAlternative{
 
-    ONION(2.00, "Poi lo scrivo!"),
-    NUTS(1.00, "Poi lo scrivo!"),
-    ALMONDS(1.50, "Poi lo scrivo!");
+    ONION(2.00, "Pungent, layered, aromatic, versatile."),
+    NUTS(1.00, "Crunchy, nutritious, energy-dense, varied."),
+    ALMONDS(1.50, "Crunchy, nutty, healthy, protein-rich.");
 
     private final double price;
     private static final String ALTERNATIVE="Crunchy";

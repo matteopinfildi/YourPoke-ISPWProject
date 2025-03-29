@@ -2,9 +2,9 @@ package org.example.ispwproject.utils.enumeration.ingredient;
 
 public enum ProteinAlternative implements GenericAlternative{
 
-    SALMON(4.00, "Poi lo scrivo!"),
-    SHRIMP(3.00, "Poi lo scrivo!"),
-    TUNA(3.50, "Poi lo scrivo!");
+    SALMON(4.00, "Rich, oily, tender, flavorful."),
+    SHRIMP(3.00, "Sweet, tender, succulent, versatile."),
+    TUNA(3.50, "Lean, firm, mild, protein-packed.");
 
     private final double price;
     private static final String ALTERNATIVE="Protein";

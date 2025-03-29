@@ -2,9 +2,9 @@ package org.example.ispwproject.utils.enumeration.ingredient;
 
 public enum RiceAlternative implements GenericAlternative {
 
-    SUSHI(3.00, "Poi lo scrivo!"),
-    VENUS(4.00, "Poi lo scrivo!"),
-    BASMATI(3.50, "Poi lo scrivo!");
+    SUSHI(3.00, "Sticky, vinegary, tender, flavorful."),
+    VENUS(4.00, "Nutty, aromatic, black, nutritious."),
+    BASMATI(3.50, "Fragrant, long-grain, fluffy, aromatic.");
 
     private final double price;
     private static final String ALTERNATIVE="Rice";

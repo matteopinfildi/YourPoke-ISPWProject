@@ -2,9 +2,9 @@ package org.example.ispwproject.utils.enumeration.ingredient;
 
 public enum SaucesAlternative implements GenericAlternative{
 
-    TERIYAKI(2.00, "Poi lo scrivo!"),
-    SOY(1.00, "Poi lo scrivo!"),
-    WASABI(1.50, "Poi lo scrivo!");
+    TERIYAKI(2.00, "Sweet, savory, thick, tangy."),
+    SOY(1.00, "Salty, umami, dark, fermented."),
+    WASABI(1.50, "Spicy, pungent, sharp, green.");
 
     private final double price;
     private static final String ALTERNATIVE="Sauces";
