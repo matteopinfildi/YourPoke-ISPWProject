@@ -43,9 +43,9 @@ public class InMemoryUserDAO implements UserDAO{
     }
 
     @Override
-    public void delete(String Uid) throws SystemException {
+    public void delete(String uId) throws SystemException {
         try {
-            listOfUsers.remove(read(Uid));
+            listOfUsers.remove(read(uId));
         } catch (SystemException e) {
             throw new RuntimeException(e);
         }

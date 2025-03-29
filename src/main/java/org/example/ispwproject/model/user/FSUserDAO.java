@@ -40,12 +40,12 @@ public class FSUserDAO implements UserDAO{
     }
 
     @Override
-    public User read(String Uid) throws SystemException {
+    public User read(String uId) throws SystemException {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] data = line.split(DELIMITER);
-                if (data[0].equals(Uid)) {
+                if (data[0].equals(uId)) {
                     int plid = Integer.parseInt(data[5]);
                     PokeLab pokeLab = (plid != -1) ? new DBPokeLabDAO().read(plid) : null;
 
