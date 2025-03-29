@@ -14,12 +14,12 @@
 
     <fx:include source="sidebar.fxml"/>
 
-    <VBox fx:id="mainContent" spacing="10" alignment="TOP_CENTER" prefWidth="700" layoutX="210" layoutY="20">
+    <VBox styleClass="vbox" fx:id="mainContent" spacing="10" alignment="TOP_CENTER" prefWidth="700" layoutX="210" layoutY="20">
         <Label text="Rice" style="-fx-font-size: 36px; -fx-text-fill: black; -fx-font-weight: bold;" styleClass="title"/>
         <Label text="Select your favourite type of rice!" style="-fx-font-size: 18px; -fx-text-fill: black;" styleClass="subtitle"/>
     </VBox>
 
-    <VBox layoutX="200" layoutY="180" alignment="CENTER" spacing="15">
+    <VBox styleClass="vbox" layoutX="200" layoutY="180" alignment="CENTER" spacing="15">
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
             <ImageView fx:id="sushiRiceImage" fitHeight="100" fitWidth="100"/>
@@ -27,7 +27,7 @@
             <CheckBox fx:id="checkSushi" />
             <Label text="+3.00$" />
             <Button fx:id="sushiNutriButton" text="Nutritional Values" onAction="#toggleSushiNutritional"/>
-            <VBox fx:id="sushiNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
+            <VBox styleClass="vbox" fx:id="sushiNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 340 kcal" />
                 <Label text="Protein: 6g" />
                 <Label text="Carbs: 76g" />
@@ -42,7 +42,7 @@
             <CheckBox fx:id="checkVenus" />
             <Label text="+4.00$" />
             <Button fx:id="venusNutriButton" text="Nutritional Values" onAction="#toggleVenusNutritional"/>
-            <VBox fx:id="venusNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
+            <VBox styleClass="vbox" fx:id="venusNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 360 kcal" />
                 <Label text="Protein: 9g" />
                 <Label text="Carbs: 75g" />
@@ -56,7 +56,7 @@
             <CheckBox fx:id="checkBasmati" />
             <Label text="+3.50$" />
             <Button fx:id="basmatiNutriButton" text="Nutritional Values" onAction="#toggleBasmatiNutritional"/>
-            <VBox fx:id="basmatiNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
+            <VBox styleClass="vbox" fx:id="basmatiNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 350 kcal" />
                 <Label text="Protein: 8g" />
                 <Label text="Carbs: 78g" />

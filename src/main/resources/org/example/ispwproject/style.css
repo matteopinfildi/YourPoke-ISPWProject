@@ -36,7 +36,7 @@ Button:hover {
     -fx-alignment: center;
 }
 
-VBox {
+.vbox {
     -fx-background-color: #ffffff;
     -fx-padding: 20px;
     -fx-border-color: #dddddd;

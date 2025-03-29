@@ -17,7 +17,7 @@
 
         <!-- Titolo in alto -->
         <top>
-            <VBox alignment="CENTER">
+            <VBox styleClass="vbox" alignment="CENTER">
                 <Label text="Confirm Order"
                        style="-fx-font-size: 36px; -fx-text-fill: black; -fx-font-weight: bold;"
                        styleClass="title"/>
@@ -26,7 +26,7 @@
 
         <!-- Contenuto principale centrato -->
         <center>
-            <VBox spacing="15" alignment="CENTER" prefWidth="400.0">
+            <VBox styleClass="vbox" spacing="15" alignment="CENTER" prefWidth="400.0">
 
                 <!-- Campo per l'indirizzo -->
                 <Label text="Insert your address:"/>

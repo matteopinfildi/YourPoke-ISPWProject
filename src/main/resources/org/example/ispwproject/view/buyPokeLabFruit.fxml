@@ -14,12 +14,12 @@
 
     <fx:include source="sidebar.fxml"/>
 
-    <VBox fx:id="mainContent" spacing="10" alignment="TOP_CENTER" prefWidth="700" layoutX="210" layoutY="20">
+    <VBox styleClass="vbox" fx:id="mainContent" spacing="10" alignment="TOP_CENTER" prefWidth="700" layoutX="210" layoutY="20">
         <Label text="Fruit" style="-fx-font-size: 36px; -fx-text-fill: black; -fx-font-weight: bold;" styleClass="title"/>
         <Label text="Select your favourite fruit!" style="-fx-font-size: 18px; -fx-text-fill: black;" styleClass="subtitle"/>
     </VBox>
 
-    <VBox layoutX="200" layoutY="180" alignment="CENTER" spacing="15">
+    <VBox styleClass="vbox" layoutX="200" layoutY="180" alignment="CENTER" spacing="15">
 
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
             <ImageView fx:id="avocadoImage" fitHeight="100" fitWidth="100"/>
@@ -27,7 +27,7 @@
             <CheckBox fx:id="checkAvocado" />
             <Label text="+2.00$" />
             <Button fx:id="avocadNutriButton" text="Nutritional Values" onAction="#toggleAvocadoNutritional"/>
-            <VBox fx:id="avocadoNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
+            <VBox styleClass="vbox" fx:id="avocadoNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 160 kcal" />
                 <Label text="Protein: 2g" />
                 <Label text="Carbs: 9g" />
@@ -42,7 +42,7 @@
             <CheckBox fx:id="checkMango" />
             <Label text="+1.50$" />
             <Button fx:id="mangoNutriButton" text="Nutritional Values" onAction="#toggleMangoNutritional"/>
-            <VBox fx:id="mangoNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
+            <VBox styleClass="vbox" fx:id="mangoNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 60 kcal" />
                 <Label text="Protein: 0.8g" />
                 <Label text="Carbs: 15g" />
@@ -56,7 +56,7 @@
             <CheckBox fx:id="checkStrawbarries" />
             <Label text="+1.00$" />
             <Button fx:id="strawbarriesNutriButton" text="Nutritional Values" onAction="#toggleStrawbarriesNutritional"/>
-            <VBox fx:id="strawbarriesNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
+            <VBox styleClass="vbox" fx:id="strawbarriesNutritionalValues" spacing="5" style="-fx-padding: 5;" visible="false">
                 <Label text="Calories: 32 kcal" />
                 <Label text="Protein: 0.7g" />
                 <Label text="Carbs: 7.7g" />

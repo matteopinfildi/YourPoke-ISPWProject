@@ -24,11 +24,11 @@
 
 
     <!-- Main Content -->
-    <VBox layoutX="199.0" layoutY="30.0" prefHeight="575.0" prefWidth="673.0" spacing="15" style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-width: 1;">
+    <VBox styleClass="vbox" layoutX="199.0" layoutY="30.0" prefHeight="575.0" prefWidth="673.0" spacing="15" style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-width: 1;">
         <Label fx:id="pokeNameLabel" alignment="CENTER" prefHeight="30.0" prefWidth="653.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Add extra to" />
         <Label alignment="CENTER" prefHeight="58.0" prefWidth="631.0" style="-fx-font-size: 14;" text="If you want, you can add extra ingredient!" textAlignment="CENTER" />
 
-        <VBox prefHeight="370.0" prefWidth="631.0" spacing="10">
+        <VBox styleClass="vbox" prefHeight="370.0" prefWidth="631.0" spacing="10">
 
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="642.0" style="-fx-font-weight: bold;" text="Select your favourite topping" />
             <GridPane prefHeight="101.0" prefWidth="646.0">

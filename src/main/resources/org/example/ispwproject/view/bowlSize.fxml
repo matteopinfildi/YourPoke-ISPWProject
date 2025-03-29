@@ -6,7 +6,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="15" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+<VBox styleClass="vbox" alignment="CENTER" spacing="15" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.example.ispwproject.control.graphic.buypokelab.BowlSizeController">
 
     <Label text="Select your bowl size" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
