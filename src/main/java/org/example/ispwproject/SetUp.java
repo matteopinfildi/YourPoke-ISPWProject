@@ -6,8 +6,11 @@ import org.example.ispwproject.utils.enumeration.UI;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class SetUp {
+
+    private static final Logger logger = Logger.getLogger(ChangePage.class.getName());
 
     public boolean setUpPersistenceProvider(){
 
@@ -17,7 +20,7 @@ public class SetUp {
 
         while(!flag){
             try {
-                System.out.println("Select a Persistence Provider (1-4): \n1. File System\n2. DBMS\n3. In Memory\n4. Exit");
+                logger.info("Select a Persistence Provider (1-4): \n1. File System\n2. DBMS\n3. In Memory\n4. Exit");
                 int selection = Integer.parseInt(String.valueOf(scanner.nextInt()));
                 flag = true;
                 switch (selection) {
@@ -34,21 +37,21 @@ public class SetUp {
                         break;
 
                     case 4:
-                        System.out.println("Exit");
+                        logger.info("Exit");
                         scanner.close();
                         return false;
 
                     default:
-                        System.out.println("Invalid choice. Please try again.");
+                        logger.warning("Invalid choice. Please try again.");
                         flag = false;
                 }
             } catch (InputMismatchException inputMismatchException){
-                System.out.println("Invalid input! Please enter a valid number.");
+                logger.warning("Invalid input! Please enter a valid number.");
                 scanner.nextLine();
             }
         }
 
-        System.out.println("Using " + persistenceProvider.name() + " Persistence Provider\n");
+        logger.info("Using " + persistenceProvider.name() + " Persistence Provider\n");
 
         DAOFactory.setPersistenceProvider(persistenceProvider);
         return true;
@@ -60,26 +63,26 @@ public class SetUp {
 
         while (uiFlag == -1){
             try{
-                System.out.println("Select a UI (1-3): \n1. GUI\n2. CLI\n3. Exit");
+                logger.info("Select a UI (1-3): \n1. GUI\n2. CLI\n3. Exit");
                 uiFlag = scanner.nextInt();
 
                 switch (uiFlag){
                     case 1:
-                        System.out.println("Using GUI\n");
+                        logger.info("Using GUI\n");
                         break;
                     case 2:
-                        System.out.println("Using CLI\n");
+                        logger.info("Using CLI\n");
                         break;
                     case 3:
-                        System.out.println("Exiting...");
+                        logger.info("Exiting...");
                         return UI.NONE;
                     default:
-                        System.out.println("Invalid choice. Please try again.");
+                        logger.warning("Invalid choice. Please try again.");
                         uiFlag = -1;
                         break;
                 }
             }catch (InputMismatchException e) {
-                System.out.println("Invalid input! Please enter a valid number.");
+                logger.warning("Invalid input! Please enter a valid number.");
                 scanner.nextLine();
             }
         }
