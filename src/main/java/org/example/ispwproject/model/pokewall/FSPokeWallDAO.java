@@ -14,12 +14,14 @@ public class FSPokeWallDAO implements PokeWallDAO {
 
     @Override
     public void create(PokeWall pokeWall) throws SystemException {
-        // Assicurati che l'ID sia univoco e incrementale
-        if (pokeWall.getId() <= lastId) {
-            lastId++;
-            pokeWall.setId(lastId);
-        } else {
-            lastId = pokeWall.getId();
+        synchronized (FSPokeWallDAO.class) {
+            // Assicurati che l'ID sia univoco e incrementale
+            if (pokeWall.getId() <= lastId) {
+                lastId++;
+                pokeWall.setId(lastId);
+            } else {
+                lastId = pokeWall.getId();
+            }
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
@@ -42,35 +44,13 @@ public class FSPokeWallDAO implements PokeWallDAO {
     @Override
     public List<PokeWall> getAllPosts() throws SystemException {
         List<PokeWall> posts = new ArrayList<>();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] data = line.split(DELIMITER, -1); // -1 mantiene campi vuoti
-
-                if (data.length >= 4) {
-                    try {
-                        int id = Integer.parseInt(data[0]);
-                        String username = data[1];
-                        String pokeName = data[2];
-                        String size = data[3];
-
-                        // Aggiorna lastId
-                        if (id > lastId) {
-                            lastId = id;
-                        }
-
-                        List<String> ingredients = new ArrayList<>();
-                        if (data.length > 4) {
-                            ingredients = Arrays.asList(data[4].split("\\|"));
-                        }
-
-                        PokeWall post = new PokeWall(pokeName, size, username, ingredients);
-                        post.setId(id); // Imposta l'ID originale
-                        posts.add(post);
-                    } catch (NumberFormatException e) {
-                        System.err.println("Invalid ID format in line: " + line);
-                        continue;
-                    }
+                PokeWall post = parsePostFromLine(line); // Usa il metodo separato
+                if (post != null) {
+                    posts.add(post);
                 }
             }
         } catch (IOException e) {
@@ -78,6 +58,41 @@ public class FSPokeWallDAO implements PokeWallDAO {
         }
         return posts;
     }
+
+    // **Nuovo metodo per estrarre un post da una riga del file**
+    private PokeWall parsePostFromLine(String line) {
+        String[] data = line.split(DELIMITER, -1); // -1 mantiene campi vuoti
+        if (data.length < 4) {
+            return null; // Se la riga non ha abbastanza dati, la ignoriamo
+        }
+
+        try {
+            int id = Integer.parseInt(data[0]);
+            String username = data[1];
+            String pokeName = data[2];
+            String size = data[3];
+
+            // Aggiorna lastId in modo sicuro
+            synchronized (FSPokeWallDAO.class) {
+                if (id > lastId) {
+                    lastId = id;
+                }
+            }
+
+            List<String> ingredients = new ArrayList<>();
+            if (data.length > 4) {
+                ingredients = Arrays.asList(data[4].split("\\|"));
+            }
+
+            PokeWall post = new PokeWall(pokeName, size, username, ingredients);
+            post.setId(id);
+            return post;
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid ID format in line: " + line);
+            return null; // Se c'è un errore nel parsing, ignoriamo la riga
+        }
+    }
+
 
     @Override
     public void delete(int postId) throws SystemException {
