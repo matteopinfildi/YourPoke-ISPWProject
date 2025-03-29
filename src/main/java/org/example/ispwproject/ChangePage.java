@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
+import org.example.ispwproject.utils.exception.ChangePageException;
 
 import java.io.IOException;
 
@@ -33,25 +34,30 @@ public class ChangePage {
             stage.setScene(new Scene(root));
             stage.show();
 
-                GraphicController controller = loader.getController();
-            try {
-                controller.init(id, pokeLabBean);
-            } catch (org.example.ispwproject.utils.exception.SystemException e) {
-                throw new RuntimeException(e);
-            } catch (java.io.IOException e) {
-                throw new RuntimeException(e);
-            } catch (javax.security.auth.login.LoginException e) {
-                throw new RuntimeException(e);
-            } catch (java.sql.SQLException throwables) {
-                throw new RuntimeException(throwables);
-            }
-
-
+            GraphicController controller = loader.getController();
+            initController(controller, id, pokeLabBean);  // Initialize controller
         } catch (IOException e) {
+            System.err.println("Error loading FXML: " + e.getMessage());  // Log error message
+            e.printStackTrace();
+        } catch (ChangePageException e) {
+            System.err.println("Error initializing controller: " + e.getMessage());  // Log error message
             e.printStackTrace();
         }
+    }
 
-
+    // Handle controller initialization with error handling
+    private static void initController(GraphicController controller, int id, PokeLabBean pokeLabBean) throws ChangePageException {
+        try {
+            controller.init(id, pokeLabBean);
+        } catch (org.example.ispwproject.utils.exception.SystemException e) {
+            throw new ChangePageException("System exception occurred while initializing controller", e);
+        } catch (java.io.IOException e) {
+            throw new ChangePageException("IO exception occurred while initializing controller", e);
+        } catch (javax.security.auth.login.LoginException e) {
+            throw new ChangePageException("Login exception occurred while initializing controller", e);
+        } catch (java.sql.SQLException e) {
+            throw new ChangePageException("SQL exception occurred while initializing controller", e);
+        }
     }
 
     public void setStage(Stage stageParam){
