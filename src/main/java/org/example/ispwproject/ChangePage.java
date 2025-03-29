@@ -38,12 +38,12 @@ public class ChangePage {
             stage.show();
 
             GraphicController controller = loader.getController();
-            initController(controller, id, pokeLabBean);  // Initialize controller
+            initController(controller, id, pokeLabBean);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error loading FXML: " + e.getMessage(), e);  // Log error message
+            logger.log(Level.SEVERE, e, () -> "Error loading FXML: " + e.getMessage());
             e.printStackTrace();
         } catch (ChangePageException e) {
-            logger.log(Level.SEVERE,"Error initializing controller: " + e.getMessage(), e);  // Log error message
+            logger.log(Level.SEVERE, e, () ->"Error initializing controller: " + e.getMessage());
             e.printStackTrace();
         }
     }
