@@ -10,14 +10,17 @@ import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.exception.ChangePageException;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ChangePage {
 
+    private static final Logger logger = Logger.getLogger(ChangePage.class.getName());
     private static ChangePage instance = null;
 
     protected ChangePage() {}
 
-    public static ChangePage getChangePage(){
+    public static synchronized ChangePage getChangePage(){
         if (ChangePage.instance == null) {
             ChangePage.instance = new ChangePage();
         }
@@ -37,10 +40,10 @@ public class ChangePage {
             GraphicController controller = loader.getController();
             initController(controller, id, pokeLabBean);  // Initialize controller
         } catch (IOException e) {
-            System.err.println("Error loading FXML: " + e.getMessage());  // Log error message
+            logger.log(Level.SEVERE, "Error loading FXML: " + e.getMessage(), e);  // Log error message
             e.printStackTrace();
         } catch (ChangePageException e) {
-            System.err.println("Error initializing controller: " + e.getMessage());  // Log error message
+            logger.log(Level.SEVERE,"Error initializing controller: " + e.getMessage(), e);  // Log error message
             e.printStackTrace();
         }
     }
