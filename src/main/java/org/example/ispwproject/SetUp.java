@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class SetUp {
 
-    private static final Logger logger = Logger.getLogger(ChangePage.class.getName());
+    private static final Logger logger = Logger.getLogger(SetUp.class.getName());
 
     public boolean setUpPersistenceProvider(){
 
