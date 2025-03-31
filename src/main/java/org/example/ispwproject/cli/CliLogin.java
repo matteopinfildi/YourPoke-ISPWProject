@@ -59,7 +59,7 @@ public class CliLogin extends CliController{
 
         if (sessionId != -1) {
             logger.info("Hi, " + session.getUserId());
-            new CliHomePage().init(sId, pokeLabBean);
+            new CliHomePage().init(sessionId, pokeLabBean);
         } else {
             logger.warning("Invalid username or password.");
             handleFailedLogin();
