@@ -13,8 +13,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class CliAddName extends CliController {
+    private static final Logger logger = Logger.getLogger(CliAddName.class.getName());
     private BuyPokeLabAppController buyPokeLabAppController;
     private PokeLabBean pokeLabBean;
     private int id;
@@ -28,45 +30,42 @@ public class CliAddName extends CliController {
         Scanner scanner = new Scanner(System.in);
         boolean validName= false;
 
-        do{
-            System.out.println("\n--- Set your Poké name ---");
-            System.out.println("Current name: " +
+        while (!validName) {
+            logger.info("\n--- Set your Poké name ---");
+            logger.info("Current name: " +
                     (pokeLabBean.getPokeName() != null ? pokeLabBean.getPokeName() : "Not set"));
-            System.out.println("(Name must be at least 4 characters long)");
-            System.out.print("Enter name (or 'back' to return): ");
-
+            logger.info("(Name must be at least 4 characters long)");
+            logger.info("Enter name (or 'back' to return): ");
             String name = scanner.nextLine().trim();
 
-            if (name.equalsIgnoreCase("back")){
+            if (name.equalsIgnoreCase("back")) {
                 new CliPokeLab().init(id, pokeLabBean);
                 return;
             }
 
             if (name.length() < 4) {
-                System.out.println("Error: The name must be at least 4 characters long!");
-                continue;
+                logger.warning("Error: The name must be at least 4 characters long!");
+                continue; // Continue if name is too short
             }
 
             SessionManager sessionManager = SessionManager.getSessionManager();
             Session session = sessionManager.getSessionFromId(id);
             String userId = session.getUserId();
 
-            // Se il nome è lo stesso di prima, non serve salvare di nuovo
+            // If the name is the same as before, no need to save it again
             if (!name.equals(pokeLabBean.getPokeName())) {
                 pokeLabBean.setPokeName(name);
                 SaveBean saveBean = new SaveBean(userId);
-
                 if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
-                    System.out.println("Save failed!");
-                    continue;
+                    logger.warning("Save failed!");
+                    continue; // Continue if saving fails
                 }
             }
 
-            System.out.println("Poké name set to: " + name);
-            validName = true;
-
+            logger.info("Poké name set to: " + name);
+            validName = true; // Exit the loop if the name is valid
             new CliPokeLab().init(id, pokeLabBean);
-        }while(!validName);
+        }
     }
 
     @Override
