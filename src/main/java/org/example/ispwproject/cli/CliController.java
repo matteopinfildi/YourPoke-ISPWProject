@@ -37,7 +37,9 @@ public abstract class CliController extends GraphicController {
     private int getUserSelection(Scanner scanner, int maxOptions) {
         int selection;
         do {
-            logger.info(String.format("Select an alternative (1-" + maxOptions + "): ", maxOptions));
+            if(logger.isLoggable(Level.INFO)) {
+                logger.info(String.format("Select an alternative (1-" + maxOptions + "): ", maxOptions));
+            }
             selection = readUserInput(scanner, maxOptions);
         } while (selection == 0);
         return selection;
