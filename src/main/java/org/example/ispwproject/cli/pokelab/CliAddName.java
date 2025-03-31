@@ -45,16 +45,20 @@ public class CliAddName extends CliController {
                 if (!name.equals(pokeLabBean.getPokeName())) {
                     logger.info(String.format("Poké name set to: %s", name));
                     }
+                validName = true;
+                new CliPokeLab().init(id, pokeLabBean);
             }
-            validName = true;
-            new CliPokeLab().init(id, pokeLabBean);
         }
     }
 
     private void displayCurrentName() {
         logger.info("\n--- Set your Poké name ---");
         String currentName = pokeLabBean != null ? pokeLabBean.getPokeName() : "no set";
-        logger.info(String.format("Current name: %s", currentName));
+        if (!currentName.equals("no set")) {
+            logger.info(String.format("Current name: %s", currentName));
+        } else {
+            logger.info("No name has been set yet.");
+        }
         logger.info("(Name must be at least 4 characters long)");
     }
 
