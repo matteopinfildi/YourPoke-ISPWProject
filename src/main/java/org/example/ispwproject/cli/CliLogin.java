@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class CliLogin extends CliController{
-    private static final Logger logger = Logger.getLogger(CliLogin.class.getName());
-
 
     private int sId;
     private PokeLabBean pokeLabBean;
@@ -34,19 +32,19 @@ public class CliLogin extends CliController{
         UserBean userBean = new UserBean(uid, password, email, userType, address);
         LoginAppController loginAppController = new LoginAppController();
         loginAppController.register(userBean);
-        logger.info("Registration completed successfully.");
+        System.out.println("Registration completed successfully.");
     }
 
     public void login(int sId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
         init(sId, pokeLabBean);
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        logger.info("Login");
+        System.out.println("Login");
 
-        logger.info("Insert username: ");
+        System.out.print("Insert username: ");
         String username = bufferedReader.readLine();
 
-        logger.info("Insert password: ");
+        System.out.print("Insert password: ");
         String password = bufferedReader.readLine();
 
         LoginAppController loginAppController = new LoginAppController();
@@ -56,12 +54,13 @@ public class CliLogin extends CliController{
 
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(sessionId);
+        System.out.println();
 
         if (sessionId != -1) {
-            logger.info("Hi, " + session.getUserId());
+            System.out.println("Hi, " + session.getUserId());
             new CliHomePage().init(sessionId, pokeLabBean);
         } else {
-            logger.warning("Invalid username or password.");
+            System.out.println("Invalid username or password.");
             handleFailedLogin();
         }
     }
@@ -79,7 +78,7 @@ public class CliLogin extends CliController{
                     new CliHomePage().init(sId, pokeLabBean);
                     break;
                 default:
-                    logger.warning("Select a valid option!");
+                    System.out.println("Select a valid option!");
             }
         } while (condition);
     }
