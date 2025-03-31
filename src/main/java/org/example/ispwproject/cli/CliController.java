@@ -38,7 +38,7 @@ public abstract class CliController extends GraphicController {
         int selection;
         do {
             if(logger.isLoggable(Level.INFO)) {
-                logger.info(String.format("Select an alternative (1-" + maxOptions + "): ", maxOptions));
+                logger.info(String.format("Select an alternative (1-%d): ", maxOptions));
             }
             selection = readUserInput(scanner, maxOptions);
         } while (selection == 0);
@@ -53,7 +53,7 @@ public abstract class CliController extends GraphicController {
         }
         int selection = scanner.nextInt();
         if (selection < 1 || selection > maxOptions) {
-            logWarning(String.format("Please, select a number between (1-" + maxOptions + ")", maxOptions));
+            logWarning(String.format("Please, select a number between (1-%d)", maxOptions));
             return 0;
         }
         return selection;
