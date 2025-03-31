@@ -37,7 +37,7 @@ public abstract class CliController extends GraphicController {
     private int getUserSelection(Scanner scanner, int maxOptions) {
         int selection;
         do {
-            logger.info("Select an alternative (1-" + maxOptions + "): ");
+            logger.info(String.format("Select an alternative (1-" + maxOptions + "): ", maxOptions));
             selection = readUserInput(scanner, maxOptions);
         } while (selection == 0);
         return selection;
@@ -51,7 +51,7 @@ public abstract class CliController extends GraphicController {
         }
         int selection = scanner.nextInt();
         if (selection < 1 || selection > maxOptions) {
-            logWarning("Please, select a number between (1-" + maxOptions + ")");
+            logWarning(String.format("Please, select a number between (1-" + maxOptions + ")", maxOptions));
             return 0;
         }
         return selection;
