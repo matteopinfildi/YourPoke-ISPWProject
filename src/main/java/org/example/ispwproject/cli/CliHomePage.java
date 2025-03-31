@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 
 
 public class CliHomePage extends CliController{
-    private static final Logger logger = Logger.getLogger(CliHomePage.class.getName());
 
     public CliHomePage(){
         // costruttore vuoto
@@ -32,8 +31,6 @@ public class CliHomePage extends CliController{
         this.sID = sID;
         this.pokeLabBean = pokeLabBean;
 
-        logger.setLevel(Level.INFO);
-
         boolean condition = true;
         do{
             int selection = userSelection("HomePage");
@@ -43,7 +40,7 @@ public class CliHomePage extends CliController{
                     break;
 
                 case 2:
-                    logger.info("Buy Classic Pokè");
+                    System.out.println("Buy Classic Pokè");
                     break;
 
                 case 3:
@@ -52,7 +49,7 @@ public class CliHomePage extends CliController{
 
                     // Controllo se l'utente è loggato
                     if (session == null) {
-                        logger.severe("You need to log in first!");
+                        System.out.printf("You need to log in first!");
                         break;
                     }
 
@@ -64,7 +61,7 @@ public class CliHomePage extends CliController{
                     break;
 
                 case 4:
-                    logger.info("Pokè Wall");
+                    System.out.println("Pokè Wall");
                     break;
 
                 case 5:
@@ -72,7 +69,7 @@ public class CliHomePage extends CliController{
                     condition = false;
                     break;
                 default:
-                    logger.warning("Select a valid option!");
+                    System.out.println("Select a valid option!");
             }
         }while(condition);
     }
@@ -92,7 +89,7 @@ public class CliHomePage extends CliController{
     }
 
     private void exit() {
-        logger.info("Exit");
+        System.out.println("Exit");
         System.exit(0);
     }
 }
