@@ -13,10 +13,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 public class CliAddName extends CliController {
-    private static final Logger logger = Logger.getLogger(CliAddName.class.getName());
     private BuyPokeLabAppController buyPokeLabAppController;
     private PokeLabBean pokeLabBean;
     private int id;
@@ -35,7 +33,7 @@ public class CliAddName extends CliController {
 
         while (!validName) {
             displayCurrentName();
-            logger.info("Enter name (or 'back' to return): ");
+            System.out.println("Enter name (or 'back' to return): ");
             String name = scanner.nextLine().trim();
 
             if (handleBackCommand(name)) return;
@@ -43,7 +41,7 @@ public class CliAddName extends CliController {
 
             if (updatePokeName(name)) {
                 if (!name.equals(pokeLabBean.getPokeName())) {
-                    logger.info(String.format("Poké name set to: %s", name));
+                    System.out.println(String.format("Poké name set to: %s", name));
                     }
                 validName = true;
                 new CliPokeLab().init(id, pokeLabBean);
@@ -52,14 +50,14 @@ public class CliAddName extends CliController {
     }
 
     private void displayCurrentName() {
-        logger.info("\n--- Set your Poké name ---");
+        System.out.println("\n--- Set your Poké name ---");
         String currentName = pokeLabBean != null ? pokeLabBean.getPokeName() : "no set";
         if (!currentName.equals("no set")) {
-            logger.info(String.format("Current name: %s", currentName));
+            System.out.println(String.format("Current name: %s", currentName));
         } else {
-            logger.info("No name has been set yet.");
+            System.out.println("No name has been set yet.");
         }
-        logger.info("(Name must be at least 4 characters long)");
+        System.out.println("(Name must be at least 4 characters long)");
     }
 
     private boolean handleBackCommand(String name) throws SystemException, IOException, LoginException, SQLException {
@@ -72,7 +70,7 @@ public class CliAddName extends CliController {
 
     private boolean isValidName(String name) {
         if (name.length() < 4) {
-            logger.warning("Error: The name must be at least 4 characters long!");
+            System.out.println("Error: The name must be at least 4 characters long!");
             return false;
         }
         return true;
@@ -85,7 +83,7 @@ public class CliAddName extends CliController {
             pokeLabBean.setPokeName(name);
 
             if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
-                logger.warning("Save failed!");
+                System.out.println("Save failed!");
                 return false;
             }
         }
