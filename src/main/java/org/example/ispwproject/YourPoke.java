@@ -16,8 +16,11 @@ import org.example.ispwproject.utils.exception.SystemException;
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class YourPoke extends Application {
+    private static final Logger logger = Logger.getLogger(YourPoke.class.getName());
 
     @Override
     public void start(Stage primaryStage) {
@@ -38,16 +41,17 @@ public class YourPoke extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error during UI initialization", e);
         }
     }
 
     public static void main(String[] args) throws SystemException, IOException, LoginException, SQLException {
+        Logger logger = Logger.getLogger(YourPoke.class.getName());
 
         SetUp setUp = new SetUp();
 
         if (!setUp.setUpPersistenceProvider()) {
-            System.exit(0);
+            logger.info("Exiting application due to persistence provider setup failure.");
         }
 
         UI uiType = setUp.setUI(); // recupera l'UI scelta dall'utente
@@ -67,7 +71,7 @@ public class YourPoke extends Application {
 
             new CliHomePage().init(-1, null);
         } else if (uiType == UI.NONE) {
-            System.out.println("Exit");
+            logger.info("Exit");
             System.exit(0);
         }
     }
