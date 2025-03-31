@@ -9,66 +9,46 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class CliController extends GraphicController {
-    private static final Logger logger = Logger.getLogger(CliController.class.getName());
 
-    protected CliController() {}
+    public CliController() {}
 
     public abstract void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException;
 
     protected int menu(String title, List<String> alternative) {
         Scanner scanner = new Scanner(System.in);
-        logMenuOptions(title, alternative);
-        return getUserSelection(scanner, alternative.size());
-    }
+        int selection = 0;
 
-    private void logMenuOptions(String title, List<String> alternative) {
-        if (!logger.isLoggable(Level.INFO)) return;
-
-        logger.info(title);
+        System.out.printf(title);
         for (int i = 0; i < alternative.size(); i++) {
-            logger.info((i + 1) + ") " + alternative.get(i));
+            System.out.printf("%d) %s%n", i + 1, alternative.get(i));
         }
-    }
 
-    private int getUserSelection(Scanner scanner, int maxOptions) {
-        int selection;
+
         do {
-            if(logger.isLoggable(Level.INFO)) {
-                logger.info(String.format("Select an alternative (1-%d): ", maxOptions));
+            System.out.println();
+            System.out.printf("Select an alternative (1-%d): ", alternative.size());
+
+            if (scanner.hasNextInt()) {
+                selection = scanner.nextInt();
+                if (selection < 1 || selection > alternative.size()) {
+                    System.out.printf("Please, select a number between (1-" + alternative.size() + ")");
+                    selection = 0;
+                }
+            } else {
+                System.out.printf("Input not valid. Please, insert a number.");
+                scanner.next();
             }
-            selection = readUserInput(scanner, maxOptions);
         } while (selection == 0);
-        return selection;
-    }
 
-    private int readUserInput(Scanner scanner, int maxOptions) {
-        if (!scanner.hasNextInt()) {
-            logWarning("Input not valid. Please, insert a number.");
-            scanner.next();
-            return 0;
-        }
-        int selection = scanner.nextInt();
-        if (selection < 1 || selection > maxOptions) {
-            logWarning(String.format("Please, select a number between (1-%d)", maxOptions));
-            return 0;
-        }
         return selection;
-    }
-
-    private void logWarning(String message) {
-        if (logger.isLoggable(Level.WARNING)) {
-            logger.warning(message);
-        }
     }
 
     protected abstract List<String> getAlternative();
 
     public int userSelection(String title) {
-        return menu(title + "\n", getAlternative());
+        List<String> alternative = getAlternative();
+        return menu(title + "\n", alternative);
     }
 }
-
