@@ -15,8 +15,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class CliLogin extends CliController{
+    private static final Logger logger = Logger.getLogger(CliLogin.class.getName());
+
 
     private int sId;
     private PokeLabBean pokeLabBean;
@@ -31,50 +34,57 @@ public class CliLogin extends CliController{
         UserBean userBean = new UserBean(uid, password, email, userType, address);
         LoginAppController loginAppController = new LoginAppController();
         loginAppController.register(userBean);
+        logger.info("Registration completed successfully.");
     }
 
     public void login(int sId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
         init(sId, pokeLabBean);
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Login");
+        logger.info("Login");
 
-        System.out.print("Insert username: ");
+        logger.info("Insert username: ");
         String username = bufferedReader.readLine();
 
-        System.out.print("Insert password: ");
+        logger.info("Insert password: ");
         String password = bufferedReader.readLine();
 
         LoginAppController loginAppController = new LoginAppController();
         CredentialBean credentialBean = new CredentialBean(username, password);
+        int sessionId = loginAppController.login(credentialBean);
 
-        sId = loginAppController.login(credentialBean);
 
         SessionManager sessionManager = SessionManager.getSessionManager();
-        Session session = sessionManager.getSessionFromId(sId);
+        Session session = sessionManager.getSessionFromId(sessionId);
         System.out.println();
 
-        if (sId != -1) {
-            System.out.println("Hi, " + session.getUserId());
+        if (sessionId != -1) {
+            logger.info("Hi, " + session.getUserId());
             new CliHomePage().init(sId, pokeLabBean);
         } else {
-            System.out.println("Invalid username or password.");
-            boolean condition = true;
-            do {
-                int selection = userSelection("Login");
-                switch (selection) {
-                    case 1:
-                        new CliLogin().init(sId, pokeLabBean);
-                        break;
-                    case 2:
-                        new CliHomePage().init(sId, pokeLabBean);
-                        break;
-                    default:
-                        System.out.println("Select a valid option!");
-                }
-            } while (condition);
+            logger.warning("Invalid username or password.");
+            handleFailedLogin();
         }
     }
+
+    private void handleFailedLogin() throws SystemException, IOException, LoginException, SQLException {
+        boolean condition = true;
+        do {
+            int selection = userSelection("Login");
+            switch (selection) {
+                case 1:
+                    new CliLogin().init(sId, pokeLabBean);
+                    break;
+
+                case 2:
+                    new CliHomePage().init(sId, pokeLabBean);
+                    break;
+                default:
+                    System.out.println("Select a valid option!");
+            }
+        } while (condition);
+    }
+
 
     @Override
     protected List<String> getAlternative() {return List.of("Try again", " Exit");}
