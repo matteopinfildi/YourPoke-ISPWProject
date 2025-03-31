@@ -9,13 +9,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class CliController extends GraphicController {
 
     private static final Logger logger = Logger.getLogger(CliController.class.getName());
 
-    public CliController(){}
+    protected CliController(){}
 
     public abstract void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException;
 
@@ -23,24 +24,31 @@ public abstract class CliController extends GraphicController {
         Scanner scanner = new Scanner(System.in);
         int selection = 0;
 
-        logger.info(title);
+        if (logger.isLoggable(Level.INFO)) {
+            logger.info(title);
 
-        for (int i=0; i < alternative.size(); i++){
-            logger.info(String.format("%d) %s%n", i+1, alternative.get(i)));
+            for (int i = 0; i < alternative.size(); i++) {
+                logger.info(String.format("%d) %s%n", i + 1, alternative.get(i)));
+            }
         }
-
         do{
-            logger.info("");
-            logger.info(String.format("Select an alternative (1-%d): ", alternative.size()));
+            if (logger.isLoggable(Level.INFO)) {
+                logger.info("Select an alternative (1-" + alternative.size() + "): ");
+            }
 
             if (scanner.hasNextInt()) {
                 selection = scanner.nextInt();
                 if(selection < 1 || selection > alternative.size()){
-                    logger.warning(String.format("Please, select a number between (1-%d)", alternative.size()));
+                    if (logger.isLoggable(Level.WARNING)) {
+                        logger.warning(String.format("Please, select a number between (1-%d)", alternative.size()));
+                    }
+
                     selection = 0;
                 }
             } else {
-                logger.warning("Input not valid. Please, insert a number.");
+                if (logger.isLoggable(Level.WARNING)) {
+                    logger.warning("Input not valid. Please, insert a number.");
+                }
                 scanner.next();
             }
         } while (selection == 0);
