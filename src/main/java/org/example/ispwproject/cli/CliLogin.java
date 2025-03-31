@@ -56,7 +56,6 @@ public class CliLogin extends CliController{
 
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(sessionId);
-        System.out.println();
 
         if (sessionId != -1) {
             logger.info("Hi, " + session.getUserId());
@@ -80,7 +79,7 @@ public class CliLogin extends CliController{
                     new CliHomePage().init(sId, pokeLabBean);
                     break;
                 default:
-                    System.out.println("Select a valid option!");
+                    logger.warning("Select a valid option!");
             }
         } while (condition);
     }
