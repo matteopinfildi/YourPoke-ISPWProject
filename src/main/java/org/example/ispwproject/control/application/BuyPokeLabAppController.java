@@ -132,7 +132,7 @@ public class BuyPokeLabAppController {
         String id = saveBean.getUid();
         try{
             user = userDAO.read(id);
-        } catch (SystemException e){
+        } catch (org.example.ispwproject.utils.exception.SystemException e){
             throw new RuntimeException(e);
         }
 
