@@ -88,8 +88,8 @@ public class ExtraController extends GraphicController {
         Image carrot = new Image(getClass().getResource("/org/example/ispwproject/image/carrot.jpg").toExternalForm());
         carrotImage.setImage(carrot);
 
-        Image spicy = new Image(getClass().getResource("/org/example/ispwproject/image/spicySauce.jpg").toExternalForm());
-        spicyImage.setImage(spicy);
+        Image spicyIm = new Image(getClass().getResource("/org/example/ispwproject/image/spicySauce.jpg").toExternalForm());
+        spicyImage.setImage(spicyIm);
 
         Image chili = new Image(getClass().getResource("/org/example/ispwproject/image/chili.jpg").toExternalForm());
         chiliImage.setImage(chili);
@@ -155,7 +155,7 @@ public class ExtraController extends GraphicController {
 
     private boolean[][] toppings = new boolean[3][2];
 
-    public void handleEdemame(ActionEvent event) {
+    public void handleEdemame() {
         if (edemameRadio.isSelected()) {
             edemameCrispyBox.setDisable(false); // Abilita il CheckBox
             emptyRadio.setSelected(false); // Deseleziona "Vuoto" se un topping è selezionato
@@ -167,7 +167,7 @@ public class ExtraController extends GraphicController {
         }
     }
 
-    public void handleCucumber(ActionEvent event) {
+    public void handleCucumber() {
         if (cucumberRadio.isSelected()) {
             cucumberCrispyBox.setDisable(false); // Abilita il CheckBox
             emptyRadio.setSelected(false); // Deseleziona "Vuoto" se un topping è selezionato
@@ -179,7 +179,7 @@ public class ExtraController extends GraphicController {
         }
     }
 
-    public void handleCarrot(ActionEvent event) {
+    public void handleCarrot() {
         if (carrotRadio.isSelected()) {
             carrotCrispyBox.setDisable(false); // Abilita il CheckBox
             emptyRadio.setSelected(false); // Deseleziona "Vuoto" se un topping è selezionato
@@ -191,29 +191,18 @@ public class ExtraController extends GraphicController {
         }
     }
 
-    public void handleEdemameCrispy(ActionEvent event) {
-        if (edemameCrispyBox.isSelected()) {
-            updateTopping(0, true, true);
-        } else {
-            updateTopping(0, true, false);
-        }
+    public void handleEdemameCrispy() {
+        updateTopping(0, true, edemameCrispyBox.isSelected());
     }
 
-    public void handleCucumberCrispy(ActionEvent event) {
-        if (cucumberCrispyBox.isSelected()) {
-            updateTopping(1, true, true);
-        } else {
-            updateTopping(1, true, false);
-        }
+    public void handleCucumberCrispy() {
+        updateTopping(1, true, cucumberCrispyBox.isSelected());
     }
 
-    public void handleCarrotCrispy(ActionEvent event) {
-        if (carrotCrispyBox.isSelected()) {
-            updateTopping(2, true, true);
-        } else {
-            updateTopping(2, true, false);
-        }
+    public void handleCarrotCrispy() {
+        updateTopping(2, true, carrotCrispyBox.isSelected());
     }
+
 
     public void updateTopping(int tid, boolean select, boolean crispy) {
         toppings[tid][0] = select;
@@ -226,7 +215,7 @@ public class ExtraController extends GraphicController {
         spicy.put(name, quantity);
     }
 
-    public void handleExtraPrice(ActionEvent event) {
+    public void handleExtraPrice() {
         spicy.put(SpicyType.SPICYSAUCE.name(), (Integer) comboBoxSpicySauce.getValue());
         spicy.put(SpicyType.CHILI.name(), (Integer) comboBoxChili.getValue());
         spicy.put(SpicyType.HARISSA.name(), (Integer) comboBoxHarissa.getValue());
