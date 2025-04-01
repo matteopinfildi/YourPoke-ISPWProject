@@ -12,8 +12,6 @@ import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class CliHomePage extends CliController{
@@ -49,7 +47,7 @@ public class CliHomePage extends CliController{
 
                     // Controllo se l'utente è loggato
                     if (session == null) {
-                        System.out.printf("You need to log in first!");
+                        System.out.println("You need to log in first!");
                         break;
                     }
 
