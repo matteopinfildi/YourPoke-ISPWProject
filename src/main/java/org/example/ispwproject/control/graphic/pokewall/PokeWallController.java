@@ -67,8 +67,8 @@ public class PokeWallController extends GraphicController implements PokeWallObs
         this.pokeWallListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         this.deleteButton.setDisable(true);
 
-        PokeWallAppController pokeWallAppController = new PokeWallAppController();
-        List<PokeWall> posts = pokeWallAppController.getAllPosts();
+        PokeWallAppController pokeWallAppC = new PokeWallAppController();
+        List<PokeWall> posts = pokeWallAppC.getAllPosts();
 
         ObservableList<String> postObservableList = FXCollections.observableArrayList();
 
