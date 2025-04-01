@@ -39,7 +39,7 @@ public class CliPokeLab extends CliController{
     private void popup() {
         Scanner scanner = new Scanner(System.in);
         int selection = -1;
-        boolean flag = false;
+//        boolean flag = false;
         do{
             System.out.println("1) Recover Pokè Lab");
             System.out.println("2) New Pokè Lab");
@@ -64,14 +64,14 @@ public class CliPokeLab extends CliController{
                         }
                     }
                     case 2 -> {
-
+                        // blocco vuoto
                     }
-                    default -> {
-                        flag = true;
-                    }
+//                    default -> {
+//                        flag = true;
+//                    }
                 }
             }
-        }while (flag);
+        }while (true);
     }
 
 
