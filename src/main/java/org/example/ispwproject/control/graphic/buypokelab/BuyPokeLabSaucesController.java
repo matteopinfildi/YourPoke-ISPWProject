@@ -13,6 +13,7 @@ import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.AddIngredientBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.enumeration.ingredient.SaucesAlternative;
+import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -80,7 +81,7 @@ public class BuyPokeLabSaucesController extends GraphicController {
     @FXML private CheckBox checkWasabi;
 
     @FXML
-    public void handleNextClick(ActionEvent event) {
+    public void handleNextClick(ActionEvent event) throws PokeLabSystemException {
         try{
             SaucesAlternative saucesAlternative = null;
             if (checkTeriyaki.isSelected()) {
@@ -96,7 +97,7 @@ public class BuyPokeLabSaucesController extends GraphicController {
 
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
         } catch (Exception e){
-            throw new RuntimeException(e);
+            throw new PokeLabSystemException("Error", e);
         }
     }
 

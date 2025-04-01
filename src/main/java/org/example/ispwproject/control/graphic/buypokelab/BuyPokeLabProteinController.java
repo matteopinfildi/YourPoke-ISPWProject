@@ -13,6 +13,7 @@ import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.AddIngredientBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.enumeration.ingredient.ProteinAlternative;
+import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -83,7 +84,7 @@ public class BuyPokeLabProteinController extends GraphicController {
 
 
     @FXML
-    public void handleNextClick(ActionEvent event) {
+    public void handleNextClick(ActionEvent event) throws PokeLabSystemException {
         try{
             ProteinAlternative proteinAlternative = null;
             if (checkSalmon.isSelected()) {
@@ -99,7 +100,7 @@ public class BuyPokeLabProteinController extends GraphicController {
 
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
         } catch (Exception e){
-            throw new RuntimeException(e);
+            throw new PokeLabSystemException("Error", e);
         }
     }
 
