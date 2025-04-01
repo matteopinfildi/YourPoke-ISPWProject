@@ -220,13 +220,13 @@ public class BuyPokeLabController extends GraphicController{
             try{
                 init(id, oldPokeLabBean);
             } catch (SystemException e) {
-                throw new RuntimeException(e);
+                throw new PokeLabSystemException("Error", e);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new PokeLabSystemException("Error", e);
             } catch (LoginException e) {
-                throw new RuntimeException(e);
+                throw new PokeLabSystemException("Error", e);
             } catch (SQLException throwables) {
-                throw new RuntimeException(throwables);
+                throw new PokeLabSystemException("Error", throwables);
             }
         } else {System.out.println("Pokè Lab not found");}
     }
