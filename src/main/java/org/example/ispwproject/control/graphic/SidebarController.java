@@ -24,7 +24,7 @@ public class SidebarController {
     private int id = -1;
     private Session session;
 
-    private static final String LOGIN_SCENE_PATH = "/org/example/ispwproject/view/login.fxml";
+    private static final String LOGIN_SCENE_PATH = System.getProperty("login.scene.path", "/org/example/ispwproject/view/login.fxml");
 
     public void initialize(){
         SessionManager sessionManager = SessionManager.getSessionManager();
