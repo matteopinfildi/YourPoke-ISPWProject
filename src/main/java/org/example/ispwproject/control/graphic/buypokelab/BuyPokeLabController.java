@@ -16,6 +16,7 @@ import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.enumeration.ingredient.*;
+import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -205,7 +206,7 @@ public class BuyPokeLabController extends GraphicController{
     public void showPopUp() {popup.setVisible(true);}
 
     @FXML
-    private void handleRecover() {
+    private void handleRecover() throws PokeLabSystemException {
         popup.setVisible(false);
 
         SessionManager sessionManager = SessionManager.getSessionManager();

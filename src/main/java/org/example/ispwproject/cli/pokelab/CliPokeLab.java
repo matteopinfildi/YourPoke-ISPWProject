@@ -9,6 +9,7 @@ import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.enumeration.ingredient.*;
 import org.example.ispwproject.utils.exception.CliException;
+import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -36,7 +37,7 @@ public class CliPokeLab extends CliController{
 
     public static void setRecover (boolean value) {recover =  value;}
 
-    private void popup() {
+    private void popup() throws PokeLabSystemException {
         Scanner scanner = new Scanner(System.in);
         int selection = -1;
         boolean flag = false;
@@ -68,7 +69,7 @@ public class CliPokeLab extends CliController{
 
 
     @Override
-    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException {
+    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException {
         buyPokeLabAppController = new BuyPokeLabAppController();
         this.pokeLabBean = pokeLabBean;
         this.id = sID;

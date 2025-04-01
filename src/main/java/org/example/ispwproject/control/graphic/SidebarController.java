@@ -14,6 +14,7 @@ import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.bean.UserTypeBean;
 import org.example.ispwproject.utils.enumeration.UserType;
+import org.example.ispwproject.utils.exception.PokeLabSystemException;
 
 public class SidebarController {
     @FXML
@@ -50,7 +51,7 @@ public class SidebarController {
 
 
     @FXML
-    public void handleBuyPokeLabCLick(MouseEvent event) {
+    public void handleBuyPokeLabCLick(MouseEvent event) throws PokeLabSystemException {
         System.out.println("Crea il tuo pokè!");
 
         LoginAppController loginAppController = new LoginAppController();
@@ -73,7 +74,7 @@ public class SidebarController {
     }
 
     @FXML
-    public void handlePokeWallCLick(MouseEvent event) {
+    public void handlePokeWallCLick(MouseEvent event) throws PokeLabSystemException {
         System.out.println("Pokè Wall");
 
         LoginAppController loginAppController = new LoginAppController();

@@ -7,6 +7,7 @@ import org.example.ispwproject.utils.bean.AddIngredientBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.enumeration.ingredient.ProteinAlternative;
 import org.example.ispwproject.utils.exception.CliException;
+import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -21,7 +22,7 @@ public class CliProtein extends CliController {
     private String total = "Total = 0.0 $";
 
     @Override
-    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException {
+    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException {
         buyPokeLabAppController = new BuyPokeLabAppController();
         this.pokeLabBean = pokeLabBean;
         this.id = sID;
