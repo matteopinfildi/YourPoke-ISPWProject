@@ -57,7 +57,9 @@ public class CliPokeLab extends CliController{
                     if (oldPokeLabBean != null) {
                         this.pokeLabBean = oldPokeLabBean;
                     } else {System.out.println("Pokè Lab not found!");}
-                }  else {
+                } else if (selection == 2) {
+
+                } else {
                     flag = true;
                 }
             }
