@@ -8,7 +8,6 @@
 
         @Override
         public double price(){
-            double ingredientPrice = this.ingredient.price();
-            return ingredientPrice;
+            return this.ingredient.price();
         }
     }
