@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public abstract class CliController extends GraphicController {
 
-    protected    CliController() {}
+    protected CliController() {}
 
     public abstract void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException;
 

@@ -68,8 +68,9 @@ public class BuyPokeLabAppController {
         registerPokeLab(pokeLab);
 
         spicy = extraBean.getSpicyMap();
-        for (String key : spicy.keySet()){
-            Integer v = spicy.get(key);
+        for (var entry : spicy.entrySet()){
+            String key = entry.getKey();
+            Integer v = entry.getValue();
             for (int i=0; i < v; i++){
                 allIngredient = new SpicyDecorator(allIngredient, key);
             }
