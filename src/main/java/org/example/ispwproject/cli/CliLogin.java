@@ -7,6 +7,7 @@ import org.example.ispwproject.utils.bean.CredentialBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.UserBean;
 import org.example.ispwproject.utils.enumeration.UserType;
+import org.example.ispwproject.utils.exception.CliException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -34,7 +35,7 @@ public class CliLogin extends CliController{
         System.out.println("Registration completed successfully.");
     }
 
-    public void login(int sId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
+    public void login(int sId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException {
         init(sId, pokeLabBean);
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -64,7 +65,7 @@ public class CliLogin extends CliController{
         }
     }
 
-    private void handleFailedLogin() throws SystemException, IOException, LoginException, SQLException {
+    private void handleFailedLogin() throws SystemException, IOException, LoginException, SQLException, CliException {
         boolean condition = true;
         do {
             int selection = userSelection("Login");

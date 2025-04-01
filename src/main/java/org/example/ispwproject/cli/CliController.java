@@ -1,6 +1,6 @@
 package org.example.ispwproject.cli;
 
-import org.example.ispwproject.control.graphic.GraphicController;
+import org.example.ispwproject.control.graphic.CliGraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.exception.CliException;
 import org.example.ispwproject.utils.exception.SystemException;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-public abstract class CliController extends GraphicController {
+public abstract class CliController extends CliGraphicController {
 
     protected CliController() {}
 

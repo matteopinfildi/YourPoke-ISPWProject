@@ -6,6 +6,7 @@ import org.example.ispwproject.cli.pokelab.CliPokeLab;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
+import org.example.ispwproject.utils.exception.CliException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -25,7 +26,7 @@ public class CliHomePage extends CliController{
     private BuyPokeLabAppController buyPokeLabAppController;
 
     @Override
-    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException{
+    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException {
         this.sID = sID;
         this.pokeLabBean = pokeLabBean;
 
