@@ -30,12 +30,15 @@ public class DBPokeLabDAO implements PokeLabDAO {
             preparedStatementPoke.executeUpdate();
 
             try (PreparedStatement preparedStatementIngredient = connection.prepareStatement(insertIngredientQuery)){
+                preparedStatementIngredient.setInt(1, plid);
                 for (Map.Entry<String, GenericAlternative> entry : pokeLab.allIngredients().entrySet()){
-                    preparedStatementIngredient.setInt(1, plid);
                     preparedStatementIngredient.setString(2, entry.getKey());
                     preparedStatementIngredient.setString(3, ((Enum<?>)entry.getValue()).name());
-                    preparedStatementIngredient.executeUpdate();
+
+                    preparedStatementIngredient.addBatch();
                 }
+
+                preparedStatementIngredient.executeBatch();
             }
         }catch (SQLException e) {
             e.printStackTrace();
