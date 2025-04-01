@@ -39,39 +39,29 @@ public class CliPokeLab extends CliController{
     private void popup() {
         Scanner scanner = new Scanner(System.in);
         int selection = -1;
-//        boolean flag = false;
+        boolean flag = false;
         do{
             System.out.println("1) Recover Pokè Lab");
             System.out.println("2) New Pokè Lab");
             System.out.println("\nSelect an option: ");
-
             if(scanner.hasNextInt()) {
                 selection = scanner.nextInt();
-                switch (selection) {
-                    case 1 -> {
-                        SessionManager sessionManager = SessionManager.getSessionManager();
+                if(selection == 1){
+                    SessionManager sessionManager = SessionManager.getSessionManager();
+                    Session session = sessionManager.getSessionFromId(id);
+                    String userId = session.getUserId();
 
-                        Session session = sessionManager.getSessionFromId(id);
-                        String userId = session.getUserId();
+                    SaveBean saveBean = new SaveBean(userId);
 
-                        SaveBean saveBean = new SaveBean(userId);
-
-                        PokeLabBean oldPokeLabBean = buyPokeLabAppController.recoverPokeLab(saveBean);
-                        if (oldPokeLabBean != null) {
-                            this.pokeLabBean = oldPokeLabBean;
-                        } else {
-                            System.out.println("Pokè Lab not found!");
-                        }
-                    }
-                    case 2 -> {
-                        // blocco vuoto
-                    }
-//                    default -> {
-//                        flag = true;
-//                    }
+                    PokeLabBean oldPokeLabBean = buyPokeLabAppController.recoverPokeLab(saveBean);
+                    if (oldPokeLabBean != null) {
+                        this.pokeLabBean = oldPokeLabBean;
+                    } else {System.out.println("Pokè Lab not found!");}
+                }  else {
+                    flag = true;
                 }
             }
-        }while (true);
+        }while (flag);
     }
 
 
