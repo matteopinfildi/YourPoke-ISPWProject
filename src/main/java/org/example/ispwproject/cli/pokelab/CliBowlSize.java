@@ -5,6 +5,7 @@ import org.example.ispwproject.cli.CliHomePage;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
+import org.example.ispwproject.utils.exception.CliException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -18,7 +19,7 @@ public class CliBowlSize extends CliController {
     private BuyPokeLabAppController buyPokeLabAppController;
 
     @Override
-    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
+    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException {
         buyPokeLabAppController = new BuyPokeLabAppController();
         this.pokeLabBean = pokeLabBean;
         this.id = sID;
@@ -63,7 +64,7 @@ public class CliBowlSize extends CliController {
             new CliPokeLab().init(sID, pokeLabBean);
 
         } catch (Exception e){
-            throw new RuntimeException(e);
+            throw new CliException("An error occurred while selecting the bowl size", e);
         }
 
 
