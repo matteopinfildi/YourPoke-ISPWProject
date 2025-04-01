@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 public class CliPokeLab extends CliController{
 
@@ -45,23 +44,31 @@ public class CliPokeLab extends CliController{
             System.out.println("1) Recover Pokè Lab");
             System.out.println("2) New Pokè Lab");
             System.out.println("\nSelect an option: ");
+
             if(scanner.hasNextInt()) {
                 selection = scanner.nextInt();
-                if(selection == 1){
-                    SessionManager sessionManager = SessionManager.getSessionManager();
-                    Session session = sessionManager.getSessionFromId(id);
-                    String userId = session.getUserId();
+                switch (selection) {
+                    case 1 -> {
+                        SessionManager sessionManager = SessionManager.getSessionManager();
 
-                    SaveBean saveBean = new SaveBean(userId);
+                        Session session = sessionManager.getSessionFromId(id);
+                        String userId = session.getUserId();
 
-                    PokeLabBean oldPokeLabBean = buyPokeLabAppController.recoverPokeLab(saveBean);
-                    if (oldPokeLabBean != null) {
-                        this.pokeLabBean = oldPokeLabBean;
-                    } else {System.out.println("Pokè Lab not found!");}
-                } else if (selection == 2) {
+                        SaveBean saveBean = new SaveBean(userId);
 
-                } else {
-                    flag = true;
+                        PokeLabBean oldPokeLabBean = buyPokeLabAppController.recoverPokeLab(saveBean);
+                        if (oldPokeLabBean != null) {
+                            this.pokeLabBean = oldPokeLabBean;
+                        } else {
+                            System.out.println("Pokè Lab not found!");
+                        }
+                    }
+                    case 2 -> {
+
+                    }
+                    default -> {
+                        flag = true;
+                    }
                 }
             }
         }while (flag);
