@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public abstract class CliController extends GraphicController {
 
-    public CliController() {}
+    protected    CliController() {}
 
     public abstract void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException;
 
@@ -33,11 +33,11 @@ public abstract class CliController extends GraphicController {
             if (scanner.hasNextInt()) {
                 selection = scanner.nextInt();
                 if (selection < 1 || selection > alternative.size()) {
-                    System.out.printf("Please, select a number between (1-" + alternative.size() + ")");
+                    System.out.printf("Please, select a number between (1-%d)%n", alternative.size());
                     selection = 0;
                 }
             } else {
-                System.out.printf("Input not valid. Please, insert a number.");
+                System.out.println("Input not valid. Please, insert a number.");
                 scanner.next();
             }
         } while (selection == 0);
