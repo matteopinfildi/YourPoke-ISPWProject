@@ -6,6 +6,7 @@ import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.utils.bean.AddIngredientBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.enumeration.ingredient.FruitAlternative;
+import org.example.ispwproject.utils.exception.CliException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -20,7 +21,7 @@ public class CliFruit extends CliController {
     private String total = "Total = 0.0 $";
 
     @Override
-    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
+    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException {
         buyPokeLabAppController = new BuyPokeLabAppController();
         this.pokeLabBean = pokeLabBean;
         this.id = sID;
@@ -56,7 +57,7 @@ public class CliFruit extends CliController {
             AddIngredientBean addIngredientBean = new AddIngredientBean("fruit", fruitAlternative);
             buyPokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
         } catch (Exception e){
-            throw new RuntimeException(e);
+            throw new CliException("An error occurred while selecting the fruit alternative", e);
         }
 
         if(pokeLabBean != null) {
