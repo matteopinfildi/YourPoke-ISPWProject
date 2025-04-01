@@ -29,14 +29,14 @@ public class CliLogin extends CliController{
         this.pokeLabBean = pokeLabBean;
     }
 
-    public void register(String uid, String password, String email, UserType userType, String address){
+    public void register(String uid, String password, String email, UserType userType, String address) throws org.example.ispwproject.utils.exception.LoginException {
         UserBean userBean = new UserBean(uid, password, email, userType, address);
         LoginAppController loginAppController = new LoginAppController();
         loginAppController.register(userBean);
         System.out.println("Registration completed successfully.");
     }
 
-    public void login(int sId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException {
+    public void login(int sId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
         init(sId, pokeLabBean);
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -66,7 +66,7 @@ public class CliLogin extends CliController{
         }
     }
 
-    private void handleFailedLogin() throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException {
+    private void handleFailedLogin() throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
         boolean condition = true;
         do {
             int selection = userSelection("Login");

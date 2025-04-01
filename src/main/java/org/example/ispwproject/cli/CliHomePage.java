@@ -27,7 +27,7 @@ public class CliHomePage extends CliController{
     private BuyPokeLabAppController buyPokeLabAppController;
 
     @Override
-    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException {
+    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
         this.sID = sID;
         this.pokeLabBean = pokeLabBean;
 

@@ -47,7 +47,7 @@ public class YourPoke extends Application {
         }
     }
 
-    public static void main(String[] args) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException {
+    public static void main(String[] args) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
         Logger logger = Logger.getLogger(YourPoke.class.getName());
 
         SetUp setUp = new SetUp();

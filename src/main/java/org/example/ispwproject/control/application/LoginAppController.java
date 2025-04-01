@@ -9,6 +9,7 @@ import org.example.ispwproject.utils.bean.UserBean;
 import org.example.ispwproject.utils.bean.UserTypeBean;
 import org.example.ispwproject.utils.dao.DAOFactory;
 import org.example.ispwproject.utils.enumeration.UserType;
+import org.example.ispwproject.utils.exception.LoginException;
 
 public class LoginAppController {
 
@@ -20,18 +21,18 @@ public class LoginAppController {
         userDAO = daoFactory.getUserDAO();
     }
 
-    public void register(UserBean userBean) {
+    public void register(UserBean userBean) throws LoginException {
 
         User userA = new User(userBean);
         try {
             userDAO.create(userA);
         } catch (org.example.ispwproject.utils.exception.SystemException e) {
-            throw new RuntimeException(e);
+            throw new LoginException("Errore", e);
         }
 
     }
 
-    public int login(CredentialBean credentialBean) {
+    public int login(CredentialBean credentialBean) throws LoginException {
         User userA = null;
 
         String username = credentialBean.getUsername();
@@ -39,7 +40,7 @@ public class LoginAppController {
         try{
             userA = userDAO.read(username);
         } catch (org.example.ispwproject.utils.exception.SystemException e) {
-            throw new RuntimeException(e);
+            throw new LoginException("Errore", e);
         }
         if (userA != null && userA.getUsername().equals(username) && userA.getPassword().equals(password)) {
             SessionManager manager = SessionManager.getSessionManager();
@@ -51,7 +52,7 @@ public class LoginAppController {
         return -1;
     }
 
-    public boolean userType(UserTypeBean userTypeBean) {
+    public boolean userType(UserTypeBean userTypeBean) throws LoginException {
         User userA = null;
 
         String uid = userTypeBean.getUid();
@@ -59,7 +60,7 @@ public class LoginAppController {
         try {
             userA = userDAO.read(uid);
         } catch (org.example.ispwproject.utils.exception.SystemException e) {
-            throw new RuntimeException(e);
+            throw new LoginException("Errore", e);
         }
 
         return uType == userA.getuType();

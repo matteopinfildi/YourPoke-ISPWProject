@@ -66,7 +66,7 @@ public class HomePageController extends GraphicController{
     private int id = -1;
 
     @FXML
-    public void handleBuyPokeLab(ActionEvent event) throws PokeLabSystemException {
+    public void handleBuyPokeLab(ActionEvent event) throws PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
 
         LoginAppController loginAppController = new LoginAppController();
         if (session != null){
@@ -87,7 +87,7 @@ public class HomePageController extends GraphicController{
     }
 
     @FXML
-    public void handlePokeWall(ActionEvent event) throws PokeLabSystemException {
+    public void handlePokeWall(ActionEvent event) throws PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
         LoginAppController loginAppController = new LoginAppController();
         if (session != null){
             UserTypeBean userTypeBean = new UserTypeBean(session.getUserId(), UserType.PREMIUMUSER);

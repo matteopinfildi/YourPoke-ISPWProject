@@ -10,5 +10,5 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public abstract class CliGraphicController {
-    public abstract void init(int sessionId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException;
+    public abstract void init(int sessionId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException;
 }

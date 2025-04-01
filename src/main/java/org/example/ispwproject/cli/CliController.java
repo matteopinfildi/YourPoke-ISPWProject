@@ -16,7 +16,7 @@ public abstract class CliController extends CliGraphicController {
 
     protected CliController() {}
 
-    public abstract void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException;
+    public abstract void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException;
 
     protected int menu(String title, List<String> alternative) {
         Scanner scanner = new Scanner(System.in);

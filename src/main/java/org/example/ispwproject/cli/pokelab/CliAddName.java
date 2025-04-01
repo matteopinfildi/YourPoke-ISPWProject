@@ -22,14 +22,14 @@ public class CliAddName extends CliController {
     private int id;
 
     @Override
-    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException {
+    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
         this.buyPokeLabAppController = new BuyPokeLabAppController();
         this.pokeLabBean = pokeLabBean;
         this.id = id;
         processPokeName();
     }
 
-    private void processPokeName() throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException {
+    private void processPokeName() throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
         Scanner scanner = new Scanner(System.in);
         boolean validName = false;
 
@@ -62,7 +62,7 @@ public class CliAddName extends CliController {
         System.out.println("(Name must be at least 4 characters long)");
     }
 
-    private boolean handleBackCommand(String name) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException {
+    private boolean handleBackCommand(String name) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
         if (name.equalsIgnoreCase("back")) {
             new CliPokeLab().init(id, pokeLabBean);
             return true;
