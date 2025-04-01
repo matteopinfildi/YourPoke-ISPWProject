@@ -32,8 +32,10 @@ public class DBPokeWallDAO implements PokeWallDAO {
                 for (String ingredient : pokeWall.getIngredients()) {
                     ingredientStmt.setInt(1, postId);
                     ingredientStmt.setString(2, ingredient);
-                    ingredientStmt.executeUpdate();
+                    ingredientStmt.addBatch();
                 }
+
+                ingredientStmt.executeBatch();
             }
         } catch (SQLException e) {
             throw new SystemException("Error saving post to database");

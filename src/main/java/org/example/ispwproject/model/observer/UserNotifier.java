@@ -20,8 +20,6 @@ public class UserNotifier  implements PokeWallObserver {
         System.out.println("Notifica: Nuovo post da " + newPost.getUsername() +
                 ": " + newPost.getPokeName());
     }
-
-    private void sendNotification(User user, PokeWall post) {
-        // da implementare l'invio effettivo della notifica
-    }
 }
+
+
