@@ -152,8 +152,7 @@ public class BuyPokeLabAppController {
 
         PokeLab pokeLab = user.getPokeLab();
         if (pokeLab != null) {
-            PokeLabBean pokeLabBean = new PokeLabBean(pokeLab);
-            return pokeLabBean;
+            return new PokeLabBean(pokeLab);
         }
         return null;
     }
