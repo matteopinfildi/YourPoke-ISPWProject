@@ -1,6 +1,7 @@
 package org.example.ispwproject.model.user;
 
 import org.example.ispwproject.model.decorator.pokelab.InMemoryPokeLabDAO;
+import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import java.util.ArrayList;
@@ -36,18 +37,18 @@ public class InMemoryUserDAO implements UserDAO{
     }
 
     @Override
-    public void update(User user, int plid) throws SystemException {
+    public void update(User user, int plid) throws SystemException, PokeLabSystemException {
         delete(user.getUsername());
         user.setPokeLab(InMemoryPokeLabDAO.getInstance().read(plid));
         listOfUsers.add(user);
     }
 
     @Override
-    public void delete(String uId) throws SystemException {
+    public void delete(String uId) throws SystemException, PokeLabSystemException {
         try {
             listOfUsers.remove(read(uId));
         } catch (SystemException e) {
-            throw new RuntimeException(e);
+            throw new PokeLabSystemException("Error creating user", e);
         }
     }
 }
