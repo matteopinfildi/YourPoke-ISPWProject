@@ -7,19 +7,19 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestSessionManager {
+class TestSessionManager {
 
     private SessionManager sessionManager;
     private Session session;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         // Inizializza il SessionManager
         sessionManager = SessionManager.getSessionManager();
     }
 
     @Test
-    public void testCreateSession() {
+    void testCreateSession() {
         // Crea una nuova sessione con un username
         session = sessionManager.createSession("pinfoM");
 
@@ -31,7 +31,7 @@ public class TestSessionManager {
     }
 
     @Test
-    public void testGetSessionFromId() {
+    void testGetSessionFromId() {
         // Crea e aggiungi una sessione al SessionManager
         session = sessionManager.createSession("pinfoM");
         sessionManager.addSession(session);
@@ -46,7 +46,7 @@ public class TestSessionManager {
     }
 
     @Test
-    public void testRemoveSession() {
+    void testRemoveSession() {
         // Crea e aggiungi una sessione al SessionManager
         session = sessionManager.createSession("pinfoM");
         sessionManager.addSession(session);
@@ -60,7 +60,7 @@ public class TestSessionManager {
     }
 
     @Test
-    public void testCreateMultipleSessions() {
+    void testCreateMultipleSessions() {
         // Crea più sessioni
         Session session1 = sessionManager.createSession("pinfoM");
         Session session2 = sessionManager.createSession("matteoP");

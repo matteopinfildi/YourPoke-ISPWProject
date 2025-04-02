@@ -7,19 +7,19 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestSpicyDecorator {
+class TestSpicyDecorator {
 
     private PokeLab pokeLab;
     private SpicyDecorator spicyDecorator;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         // Crea un oggetto PokeLab con un prezzo base di 5.0 (ad esempio un poke bowl base)
         pokeLab = new PokeLab(5.0);
     }
 
     @Test
-    public void testSpicyDecoratorPrice() {
+    void testSpicyDecoratorPrice() {
         // Aggiungi la spezia "Hebanero" al PokeLab tramite SpicyDecorator
         spicyDecorator = new SpicyDecorator(pokeLab, "Hebanero");
 
@@ -32,7 +32,7 @@ public class TestSpicyDecorator {
     }
 
     @Test
-    public void testSpicyDecoratorPriceWithDifferentSpicy() {
+    void testSpicyDecoratorPriceWithDifferentSpicy() {
         // Aggiungi la spezia "Chili" al PokeLab tramite SpicyDecorator
         spicyDecorator = new SpicyDecorator(pokeLab, "Chili");
 
