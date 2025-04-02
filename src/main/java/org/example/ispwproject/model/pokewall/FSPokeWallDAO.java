@@ -102,19 +102,10 @@ public class FSPokeWallDAO implements PokeWallDAO {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] data = line.split(DELIMITER, -1);
-                if (data.length >= 1) {
-                    try {
-                        int currentId = Integer.parseInt(data[0]);
-                        if (currentId != postId) {
-                            linesToKeep.add(line);
-                        } else {
-                            found = true;
-                        }
-                    } catch (NumberFormatException e) {
-                        // Salta righe malformate
-                        continue;
-                    }
+                if (!isPostIdMatch(line, postId)) {
+                    linesToKeep.add(line);
+                } else {
+                    found = true;
                 }
             }
         } catch (IOException e) {
@@ -125,7 +116,7 @@ public class FSPokeWallDAO implements PokeWallDAO {
             throw new SystemException("Post with ID " + postId + " not found");
         }
 
-        // Risalva il file senza il post eliminato
+        // Riscrive il file senza il post eliminato
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (String line : linesToKeep) {
                 writer.write(line);
@@ -135,4 +126,15 @@ public class FSPokeWallDAO implements PokeWallDAO {
             throw new SystemException("Error rewriting file after deletion");
         }
     }
+
+    private boolean isPostIdMatch(String line, int postId) {
+        String[] data = line.split(DELIMITER, -1);
+        if (data.length >= 1) {
+            try {
+                return Integer.parseInt(data[0]) == postId;
+            } catch (NumberFormatException ignored) {}
+        }
+        return false;
+    }
+
 }
