@@ -11,7 +11,7 @@ public class PokeWall {
 
     public PokeWall(String pokeName, String size, String username, List<String> ingredients) {
         this.pokeName = pokeName;
-        this.size = size;
+        this.size = size != null && !size.isEmpty() ? size : "Unknown size";
         this.username = username;
         this.ingredients = ingredients;
     }
@@ -35,7 +35,7 @@ public class PokeWall {
 
     public String getSize(){return size;}
 
-    public void setSize(String size) {this.size = size;}
+    public void setSize(String size) {this.size = size  != null && !size.isEmpty() ? size : "Unknown size";}
 
     public String getUsername() {
         return username;

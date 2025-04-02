@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-public class AddNameController extends GraphicController{
+public class AddNameController extends GraphicController {
 
     @FXML
     private TextField pokeNameField;
@@ -67,7 +67,7 @@ public class AddNameController extends GraphicController{
 
             SaveBean saveBean = new SaveBean(userId);
 
-            if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)){
+            if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
                 System.out.println("Save failed");
                 return;
             } else {
@@ -86,21 +86,30 @@ public class AddNameController extends GraphicController{
     }
 
 
-
     @FXML
     public void handlePostToPokeWall(ActionEvent event) {
         PokeWallAppController pokeWallAppController = new PokeWallAppController();
         String name = pokeNameField.getText().trim();
+
+        // Controllo sul nome
         if (name.length() < 4) {
             errorLabel.setText("The name must be at least 4 characters long!");
             return;
         }
 
+        // Recupera la sessione
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(id);
+
+        // Aggiungi il controllo se la sessione è null
+        if (session == null) {
+            errorLabel.setText("Session not found. Please log in again.");
+            return;
+        }
+
         String userId = session.getUserId();
 
-        // Crea la PokeWallBean invece di passare i parametri singolarmente
+        // Crea il PokeWallBean
         PokeWallBean pokeWallBean = new PokeWallBean();
         pokeWallBean.setPokeName(name);
         pokeWallBean.setSize(pokeLabBean.getBowlSize());

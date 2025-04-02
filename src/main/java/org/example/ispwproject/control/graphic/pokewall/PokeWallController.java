@@ -75,6 +75,12 @@ public class PokeWallController extends GraphicController implements PokeWallObs
         for (PokeWall pokeWall : posts) {
             StringBuilder postText = new StringBuilder();
             postText.append(pokeWall.getUsername()).append(" created the Poke Lab: ").append(pokeWall.getPokeName()).append("\n");
+
+            String pokeSize = pokeWall.getSize();
+            if (pokeSize == null || pokeSize.isEmpty()) {
+                pokeSize = "Unknown size"; // Default
+            }
+
             postText.append("Poke size: ").append(pokeWall.getSize()).append("\n");
 
             // Aggiungi gli ingredienti
@@ -124,6 +130,12 @@ public class PokeWallController extends GraphicController implements PokeWallObs
         for (PokeWall pokeWall : currentPosts) {
             StringBuilder postText = new StringBuilder();
             postText.append(pokeWall.getUsername()).append(" created the Poke Lab: ").append(pokeWall.getPokeName()).append("\n");
+
+            String pokeSize = pokeWall.getSize();
+            if (pokeSize == null || pokeSize.isEmpty()) {
+                pokeSize = "Unknown size";
+            }
+
             postText.append("Poke size: ").append(pokeWall.getSize()).append("\n");
 
             for (String ingredient : pokeWall.getIngredients()) {
@@ -159,7 +171,16 @@ public class PokeWallController extends GraphicController implements PokeWallObs
                 // Passiamo l'ID del post invece dell'indice
                 boolean success = pokeWallAppController.deletePost(selectedPost.getId(), currentUsername);
                 if (success) {
+                    // Salva l'indice selezionato prima del refresh
+                    int selectedId = selectedPost.getId();
                     refreshPosts();
+                    // Ripristina la selezione dopo il refresh
+                    for (int i = 0; i < currentPosts.size(); i++) {
+                        if (currentPosts.get(i).getId() == selectedId) {
+                            pokeWallListView.getSelectionModel().select(i);
+                            break;
+                        }
+                    }
                     System.out.println("Post deleted successfully!");
                 } else {
                     System.out.println("Failed to delete post.");
