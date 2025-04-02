@@ -1,6 +1,5 @@
 package org.example.ispwproject.model.pokewall;
 
-import org.example.ispwproject.model.pokewall.PokeWall;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import java.util.List;

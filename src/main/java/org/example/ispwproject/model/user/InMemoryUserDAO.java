@@ -26,9 +26,9 @@ public class InMemoryUserDAO implements UserDAO{
     }
 
     @Override
-    public User read(String Uid) throws SystemException {
+    public User read(String uId) throws SystemException {
         for (User user : listOfUsers) {
-            if (user.getUsername().equals(Uid)) {
+            if (user.getUsername().equals(uId)) {
                 return user;
             }
         }
