@@ -19,10 +19,7 @@ import org.example.ispwproject.utils.enumeration.ingredient.GenericAlternative;
 import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class BuyPokeLabAppController {
     private DAOFactory daoFactory;
@@ -61,7 +58,7 @@ public class BuyPokeLabAppController {
 
     public void registerPokeLab(Ingredient ingredient){this.allIngredient = ingredient;}
 
-    private HashMap<String, Integer> spicy = new HashMap<>();
+    private Map<String, Integer> spicy = new HashMap<>();
     private List<Topping> topping = new ArrayList<>();
 
     public double putDecoration(PokeLabBean pokeLabBean, ExtraBean extraBean){
