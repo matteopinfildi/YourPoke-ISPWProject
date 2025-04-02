@@ -1,3 +1,5 @@
+package org.example.ispwprogect;
+
 import org.example.ispwproject.model.decorator.spicy.SpicyDecorator;
 import org.example.ispwproject.model.decorator.pokelab.PokeLab;
 import org.junit.jupiter.api.BeforeEach;

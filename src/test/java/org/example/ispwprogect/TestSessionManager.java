@@ -1,3 +1,5 @@
+package org.example.ispwprogect;
+
 import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
 import org.junit.jupiter.api.BeforeEach;
