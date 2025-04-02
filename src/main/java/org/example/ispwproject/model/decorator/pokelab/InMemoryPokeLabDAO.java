@@ -6,16 +6,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class InMemoryPokeLabDAO implements PokeLabDAO {
-    private static InMemoryPokeLabDAO instance;
+
+    private static class SingletonHelper {
+        private static final InMemoryPokeLabDAO INSTANCE = new InMemoryPokeLabDAO();
+    }
+//    private static InMemoryPokeLabDAO instance;
     private Collection<PokeLab> listOfPokeLab = new ArrayList<>();
 
     private InMemoryPokeLabDAO(){}
 
     public static synchronized InMemoryPokeLabDAO getInstance(){
-        if (instance == null) {
-            instance = new InMemoryPokeLabDAO();
-        }
-        return instance;
+//        if (instance == null) {
+//            instance = new InMemoryPokeLabDAO();
+//        }
+//        return instance;
+        return SingletonHelper.INSTANCE;
     }
 
     @Override
