@@ -158,37 +158,60 @@ public class PokeWallController extends GraphicController implements PokeWallObs
     public void handleDeletePost(ActionEvent event) {
         int selectedIndex = pokeWallListView.getSelectionModel().getSelectedIndex();
 
-        if (selectedIndex >= 0 && selectedIndex < currentPosts.size()) {
+        if (isValidSelection(selectedIndex)) {
             PokeWall selectedPost = currentPosts.get(selectedIndex);
 
-            // Verifica se l'utente corrente è il creatore del post
-            if (!selectedPost.getUsername().equals(currentUsername)) {
-                System.out.println("You can only delete your own posts!");
-                return;
-            }
-
-            try {
-                // Passiamo l'ID del post invece dell'indice
-                boolean success = pokeWallAppController.deletePost(selectedPost.getId(), currentUsername);
-                if (success) {
-                    // Salva l'indice selezionato prima del refresh
-                    int selectedId = selectedPost.getId();
-                    refreshPosts();
-                    // Ripristina la selezione dopo il refresh
-                    for (int i = 0; i < currentPosts.size(); i++) {
-                        if (currentPosts.get(i).getId() == selectedId) {
-                            pokeWallListView.getSelectionModel().select(i);
-                            break;
-                        }
-                    }
-                    System.out.println("Post deleted successfully!");
-                } else {
-                    System.out.println("Failed to delete post.");
+            if (canDeletePost(selectedPost)) {
+                try {
+                    deleteAndRefreshPosts(selectedPost);
+                } catch (SystemException e) {
+                    System.err.println("Error deleting post: " + e.getMessage());
                 }
-            } catch (SystemException e) {
-                System.err.println("Error deleting post: " + e.getMessage());
             }
         }
     }
 
+    // Verifica se la selezione è valida
+    private boolean isValidSelection(int selectedIndex) {
+        return selectedIndex >= 0 && selectedIndex < currentPosts.size();
+    }
+
+    // Verifica se l'utente ha il permesso di eliminare il post
+    private boolean canDeletePost(PokeWall selectedPost) {
+        if (!selectedPost.getUsername().equals(currentUsername)) {
+            System.out.println("You can only delete your own posts!");
+            return false;
+        }
+        return true;
+    }
+
+    // Elimina il post, aggiorna la lista e ripristina la selezione
+    private void deleteAndRefreshPosts(PokeWall selectedPost) throws SystemException {
+        boolean success = pokeWallAppController.deletePost(selectedPost.getId(), currentUsername);
+
+        if (success) {
+            // Salva l'ID del post selezionato prima del refresh
+            int selectedId = selectedPost.getId();
+
+            // Esegui il refresh dei post
+            refreshPosts();
+
+            // Ripristina la selezione dopo il refresh
+            restoreSelection(selectedId);
+
+            System.out.println("Post deleted successfully!");
+        } else {
+            System.out.println("Failed to delete post.");
+        }
+    }
+
+    // Ripristina la selezione del post dopo il refresh
+    private void restoreSelection(int selectedId) {
+        for (int i = 0; i < currentPosts.size(); i++) {
+            if (currentPosts.get(i).getId() == selectedId) {
+                pokeWallListView.getSelectionModel().select(i);
+                break;
+            }
+        }
+    }
 }
