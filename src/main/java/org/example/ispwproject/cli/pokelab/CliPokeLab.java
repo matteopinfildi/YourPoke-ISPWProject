@@ -3,7 +3,6 @@ package org.example.ispwproject.cli.pokelab;
 import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.cli.CliController;
-import org.example.ispwproject.cli.CliHomePage;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
@@ -40,31 +39,45 @@ public class CliPokeLab extends CliController{
     private void popup() throws PokeLabSystemException {
         Scanner scanner = new Scanner(System.in);
         int selection = -1;
-        boolean flag = false;
-        do{
+        boolean validInput = false;
+        do {
             System.out.println("1) Recover Pokè Lab");
             System.out.println("2) New Pokè Lab");
             System.out.println("\nSelect an option: ");
-            if(scanner.hasNextInt()) {
-                selection = scanner.nextInt();
-                if(selection == 1){
-                    SessionManager sessionManager = SessionManager.getSessionManager();
-                    Session session = sessionManager.getSessionFromId(id);
-                    String userId = session.getUserId();
 
-                    SaveBean saveBean = new SaveBean(userId);
+            validInput = scanner.hasNextInt();
+            if (!validInput) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // Consuma l'input non valido
+                continue;
+            }
 
-                    PokeLabBean oldPokeLabBean = buyPokeLabAppController.recoverPokeLab(saveBean);
-                    if (oldPokeLabBean != null) {
-                        this.pokeLabBean = oldPokeLabBean;
-                    } else {System.out.println("Pokè Lab not found!");}
-                } else if (selection == 2) {
-
-                } else {
-                    flag = true;
+            selection = scanner.nextInt();
+            switch (selection) {
+                case 1 -> recoverPokeLab();
+                case 2 -> System.out.println("Creating a new Pokè Lab...");
+                default -> {
+                    System.out.println("Invalid option. Please select 1 or 2.");
+                    validInput = false;
                 }
             }
-        }while (flag);
+
+        }while (validInput) ;
+    }
+
+    private void recoverPokeLab() throws PokeLabSystemException {
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSessionFromId(id);
+        String userId = session.getUserId();
+        SaveBean saveBean = new SaveBean(userId);
+        PokeLabBean oldPokeLabBean = buyPokeLabAppController.recoverPokeLab(saveBean);
+
+        if (oldPokeLabBean != null) {
+            this.pokeLabBean = oldPokeLabBean;
+            System.out.println("Pokè Lab successfully recovered.");
+        } else {
+            System.out.println("Pokè Lab not found!");
+        }
     }
 
 
