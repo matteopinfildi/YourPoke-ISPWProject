@@ -39,7 +39,7 @@ public class DBUserDAO implements UserDAO{
 
     @Override
     public User read(String uid) throws SystemException{
-        String queryRead = "SELECT * FROM users WHERE username = ?";
+        String queryRead = "SELECT username, password, email, utype, address, plid FROM users WHERE username = ?";
         try(Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatement =connection.prepareStatement(queryRead)){
             preparedStatement.setString(1, uid);
             ResultSet resultSet = preparedStatement.executeQuery();
