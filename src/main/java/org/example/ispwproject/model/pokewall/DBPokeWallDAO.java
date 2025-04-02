@@ -28,9 +28,8 @@ public class DBPokeWallDAO implements PokeWallDAO {
             if (rs.next()) {
                 int postId = rs.getInt(1);
 
-                // Salva gli ingredienti
+                ingredientStmt.setInt(1, postId);
                 for (String ingredient : pokeWall.getIngredients()) {
-                    ingredientStmt.setInt(1, postId);
                     ingredientStmt.setString(2, ingredient);
                     ingredientStmt.addBatch();
                 }
