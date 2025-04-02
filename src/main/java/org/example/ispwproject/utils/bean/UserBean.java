@@ -19,7 +19,6 @@ public class UserBean {
     }
 
     public String getUid() {return uid;}
-    public void setUid() {this.uid = uid;}
 
     public String getPassword() {return password;}
     public void setPassword(String password) {this.password = password;}

@@ -19,7 +19,7 @@ public class PokeLabBean {
 
     public PokeLabBean(){
         plId= SessionManager.getSessionManager().curPokeId();
-//       setPrice(0);
+       setPrice(0);
     }
 
     public PokeLabBean(PokeLab pokeLab){
