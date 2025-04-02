@@ -53,7 +53,8 @@ public class CliAddName extends CliController {
 
     private void displayCurrentName() {
         System.out.println("\n--- Set your Poké name ---");
-        String currentName = pokeLabBean != null ? pokeLabBean.getPokeName() : "no set";
+        // Se getPokeName() restituisce null, assegna "no set"
+        String currentName = (pokeLabBean.getPokeName() != null) ? pokeLabBean.getPokeName() : "no set";
         if (!currentName.equals("no set")) {
             System.out.println(String.format("Current name: %s", currentName));
         } else {

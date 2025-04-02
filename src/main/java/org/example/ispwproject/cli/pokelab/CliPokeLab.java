@@ -3,6 +3,7 @@ package org.example.ispwproject.cli.pokelab;
 import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.cli.CliController;
+import org.example.ispwproject.cli.CliHomePage;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
@@ -151,6 +152,9 @@ public class CliPokeLab extends CliController{
                 return true;
             case 8:
                 return savePokeLab(); // Gestisci il salvataggio
+            case 9:
+                new CliHomePage().init(id, pokeLabBean);
+                return true;
             default:
                 System.out.println("Select a valid option!");
                 return false;
@@ -183,8 +187,8 @@ public class CliPokeLab extends CliController{
                 "Sauces: " + saucesName,
                 "Bowl size: " + bowlSize,
                 "Add Name: " + pokeName,
-                "Back",
-                "Save Pokè Lab"
+                "Save Pokè Lab",
+                "Back"
         );
     }
 }

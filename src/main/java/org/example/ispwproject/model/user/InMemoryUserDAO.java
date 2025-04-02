@@ -38,6 +38,15 @@ public class InMemoryUserDAO implements UserDAO{
 
     @Override
     public void update(User user, int plid) throws SystemException, PokeLabSystemException {
+        if (user == null) {
+            throw new PokeLabSystemException("Errore: l'utente passato al metodo update() è nullo.");
+        }
+        // Controlla che l'utente esista nel sistema
+        if (read(user.getUsername()) == null) {
+            throw new PokeLabSystemException("Errore: utente non trovato per l'aggiornamento.");
+        }
+
+        // Procedi con l'aggiornamento
         delete(user.getUsername());
         user.setPokeLab(InMemoryPokeLabDAO.getInstance().read(plid));
         listOfUsers.add(user);

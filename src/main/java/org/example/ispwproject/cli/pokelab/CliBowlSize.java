@@ -1,5 +1,7 @@
 package org.example.ispwproject.cli.pokelab;
 
+import org.example.ispwproject.Session;
+import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.cli.CliController;
 import org.example.ispwproject.cli.CliHomePage;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
@@ -53,7 +55,11 @@ public class CliBowlSize extends CliController {
             if (!selectedSize.equals(pokeLabBean.getBowlSize())) {
                 pokeLabBean.setBowlSize(selectedSize);
 
-                SaveBean saveBean = new SaveBean(String.valueOf(pokeLabBean.getId()));
+                SessionManager sessionManager = SessionManager.getSessionManager();
+                Session session = sessionManager.getSessionFromId(sID);
+                String userId = session.getUserId();
+
+                SaveBean saveBean = new SaveBean(userId);
                 if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
                     System.out.println("Error saving bowl size");
                 } else {
