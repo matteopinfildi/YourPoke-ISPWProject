@@ -132,7 +132,9 @@ public class FSPokeWallDAO implements PokeWallDAO {
         if (data.length >= 1) {
             try {
                 return Integer.parseInt(data[0]) == postId;
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException e) {
+                return false;
+            }
         }
         return false;
     }
