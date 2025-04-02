@@ -11,7 +11,7 @@ public class InMemoryPokeLabDAO implements PokeLabDAO {
 
     private InMemoryPokeLabDAO(){}
 
-    public static InMemoryPokeLabDAO getInstance(){
+    public static synchronized InMemoryPokeLabDAO getInstance(){
         if (instance == null) {
             instance = new InMemoryPokeLabDAO();
         }
@@ -20,6 +20,9 @@ public class InMemoryPokeLabDAO implements PokeLabDAO {
 
     @Override
     public void create(PokeLab pokeLab) throws SystemException {
+        if (pokeLab == null) {
+            throw new SystemException("Error");
+        }
         listOfPokeLab.add(pokeLab);
     }
 
@@ -35,10 +38,9 @@ public class InMemoryPokeLabDAO implements PokeLabDAO {
 
     @Override
     public void delete(int plid) throws SystemException {
-        try {
-            listOfPokeLab.remove(read(plid));
-        } catch (SystemException e) {
-            throw new RuntimeException(e);
+        boolean removed = listOfPokeLab.removeIf(pokeLab -> pokeLab.id() == plid);
+        if (!removed) {
+            throw new SystemException("PokéLab con id " + plid + " non trovato.");
         }
     }
 
