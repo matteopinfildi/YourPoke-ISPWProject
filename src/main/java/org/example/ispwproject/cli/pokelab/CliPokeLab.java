@@ -74,92 +74,90 @@ public class CliPokeLab extends CliController{
         this.pokeLabBean = pokeLabBean;
         this.id = sID;
 
+        // Recupero se necessario
         if (recover) {
             popup();
-            boolean flag = false;
-            setRecover(flag);
+            setRecover(false);
         }
 
-        if(pokeLabBean != null) {
+        // Aggiorna il totale se esiste un pokeLabBean
+        if (pokeLabBean != null) {
             total = "Total = " + pokeLabBean.getPrice() + " $";
         }
 
-        GenericAlternative genericAlternative;
+        // Seleziona gli ingredienti
+        setIngredients();
 
-        genericAlternative = pokeLabBean.getIngredient("rice");
-        riceName = (genericAlternative != null) ? ((RiceAlternative) genericAlternative).name() : NO_SELECTION;
-
-        genericAlternative = pokeLabBean.getIngredient("protein");
-        proteinName = (genericAlternative != null) ? ((ProteinAlternative) genericAlternative).name() : NO_SELECTION;
-
-        genericAlternative = pokeLabBean.getIngredient("fruit");
-        fruitName = (genericAlternative != null) ? ((FruitAlternative) genericAlternative).name() : NO_SELECTION;
-
-        genericAlternative = pokeLabBean.getIngredient("crunchy");
-        crunchyName = (genericAlternative != null) ? ((CrunchyAlternative) genericAlternative).name() : NO_SELECTION;
-
-        genericAlternative = pokeLabBean.getIngredient("sauces");
-        saucesName = (genericAlternative != null) ? ((SaucesAlternative) genericAlternative).name() : NO_SELECTION;
-
-        bowlSize = pokeLabBean.getBowlSize() != null ? pokeLabBean.getBowlSize() : NO_SELECTION;
-
-        pokeName = pokeLabBean.getPokeName() != null ? pokeLabBean.getPokeName() : "No name set";
-
+        // Gestione della selezione dell'utente per gli ingredienti
         boolean condition;
+        do {
+            condition = handleUserSelection();
+        } while (!condition);
+    }
 
-        do{
-            condition = true;
-            int selection = userSelection("Select an ingredient for your Poke Lab");
-            switch (selection) {
-                case 1:
-                    new CliRice().init(sID, pokeLabBean);
-                    break;
-                case 2:
-                    new CliProtein().init(sID, pokeLabBean);
-                    break;
-                case 3:
-                    new CliFruit().init(sID, pokeLabBean);
-                    break;
-                case 4:
-                    new CliCrunchy().init(sID, pokeLabBean);
-                    break;
-                case 5:
-                    new CliSauces().init(sID, pokeLabBean);
-                    break;
+    // Metodo per impostare gli ingredienti
+    private void setIngredients() {
+        riceName = getIngredientName("rice");
+        proteinName = getIngredientName("protein");
+        fruitName = getIngredientName("fruit");
+        crunchyName = getIngredientName("crunchy");
+        saucesName = getIngredientName("sauces");
+        bowlSize = (pokeLabBean.getBowlSize() != null) ? pokeLabBean.getBowlSize() : NO_SELECTION;
+        pokeName = (pokeLabBean.getPokeName() != null) ? pokeLabBean.getPokeName() : "No name set";
+    }
 
-                case 6:
-                    new CliBowlSize().init(sID, pokeLabBean);
-                    break;
+    private String getIngredientName(String ingredientType) {
+        GenericAlternative ingredient = pokeLabBean.getIngredient(ingredientType);
+        return (ingredient != null) ? ingredient.toString() : NO_SELECTION;
+    }
+    // Metodo per gestire la selezione dell'utente
+    private boolean handleUserSelection() throws SystemException, CliException, SQLException, LoginException, IOException, org.example.ispwproject.utils.exception.LoginException, PokeLabSystemException {
+        int selection = userSelection("Select an ingredient for your Poke Lab");
 
-                case 7:
-                    new CliAddName().init(sID, pokeLabBean);
-                    break;
-                case 8:
-                    new CliHomePage().init(sID, pokeLabBean);
-                    break;
+        switch (selection) {
+            case 1:
+                new CliRice().init(id, pokeLabBean);
+                return true;
+            case 2:
+                new CliProtein().init(id, pokeLabBean);
+                return true;
+            case 3:
+                new CliFruit().init(id, pokeLabBean);
+                return true;
+            case 4:
+                new CliCrunchy().init(id, pokeLabBean);
+                return true;
+            case 5:
+                new CliSauces().init(id, pokeLabBean);
+                return true;
+            case 6:
+                new CliBowlSize().init(id, pokeLabBean);
+                return true;
+            case 7:
+                new CliAddName().init(id, pokeLabBean);
+                return true;
+            case 8:
+                return savePokeLab(); // Gestisci il salvataggio
+            default:
+                System.out.println("Select a valid option!");
+                return false;
+        }
+    }
 
-                case 9:
-                    SessionManager sessionManager = SessionManager.getSessionManager();
-                    Session session = sessionManager.getSessionFromId(id);
-                    String userId = session.getUserId();
+    // Metodo per salvare il Pokè Lab
+    private boolean savePokeLab() throws PokeLabSystemException {
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSessionFromId(id);
+        String userId = session.getUserId();
+        SaveBean saveBean = new SaveBean(userId);
 
-                    SaveBean saveBean = new SaveBean(userId);
-
-                    if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
-                        System.out.println("Save failed\n");
-                        condition = false;
-                        break;
-                    } else {
-                        System.out.println("Save successfull\n");
-                        // mettere add name
-                    }
-                    break;
-
-                default:
-                    System.out.println("Select a valid option!");
-                    condition = false;
-            }
-        }while(!condition);
+        if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
+            System.out.println("Save failed\n");
+            return false;
+        } else {
+            System.out.println("Save successful\n");
+            return true;
+        }
     }
 
     @Override
