@@ -1,7 +1,7 @@
 package org.example.ispwprogect;
 
 import org.example.ispwproject.model.observer.UserNotifier;
-import org.example.ispwproject.model.pokewall.PokeWall;
+import org.example.ispwproject.model.observer.pokewall.PokeWall;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

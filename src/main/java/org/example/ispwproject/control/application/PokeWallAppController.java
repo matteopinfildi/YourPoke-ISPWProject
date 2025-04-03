@@ -2,9 +2,9 @@ package org.example.ispwproject.control.application;
 
 import org.example.ispwproject.model.PokeWallObserver;
 import org.example.ispwproject.model.PokeWallSubject;
-import org.example.ispwproject.model.pokewall.PokeWall;
-import org.example.ispwproject.model.pokewall.PokeWallDAO;
-import org.example.ispwproject.model.pokewall.FSPokeWallDAO;
+import org.example.ispwproject.model.observer.pokewall.PokeWall;
+import org.example.ispwproject.model.observer.pokewall.PokeWallDAO;
+import org.example.ispwproject.model.observer.pokewall.FSPokeWallDAO;
 import org.example.ispwproject.utils.bean.PokeWallBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.model.user.User;

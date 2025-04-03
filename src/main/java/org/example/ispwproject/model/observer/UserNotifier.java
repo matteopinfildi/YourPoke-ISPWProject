@@ -1,7 +1,7 @@
 package org.example.ispwproject.model.observer;
 
 import org.example.ispwproject.model.PokeWallObserver;
-import org.example.ispwproject.model.pokewall.PokeWall;
+import org.example.ispwproject.model.observer.pokewall.PokeWall;
 import org.example.ispwproject.model.user.UserDAO;
 import org.example.ispwproject.utils.dao.DAOFactory;
 

@@ -1,4 +1,4 @@
-package org.example.ispwproject.model.pokewall;
+package org.example.ispwproject.model.observer.pokewall;
 
 import org.example.ispwproject.utils.exception.SystemException;
 

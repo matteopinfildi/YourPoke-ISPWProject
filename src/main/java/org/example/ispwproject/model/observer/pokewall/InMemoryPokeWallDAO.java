@@ -1,4 +1,4 @@
-package org.example.ispwproject.model.pokewall;
+package org.example.ispwproject.model.observer.pokewall;
 
 import java.util.ArrayList;
 import java.util.List;
