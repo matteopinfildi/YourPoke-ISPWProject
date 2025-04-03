@@ -130,7 +130,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "SQL error while updating bowl size for PokeLab with ID " + plid, e);
-            throw new SystemException("Error updating PokeLab bowl size";
+            throw new SystemException("Error updating PokeLab bowl size");
         }
     }
 
