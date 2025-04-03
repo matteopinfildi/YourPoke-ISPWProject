@@ -89,8 +89,8 @@ public class DBPokeLabDAO implements PokeLabDAO {
                 return new PokeLab(price, plid, ingredients, size);
             }
         }catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL error  ");
-            throw new SystemException("Error");
+            logger.log(Level.SEVERE, "SQL error while reading PokeLab entry with ID " + plid, e);
+            throw new SystemException("Error reading PokeLab from database");
         }
         return null;
     }
@@ -105,8 +105,8 @@ public class DBPokeLabDAO implements PokeLabDAO {
             preparedStatement.setInt(1, plid);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL error  ");
-            throw new SystemException("Error");
+            logger.log(Level.SEVERE, "SQL error while deleting PokeLab entry with ID " + plid, e);
+            throw new SystemException("Error deleting PokeLab from database");
         }
     }
 
@@ -129,8 +129,8 @@ public class DBPokeLabDAO implements PokeLabDAO {
             }
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL error  ");
-            throw new SystemException("Error");
+            logger.log(Level.SEVERE, "SQL error while updating bowl size for PokeLab with ID " + plid, e);
+            throw new SystemException("Error updating PokeLab bowl size";
         }
     }
 
