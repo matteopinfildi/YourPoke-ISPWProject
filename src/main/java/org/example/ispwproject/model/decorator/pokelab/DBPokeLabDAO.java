@@ -10,8 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DBPokeLabDAO implements PokeLabDAO {
+    private static final Logger logger = Logger.getLogger(DBPokeLabDAO.class.getName());
 
     @Override
     public void create(PokeLab pokeLab) throws SystemException {
@@ -41,6 +44,8 @@ public class DBPokeLabDAO implements PokeLabDAO {
                 preparedStatementIngredient.executeBatch();
             }
         }catch (SQLException e) {
+            logger.log(Level.SEVERE, "SQL error while creating PokeLab entry", e);
+            throw new SystemException("Error creating PokeLab in database");
         }
     }
 
@@ -84,6 +89,8 @@ public class DBPokeLabDAO implements PokeLabDAO {
                 return new PokeLab(price, plid, ingredients, size);
             }
         }catch (SQLException e) {
+            logger.log(Level.SEVERE, "SQL error  ");
+            throw new SystemException("Error");
         }
         return null;
     }
@@ -98,6 +105,8 @@ public class DBPokeLabDAO implements PokeLabDAO {
             preparedStatement.setInt(1, plid);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, "SQL error  ");
+            throw new SystemException("Error");
         }
     }
 
@@ -120,6 +129,8 @@ public class DBPokeLabDAO implements PokeLabDAO {
             }
 
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, "SQL error  ");
+            throw new SystemException("Error");
         }
     }
 
