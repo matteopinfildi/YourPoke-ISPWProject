@@ -84,7 +84,6 @@ public class DBPokeLabDAO implements PokeLabDAO {
                 return new PokeLab(price, plid, ingredients, size);
             }
         }catch (SQLException e) {
-            e.printStackTrace();
         }
         return null;
     }
@@ -99,7 +98,6 @@ public class DBPokeLabDAO implements PokeLabDAO {
             preparedStatement.setInt(1, plid);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
