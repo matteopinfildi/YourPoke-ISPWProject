@@ -41,10 +41,8 @@ public class ChangePage {
             initController(controller, id, pokeLabBean);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Error loading FXML", e);
-            e.printStackTrace();
         } catch (ChangePageException e) {
             logger.log(Level.SEVERE, "Error loading FXML", e);
-            e.printStackTrace();
         }
     }
 
