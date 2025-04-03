@@ -24,7 +24,7 @@ public class PokeWallAppController implements PokeWallSubject {
     // Costruttore che inizializza le DAO (scegliendo quella in memoria o su file system)
     public PokeWallAppController() {
         // Usa il DAO per il PokeWall dal file system o in memoria
-        this.pokeWallDAO = new FSPokeWallDAO();  // oppure InMemoryPokeWallDAO.getInstance()
+        this.pokeWallDAO = new FSPokeWallDAO();
         // Inizializza il DAO per gli utenti
         DAOFactory daoFactory = DAOFactory.getInstance();
         userDAO = daoFactory.getUserDAO();

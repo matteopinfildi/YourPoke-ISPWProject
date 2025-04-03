@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import org.example.ispwproject.ChangePage;
+import org.example.ispwproject.NavigationHelper;
 import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
@@ -53,47 +54,13 @@ public class SidebarController {
 
     @FXML
     public void handleBuyPokeLabCLick(MouseEvent event) throws PokeLabSystemException, LoginException {
-        System.out.println("Crea il tuo pokè!");
-
-        LoginAppController loginAppController = new LoginAppController();
-        if (session != null){
-            UserTypeBean userTypeBean = new UserTypeBean(session.getUserId(), UserType.PREMIUMUSER);
-            if (loginAppController.userType(userTypeBean)){
-                BuyPokeLabAppController buyPokeLabAppController = new BuyPokeLabAppController();
-                PokeLabBean pokeLabBean = buyPokeLabAppController.newPokeLab();
-
-                SaveBean saveBean = new SaveBean(session.getUserId());
-                boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
-                BuyPokeLabController.setRecover(value);
-
-                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
-            }
-        } else{
-            ChangePage.changeScene((Node) event.getSource(), LOGIN_SCENE_PATH, null, id);
-        }
-
+        NavigationHelper.handleSceneChange(event, session, "/org/example/ispwproject/view/buyPokeLab.fxml", id);
     }
+
 
     @FXML
     public void handlePokeWallCLick(MouseEvent event) throws PokeLabSystemException, LoginException {
-        System.out.println("Pokè Wall");
-
-        LoginAppController loginAppController = new LoginAppController();
-        if (session != null){
-            UserTypeBean userTypeBean = new UserTypeBean(session.getUserId(), UserType.PREMIUMUSER);
-            if (loginAppController.userType(userTypeBean)){
-                BuyPokeLabAppController buyPokeLabAppController = new BuyPokeLabAppController();
-                PokeLabBean pokeLabBean = buyPokeLabAppController.newPokeLab();
-
-                SaveBean saveBean = new SaveBean(session.getUserId());
-                boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
-                BuyPokeLabController.setRecover(value);
-
-                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/pokeWall.fxml", pokeLabBean, id);
-            }
-        } else{
-            ChangePage.changeScene((Node) event.getSource(), LOGIN_SCENE_PATH, null, id);
-        }
+        NavigationHelper.handleSceneChange(event, session, "/org/example/ispwproject/view/pokeWall.fxml", id);
     }
 
 
