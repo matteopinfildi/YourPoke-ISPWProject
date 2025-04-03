@@ -120,7 +120,6 @@ public class DBPokeLabDAO implements PokeLabDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
