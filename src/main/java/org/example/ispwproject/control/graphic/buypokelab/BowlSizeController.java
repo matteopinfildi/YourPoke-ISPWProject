@@ -109,7 +109,6 @@ public class BowlSizeController extends GraphicController {
                 System.out.println("Bowl size saved: " + selectedSize);
             } catch (Exception e) {
                 System.out.println("Error saving bowl size: " + e.getMessage());
-                e.printStackTrace();
             }
         }
 

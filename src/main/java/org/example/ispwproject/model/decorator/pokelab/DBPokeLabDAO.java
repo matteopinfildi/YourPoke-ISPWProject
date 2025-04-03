@@ -41,7 +41,6 @@ public class DBPokeLabDAO implements PokeLabDAO {
                 preparedStatementIngredient.executeBatch();
             }
         }catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
