@@ -15,6 +15,11 @@ import org.example.ispwproject.utils.exception.PokeLabSystemException;
 
 public class NavigationHelper {
 
+    private NavigationHelper() {
+        // Costruttore vuoto
+    }
+
+
     public static void handleSceneChange(ActionEvent event, Session session, String scenePath, int id) throws  PokeLabSystemException, LoginException {
         LoginAppController loginAppController = new LoginAppController();
         if (session != null) {
