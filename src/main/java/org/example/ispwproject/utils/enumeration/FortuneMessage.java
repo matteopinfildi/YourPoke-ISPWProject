@@ -1,6 +1,6 @@
 package org.example.ispwproject.utils.enumeration;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public enum FortuneMessage {
     OPPORTUNITY("Every day is a new opportunity."),
@@ -21,6 +21,6 @@ public enum FortuneMessage {
 
     public static FortuneMessage getRandomFortune() {
         FortuneMessage[] values = FortuneMessage.values();
-        return values[new Random().nextInt(values.length)];
+        return values[ThreadLocalRandom.current().nextInt(values.length)];
     }
 }
