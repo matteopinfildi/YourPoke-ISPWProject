@@ -236,4 +236,9 @@ public class ExtraController extends GraphicController {
     public void handleBackClick(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addName.fxml", pokeLabBean, id);
     }
+
+    @FXML
+    public void handleFortuneClick(ActionEvent event) {
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/fortuneCookie.fxml", pokeLabBean, id);
+    }
 }
