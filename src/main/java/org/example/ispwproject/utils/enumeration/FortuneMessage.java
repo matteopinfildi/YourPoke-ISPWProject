@@ -21,6 +21,7 @@ public enum FortuneMessage {
 
     public static FortuneMessage getRandomFortune() {
         FortuneMessage[] values = FortuneMessage.values();
-        return values[ThreadLocalRandom.current().nextInt(values.length)];
+        int randomIndex = ThreadLocalRandom.current().nextInt(values.length);
+        return values[randomIndex];
     }
 }
