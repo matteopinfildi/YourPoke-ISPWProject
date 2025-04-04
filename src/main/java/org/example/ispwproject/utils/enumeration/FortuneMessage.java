@@ -1,6 +1,6 @@
 package org.example.ispwproject.utils.enumeration;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.security.SecureRandom;
 
 public enum FortuneMessage {
     OPPORTUNITY("Every day is a new opportunity."),
@@ -10,6 +10,7 @@ public enum FortuneMessage {
     STEP_BY_STEP("Every step you take brings you closer to your goal.");
 
     private final String message;
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     FortuneMessage(String message) {
         this.message = message;
@@ -21,7 +22,7 @@ public enum FortuneMessage {
 
     public static FortuneMessage getRandomFortune() {
         FortuneMessage[] values = FortuneMessage.values();
-        int randomIndex = ThreadLocalRandom.current().nextInt(values.length);
+        int randomIndex = SECURE_RANDOM.nextInt(values.length); // Uso di SecureRandom
         return values[randomIndex];
     }
 }
