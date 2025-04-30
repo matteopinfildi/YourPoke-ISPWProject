@@ -1,10 +1,10 @@
--- Creazione del database (se non esiste già)
+-- Creazione del database
 CREATE DATABASE IF NOT EXISTS yourPoke;
 
 -- Seleziona il database da usare
 USE yourPoke;
 
--- Creazione della tabella pokeLab (per le chitarre)
+-- Creazione della tabella pokeLab
 CREATE TABLE IF NOT EXISTS pokeLab (
     id INT PRIMARY KEY,
     price DECIMAL(10, 2) NOT NULL
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS pokeLabIngredients (
     FOREIGN KEY (plid) REFERENCES pokeLab(id) ON DELETE CASCADE
     );
 
--- Creazione della tabella users (per gli utenti)
+-- Creazione della tabella users
 CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(255) PRIMARY KEY,
     password VARCHAR(255) NOT NULL,
