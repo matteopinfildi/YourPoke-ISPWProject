@@ -38,33 +38,121 @@ public class DBUserDAO implements UserDAO{
     }
 
     @Override
-    public User read(String uid) throws SystemException{
+    public User read(String uid) throws SystemException {
         String queryRead = "SELECT username, password, email, utype, address, plid FROM users WHERE username = ?";
-        try(Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatement =connection.prepareStatement(queryRead)){
+        try (Connection connection = DBConnection.getDBConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(queryRead)) {
+
             preparedStatement.setString(1, uid);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()){
+            if (resultSet.next()) {
+                // Leggi plid
                 int plid = resultSet.getInt("plid");
-                System.out.println(plid);
-                PokeLab pokeLab = plid != -1 ? new DBPokeLabDAO().read(plid) : null;
 
+                // Verifica che plid non sia nullo (o zero)
+                PokeLab pokeLab = null;
+                if (!resultSet.wasNull() && plid > 0) {
+                    // Se plid è valido, prova a caricare il PokeLab
+                    try {
+                        pokeLab = new DBPokeLabDAO().read(plid);
+                    } catch (SystemException e) {
+                        // Se non riesci a trovare il PokeLab, logga l'errore o gestisci la situazione
+                        System.err.println("Attenzione: PokeLab con plid " + plid + " non trovato.");
+                    }
+                }
+
+                // Leggi i dati dell'utente
                 String username = resultSet.getString("username");
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
                 UserType userType = UserType.valueOf(resultSet.getString("utype"));
                 String address = resultSet.getString("address");
 
+                // Crea l'oggetto User
                 User user = new User(username, password, email, userType, address);
+
+                // Imposta il PokeLab, se presente
                 user.setPokeLab(pokeLab);
                 return user;
-            }else{
-                return null;
+            } else {
+                return null;  // L'utente non è stato trovato
             }
-        }catch (SQLException e) {
-            throw new SystemException("Error read!");
+        } catch (SQLException e) {
+            throw new SystemException("Errore nella lettura dell'utente");
         }
     }
+
+
+//    @Override
+//    public User read(String uid) throws SystemException {
+//        String queryRead = "SELECT username, password, email, utype, address, plid FROM users WHERE username = ?";
+//        try (Connection connection = DBConnection.getDBConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(queryRead)) {
+//
+//            preparedStatement.setString(1, uid);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            if (resultSet.next()) {
+//                // MODIFICA CRUCIALE QUI:
+//                int plid = resultSet.getInt("plid");
+//                PokeLab pokeLab = null;
+//
+//                // Solo se plid è valido (non NULL e > 0)
+//                if (!resultSet.wasNull() && plid > 0) {
+//                    try {
+//                        pokeLab = new DBPokeLabDAO().read(plid);
+//                    } catch (SystemException e) {
+//                        System.err.println("Attenzione: PokeLab " + plid + " non trovato, continuo senza");
+//                        // Continua senza PokeLab invece di fallire
+//                    }
+//                }
+//
+//                String username = resultSet.getString("username");
+//                String password = resultSet.getString("password");
+//                String email = resultSet.getString("email");
+//                UserType userType = UserType.valueOf(resultSet.getString("utype"));
+//                String address = resultSet.getString("address");
+//
+//                User user = new User(username, password, email, userType, address);
+//                user.setPokeLab(pokeLab);
+//                return user;
+//            } else {
+//                return null;
+//            }
+//        } catch (SQLException e) {
+//            throw new SystemException("Errore lettura utente " + uid);
+//        }
+//    }
+
+//    @Override
+//    public User read(String uid) throws SystemException{
+//        String queryRead = "SELECT username, password, email, utype, address, plid FROM users WHERE username = ?";
+//        try(Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatement =connection.prepareStatement(queryRead)){
+//            preparedStatement.setString(1, uid);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            if (resultSet.next()){
+//                int plid = resultSet.getInt("plid");
+//                System.out.println(plid);
+//                PokeLab pokeLab = plid != -1 ? new DBPokeLabDAO().read(plid) : null;
+//
+//                String username = resultSet.getString("username");
+//                String password = resultSet.getString("password");
+//                String email = resultSet.getString("email");
+//                UserType userType = UserType.valueOf(resultSet.getString("utype"));
+//                String address = resultSet.getString("address");
+//
+//                User user = new User(username, password, email, userType, address);
+//                user.setPokeLab(pokeLab);
+//                return user;
+//            }else{
+//                return null;
+//            }
+//        }catch (SQLException e) {
+//            throw new SystemException("Error read!");
+//        }
+//    }
 
     @Override
     public void update(User user, int plid) throws SystemException {
@@ -75,7 +163,7 @@ public class DBUserDAO implements UserDAO{
             preparedStatement.setString(2, user.getUsername());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new SystemException("Errore update!");
+            throw new SystemException("Errore update!"+e.getMessage());
         }
     }
 
@@ -85,7 +173,7 @@ public class DBUserDAO implements UserDAO{
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new SystemException("Errore delete poke lab!");
+            throw new SystemException("Errore delete poke lab!"+ e.getMessage());
         }
     }
 

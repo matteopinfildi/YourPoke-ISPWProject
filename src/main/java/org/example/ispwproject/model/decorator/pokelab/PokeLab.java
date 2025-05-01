@@ -21,6 +21,7 @@ public class PokeLab extends Ingredient {
         this.id = pokeLab.getId();
         this.totalPrice = pokeLab.getPrice();
         this.items = new HashMap<>(pokeLab.getAllIngredients());
+        this.bowlSize = pokeLab.getBowlSize();
     }
 
     public PokeLab(double price, int id, Map<String, GenericAlternative> items, String bowlSize) {
