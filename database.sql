@@ -20,12 +20,15 @@ USE `your_poke` ;
 -- -----------------------------------------------------
 -- Table `your_poke`.`poke_lab`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `your_poke`.`poke_lab` ;
+
 CREATE TABLE IF NOT EXISTS `your_poke`.`poke_lab` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `price` DOUBLE NOT NULL,
   `size` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 34
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -33,6 +36,8 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `your_poke`.`poke_lab_ingredients`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `your_poke`.`poke_lab_ingredients` ;
+
 CREATE TABLE IF NOT EXISTS `your_poke`.`poke_lab_ingredients` (
   `plid` INT NOT NULL,
   `ingredient_name` VARCHAR(255) NOT NULL,
@@ -40,8 +45,7 @@ CREATE TABLE IF NOT EXISTS `your_poke`.`poke_lab_ingredients` (
   PRIMARY KEY (`plid`, `ingredient_name`),
   CONSTRAINT `pl_id`
     FOREIGN KEY (`plid`)
-    REFERENCES `your_poke`.`poke_lab` (`id`)
-    ON DELETE CASCADE)
+    REFERENCES `your_poke`.`poke_lab` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -50,6 +54,8 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `your_poke`.`users`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `your_poke`.`users` ;
+
 CREATE TABLE IF NOT EXISTS `your_poke`.`users` (
   `username` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
@@ -71,14 +77,16 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `your_poke`.`poke_wall_posts`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `your_poke`.`poke_wall_posts` ;
+
 CREATE TABLE IF NOT EXISTS `your_poke`.`poke_wall_posts` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `poke_name` VARCHAR(100) NOT NULL,
-  `size` VARCHAR(20) NOT NULL,
-  `username` VARCHAR(50) NOT NULL,
+  `poke_name` VARCHAR(255) NOT NULL,
+  `size` VARCHAR(255) NOT NULL,
+  `username` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `username` (`username` ASC) VISIBLE,
-  CONSTRAINT `poke_wall_posts_ibfk_1`
+  INDEX `username_idx` (`username` ASC) VISIBLE,
+  CONSTRAINT `username`
     FOREIGN KEY (`username`)
     REFERENCES `your_poke`.`users` (`username`)
     ON DELETE CASCADE)
@@ -90,13 +98,15 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `your_poke`.`poke_wall_ingredients`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `your_poke`.`poke_wall_ingredients` ;
+
 CREATE TABLE IF NOT EXISTS `your_poke`.`poke_wall_ingredients` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `post_id` INT NOT NULL,
-  `ingredient` VARCHAR(50) NOT NULL,
+  `ingredient` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `post_id` (`post_id` ASC) VISIBLE,
-  CONSTRAINT `poke_wall_ingredients_ibfk_1`
+  CONSTRAINT `post_id`
     FOREIGN KEY (`post_id`)
     REFERENCES `your_poke`.`poke_wall_posts` (`id`)
     ON DELETE CASCADE)

@@ -12,7 +12,7 @@ import java.util.Map;
 public class DBPokeWallDAO implements PokeWallDAO {
     @Override
     public void create(PokeWall pokeWall) throws SystemException {
-        String insertPostSQL = "INSERT INTO poke_wall_posts (pokeName, size, username) VALUES (?, ?, ?) RETURNING id";
+        String insertPostSQL = "INSERT INTO poke_wall_posts (poke_name, size, username) VALUES (?, ?, ?) RETURNING id";
         String insertIngredientSQL = "INSERT INTO poke_wall_ingredients (post_id, ingredient) VALUES (?, ?)";
 
         try (Connection connection = DBConnection.getDBConnection();
