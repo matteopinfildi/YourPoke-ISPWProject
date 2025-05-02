@@ -86,43 +86,37 @@ public class BuyPokeLabAppController {
         return allIngredient.price();
     }
 
+
     public boolean savePokeLab(PokeLabBean pokeLabBean, SaveBean saveBean) throws PokeLabSystemException {
-        String uid = saveBean.getUid();
-
-        if (!pokeLabBean.isFull()){
-            System.out.println("Select all component!!!");
-            return false;
-        }
-
-        // aggiungo il nome del poke al pokeLab
-        String pokeName = pokeLabBean.getPokeName();
-        String bowlSize = pokeLabBean.getBowlSize();
-        System.out.println("Saving Poké with name: " + pokeName);
-        System.out.println("Saving Poké with size: " + bowlSize);
-
-        System.out.println(pokeLabBean.getId());
-        PokeLab pokeLab = new PokeLab(pokeLabBean);
-        try{
-            System.out.println(pokeLab.id());
-            pokeLabDAO.create(pokeLab);
-        } catch (SystemException e){
-            throw new PokeLabSystemException("Error", e);
-        }
-
-        User user = null;
-        try{
-            user = userDAO.read(uid);
-        } catch (SystemException e){
-            throw new PokeLabSystemException("Error", e);
-        }
-
         try {
-            userDAO.update(user, pokeLab.id());
-        } catch (SystemException e){
-            throw new PokeLabSystemException("Error", e);
-        }
+            // 1. Crea il PokeLab (il DAO gestirà la transazione internamente)
+            PokeLab pokeLab = new PokeLab(pokeLabBean);
+            pokeLabDAO.create(pokeLab); // Senza passare la connection
 
-        return true;
+            // 2. Verifica che l'ID sia stato generato
+            if (pokeLab.id() <= 0) {
+                throw new PokeLabSystemException("Invalid PokeLab ID generated");
+            }
+
+            // 3. Recupera l'utente
+            User user = userDAO.read(saveBean.getUid());
+            if (user == null) {
+                throw new PokeLabSystemException("User not found: " + saveBean.getUid());
+            }
+
+            // 4. Elimina eventuale PokeLab precedente
+            if (user.getPokeLab() != null) {
+                pokeLabDAO.delete(user.getPokeLab().id());
+            }
+
+            // 5. Aggiorna riferimento al nuovo PokeLab
+            userDAO.update(user, pokeLab.id());
+
+            return true;
+
+        } catch (SystemException e) {
+            throw new PokeLabSystemException("Failed to save PokeLab: " + e.getMessage(), e);
+        }
     }
 
     public boolean checkPokeLab(SaveBean saveBean) throws PokeLabSystemException {

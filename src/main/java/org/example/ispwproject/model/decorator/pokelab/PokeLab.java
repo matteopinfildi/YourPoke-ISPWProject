@@ -48,4 +48,10 @@ public class PokeLab extends Ingredient {
         this.bowlSize = bowlSize;
     }
 
+    public void setId(int id) {
+        if(id <= 0) {
+            throw new IllegalArgumentException("ID must be positive");
+        }
+        this.id = id;
+    }
 }

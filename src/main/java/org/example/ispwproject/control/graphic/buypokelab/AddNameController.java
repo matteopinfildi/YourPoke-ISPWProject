@@ -80,6 +80,7 @@ public class AddNameController extends GraphicController {
         }
     }
 
+
     @FXML
     public void handleBackClick(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);

@@ -4,10 +4,12 @@ import org.example.ispwproject.utils.exception.SystemException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class InMemoryPokeLabDAO implements PokeLabDAO {
     private static InMemoryPokeLabDAO instance;
     private Collection<PokeLab> listOfPokeLab = new ArrayList<>();
+    private AtomicInteger idCounter = new AtomicInteger(1);
 
     private InMemoryPokeLabDAO(){}
 
@@ -20,6 +22,15 @@ public class InMemoryPokeLabDAO implements PokeLabDAO {
 
     @Override
     public void create(PokeLab pokeLab) throws SystemException {
+        if (pokeLab == null) {
+            throw new SystemException("PokeLab cannot be null");
+        }
+
+        // Genera e assegna ID come nella versione DB
+        int newId = idCounter.getAndIncrement();
+        pokeLab.setId(newId);
+
+        listOfPokeLab.add(pokeLab);
         if (pokeLab == null) {
             throw new SystemException("Error");
         }
@@ -44,14 +55,14 @@ public class InMemoryPokeLabDAO implements PokeLabDAO {
         }
     }
 
+    // In InMemoryPokeLabDAO
     @Override
     public void updateBowlSize(int plid, String bowlSize) throws SystemException {
         PokeLab pokeLab = read(plid);
-        if (pokeLab != null) {
-            pokeLab.setBowlSize(bowlSize);  // Aggiorna la bowl size
-        } else {
+        if (pokeLab == null) {
             throw new SystemException("PokéLab con id " + plid + " non trovato.");
         }
+        pokeLab.setBowlSize(bowlSize);
     }
 
 }

@@ -84,86 +84,37 @@ public class DBUserDAO implements UserDAO{
     }
 
 
-//    @Override
-//    public User read(String uid) throws SystemException {
-//        String queryRead = "SELECT username, password, email, utype, address, plid FROM users WHERE username = ?";
-//        try (Connection connection = DBConnection.getDBConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(queryRead)) {
-//
-//            preparedStatement.setString(1, uid);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            if (resultSet.next()) {
-//                // MODIFICA CRUCIALE QUI:
-//                int plid = resultSet.getInt("plid");
-//                PokeLab pokeLab = null;
-//
-//                // Solo se plid è valido (non NULL e > 0)
-//                if (!resultSet.wasNull() && plid > 0) {
-//                    try {
-//                        pokeLab = new DBPokeLabDAO().read(plid);
-//                    } catch (SystemException e) {
-//                        System.err.println("Attenzione: PokeLab " + plid + " non trovato, continuo senza");
-//                        // Continua senza PokeLab invece di fallire
-//                    }
-//                }
-//
-//                String username = resultSet.getString("username");
-//                String password = resultSet.getString("password");
-//                String email = resultSet.getString("email");
-//                UserType userType = UserType.valueOf(resultSet.getString("utype"));
-//                String address = resultSet.getString("address");
-//
-//                User user = new User(username, password, email, userType, address);
-//                user.setPokeLab(pokeLab);
-//                return user;
-//            } else {
-//                return null;
-//            }
-//        } catch (SQLException e) {
-//            throw new SystemException("Errore lettura utente " + uid);
-//        }
-//    }
-
-//    @Override
-//    public User read(String uid) throws SystemException{
-//        String queryRead = "SELECT username, password, email, utype, address, plid FROM users WHERE username = ?";
-//        try(Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatement =connection.prepareStatement(queryRead)){
-//            preparedStatement.setString(1, uid);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            if (resultSet.next()){
-//                int plid = resultSet.getInt("plid");
-//                System.out.println(plid);
-//                PokeLab pokeLab = plid != -1 ? new DBPokeLabDAO().read(plid) : null;
-//
-//                String username = resultSet.getString("username");
-//                String password = resultSet.getString("password");
-//                String email = resultSet.getString("email");
-//                UserType userType = UserType.valueOf(resultSet.getString("utype"));
-//                String address = resultSet.getString("address");
-//
-//                User user = new User(username, password, email, userType, address);
-//                user.setPokeLab(pokeLab);
-//                return user;
-//            }else{
-//                return null;
-//            }
-//        }catch (SQLException e) {
-//            throw new SystemException("Error read!");
-//        }
-//    }
-
     @Override
     public void update(User user, int plid) throws SystemException {
-        String queryUpdate = "UPDATE users SET plid = ? WHERE username = ?";
-        try (Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatement = connection.prepareStatement(queryUpdate)) {
-            deletePokeLab(user);
-            preparedStatement.setInt(1, plid);
-            preparedStatement.setString(2, user.getUsername());
-            preparedStatement.executeUpdate();
+        // Prima verifica che il PokeLab esista
+        String checkPokeLabQuery = "SELECT COUNT(*) FROM poke_lab WHERE id = ?";
+        String updateUserQuery = "UPDATE users SET plid = ? WHERE username = ?";
+
+        try (Connection connection = DBConnection.getDBConnection();
+             PreparedStatement checkStmt = connection.prepareStatement(checkPokeLabQuery);
+             PreparedStatement updateStmt = connection.prepareStatement(updateUserQuery)) {
+
+            // Verifica l'esistenza del PokeLab
+            checkStmt.setInt(1, plid);
+            ResultSet rs = checkStmt.executeQuery();
+            rs.next();
+            int count = rs.getInt(1);
+
+            if (count == 0) {
+                throw new SystemException("PokeLab with ID " + plid + " does not exist");
+            }
+
+            // Se esiste, procedi con l'update
+            updateStmt.setInt(1, plid);
+            updateStmt.setString(2, user.getUsername());
+
+            int affectedRows = updateStmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SystemException("No user found with username: " + user.getUsername());
+            }
         } catch (SQLException e) {
-            throw new SystemException("Errore update!"+e.getMessage());
+            throw new SystemException("Error updating user's poke lab reference: " + e.getMessage());
         }
     }
 

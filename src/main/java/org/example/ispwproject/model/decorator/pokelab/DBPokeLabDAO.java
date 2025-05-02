@@ -15,46 +15,38 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
     @Override
     public void create(PokeLab pokeLab) throws SystemException {
-        String insertPokeLabQuery = "Insert into poke_lab (price, size) VALUES (?, ?)";
-        String insertIngredientQuery = "Insert into poke_lab_ingredients (plid, ingredient_name, ingredient_alternative) VALUES (?, ?, ?)";
+        String insertPokeLabQuery = "INSERT INTO poke_lab (price, size) VALUES (?, ?)";
+        String insertIngredientQuery = "INSERT INTO poke_lab_ingredients (plid, ingredient_name, ingredient_alternative) VALUES (?, ?, ?)";
 
         try (Connection connection = DBConnection.getDBConnection();
-             PreparedStatement preparedStatementPoke = connection.prepareStatement(insertPokeLabQuery, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatementPoke = connection.prepareStatement(
+                     insertPokeLabQuery, Statement.RETURN_GENERATED_KEYS)) {
 
-            // Rimuoviamo il controllo per plid, perché lo recuperiamo dal database
+            // 1. Inserisci il PokeLab principale
             preparedStatementPoke.setDouble(1, pokeLab.price());
             preparedStatementPoke.setString(2, pokeLab.getBowlSize());
+            preparedStatementPoke.executeUpdate();
 
-            // Eseguiamo l'inserimento di poke_lab
-            int rowsAffected = preparedStatementPoke.executeUpdate();
+            // 2. Ottieni l'ID generato
+            try (ResultSet generatedKeys = preparedStatementPoke.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int plid = generatedKeys.getInt(1);
+                    pokeLab.setId(plid);
 
-            // Se l'inserimento è riuscito, otteniamo l'ID generato
-            if (rowsAffected > 0) {
-                try (ResultSet generatedKeys = preparedStatementPoke.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        int plid = generatedKeys.getInt(1);  // Otteniamo l'ID generato
-                        // Inseriamo gli ingredienti nel batch
-                        try (PreparedStatement preparedStatementIngredient = connection.prepareStatement(insertIngredientQuery)) {
-                            for (Map.Entry<String, GenericAlternative> entry : pokeLab.allIngredients().entrySet()) {
-                                preparedStatementIngredient.setInt(1, plid);
-                                preparedStatementIngredient.setString(2, entry.getKey());
-                                preparedStatementIngredient.setString(3, ((Enum<?>)entry.getValue()).name());
-
-                                preparedStatementIngredient.addBatch();
-                            }
-
-                            preparedStatementIngredient.executeBatch();
+                    // 3. Inserisci gli ingredienti
+                    try (PreparedStatement stmtIngredients = connection.prepareStatement(insertIngredientQuery)) {
+                        for (Map.Entry<String, GenericAlternative> entry : pokeLab.allIngredients().entrySet()) {
+                            stmtIngredients.setInt(1, plid);
+                            stmtIngredients.setString(2, entry.getKey());
+                            stmtIngredients.setString(3, ((Enum<?>) entry.getValue()).name());
+                            stmtIngredients.addBatch();
                         }
-                    } else {
-                        throw new SystemException("Failed to retrieve the generated PokeLab ID");
+                        stmtIngredients.executeBatch();
                     }
                 }
-            } else {
-                throw new SystemException("Failed to insert PokeLab");
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL error while creating PokeLab entry", e);
-            throw new SystemException("Error creating PokeLab in database");
+            throw new SystemException("Error creating PokeLab: " + e.getMessage());
         }
     }
 
@@ -106,16 +98,39 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
     @Override
     public void delete(int plid) throws SystemException {
-        String deletePokeQuery = "DELETE FROM poke_lab WHERE id = ?";
+        // Prima elimina gli ingredienti (figli) e poi il PokeLab (padre)
+        String deleteIngredientsQuery = "DELETE FROM poke_lab_ingredients WHERE plid = ?";
+        String deletePokeLabQuery = "DELETE FROM poke_lab WHERE id = ?";
 
-        try (Connection connection = DBConnection.getDBConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(deletePokeQuery)) {
+        try (Connection connection = DBConnection.getDBConnection()) {
+            // Disabilita temporaneamente i vincoli di foreign key
+            try (Statement disableFK = connection.createStatement()) {
+                disableFK.execute("SET FOREIGN_KEY_CHECKS=0");
+            }
 
-            preparedStatement.setInt(1, plid);
-            preparedStatement.executeUpdate();
+            // 1. Elimina prima gli ingredienti associati
+            try (PreparedStatement stmtIngredients = connection.prepareStatement(deleteIngredientsQuery)) {
+                stmtIngredients.setInt(1, plid);
+                stmtIngredients.executeUpdate();
+            }
+
+            // 2. Poi elimina il PokeLab
+            try (PreparedStatement stmtPokeLab = connection.prepareStatement(deletePokeLabQuery)) {
+                stmtPokeLab.setInt(1, plid);
+                int rowsAffected = stmtPokeLab.executeUpdate();
+
+                if (rowsAffected == 0) {
+                    throw new SystemException("No PokeLab found with ID: " + plid);
+                }
+            }
+
+            // Riabilita i vincoli di foreign key
+            try (Statement enableFK = connection.createStatement()) {
+                enableFK.execute("SET FOREIGN_KEY_CHECKS=1");
+            }
+
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL error while deleting PokeLab entry with ID ");
-            throw new SystemException("Error deleting PokeLab from database");
+            throw new SystemException("Error deleting PokeLab from database: " + e.getMessage());
         }
     }
 
