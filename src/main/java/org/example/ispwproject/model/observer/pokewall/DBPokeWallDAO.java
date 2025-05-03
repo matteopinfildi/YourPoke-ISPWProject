@@ -1,98 +1,108 @@
 package org.example.ispwproject.model.observer.pokewall;
 
-import org.example.ispwproject.utils.exception.SystemException;
 import org.example.ispwproject.utils.database.DBConnection;
+import org.example.ispwproject.utils.exception.SystemException;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DBPokeWallDAO implements PokeWallDAO {
+
     @Override
     public void create(PokeWall pokeWall) throws SystemException {
-        String insertPostSQL = "INSERT INTO poke_wall_posts (poke_name, size, username) VALUES (?, ?, ?) RETURNING id";
+        String insertPostSQL = "INSERT INTO poke_wall_posts (poke_name, size, username) VALUES (?, ?, ?)";
         String insertIngredientSQL = "INSERT INTO poke_wall_ingredients (post_id, ingredient) VALUES (?, ?)";
 
-        try (Connection connection = DBConnection.getDBConnection();
-             PreparedStatement postStmt = connection.prepareStatement(insertPostSQL);
-             PreparedStatement ingredientStmt = connection.prepareStatement(insertIngredientSQL)) {
+        try (Connection connection = DBConnection.getDBConnection()) {
+            connection.setAutoCommit(false);
 
-            // Salva il post e ottieni l'ID generato
-            postStmt.setString(1, pokeWall.getPokeName());
-            postStmt.setString(2, pokeWall.getSize());
-            postStmt.setString(3, pokeWall.getUsername());
-            ResultSet rs = postStmt.executeQuery();
+            try (
+                    PreparedStatement postStmt = connection.prepareStatement(insertPostSQL, Statement.RETURN_GENERATED_KEYS)
+            ) {
+                postStmt.setString(1, pokeWall.getPokeName());
+                postStmt.setString(2, pokeWall.getSize());
+                postStmt.setString(3, pokeWall.getUsername());
+                postStmt.executeUpdate();
 
-            if (rs.next()) {
-                int postId = rs.getInt(1);
-
-                ingredientStmt.setInt(1, postId);
-                for (String ingredient : pokeWall.getIngredients()) {
-                    ingredientStmt.setString(2, ingredient);
-                    ingredientStmt.addBatch();
+                int postId;
+                try (ResultSet rs = postStmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        postId = rs.getInt(1);
+                    } else {
+                        throw new SystemException("Impossibile ottenere l'ID del post generato.");
+                    }
                 }
 
-                ingredientStmt.executeBatch();
+                try (PreparedStatement ingredientStmt = connection.prepareStatement(insertIngredientSQL)) {
+                    for (String ingredient : pokeWall.getIngredients()) {
+                        ingredientStmt.setInt(1, postId);
+                        ingredientStmt.setString(2, ingredient);
+                        ingredientStmt.addBatch();
+                    }
+                    ingredientStmt.executeBatch();
+                }
+
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw new SystemException("Errore durante il salvataggio nel DB: " + e.getMessage());
+            } finally {
+                connection.setAutoCommit(true);
             }
         } catch (SQLException e) {
-            throw new SystemException("Error saving post to database");
+            throw new SystemException("Errore di connessione al DB: " + e.getMessage());
         }
     }
 
-
     @Override
     public List<PokeWall> getAllPosts() throws SystemException {
-        List<PokeWall> posts = new ArrayList<>();
-        String query = "SELECT p.id, p.pokeName, p.size, p.username, i.ingredient " +
+        String query = "SELECT p.id, p.poke_name, p.size, p.username, i.ingredient " +
                 "FROM poke_wall_posts p " +
                 "LEFT JOIN poke_wall_ingredients i ON p.id = i.post_id " +
                 "ORDER BY p.id, i.id";
 
-        try (Connection connection = DBConnection.getDBConnection();
-             PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+        List<PokeWall> posts = new ArrayList<>();
 
-            Map<Integer, PokeWall> postMap = new HashMap<>();
+        try (
+                Connection connection = DBConnection.getDBConnection();
+                PreparedStatement stmt = connection.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()
+        ) {
+            Map<Integer, PokeWall> postMap = new LinkedHashMap<>();
             while (rs.next()) {
                 int postId = rs.getInt("id");
-                String pokeName = rs.getString("pokeName");
+                String pokeName = rs.getString("poke_name");
                 String size = rs.getString("size");
                 String username = rs.getString("username");
                 String ingredient = rs.getString("ingredient");
 
-                if (!postMap.containsKey(postId)) {
-                    postMap.put(postId, new PokeWall(pokeName, size, username, new ArrayList<>()));
-                }
-
+                postMap.computeIfAbsent(postId, k -> new PokeWall(pokeName, size, username, new ArrayList<>()));
                 if (ingredient != null) {
                     postMap.get(postId).getIngredients().add(ingredient);
                 }
             }
-
             posts.addAll(postMap.values());
         } catch (SQLException e) {
-            throw new SystemException("Error retrieving posts from database");
+            throw new SystemException("Errore nel recupero post: " + e.getMessage());
         }
 
         return posts;
     }
 
-
-
     @Override
     public void delete(int postId) throws SystemException {
-        String query = "DELETE FROM poke_wall_posts WHERE id = ?";  // Assicurati che la colonna si chiami 'id'
-        try (Connection connection = DBConnection.getDBConnection();
-             PreparedStatement ps = connection.prepareStatement(query)) {
+        String query = "DELETE FROM poke_wall_posts WHERE id = ?";
+
+        try (
+                Connection connection = DBConnection.getDBConnection();
+                PreparedStatement ps = connection.prepareStatement(query)
+        ) {
             ps.setInt(1, postId);
-            int affectedRows = ps.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SystemException("Post with ID " + postId + " not found");
+            if (ps.executeUpdate() == 0) {
+                throw new SystemException("Post con ID " + postId + " non trovato");
             }
         } catch (SQLException e) {
-            throw new SystemException("Error deleting post: " + e.getMessage());
+            throw new SystemException("Errore durante l'eliminazione: " + e.getMessage());
         }
     }
 }
