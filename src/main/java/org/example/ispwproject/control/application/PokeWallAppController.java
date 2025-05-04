@@ -4,7 +4,6 @@
 //import org.example.ispwproject.model.PokeWallSubject;
 //import org.example.ispwproject.model.observer.pokewall.PokeWall;
 //import org.example.ispwproject.model.observer.pokewall.PokeWallDAO;
-//import org.example.ispwproject.model.observer.pokewall.FSPokeWallDAO;
 //import org.example.ispwproject.utils.bean.PokeWallBean;
 //import org.example.ispwproject.utils.bean.SaveBean;
 //import org.example.ispwproject.model.user.User;
@@ -17,17 +16,20 @@
 //
 //public class PokeWallAppController implements PokeWallSubject {
 //
-//    private PokeWallDAO pokeWallDAO;
-//    private UserDAO userDAO;
-//    private List<PokeWallObserver> observers = new ArrayList<>();
+//    private final PokeWallDAO pokeWallDAO;
+//    private final UserDAO userDAO;
+//    private final List<PokeWallObserver> observers = new ArrayList<>();
+//    private static final PokeWallAppController instance = new PokeWallAppController();
 //
-//    // Costruttore che inizializza le DAO (scegliendo quella in memoria o su file system)
+//    public static PokeWallAppController getInstance() {
+//        return instance;
+//    }
+//
+//
 //    public PokeWallAppController() {
-//        // Usa il DAO per il PokeWall dal file system o in memoria
-//        this.pokeWallDAO = new FSPokeWallDAO();
-//        // Inizializza il DAO per gli utenti
 //        DAOFactory daoFactory = DAOFactory.getInstance();
-//        userDAO = daoFactory.getUserDAO();
+//        this.pokeWallDAO = daoFactory.getPokeWallDAO(); // <--- usa la factory!
+//        this.userDAO = daoFactory.getUserDAO();
 //    }
 //
 //    @Override
@@ -55,7 +57,6 @@
 //            return false;
 //        }
 //
-//        // Crea il model dal bean
 //        PokeWall pokeWall = new PokeWall(
 //                pokeWallBean.getPokeName(),
 //                pokeWallBean.getSize(),
@@ -64,16 +65,10 @@
 //        );
 //
 //        pokeWallDAO.create(pokeWall);
-//
-//        // Notifica tutti gli observer del nuovo post
 //        notifyObservers(pokeWall);
-//
 //        return true;
 //    }
 //
-//
-//
-//    // Metodo per recuperare tutti i post presenti nel PokeWall
 //    public List<PokeWall> getAllPosts() throws SystemException {
 //        List<PokeWall> posts = pokeWallDAO.getAllPosts();
 //        if (posts == null || posts.isEmpty()) {
@@ -82,13 +77,8 @@
 //        return posts;
 //    }
 //
-//
-//
-//
-//    //Metodo per eliminare un post dalla PokeWall
 //    public boolean deletePost(int postId, String requestingUsername) throws SystemException {
 //        try {
-//            // Prima verifichiamo che il post esista e appartenga all'utente
 //            PokeWall postToDelete = getPostById(postId);
 //            if (postToDelete == null) {
 //                System.out.println("Post not found!");
@@ -105,12 +95,10 @@
 //            return true;
 //        } catch (SystemException e) {
 //            System.out.println("Failed to delete post: " + e.getMessage());
-//            throw e; // Rilancia l'eccezione per gestione superiore
+//            throw e;
 //        }
 //    }
 //
-//
-//    //Metodo per recuperare un singolo post dalla PokeWall tramite ID
 //    public PokeWall getPostById(int postId) throws SystemException {
 //        List<PokeWall> posts = pokeWallDAO.getAllPosts();
 //        for (PokeWall pokeWall : posts) {
@@ -121,7 +109,6 @@
 //        return null;
 //    }
 //}
-
 package org.example.ispwproject.control.application;
 
 import org.example.ispwproject.model.PokeWallObserver;
@@ -143,16 +130,30 @@ public class PokeWallAppController implements PokeWallSubject {
     private final PokeWallDAO pokeWallDAO;
     private final UserDAO userDAO;
     private final List<PokeWallObserver> observers = new ArrayList<>();
+    private static final PokeWallAppController instance = new PokeWallAppController();
 
-    public PokeWallAppController() {
+    private PokeWallAppController() {
         DAOFactory daoFactory = DAOFactory.getInstance();
         this.pokeWallDAO = daoFactory.getPokeWallDAO(); // <--- usa la factory!
         this.userDAO = daoFactory.getUserDAO();
     }
 
+    public static PokeWallAppController getInstance() {
+        return instance;
+    }
+
     @Override
     public void registerObserver(PokeWallObserver observer) {
         observers.add(observer);
+        // appena un observer si registra, lo aggiorniamo con tutti i post esistenti
+        try {
+            List<PokeWall> allPosts = getAllPosts();
+            for (PokeWall post : allPosts) {
+                observer.update(post);
+            }
+        } catch (SystemException e) {
+            System.out.println("Errore nel recuperare i post per observer: " + e.getMessage());
+        }
     }
 
     @Override

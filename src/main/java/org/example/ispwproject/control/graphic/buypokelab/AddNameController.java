@@ -89,7 +89,9 @@ public class AddNameController extends GraphicController {
 
     @FXML
     public void handlePostToPokeWall(ActionEvent event) {
-        PokeWallAppController pokeWallAppController = new PokeWallAppController();
+        // Ottieni l'istanza singleton di PokeWallAppController
+        PokeWallAppController pokeWallAppController = PokeWallAppController.getInstance();
+
         String name = pokeNameField.getText().trim();
 
         // Controllo sul nome
@@ -121,6 +123,7 @@ public class AddNameController extends GraphicController {
         );
 
         try {
+            // Utilizza il metodo createPost tramite l'istanza singleton di PokeWallAppController
             boolean success = pokeWallAppController.createPost(
                     new SaveBean(userId),
                     pokeWallBean // Passa l'intero bean invece dei singoli campi

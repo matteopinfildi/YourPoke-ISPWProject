@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -18,20 +15,26 @@
         <!-- Titolo Poke Wall -->
         <Label text="Poke Wall" style="-fx-font-size: 24px; -fx-text-fill: black;"/>
 
+        <!-- Label per le notifiche -->
+        <Label fx:id="notificationLabel"
+               text="Nessuna notifica"
+               visible="false"
+               style="-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 14px;"
+               layoutX="650" layoutY="20"/>
         <!-- ListView per visualizzare i post -->
         <ListView fx:id="pokeWallListView" prefHeight="300.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
-        <placeholder>
-            <Label text="No posts available"/>
-        </placeholder>
-    </ListView>
+            <placeholder>
+                <Label text="No posts available"/>
+            </placeholder>
+        </ListView>
 
-    <!-- Contenitore per i pulsanti -->
-    <HBox alignment="CENTER" spacing="10">
-        <!-- Pulsante per eliminare il post -->
-        <Button fx:id="deleteButton" text="Delete Post" onAction="#handleDeletePost" disable="true"
-                style="-fx-background-color: #ff4444; -fx-text-fill: white;"/>
+        <!-- Contenitore per i pulsanti -->
+        <HBox alignment="CENTER" spacing="10">
+            <!-- Pulsante per eliminare il post -->
+            <Button fx:id="deleteButton" text="Delete Post" onAction="#handleDeletePost" disable="true"
+                    style="-fx-background-color: #ff4444; -fx-text-fill: white;"/>
 
-        <!-- Contenitore per il pulsante Back -->
+            <!-- Contenitore per il pulsante Back -->
             <Button fx:id="backButton" onAction="#handleBackClick" text="Back" />
         </HBox>
     </VBox>
