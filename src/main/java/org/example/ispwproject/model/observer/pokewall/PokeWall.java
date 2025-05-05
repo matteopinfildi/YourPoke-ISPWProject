@@ -1,16 +1,20 @@
 package org.example.ispwproject.model.observer.pokewall;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class PokeWall {
+    private static int currentId = 1;
     private int id;
     private String pokeName;
     private String size;
     private String username;
     private List<String> ingredients;
+    private List<String> seenByUsers = new ArrayList<>();
 
     public PokeWall(String pokeName, String size, String username, List<String> ingredients) {
+        this.id = currentId++;
         this.pokeName = Objects.requireNonNull(pokeName, "Poke name cannot be null");
         this.size = size != null && !size.isEmpty() ? size : "Unknown size";
         this.username = Objects.requireNonNull(username, "Username cannot be null");
@@ -56,6 +60,18 @@ public class PokeWall {
 
     public void setIngredients(List<String> ingredients) {
         this.ingredients = Objects.requireNonNull(ingredients, "Ingredients list cannot be null");
+    }
+
+
+
+    public void addSeenUser(String username) {
+        if (!seenByUsers.contains(username)) {
+            seenByUsers.add(username);
+        }
+    }
+
+    public List<String> getSeenByUsers() {
+        return seenByUsers;
     }
 
     @Override

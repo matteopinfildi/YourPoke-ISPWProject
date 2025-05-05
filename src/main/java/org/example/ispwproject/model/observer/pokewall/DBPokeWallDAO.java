@@ -16,43 +16,51 @@ public class DBPokeWallDAO implements PokeWallDAO {
         try (Connection connection = DBConnection.getDBConnection()) {
             connection.setAutoCommit(false);
 
-            try (
-                    PreparedStatement postStmt = connection.prepareStatement(insertPostSQL, Statement.RETURN_GENERATED_KEYS)
-            ) {
+            try (PreparedStatement postStmt = connection.prepareStatement(insertPostSQL, Statement.RETURN_GENERATED_KEYS)) {
                 postStmt.setString(1, pokeWall.getPokeName());
                 postStmt.setString(2, pokeWall.getSize());
                 postStmt.setString(3, pokeWall.getUsername());
-                postStmt.executeUpdate();
 
-                int postId;
+                int rowsAffected = postStmt.executeUpdate();
+                if (rowsAffected == 0) {
+                    throw new SystemException("Impossibile inserire il post. Nessuna riga influenzata.");
+                }
+
+                // Recupera l'ID del post appena creato
                 try (ResultSet rs = postStmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        postId = rs.getInt(1);
+                        int postId = rs.getInt(1);
+                        System.out.println("Post creato con ID: " + postId);
+
+                        // Inserisci gli ingredienti associati al post
+                        try (PreparedStatement ingredientStmt = connection.prepareStatement(insertIngredientSQL)) {
+                            for (String ingredient : pokeWall.getIngredients()) {
+                                ingredientStmt.setInt(1, postId);
+                                ingredientStmt.setString(2, ingredient);
+                                ingredientStmt.addBatch();
+                            }
+                            ingredientStmt.executeBatch();
+                        }
+
+                        connection.commit();
                     } else {
                         throw new SystemException("Impossibile ottenere l'ID del post generato.");
                     }
                 }
 
-                try (PreparedStatement ingredientStmt = connection.prepareStatement(insertIngredientSQL)) {
-                    for (String ingredient : pokeWall.getIngredients()) {
-                        ingredientStmt.setInt(1, postId);
-                        ingredientStmt.setString(2, ingredient);
-                        ingredientStmt.addBatch();
-                    }
-                    ingredientStmt.executeBatch();
-                }
-
-                connection.commit();
             } catch (SQLException e) {
                 connection.rollback();
-                throw new SystemException("Errore durante il salvataggio nel DB: " + e.getMessage());
+                System.out.println("Rollback della transazione: " + e.getMessage());
+                throw new SystemException("Errore durante la creazione del post: " + e.getMessage());
             } finally {
                 connection.setAutoCommit(true);
             }
+
         } catch (SQLException e) {
-            throw new SystemException("Errore di connessione al DB: " + e.getMessage());
+            throw new SystemException("Errore di connessione al database: " + e.getMessage());
         }
     }
+
 
     @Override
     public List<PokeWall> getAllPosts() throws SystemException {
@@ -105,4 +113,81 @@ public class DBPokeWallDAO implements PokeWallDAO {
             throw new SystemException("Errore durante l'eliminazione: " + e.getMessage());
         }
     }
+
+
+
+    @Override
+    public List<PokeWall> getUnseenPosts(String username) throws SystemException {
+        List<PokeWall> unseenPosts = new ArrayList<>();
+        String query = """
+    SELECT p.id, p.poke_name, p.size, p.username, i.ingredient
+    FROM poke_wall_posts p
+    LEFT JOIN poke_wall_ingredients i ON p.id = i.post_id
+    WHERE NOT EXISTS (
+        SELECT 1 FROM poke_post_views ppv
+        WHERE ppv.post_id = p.id AND ppv.username = ?
+    )
+    ORDER BY p.id, i.id
+    """;
+
+        try (Connection conn = DBConnection.getDBConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            try (ResultSet rs = stmt.executeQuery()) {
+                Map<Integer, PokeWall> postMap = new LinkedHashMap<>();
+                while (rs.next()) {
+                    int postId = rs.getInt("id");
+                    String pokeName = rs.getString("poke_name");
+                    String size = rs.getString("size");
+                    String postUsername = rs.getString("username");
+                    String ingredient = rs.getString("ingredient");
+
+                    postMap.computeIfAbsent(postId, k -> new PokeWall(pokeName, size, postUsername, new ArrayList<>()));
+
+                    if (ingredient != null) {
+                        postMap.get(postId).getIngredients().add(ingredient);
+                    }
+                }
+
+                unseenPosts.addAll(postMap.values());
+            }
+        } catch (SQLException e) {
+            throw new SystemException("Errore nel recupero dei post non visti: " + e.getMessage());
+        }
+
+        return unseenPosts;
+    }
+
+
+
+    public void markPostAsSeen(int postId, String username) throws SystemException {
+        if (postId <= 0) {
+            throw new IllegalArgumentException("postId deve essere maggiore di 0");
+        }
+        if (username == null || username.trim().isEmpty()) {
+            throw new IllegalArgumentException("Username non può essere null o vuoto");
+        }
+
+        String query = "INSERT IGNORE INTO poke_post_views (post_id, username) VALUES (?, ?)";
+        try (Connection conn = DBConnection.getDBConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, postId);
+            stmt.setString(2, username);
+
+            System.out.println("Eseguendo la query di inserimento: " + stmt.toString());
+
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Record inserito correttamente.");
+            } else {
+                System.out.println("Record non inserito (probabilmente già presente).");
+            }
+
+        } catch (SQLException e) {
+            throw new SystemException("Errore in markPostAsSeen: " + e.getMessage());
+        }
+    }
+
 }

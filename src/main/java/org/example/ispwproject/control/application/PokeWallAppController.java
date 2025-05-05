@@ -1,5 +1,8 @@
 package org.example.ispwproject.control.application;
 
+import org.example.ispwproject.Session;
+import org.example.ispwproject.SessionManager;
+import org.example.ispwproject.control.graphic.pokewall.PokeWallController;
 import org.example.ispwproject.model.PokeWallObserver;
 import org.example.ispwproject.model.PokeWallSubject;
 import org.example.ispwproject.model.observer.pokewall.PokeWall;
@@ -31,19 +34,24 @@ public class PokeWallAppController implements PokeWallSubject {
         return instance;
     }
 
-    @Override
-    public void registerObserver(PokeWallObserver observer) {
+    public void registerObserver(PokeWallObserver observer, int sessionId) {
         observers.add(observer);
-        // appena un observer si registra, lo aggiorniamo con tutti i post esistenti
         try {
-            List<PokeWall> allPosts = getAllPosts();
-            for (PokeWall post : allPosts) {
-                observer.update(post);
+            String username = getUsernameFromSession(sessionId);
+            if (observer instanceof PokeWallController pokeWallController) {
+                pokeWallController.setCurrentUsername(username);
+                List<PokeWall> unseenPosts = pokeWallDAO.getUnseenPosts(username);
+                for (PokeWall post : unseenPosts) {
+                    observer.update(post);
+                    pokeWallDAO.markPostAsSeen(post.getId(), username);
+                }
             }
         } catch (SystemException e) {
             System.out.println("Errore nel recuperare i post per observer: " + e.getMessage());
         }
     }
+
+
 
     @Override
     public void removeObserver(PokeWallObserver observer) {
@@ -116,4 +124,14 @@ public class PokeWallAppController implements PokeWallSubject {
         }
         return null;
     }
+
+    private String getUsernameFromSession(int sessionId) throws SystemException {
+        Session session = SessionManager.getSessionManager().getSessionFromId(sessionId);
+        User user = userDAO.read(session.getUserId());
+        if (user == null) {
+            throw new SystemException("User not found for session id: " + sessionId);
+        }
+        return user.getUsername();
+    }
+
 }
