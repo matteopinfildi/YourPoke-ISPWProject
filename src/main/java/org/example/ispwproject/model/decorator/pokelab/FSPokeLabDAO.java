@@ -6,21 +6,62 @@ import org.example.ispwproject.utils.exception.SystemException;
 import java.io.*;
 import java.util.*;
 
+
 public class FSPokeLabDAO implements PokeLabDAO {
     private static final String FILE_LAB = "poke_lab.csv";
     private static final String FILE_INGREDIENTS = "poke_lab_ingredients.csv";
     private static final String DELIMITER = ",";
-    private static int lastId = 0;
+    private static int lastId = -1; // Inizializzato a -1
+
+    // Carica l'ultimo ID all'avvio
+    static {
+        try {
+            lastId = findMaxIdFromFile();
+        } catch (SystemException e) {
+            System.err.println("Error initializing lastId: " + e.getMessage());
+            lastId = 0; // Fallback
+        }
+    }
+
+    private static int findMaxIdFromFile() throws SystemException {
+        if (!new File(FILE_LAB).exists()) {
+            return 0;
+        }
+
+        int maxId = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_LAB))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(DELIMITER);
+                if (parts.length > 0) {
+                    try {
+                        int currentId = Integer.parseInt(parts[0]);
+                        if (currentId > maxId) {
+                            maxId = currentId;
+                        }
+                    } catch (NumberFormatException e) {
+                        // Ignora righe malformate
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new SystemException("Error reading PokeLab file to find max ID");
+        }
+        return maxId;
+    }
 
     @Override
     public void create(PokeLab pokeLab) throws SystemException {
         synchronized (FSPokeLabDAO.class) {
-            if (pokeLab.id() <= lastId) {
+            // Assegna un nuovo ID solo se non è già stato assegnato
+            if (pokeLab.id() <= 0) {
                 lastId++;
                 pokeLab.setId(lastId);
-            } else {
+            } else if (pokeLab.id() > lastId) {
+                // Aggiorna lastId se viene passato un ID maggiore
                 lastId = pokeLab.id();
             }
+            // Se l'ID è valido e <= lastId, non fare nulla
         }
 
         try (BufferedWriter writerLab = new BufferedWriter(new FileWriter(FILE_LAB, true));

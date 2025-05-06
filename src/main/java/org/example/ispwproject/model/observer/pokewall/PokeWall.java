@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class PokeWall {
-    private static int currentId = 1;
+    private static int currentId = 0;
     private int id;
     private String pokeName;
     private String size;
