@@ -175,15 +175,9 @@ public class DBPokeWallDAO implements PokeWallDAO {
             stmt.setInt(1, postId);
             stmt.setString(2, username);
 
-            System.out.println("Eseguendo la query di inserimento: " + stmt.toString());
-
             int rowsAffected = stmt.executeUpdate();
 
-            if (rowsAffected > 0) {
-                System.out.println("Record inserito correttamente.");
-            } else {
-                System.out.println("Record non inserito (probabilmente già presente).");
-            }
+
 
         } catch (SQLException e) {
             throw new SystemException("Errore in markPostAsSeen: " + e.getMessage());
