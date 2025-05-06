@@ -58,14 +58,12 @@ public class PokeWallController extends GraphicController implements PokeWallObs
 
     @Override
     public void update(PokeWall newPost) {
-        System.out.println("Chiamato update per nuovo post: " + newPost.getPokeName());
 
         Platform.runLater(() -> {
             try {
                 refreshPosts();
 
-                String message = "Nuovo post da " + newPost.getUsername() + ": " + newPost.getPokeName();
-                System.out.println("Mostro notifica: " + message);
+                String message = "New post by" + newPost.getUsername() + ": " + newPost.getPokeName();
 
                 notificationLabel.setText(message);
                 notificationLabel.setVisible(true);
@@ -77,7 +75,6 @@ public class PokeWallController extends GraphicController implements PokeWallObs
                         Platform.runLater(() -> {
                             notificationLabel.setVisible(false);
                             notificationLabel.setText("");
-                            System.out.println("Notifica nascosta.");
                         });
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -88,13 +85,13 @@ public class PokeWallController extends GraphicController implements PokeWallObs
 
                 // Alert popup
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Nuovo Poke disponibile!");
-                alert.setHeaderText("Un nuovo Poke Lab è stato creato!");
+                alert.setTitle("New post available");
+                alert.setHeaderText("A new poke lab has been created!");
                 alert.setContentText(message);
                 alert.showAndWait();
 
             } catch (SystemException e) {
-                System.err.println("Errore durante l'aggiornamento dei post: " + e.getMessage());
+                System.err.println("Error " + e.getMessage());
             }
         });
     }
