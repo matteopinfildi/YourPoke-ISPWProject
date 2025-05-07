@@ -13,9 +13,9 @@ public class DBPokeWallDAO implements PokeWallDAO {
         try (Connection connection = DBConnection.getDBConnection()) {
             connection.setAutoCommit(false);
             try {
-                performCreateTransaction(connection, pokeWall);
+                performCreateTransaction(connection, pokeWall); // ✅ Estratto qui
                 connection.commit();
-            } catch (SQLException | SystemException e) {
+            } catch (SQLException e) {
                 connection.rollback();
                 System.out.println("Rollback della transazione: " + e.getMessage());
                 throw new SystemException("Errore durante la creazione del post: " + e.getMessage());
@@ -31,6 +31,7 @@ public class DBPokeWallDAO implements PokeWallDAO {
         int postId = insertPostAndReturnId(connection, pokeWall);
         insertIngredients(connection, postId, pokeWall.getIngredients());
     }
+
 
 
     private int insertPostAndReturnId(Connection connection, PokeWall pokeWall) throws SQLException, SystemException {
