@@ -10,44 +10,12 @@ public class DBPokeWallDAO implements PokeWallDAO {
 
     @Override
     public void create(PokeWall pokeWall) throws SystemException {
-        String insertPostSQL = "INSERT INTO poke_wall_posts (poke_name, size, username) VALUES (?, ?, ?)";
-        String insertIngredientSQL = "INSERT INTO poke_wall_ingredients (post_id, ingredient) VALUES (?, ?)";
-
         try (Connection connection = DBConnection.getDBConnection()) {
             connection.setAutoCommit(false);
-
-            try (PreparedStatement postStmt = connection.prepareStatement(insertPostSQL, Statement.RETURN_GENERATED_KEYS)) {
-                postStmt.setString(1, pokeWall.getPokeName());
-                postStmt.setString(2, pokeWall.getSize());
-                postStmt.setString(3, pokeWall.getUsername());
-
-                int rowsAffected = postStmt.executeUpdate();
-                if (rowsAffected == 0) {
-                    throw new SystemException("Impossibile inserire il post. Nessuna riga influenzata.");
-                }
-
-                // Recupera l'ID del post appena creato
-                try (ResultSet rs = postStmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        int postId = rs.getInt(1);
-                        System.out.println("Post creato con ID: " + postId);
-
-                        // Inserisci gli ingredienti associati al post
-                        try (PreparedStatement ingredientStmt = connection.prepareStatement(insertIngredientSQL)) {
-                            for (String ingredient : pokeWall.getIngredients()) {
-                                ingredientStmt.setInt(1, postId);
-                                ingredientStmt.setString(2, ingredient);
-                                ingredientStmt.addBatch();
-                            }
-                            ingredientStmt.executeBatch();
-                        }
-
-                        connection.commit();
-                    } else {
-                        throw new SystemException("Impossibile ottenere l'ID del post generato.");
-                    }
-                }
-
+            try {
+                int postId = insertPostAndReturnId(connection, pokeWall);
+                insertIngredients(connection, postId, pokeWall.getIngredients());
+                connection.commit();
             } catch (SQLException e) {
                 connection.rollback();
                 System.out.println("Rollback della transazione: " + e.getMessage());
@@ -55,9 +23,42 @@ public class DBPokeWallDAO implements PokeWallDAO {
             } finally {
                 connection.setAutoCommit(true);
             }
-
         } catch (SQLException e) {
             throw new SystemException("Errore di connessione al database: " + e.getMessage());
+        }
+    }
+
+    private int insertPostAndReturnId(Connection connection, PokeWall pokeWall) throws SQLException, SystemException {
+        String insertPostSQL = "INSERT INTO poke_wall_posts (poke_name, size, username) VALUES (?, ?, ?)";
+        try (PreparedStatement postStmt = connection.prepareStatement(insertPostSQL, Statement.RETURN_GENERATED_KEYS)) {
+            postStmt.setString(1, pokeWall.getPokeName());
+            postStmt.setString(2, pokeWall.getSize());
+            postStmt.setString(3, pokeWall.getUsername());
+            int rowsAffected = postStmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SystemException("Impossibile inserire il post. Nessuna riga influenzata.");
+            }
+            try (ResultSet rs = postStmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    int postId = rs.getInt(1);
+                    System.out.println("Post creato con ID: " + postId);
+                    return postId;
+                } else {
+                    throw new SystemException("Impossibile ottenere l'ID del post generato.");
+                }
+            }
+        }
+    }
+
+    private void insertIngredients(Connection connection, int postId, List<String> ingredients) throws SQLException {
+        String insertIngredientSQL = "INSERT INTO poke_wall_ingredients (post_id, ingredient) VALUES (?, ?)";
+        try (PreparedStatement ingredientStmt = connection.prepareStatement(insertIngredientSQL)) {
+            ingredientStmt.setInt(1, postId);
+            for (String ingredient : ingredients) {
+                ingredientStmt.setString(2, ingredient);
+                ingredientStmt.addBatch();
+            }
+            ingredientStmt.executeBatch();
         }
     }
 
