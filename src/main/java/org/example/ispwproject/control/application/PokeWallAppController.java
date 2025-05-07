@@ -35,7 +35,10 @@ public class PokeWallAppController implements PokeWallSubject {
     }
 
     public void registerObserver(PokeWallObserver observer, int sessionId) {
-        observers.add(observer);
+        if (!observers.contains(observer)) {
+            observers.add(observer);
+        }
+
         try {
             String username = getUsernameFromSession(sessionId);
             if (observer instanceof PokeWallController pokeWallController) {

@@ -5,6 +5,7 @@ import org.example.ispwproject.model.observer.pokewall.PokeWall;
 import org.example.ispwproject.model.user.UserDAO;
 import org.example.ispwproject.utils.dao.DAOFactory;
 
+// forse da levare
 public class UserNotifier  implements PokeWallObserver {
     private UserDAO userDAO;
 
