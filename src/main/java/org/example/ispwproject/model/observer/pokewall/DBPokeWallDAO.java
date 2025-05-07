@@ -11,39 +11,26 @@ public class DBPokeWallDAO implements PokeWallDAO {
     @Override
     public void create(PokeWall pokeWall) throws SystemException {
         try (Connection connection = DBConnection.getDBConnection()) {
-            executeCreateWithTransaction(connection, pokeWall);
+            connection.setAutoCommit(false);
+            try {
+                performCreateTransaction(connection, pokeWall);
+                connection.commit();
+            } catch (SQLException | SystemException e) {
+                connection.rollback();
+                System.out.println("Rollback della transazione: " + e.getMessage());
+                throw new SystemException("Errore durante la creazione del post: " + e.getMessage());
+            } finally {
+                connection.setAutoCommit(true);
+            }
         } catch (SQLException e) {
             throw new SystemException("Errore di connessione al database: " + e.getMessage());
         }
     }
 
-    private void executeCreateWithTransaction(Connection connection, PokeWall pokeWall) throws SystemException {
-        try {
-            connection.setAutoCommit(false);
-            performCreateTransaction(connection, pokeWall);
-            connection.commit();
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException rollbackEx) {
-                throw new SystemException("Errore durante il rollback: " + rollbackEx.getMessage());
-            }
-            throw new SystemException("Errore durante la creazione del post: " + e.getMessage());
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException ex) {
-                throw new SystemException("Errore nel ripristino dell'autocommit: " + ex.getMessage());
-            }
-        }
-    }
-
-
     private void performCreateTransaction(Connection connection, PokeWall pokeWall) throws SQLException, SystemException {
         int postId = insertPostAndReturnId(connection, pokeWall);
         insertIngredients(connection, postId, pokeWall.getIngredients());
     }
-
 
 
     private int insertPostAndReturnId(Connection connection, PokeWall pokeWall) throws SQLException, SystemException {
