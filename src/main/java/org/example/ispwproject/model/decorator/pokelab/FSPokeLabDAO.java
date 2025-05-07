@@ -5,6 +5,7 @@ import org.example.ispwproject.utils.exception.SystemException;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class FSPokeLabDAO implements PokeLabDAO {
 
@@ -12,6 +13,8 @@ public class FSPokeLabDAO implements PokeLabDAO {
     private static final String FILE_INGREDIENTS = "poke_lab_ingredients.csv";
     private static final String DELIMITER = ",";
     private static int lastId = -1; // Inizializzato a -1
+    private static final Logger LOGGER = Logger.getLogger(FSPokeLabDAO.class.getName());
+
 
     // Carica l'ultimo ID all'avvio
     static {
@@ -32,23 +35,31 @@ public class FSPokeLabDAO implements PokeLabDAO {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_LAB))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(DELIMITER);
-                if (parts.length > 0) {
-                    try {
-                        int currentId = Integer.parseInt(parts[0]);
-                        if (currentId > maxId) {
-                            maxId = currentId;
-                        }
-                    } catch (NumberFormatException e) {
-                        // Ignora righe malformate
-                    }
-                }
+                maxId = updateMaxIdIfValid(line, maxId);
             }
         } catch (IOException e) {
             throw new SystemException("Error reading PokeLab file to find max ID");
         }
+
         return maxId;
     }
+
+    // Metodo estratto per analizzare una riga e aggiornare maxId
+    private static int updateMaxIdIfValid(String line, int currentMaxId) {
+        String[] parts = line.split(DELIMITER);
+        if (parts.length > 0) {
+            try {
+                int currentId = Integer.parseInt(parts[0]);
+                if (currentId > currentMaxId) {
+                    return currentId;
+                }
+            } catch (NumberFormatException e) {
+                LOGGER.warning("ID non numerico trovato nella riga: " + line);
+            }
+        }
+        return currentMaxId;
+    }
+
 
     @Override
     public void create(PokeLab pokeLab) throws SystemException {
