@@ -35,8 +35,8 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
                     // 3. Inserisci gli ingredienti
                     try (PreparedStatement stmtIngredients = connection.prepareStatement(insertIngredientQuery)) {
+                        stmtIngredients.setInt(1, plid);
                         for (Map.Entry<String, GenericAlternative> entry : pokeLab.allIngredients().entrySet()) {
-                            stmtIngredients.setInt(1, plid);
                             stmtIngredients.setString(2, entry.getKey());
                             stmtIngredients.setString(3, ((Enum<?>) entry.getValue()).name());
                             stmtIngredients.addBatch();
