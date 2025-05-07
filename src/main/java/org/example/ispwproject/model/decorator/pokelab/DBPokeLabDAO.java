@@ -147,9 +147,9 @@ public class DBPokeLabDAO implements PokeLabDAO {
             int rowsUpdated = preparedStatement.executeUpdate();
 
             if (rowsUpdated == 0) {
-                System.out.println("Nessun record trovato con ID: " + plid);
+                logger.info("Nessun record trovato con ID: " + plid);
             } else {
-                System.out.println("Bowl size aggiornato per ID: " + plid);
+                logger.info("Bowl size aggiornato per ID: " + plid);
             }
 
         } catch (SQLException e) {
