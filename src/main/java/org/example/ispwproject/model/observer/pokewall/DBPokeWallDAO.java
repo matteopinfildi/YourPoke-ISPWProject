@@ -68,6 +68,7 @@ public class DBPokeWallDAO implements PokeWallDAO {
     }
 
 
+
     @Override
     public List<PokeWall> getAllPosts() throws SystemException {
         String query = "SELECT p.id, p.poke_name, p.size, p.username, i.ingredient " +
@@ -90,7 +91,8 @@ public class DBPokeWallDAO implements PokeWallDAO {
                 String username = rs.getString("username");
                 String ingredient = rs.getString("ingredient");
 
-                postMap.computeIfAbsent(postId, k -> new PokeWall(pokeName, size, username, new ArrayList<>()));
+                // Passa postId come primo parametro, seguito dagli altri parametri
+                postMap.computeIfAbsent(postId, k -> new PokeWall(postId, pokeName, size, username, new ArrayList<>()));
                 if (ingredient != null) {
                     postMap.get(postId).getIngredients().add(ingredient);
                 }
@@ -102,6 +104,7 @@ public class DBPokeWallDAO implements PokeWallDAO {
 
         return posts;
     }
+
 
     @Override
     public void delete(int postId) throws SystemException {
@@ -119,6 +122,7 @@ public class DBPokeWallDAO implements PokeWallDAO {
             throw new SystemException("Errore durante l'eliminazione: " + e.getMessage());
         }
     }
+
 
 
 
@@ -148,7 +152,8 @@ public class DBPokeWallDAO implements PokeWallDAO {
                     String postUsername = rs.getString("username");
                     String ingredient = rs.getString("ingredient");
 
-                    postMap.computeIfAbsent(postId, k -> new PokeWall(pokeName, size, postUsername, new ArrayList<>()));
+                    // Passa 5 argomenti: postId, pokeName, size, postUsername, e lista di ingredienti vuota
+                    postMap.computeIfAbsent(postId, k -> new PokeWall(postId, pokeName, size, postUsername, new ArrayList<>()));
 
                     if (ingredient != null) {
                         postMap.get(postId).getIngredients().add(ingredient);
@@ -163,7 +168,6 @@ public class DBPokeWallDAO implements PokeWallDAO {
 
         return unseenPosts;
     }
-
 
 
     public void markPostAsSeen(int postId, String username) throws SystemException {
