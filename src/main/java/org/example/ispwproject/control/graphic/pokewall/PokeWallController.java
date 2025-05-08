@@ -12,6 +12,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.event.ActionEvent;
 
 import org.example.ispwproject.ChangePage;
+import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.PokeWallAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.model.PokeWallObserver;
@@ -24,18 +25,89 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class PokeWallController extends GraphicController implements PokeWallObserver {
+//public class PokeWallController extends GraphicController implements PokeWallObserver {
+//
+//    private PokeLabBean pokeLabBean;
+//    private int id;
+//    private String currentUsername;
+//    private List<PokeWall> currentPosts;
+//    private PokeWallAppController pokeWallAppController;
+//
+//    @FXML private ListView<String> pokeWallListView;
+//    @FXML private Button deleteButton;
+//    @FXML private javafx.scene.control.Label notificationLabel;
+//
+//
+//    @Override
+//    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
+//        this.pokeLabBean = pokeLabBean;
+//        this.id = id;
+//
+//        pokeWallAppController = PokeWallAppController.getInstance();
+//        pokeWallAppController.registerObserver(this, id);
+//
+//
+//        pokeWallListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+//        deleteButton.setDisable(true);
+//
+//        refreshPosts();
+//
+//        pokeWallListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+//            deleteButton.setDisable(newVal == null);
+//        });
+//    }
+//
+//    @Override
+//    public void update(PokeWall newPost) {
+//
+//        Platform.runLater(() -> {
+//            try {
+//                refreshPosts();
+//
+//                String message = "New post by " + newPost.getUsername() + ": " + newPost.getPokeName();
+//
+//                notificationLabel.setText(message);
+//                notificationLabel.setVisible(true);
+//
+//                // Nascondi dopo 5 secondi
+//                Thread hideThread = new Thread(() -> {
+//                    try {
+//                        Thread.sleep(5000);
+//                        Platform.runLater(() -> {
+//                            notificationLabel.setVisible(false);
+//                            notificationLabel.setText("");
+//                        });
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                });
+//                hideThread.setDaemon(true);
+//                hideThread.start();
+//
+//                // Alert popup
+//                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                alert.setTitle("New post available");
+//                alert.setHeaderText("A new poke lab has been created!");
+//                alert.setContentText(message);
+//                alert.showAndWait();
+//
+//            } catch (SystemException e) {
+//                System.err.println("Error " + e.getMessage());
+//            }
+//        });
+//    }
+public class PokeWallController extends GraphicController {
 
     private PokeLabBean pokeLabBean;
     private int id;
     private String currentUsername;
     private List<PokeWall> currentPosts;
     private PokeWallAppController pokeWallAppController;
+    private PokeWallObserver observerInstance; // ✅ Salviamo l’observer
 
     @FXML private ListView<String> pokeWallListView;
     @FXML private Button deleteButton;
     @FXML private javafx.scene.control.Label notificationLabel;
-
 
     @Override
     public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
@@ -43,56 +115,52 @@ public class PokeWallController extends GraphicController implements PokeWallObs
         this.id = id;
 
         pokeWallAppController = PokeWallAppController.getInstance();
-        pokeWallAppController.registerObserver(this, id);
+        this.currentUsername = SessionManager.getSessionManager().getSessionFromId(id).getUserId();
 
+        // ✅ Salviamo l’observer in una variabile per poterlo poi rimuovere
+        observerInstance = new PokeWallObserver() {
+            @Override
+            public void update(PokeWall newPost) {
+                Platform.runLater(() -> {
+                    try {
+                        refreshPosts();
+                        String message = "New post by " + newPost.getUsername() + ": " + newPost.getPokeName();
+                        notificationLabel.setText(message);
+                        notificationLabel.setVisible(true);
+                        Thread hideThread = new Thread(() -> {
+                            try {
+                                Thread.sleep(5000);
+                                Platform.runLater(() -> {
+                                    notificationLabel.setVisible(false);
+                                    notificationLabel.setText("");
+                                });
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                        hideThread.setDaemon(true);
+                        hideThread.start();
+
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("New post available");
+                        alert.setHeaderText("A new poke lab has been created!");
+                        alert.setContentText(message);
+                        alert.showAndWait();
+                    } catch (SystemException e) {
+                        System.err.println("Error " + e.getMessage());
+                    }
+                });
+            }
+        };
+
+        pokeWallAppController.registerObserver(observerInstance, id); // ✅ Registrazione
 
         pokeWallListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         deleteButton.setDisable(true);
-
         refreshPosts();
 
         pokeWallListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             deleteButton.setDisable(newVal == null);
-        });
-    }
-
-    @Override
-    public void update(PokeWall newPost) {
-
-        Platform.runLater(() -> {
-            try {
-                refreshPosts();
-
-                String message = "New post by " + newPost.getUsername() + ": " + newPost.getPokeName();
-
-                notificationLabel.setText(message);
-                notificationLabel.setVisible(true);
-
-                // Nascondi dopo 5 secondi
-                Thread hideThread = new Thread(() -> {
-                    try {
-                        Thread.sleep(5000);
-                        Platform.runLater(() -> {
-                            notificationLabel.setVisible(false);
-                            notificationLabel.setText("");
-                        });
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                });
-                hideThread.setDaemon(true);
-                hideThread.start();
-
-                // Alert popup
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("New post available");
-                alert.setHeaderText("A new poke lab has been created!");
-                alert.setContentText(message);
-                alert.showAndWait();
-
-            } catch (SystemException e) {
-                System.err.println("Error " + e.getMessage());
-            }
         });
     }
 
@@ -123,10 +191,10 @@ public class PokeWallController extends GraphicController implements PokeWallObs
 
     @FXML
     public void handleBackClick(ActionEvent event) throws SystemException {
-        List<PokeWall> posts = pokeWallAppController.getAllPosts();
-        for (PokeWall post : posts) {
-            post.removeObserver(this);
+        if (observerInstance != null) {
+            pokeWallAppController.removeObserver(observerInstance); // ✅ Rimozione corretta
         }
+
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/homePage.fxml", pokeLabBean, id);
     }
 
@@ -184,5 +252,4 @@ public class PokeWallController extends GraphicController implements PokeWallObs
     public void setCurrentUsername(String username) {
         this.currentUsername = username;
     }
-
 }
