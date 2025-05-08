@@ -12,6 +12,7 @@ public class PokeWall implements PokeWallSubject {
     private String username;
     private List<String> ingredients;
     private List<String> seenByUsers = new ArrayList<>();
+    private final Set<PokeWallObserver> observers = new HashSet<>(); // Usiamo Set per evitare duplicati
 
     public PokeWall(int id, String pokeName, String size, String username, List<String> ingredients) {
         this.id = id;
@@ -21,8 +22,6 @@ public class PokeWall implements PokeWallSubject {
         this.ingredients = Objects.requireNonNull(ingredients, "Ingredients list cannot be null");
     }
 
-    // Metodi del Subject
-    private final Set<PokeWallObserver> observers = new HashSet<>(); // Usiamo Set per evitare duplicati
 
     @Override
     public void registerObserver(PokeWallObserver observer) {
