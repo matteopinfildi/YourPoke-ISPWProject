@@ -122,7 +122,11 @@ public class PokeWallController extends GraphicController implements PokeWallObs
     }
 
     @FXML
-    public void handleBackClick(ActionEvent event) {
+    public void handleBackClick(ActionEvent event) throws SystemException {
+        List<PokeWall> posts = pokeWallAppController.getAllPosts();
+        for (PokeWall post : posts) {
+            post.removeObserver(this);
+        }
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/homePage.fxml", pokeLabBean, id);
     }
 
