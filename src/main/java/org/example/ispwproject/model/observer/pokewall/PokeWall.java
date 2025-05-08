@@ -28,8 +28,6 @@ public class PokeWall implements PokeWallSubject {
     public void registerObserver(PokeWallObserver observer) {
         if (observer != null) {
             observers.add(observer);
-            System.out.println("Observer registrato per post " + id +
-                    ". Totale: " + observers.size());
         }
     }
 
@@ -37,15 +35,11 @@ public class PokeWall implements PokeWallSubject {
     public void removeObserver(PokeWallObserver observer) {
         if (observer != null) {
             observers.remove(observer);
-            System.out.println("Observer rimosso da post " + id +
-                    ". Totale: " + observers.size());
         }
     }
 
     @Override
     public void notifyObservers() {
-        System.out.println("Notifica inviata a " + observers.size() +
-                " observer per post " + id);
         for (PokeWallObserver observer : observers) {
             observer.update(this);
         }
