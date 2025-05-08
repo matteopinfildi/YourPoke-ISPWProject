@@ -167,7 +167,6 @@ public class PokeWallAppController implements PokeWallObserver {
         }
     }
 
-    // ✅ Metodo per rimuovere un observer
     public void removeObserver(PokeWallObserver observer) {
         observers.remove(observer);
     }
