@@ -63,7 +63,7 @@ public class PokeWallController extends GraphicController implements PokeWallObs
             try {
                 refreshPosts();
 
-                String message = "New post by" + newPost.getUsername() + ": " + newPost.getPokeName();
+                String message = "New post by " + newPost.getUsername() + ": " + newPost.getPokeName();
 
                 notificationLabel.setText(message);
                 notificationLabel.setVisible(true);
