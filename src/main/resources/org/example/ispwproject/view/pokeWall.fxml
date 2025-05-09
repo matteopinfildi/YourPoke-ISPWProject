@@ -34,6 +34,9 @@
             <Button fx:id="deleteButton" text="Delete Post" onAction="#handleDeletePost" disable="true"
                     style="-fx-background-color: #ff4444; -fx-text-fill: white;"/>
 
+
+            <Button fx:id="fortuneCookie" onAction="#handleFortuneClick" text="Fortune Cookie" />
+
             <!-- Contenitore per il pulsante Back -->
             <Button fx:id="backButton" onAction="#handleBackClick" text="Back" />
         </HBox>

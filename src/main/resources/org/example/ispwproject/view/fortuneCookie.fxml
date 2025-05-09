@@ -25,7 +25,7 @@
 
         <Label fx:id="fortuneLabel" text="Random phrase!" wrapText="true" style="-fx-font-size: 16px;"/>
         <Button text="Fortune Cookie" onAction="#showFortune" style="-fx-font-size: 14px; padding: 10px 20px;"/>
-        <Button fx:id="nextButton" onAction="#handleNextClick" text="Next" style="-fx-font-size: 14px;"/>
+        <Button fx:id="backButton" onAction="#handleBackClick" text="Back" style="-fx-font-size: 14px;"/>
     </VBox>
 
 </AnchorPane>

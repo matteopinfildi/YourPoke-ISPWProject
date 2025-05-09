@@ -61,21 +61,6 @@ public class PokeLabBean {
     public int getId() {return plId;}
     public void setId(int id) {this.plId = id;}
 
-    // Metodi per i post
-    public List<String> getPosts() {
-        return posts;
-    }
-
-    // Aggiunge un post alla lista
-    public void addPost(String post) {
-        posts.add(post);
-    }
-
-    // Controlla se ci sono post
-    public boolean hasPosts() {
-        return !posts.isEmpty();
-    }
-
 
 }
 

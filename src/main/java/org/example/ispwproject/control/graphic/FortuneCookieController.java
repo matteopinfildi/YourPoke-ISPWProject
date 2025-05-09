@@ -34,8 +34,8 @@ public class FortuneCookieController extends GraphicController {
     }
 
     @FXML
-    public void handleNextClick(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/extra.fxml", pokeLabBean, id);
+    public void handleBackClick(ActionEvent event) {
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/pokeWall.fxml", pokeLabBean, id);
     }
 
 }

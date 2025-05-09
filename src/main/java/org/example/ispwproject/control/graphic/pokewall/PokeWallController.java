@@ -252,4 +252,10 @@ public class PokeWallController extends GraphicController {
     public void setCurrentUsername(String username) {
         this.currentUsername = username;
     }
+
+
+    @FXML
+    public void handleFortuneClick(ActionEvent event) {
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/fortuneCookie.fxml", pokeLabBean, id);
+    }
 }

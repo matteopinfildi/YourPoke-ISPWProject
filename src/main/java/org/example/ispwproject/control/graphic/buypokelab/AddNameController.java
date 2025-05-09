@@ -58,7 +58,7 @@ public class AddNameController extends GraphicController {
         } else {
             // Se il nome è lo stesso di prima, non serve salvare di nuovo
             if (name.equals(pokeLabBean.getPokeName())) {
-                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/extra.fxml", pokeLabBean, id);
+                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/orderPokeLab.fxml", pokeLabBean, id);
                 return;
             }
             //associo il nome del poke alla rispettiva bean
@@ -75,7 +75,7 @@ public class AddNameController extends GraphicController {
 
             errorLabel.setText(""); // Rimuove eventuali messaggi di errore
             System.out.println("Poké name set to: " + name);
-            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/extra.fxml", pokeLabBean, id);
+            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/orderPokeLab.fxml", pokeLabBean, id);
         }
     }
 
