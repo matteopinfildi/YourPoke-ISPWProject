@@ -14,7 +14,6 @@ import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.PokeWallBean;
 import org.example.ispwproject.utils.bean.SaveBean;
-import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -47,7 +46,7 @@ public class AddNameController extends GraphicController {
 
 
     @FXML
-    public void handleNextClick(ActionEvent event) throws PokeLabSystemException {
+    public void handleNextClick(ActionEvent event) throws SystemException {
         String name = pokeNameField.getText().trim();
 
         SessionManager sessionManager = SessionManager.getSessionManager();
@@ -82,7 +81,7 @@ public class AddNameController extends GraphicController {
 
 
     @FXML
-    public void handleBackClick(ActionEvent event) {
+    public void handleBackClick(ActionEvent event) throws SystemException{
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
     }
 

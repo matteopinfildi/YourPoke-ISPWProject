@@ -1,7 +1,6 @@
 package org.example.ispwproject.model.user;
 
 import org.example.ispwproject.model.decorator.pokelab.InMemoryPokeLabDAO;
-import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import java.util.ArrayList;
@@ -37,13 +36,13 @@ public class InMemoryUserDAO implements UserDAO{
     }
 
     @Override
-    public void update(User user, int plid) throws SystemException, PokeLabSystemException {
+    public void update(User user, int plid) throws SystemException {
         if (user == null) {
-            throw new PokeLabSystemException("Errore: l'utente passato al metodo update() è nullo.");
+            throw new SystemException("Errore: l'utente passato al metodo update() è nullo.");
         }
         // Controlla che l'utente esista nel sistema
         if (read(user.getUsername()) == null) {
-            throw new PokeLabSystemException("Errore: utente non trovato per l'aggiornamento.");
+            throw new SystemException("Errore: utente non trovato per l'aggiornamento.");
         }
 
         // Procedi con l'aggiornamento
@@ -53,11 +52,11 @@ public class InMemoryUserDAO implements UserDAO{
     }
 
     @Override
-    public void delete(String uId) throws SystemException, PokeLabSystemException {
+    public void delete(String uId) throws SystemException {
         try {
             listOfUsers.remove(read(uId));
         } catch (SystemException e) {
-            throw new PokeLabSystemException("Error creating user", e);
+            throw new SystemException("Error creating user" + e.getMessage());
         }
     }
 }

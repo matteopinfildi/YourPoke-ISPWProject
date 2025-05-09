@@ -16,7 +16,6 @@ import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.dao.DAOFactory;
 import org.example.ispwproject.utils.enumeration.Topping;
 import org.example.ispwproject.utils.enumeration.ingredient.GenericAlternative;
-import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import java.util.*;
@@ -87,7 +86,7 @@ public class BuyPokeLabAppController {
     }
 
 
-    public boolean savePokeLab(PokeLabBean pokeLabBean, SaveBean saveBean) throws PokeLabSystemException {
+    public boolean savePokeLab(PokeLabBean pokeLabBean, SaveBean saveBean) throws SystemException {
         try {
             // 1. Crea il PokeLab (il DAO gestirà la transazione internamente)
             PokeLab pokeLab = new PokeLab(pokeLabBean);
@@ -95,13 +94,13 @@ public class BuyPokeLabAppController {
 
             // 2. Verifica che l'ID sia stato generato
             if (pokeLab.id() <= 0) {
-                throw new PokeLabSystemException("Invalid PokeLab ID generated");
+                throw new SystemException("Invalid PokeLab ID generated");
             }
 
             // 3. Recupera l'utente
             User user = userDAO.read(saveBean.getUid());
             if (user == null) {
-                throw new PokeLabSystemException("User not found: " + saveBean.getUid());
+                throw new SystemException("User not found: " + saveBean.getUid());
             }
 
             // 4. Elimina eventuale PokeLab precedente
@@ -115,30 +114,30 @@ public class BuyPokeLabAppController {
             return true;
 
         } catch (SystemException e) {
-            throw new PokeLabSystemException("Failed to save PokeLab: " + e.getMessage(), e);
+            throw new SystemException("Failed to save PokeLab: " + e.getMessage());
         }
     }
 
-    public boolean checkPokeLab(SaveBean saveBean) throws PokeLabSystemException {
+    public boolean checkPokeLab(SaveBean saveBean) throws SystemException {
         User user = null;
         String id = saveBean.getUid();
         try{
             user = userDAO.read(id);
         } catch (SystemException e){
-            throw new PokeLabSystemException("Error", e);
+            throw new SystemException("Error" + e.getMessage());
         }
 
         PokeLab pokeLab = user.getPokeLab();
         return pokeLab != null;
     }
 
-    public PokeLabBean recoverPokeLab(SaveBean saveBean) throws PokeLabSystemException {
+    public PokeLabBean recoverPokeLab(SaveBean saveBean) throws SystemException {
         User user = null;
         String uID = saveBean.getUid();
         try{
             user = userDAO.read(uID);
-        } catch (SystemException systemException){
-            throw new PokeLabSystemException("Error", systemException);
+        } catch (SystemException e){
+            throw new SystemException("Error" + e.getMessage());
         }
 
         PokeLab pokeLab = user.getPokeLab();
@@ -147,14 +146,4 @@ public class BuyPokeLabAppController {
         }
         return null;
     }
-
-    public void updateBowlSize(PokeLabBean pokeLabBean) throws PokeLabSystemException {
-        try {
-            pokeLabDAO.updateBowlSize(pokeLabBean.getId(), pokeLabBean.getBowlSize());
-        } catch (SystemException e) {
-            throw new PokeLabSystemException("Error", e);
-        }
-    }
-
-
 }

@@ -16,7 +16,6 @@ import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.enumeration.ingredient.*;
-import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -147,43 +146,43 @@ public class BuyPokeLabController extends GraphicController{
 
 
     @FXML
-    public void handleRice(ActionEvent event) {
+    public void handleRice(ActionEvent event) throws SystemException{
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabRice.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
     @FXML
-    public void handleProtein(ActionEvent event) {
+    public void handleProtein(ActionEvent event) throws SystemException{
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabProtein.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
     @FXML
-    public void handleFruit(ActionEvent event) {
+    public void handleFruit(ActionEvent event) throws SystemException{
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabFruit.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
     @FXML
-    public void handleCrunchy(ActionEvent event) {
+    public void handleCrunchy(ActionEvent event) throws SystemException{
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabCrunchy.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
     @FXML
-    public void handleSauces(ActionEvent event) {
+    public void handleSauces(ActionEvent event) throws SystemException{
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabSauces.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
     @FXML
-    public void handleBowlSizeClick(ActionEvent event) {
+    public void handleBowlSizeClick(ActionEvent event) throws SystemException{
         if (!bowlSizeButton.isDisabled()){ // Controlla se il pulsante è attivo prima di cambiare scena
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/bowlSize.fxml", pokeLabBean, id);
         }
     }
 
-    private void updateSizeLabel() {
+    private void updateSizeLabel() throws SystemException{
         if (sizeLabel != null && pokeLabBean.getBowlSize() != null) {
             sizeLabel.setText("Bowl Size: " + pokeLabBean.getBowlSize());
         }
@@ -191,14 +190,14 @@ public class BuyPokeLabController extends GraphicController{
 
 
     @FXML
-    public void handleAddNameClick(ActionEvent event) {
+    public void handleAddNameClick(ActionEvent event) throws SystemException{
         if (!addNameButton.isDisabled()) { // Controlla se il pulsante è attivo prima di cambiare scena
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addName.fxml", pokeLabBean, id);
         }
     }
 
     @FXML
-    public void handleBackClick(ActionEvent event) {
+    public void handleBackClick(ActionEvent event) throws SystemException{
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/homePage.fxml", pokeLabBean, id);
     }
 
@@ -206,7 +205,7 @@ public class BuyPokeLabController extends GraphicController{
     public void showPopUp() {popup.setVisible(true);}
 
     @FXML
-    private void handleRecover() throws PokeLabSystemException {
+    private void handleRecover() throws SystemException {
         popup.setVisible(false);
 
         SessionManager sessionManager = SessionManager.getSessionManager();
@@ -220,13 +219,13 @@ public class BuyPokeLabController extends GraphicController{
             try{
                 init(id, oldPokeLabBean);
             } catch (SystemException e) {
-                throw new PokeLabSystemException("Error", e);
+                throw new RuntimeException(e);
             } catch (IOException e) {
-                throw new PokeLabSystemException("Error", e);
+                throw new RuntimeException(e);
             } catch (LoginException e) {
-                throw new PokeLabSystemException("Error", e);
+                throw new RuntimeException(e);
             } catch (SQLException throwables) {
-                throw new PokeLabSystemException("Error", throwables);
+                throw new RuntimeException(throwables);
             }
         } else {System.out.println("Pokè Lab not found");}
     }

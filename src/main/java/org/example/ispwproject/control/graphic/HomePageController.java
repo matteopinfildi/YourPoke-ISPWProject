@@ -8,7 +8,6 @@ import org.example.ispwproject.NavigationHelper;
 import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.utils.bean.PokeLabBean;
-import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -59,12 +58,12 @@ public class HomePageController extends GraphicController{
     private int id = -1;
 
     @FXML
-    public void handleBuyPokeLab(ActionEvent event) throws PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
+    public void handleBuyPokeLab(ActionEvent event) throws SystemException, LoginException {
         NavigationHelper.handleSceneChange(event, session, "/org/example/ispwproject/view/buyPokeLab.fxml", id);
     }
 
     @FXML
-    public void handlePokeWall(ActionEvent event) throws PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
+    public void handlePokeWall(ActionEvent event) throws SystemException, LoginException {
         NavigationHelper.handleSceneChange(event, session, "/org/example/ispwproject/view/pokeWall.fxml", id);
     }
 

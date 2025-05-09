@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
-import org.example.ispwproject.utils.exception.ChangePageException;
+import org.example.ispwproject.utils.exception.SystemException;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -41,23 +41,21 @@ public class ChangePage {
             initController(controller, id, pokeLabBean);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Error loading FXML", e);
-        } catch (ChangePageException e) {
-            logger.log(Level.SEVERE, "Error loading FXML", e);
         }
     }
 
     // Handle controller initialization with error handling
-    private static void initController(GraphicController controller, int id, PokeLabBean pokeLabBean) throws ChangePageException {
+    private static void initController(GraphicController controller, int id, PokeLabBean pokeLabBean)  {
         try {
             controller.init(id, pokeLabBean);
         } catch (org.example.ispwproject.utils.exception.SystemException e) {
-            throw new ChangePageException("System exception occurred while initializing controller", e);
+            throw new RuntimeException(e);
         } catch (java.io.IOException e) {
-            throw new ChangePageException("IO exception occurred while initializing controller", e);
+            throw new RuntimeException(e);
         } catch (javax.security.auth.login.LoginException e) {
-            throw new ChangePageException("Login exception occurred while initializing controller", e);
-        } catch (java.sql.SQLException e) {
-            throw new ChangePageException("SQL exception occurred while initializing controller", e);
+            throw new RuntimeException(e);
+        } catch (java.sql.SQLException throwables) {
+            throw new RuntimeException(throwables);
         }
     }
 

@@ -9,7 +9,8 @@ import org.example.ispwproject.utils.bean.UserBean;
 import org.example.ispwproject.utils.bean.UserTypeBean;
 import org.example.ispwproject.utils.dao.DAOFactory;
 import org.example.ispwproject.utils.enumeration.UserType;
-import org.example.ispwproject.utils.exception.LoginException;
+
+import javax.security.auth.login.LoginException;
 
 public class LoginAppController {
 
@@ -27,7 +28,7 @@ public class LoginAppController {
         try {
             userDAO.create(userA);
         } catch (org.example.ispwproject.utils.exception.SystemException e) {
-            throw new LoginException("Errore", e);
+            throw new LoginException("Errore" + e.getMessage());
         }
 
     }
@@ -40,7 +41,7 @@ public class LoginAppController {
         try{
             userA = userDAO.read(username);
         } catch (org.example.ispwproject.utils.exception.SystemException e) {
-            throw new LoginException("Errore", e);
+            throw new LoginException("Errore" + e.getMessage());
         }
         if (userA != null && userA.getUsername().equals(username) && userA.getPassword().equals(password)) {
             SessionManager manager = SessionManager.getSessionManager();
@@ -60,7 +61,7 @@ public class LoginAppController {
         try {
             userA = userDAO.read(uid);
         } catch (org.example.ispwproject.utils.exception.SystemException e) {
-            throw new LoginException("Errore", e);
+            throw new LoginException("Errore" + e.getMessage());
         }
 
         return uType == userA.getuType();

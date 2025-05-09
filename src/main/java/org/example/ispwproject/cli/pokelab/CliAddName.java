@@ -7,7 +7,6 @@ import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.exception.CliException;
-import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -22,14 +21,14 @@ public class CliAddName extends CliController {
     private int id;
 
     @Override
-    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
+    public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException {
         this.buyPokeLabAppController = new BuyPokeLabAppController();
         this.pokeLabBean = pokeLabBean;
         this.id = id;
         processPokeName();
     }
 
-    private void processPokeName() throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
+    private void processPokeName() throws SystemException, IOException, LoginException, SQLException, CliException {
         Scanner scanner = new Scanner(System.in);
         boolean validName = false;
 
@@ -63,7 +62,7 @@ public class CliAddName extends CliController {
         System.out.println("(Name must be at least 4 characters long)");
     }
 
-    private boolean handleBackCommand(String name) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
+    private boolean handleBackCommand(String name) throws SystemException, IOException, LoginException, SQLException, CliException {
         if (name.equalsIgnoreCase("back")) {
             new CliPokeLab().init(id, pokeLabBean);
             return true;
@@ -79,7 +78,7 @@ public class CliAddName extends CliController {
         return true;
     }
 
-    private boolean updatePokeName(String name) throws PokeLabSystemException {
+    private boolean updatePokeName(String name) throws SystemException {
         if (!name.equals(pokeLabBean.getPokeName())) {
             Session session = SessionManager.getSessionManager().getSessionFromId(id);
             SaveBean saveBean = new SaveBean(session.getUserId());

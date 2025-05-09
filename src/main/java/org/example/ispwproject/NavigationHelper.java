@@ -10,8 +10,9 @@ import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.bean.UserTypeBean;
 import org.example.ispwproject.utils.enumeration.UserType;
-import org.example.ispwproject.utils.exception.LoginException;
-import org.example.ispwproject.utils.exception.PokeLabSystemException;
+import org.example.ispwproject.utils.exception.SystemException;
+
+import javax.security.auth.login.LoginException;
 
 public class NavigationHelper {
 
@@ -20,7 +21,7 @@ public class NavigationHelper {
     }
 
 
-    public static void handleSceneChange(ActionEvent event, Session session, String scenePath, int id) throws  PokeLabSystemException, LoginException {
+    public static void handleSceneChange(ActionEvent event, Session session, String scenePath, int id) throws SystemException, LoginException {
         LoginAppController loginAppController = new LoginAppController();
         if (session != null) {
             UserTypeBean userTypeBean = new UserTypeBean(session.getUserId(), UserType.PREMIUMUSER);
@@ -37,7 +38,7 @@ public class NavigationHelper {
         }
     }
 
-    public static void handleSceneChange(MouseEvent event, Session session, String scenePath, int id) throws  PokeLabSystemException, LoginException {
+    public static void handleSceneChange(MouseEvent event, Session session, String scenePath, int id) throws  SystemException, LoginException {
         LoginAppController loginAppController = new LoginAppController();
         if (session != null) {
             UserTypeBean userTypeBean = new UserTypeBean(session.getUserId(), UserType.PREMIUMUSER);

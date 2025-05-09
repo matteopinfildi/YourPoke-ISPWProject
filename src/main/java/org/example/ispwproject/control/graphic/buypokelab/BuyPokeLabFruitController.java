@@ -13,7 +13,6 @@ import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.AddIngredientBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.enumeration.ingredient.FruitAlternative;
-import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -81,7 +80,7 @@ public class BuyPokeLabFruitController  extends GraphicController{
     @FXML private CheckBox checkStrawbarries;
 
     @FXML
-    public void handleNextClick(ActionEvent event) throws PokeLabSystemException {
+    public void handleNextClick(ActionEvent event) throws SystemException {
         try{
             FruitAlternative fruitAlternative = null;
             if (checkAvocado.isSelected()) {
@@ -97,7 +96,7 @@ public class BuyPokeLabFruitController  extends GraphicController{
 
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
         }catch (Exception e){
-            throw new PokeLabSystemException("Error", e);
+            throw new SystemException("Error" + e.getMessage());
         }
     }
 

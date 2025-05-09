@@ -3,7 +3,6 @@ package org.example.ispwproject.cli;
 import org.example.ispwproject.control.graphic.CliGraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.exception.CliException;
-import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -16,7 +15,7 @@ public abstract class CliController extends CliGraphicController {
 
     protected CliController() {}
 
-    public abstract void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException;
+    public abstract void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException;
 
     protected int menu(String title, List<String> alternative) {
         Scanner scanner = new Scanner(System.in);

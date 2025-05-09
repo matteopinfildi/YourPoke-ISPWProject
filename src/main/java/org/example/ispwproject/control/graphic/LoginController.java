@@ -34,13 +34,13 @@ public class LoginController extends GraphicController{
         this.sessionId = sessionId;
     }
 
-    public void registerUser(String uid, String password, String email, UserType uType, String address) throws org.example.ispwproject.utils.exception.LoginException {
+    public void registerUser(String uid, String password, String email, UserType uType, String address) throws LoginException {
         UserBean userBean = new UserBean(uid, password, email, uType, address);
         LoginAppController loginAppController = new LoginAppController();
         loginAppController.register(userBean);
     }
 
-    public void handleLogin(ActionEvent event) throws org.example.ispwproject.utils.exception.LoginException {
+    public void handleLogin(ActionEvent event) throws LoginException {
         String username = usernameField.getText();
         String password = passwordField.getText();
 

@@ -9,7 +9,6 @@ import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.enumeration.ingredient.*;
 import org.example.ispwproject.utils.exception.CliException;
-import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -37,7 +36,7 @@ public class CliPokeLab extends CliController{
 
     public static void setRecover (boolean value) {recover =  value;}
 
-    private void popup() throws PokeLabSystemException {
+    private void popup() throws SystemException{
         Scanner scanner = new Scanner(System.in);
         int selection = -1;
         boolean validInput = false;
@@ -66,7 +65,7 @@ public class CliPokeLab extends CliController{
         }while (validInput) ;
     }
 
-    private void recoverPokeLab() throws PokeLabSystemException {
+    private void recoverPokeLab() throws SystemException{
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(id);
         String userId = session.getUserId();
@@ -83,7 +82,7 @@ public class CliPokeLab extends CliController{
 
 
     @Override
-    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
+    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException {
         buyPokeLabAppController = new BuyPokeLabAppController();
         this.pokeLabBean = pokeLabBean;
         this.id = sID;
@@ -125,7 +124,7 @@ public class CliPokeLab extends CliController{
         return (ingredient != null) ? ingredient.toString() : NO_SELECTION;
     }
     // Metodo per gestire la selezione dell'utente
-    private boolean handleUserSelection() throws SystemException, CliException, SQLException, LoginException, IOException, org.example.ispwproject.utils.exception.LoginException, PokeLabSystemException {
+    private boolean handleUserSelection() throws SystemException, CliException, SQLException, LoginException, IOException {
         int selection = userSelection("Select an ingredient for your Poke Lab");
 
         switch (selection) {
@@ -162,7 +161,7 @@ public class CliPokeLab extends CliController{
     }
 
     // Metodo per salvare il Pokè Lab
-    private boolean savePokeLab() throws PokeLabSystemException {
+    private boolean savePokeLab() throws SystemException{
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(id);
         String userId = session.getUserId();

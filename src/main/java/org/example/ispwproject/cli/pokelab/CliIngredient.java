@@ -7,7 +7,6 @@ import org.example.ispwproject.utils.bean.AddIngredientBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.enumeration.ingredient.*;
 import org.example.ispwproject.utils.exception.CliException;
-import org.example.ispwproject.utils.exception.PokeLabSystemException;
 import org.example.ispwproject.utils.exception.SystemException;
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
@@ -30,7 +29,7 @@ public abstract class CliIngredient<T extends Enum<T>> extends CliController {
     }
 
     @Override
-    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException, PokeLabSystemException, org.example.ispwproject.utils.exception.LoginException {
+    public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException {
         buyPokeLabAppController = new BuyPokeLabAppController();
         this.pokeLabBean = pokeLabBean;
         this.id = sID;
@@ -47,7 +46,7 @@ public abstract class CliIngredient<T extends Enum<T>> extends CliController {
         new CliPokeLab().init(sID, pokeLabBean);
     }
 
-    private T getUserSelection() throws SystemException, CliException, SQLException, LoginException, org.example.ispwproject.utils.exception.LoginException, IOException, PokeLabSystemException {
+    private T getUserSelection() throws SystemException, CliException, SQLException, LoginException, IOException {
         boolean flag;
         T selectedAlternative = null;
         do {

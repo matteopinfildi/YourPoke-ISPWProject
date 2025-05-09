@@ -8,15 +8,9 @@ import org.example.ispwproject.ChangePage;
 import org.example.ispwproject.NavigationHelper;
 import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
-import org.example.ispwproject.control.application.BuyPokeLabAppController;
-import org.example.ispwproject.control.application.LoginAppController;
-import org.example.ispwproject.control.graphic.buypokelab.BuyPokeLabController;
-import org.example.ispwproject.utils.bean.PokeLabBean;
-import org.example.ispwproject.utils.bean.SaveBean;
-import org.example.ispwproject.utils.bean.UserTypeBean;
-import org.example.ispwproject.utils.enumeration.UserType;
-import org.example.ispwproject.utils.exception.LoginException;
-import org.example.ispwproject.utils.exception.PokeLabSystemException;
+import org.example.ispwproject.utils.exception.SystemException;
+
+import javax.security.auth.login.LoginException;
 
 public class SidebarController {
     @FXML
@@ -53,13 +47,13 @@ public class SidebarController {
 
 
     @FXML
-    public void handleBuyPokeLabCLick(MouseEvent event) throws PokeLabSystemException, LoginException {
+    public void handleBuyPokeLabCLick(MouseEvent event) throws SystemException, LoginException {
         NavigationHelper.handleSceneChange(event, session, "/org/example/ispwproject/view/buyPokeLab.fxml", id);
     }
 
 
     @FXML
-    public void handlePokeWallCLick(MouseEvent event) throws PokeLabSystemException, LoginException {
+    public void handlePokeWallCLick(MouseEvent event) throws SystemException, LoginException {
         NavigationHelper.handleSceneChange(event, session, "/org/example/ispwproject/view/pokeWall.fxml", id);
     }
 
