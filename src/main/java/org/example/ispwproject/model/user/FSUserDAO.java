@@ -15,29 +15,39 @@ public class FSUserDAO implements UserDAO{
 
     @Override
     public void create(User userA) throws SystemException {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_PATH));
-             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+        boolean exists = false;
 
-            // Controlla se l'utente esiste già
+        // Primo blocco: controllo esistenza
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] data = line.split(DELIMITER);
                 if (data[0].equals(userA.getUsername())) {
-                    return; // Utente già esistente, non aggiungerlo
+                    exists = true;
+                    break;
                 }
             }
+        } catch (FileNotFoundException e) {
+            // Il file non esiste, verrà creato nel blocco di scrittura
+        } catch (IOException e) {
+            throw new SystemException("Failed to check user in FS");
+        }
 
-            // Scrive l'utente nel file
+        if (exists) return;
+
+        // Secondo blocco: scrittura
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             bufferedWriter.write(userA.getUsername() + DELIMITER +
                     userA.getPassword() + DELIMITER +
                     userA.getEmail() + DELIMITER +
                     userA.getuType().name() + DELIMITER +
                     userA.getAddress() + DELIMITER +
-                    "-1" + "\n"); // con il -1 indichiamo che non c'è nessun pokè lab
+                    "-1" + "\n");
         } catch (IOException e) {
             throw new SystemException("Failed to create user in FS");
         }
     }
+
 
     @Override
     public User read(String uId) throws SystemException {

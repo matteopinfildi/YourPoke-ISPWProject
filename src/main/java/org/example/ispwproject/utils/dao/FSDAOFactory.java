@@ -10,6 +10,7 @@ import org.example.ispwproject.model.decorator.topping.ToppingDAO;
 import org.example.ispwproject.model.observer.pokewall.FSPokeWallDAO;
 import org.example.ispwproject.model.observer.pokewall.InMemoryPokeWallDAO;
 import org.example.ispwproject.model.observer.pokewall.PokeWallDAO;
+import org.example.ispwproject.model.user.FSUserDAO;
 import org.example.ispwproject.model.user.InMemoryUserDAO;
 import org.example.ispwproject.model.user.UserDAO;
 
@@ -24,7 +25,7 @@ public class FSDAOFactory extends DAOFactory{
     public SpicyDAO getSpicyDAO(){return InMemorySpicyDAO.getInstance();}
 
     @Override
-    public UserDAO getUserDAO(){return InMemoryUserDAO.getInstance();}
+    public UserDAO getUserDAO(){return new FSUserDAO();}
 
     @Override
     public PokeWallDAO getPokeWallDAO() {return new FSPokeWallDAO();}
