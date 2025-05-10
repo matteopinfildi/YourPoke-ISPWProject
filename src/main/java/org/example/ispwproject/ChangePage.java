@@ -45,19 +45,34 @@ public class ChangePage {
     }
 
     // Handle controller initialization with error handling
-    private static void initController(GraphicController controller, int id, PokeLabBean pokeLabBean)  {
+//    private static void initController(GraphicController controller, int id, PokeLabBean pokeLabBean)  {
+//        try {
+//            controller.init(id, pokeLabBean);
+//        } catch (org.example.ispwproject.utils.exception.SystemException e) {
+//            throw new RuntimeException(e);
+//        } catch (java.io.IOException e) {
+//            throw new RuntimeException(e);
+//        } catch (javax.security.auth.login.LoginException e) {
+//            throw new RuntimeException(e);
+//        } catch (java.sql.SQLException throwables) {
+//            throw new RuntimeException(throwables);
+//        }
+//    }
+
+    private static void initController(GraphicController controller, int id, PokeLabBean pokeLabBean) {
         try {
             controller.init(id, pokeLabBean);
-        } catch (org.example.ispwproject.utils.exception.SystemException e) {
-            throw new RuntimeException(e);
-        } catch (java.io.IOException e) {
-            throw new RuntimeException(e);
+        } catch (SystemException e) {
+            throw new RuntimeException(e); // puoi anche lasciarla così se SystemException è già significativa
+        } catch (IOException e) {
+            throw new RuntimeException(new SystemException("IOException during controller initialization: " + e.getMessage()));
         } catch (javax.security.auth.login.LoginException e) {
-            throw new RuntimeException(e);
-        } catch (java.sql.SQLException throwables) {
-            throw new RuntimeException(throwables);
+            throw new RuntimeException(new SystemException("Login error during controller initialization: " + e.getMessage()));
+        } catch (java.sql.SQLException e) {
+            throw new RuntimeException(new SystemException("Database error during controller initialization: " + e.getMessage()));
         }
     }
+
 
     public void setStage(Stage stageParam){
         this.stage=stageParam;
