@@ -112,7 +112,7 @@ public class FSPokeWallDAO implements PokeWallDAO {
                         String username = parts[3];
 
                         postsMap.put(postId, new PokeWall(postId, pokeName, size, username, new ArrayList<>()));
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException _) {
                         // Ignora riga con formato errato
                     }
                 }
@@ -143,7 +143,7 @@ public class FSPokeWallDAO implements PokeWallDAO {
                         if (postsMap.containsKey(postId)) {
                             postsMap.get(postId).getIngredients().add(ingredient);
                         }
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException _) {
                         // Ignora riga con formato errato
                     }
                 }
@@ -200,7 +200,7 @@ public class FSPokeWallDAO implements PokeWallDAO {
     private void tryAddSeenPostId(Set<Integer> seenPostIds, String idStr) {
         try {
             seenPostIds.add(Integer.parseInt(idStr));
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             // Ignora riga con formato errato
         }
     }
