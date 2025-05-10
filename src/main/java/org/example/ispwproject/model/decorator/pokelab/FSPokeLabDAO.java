@@ -37,7 +37,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
             while ((line = reader.readLine()) != null) {
                 maxId = updateMaxIdIfValid(line, maxId);
             }
-        } catch (IOException e) {
+        } catch (IOException _) {
             throw new SystemException("Error reading PokeLab file to find max ID");
         }
 
@@ -53,7 +53,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
                 if (currentId > currentMaxId) {
                     return currentId;
                 }
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 LOGGER.warning("ID non numerico trovato nella riga: " + line);
             }
         }
@@ -84,7 +84,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
                 writerIng.write(pokeLab.id() + DELIMITER + entry.getKey() + DELIMITER + ((Enum<?>) entry.getValue()).name());
                 writerIng.newLine();
             }
-        } catch (IOException e) {
+        } catch (IOException _) {
             throw new SystemException("Error saving PokeLab to file");
         }
     }
@@ -106,7 +106,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
                     break;
                 }
             }
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException | NumberFormatException _) {
             throw new SystemException("Error reading PokeLab file");
         }
         if (!found) {
@@ -132,7 +132,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
                     }
                 }
             }
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException | NumberFormatException _) {
             throw new SystemException("Error reading PokeLab ingredients file");
         }
         return new PokeLab(price, plid, ingredients, size);
@@ -196,7 +196,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
                 }
                 writer.newLine();
             }
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException | NumberFormatException _) {
             throw new SystemException("Error updating PokeLab bowl size");
         }
         if (!original.delete() || !temp.renameTo(original)) {
