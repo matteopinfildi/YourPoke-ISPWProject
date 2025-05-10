@@ -12,7 +12,9 @@ public class SessionManager {
     private int nextId = -1;
     private int pokeId = -1;
 
-    public SessionManager() {}
+    public SessionManager() {
+        // costruttore vuoto
+    }
 
     public static SessionManager getSessionManager() {
         if (SessionManager.instance == null) {
