@@ -39,7 +39,7 @@ public class SetUp {
                         logger.warning("Invalid choice. Please try again.");
                         flag = false;
                 }
-            } catch (InputMismatchException e) {  // Replaced with unnamed pattern
+            } catch (InputMismatchException _) {  // Replaced with unnamed pattern
                 logger.warning("Invalid input! Please enter a valid number.");
                 scanner.nextLine();  // Consume the invalid input
             }
