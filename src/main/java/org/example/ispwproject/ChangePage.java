@@ -46,36 +46,6 @@ public class ChangePage {
     }
 
 
-//    public static void changeScene(Node node, String fxmlPath, PokeLabBean pokeLabBean, int id) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(ChangePage.class.getResource(fxmlPath));
-//            Parent root = loader.load();
-//            Stage stage = (Stage) node.getScene().getWindow();
-//            stage.setScene(new Scene(root));
-//            stage.show();
-//
-//            GraphicController controller = loader.getController();
-//            initController(controller, id, pokeLabBean);
-//        } catch (IOException e) {
-//            logger.log(Level.SEVERE, "Error loading FXML", e);
-//        }
-//    }
-
-    // Handle controller initialization with error handling
-//    private static void initController(GraphicController controller, int id, PokeLabBean pokeLabBean)  {
-//        try {
-//            controller.init(id, pokeLabBean);
-//        } catch (org.example.ispwproject.utils.exception.SystemException e) {
-//            throw new RuntimeException(e);
-//        } catch (java.io.IOException e) {
-//            throw new RuntimeException(e);
-//        } catch (javax.security.auth.login.LoginException e) {
-//            throw new RuntimeException(e);
-//        } catch (java.sql.SQLException throwables) {
-//            throw new RuntimeException(throwables);
-//        }
-//    }
-
     private static void initController(GraphicController controller, int id, PokeLabBean pokeLabBean) throws SystemException {
         try {
             controller.init(id, pokeLabBean);
