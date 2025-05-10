@@ -80,26 +80,48 @@ public class BuyPokeLabRiceController extends GraphicController {
 
     @FXML private CheckBox checkBasmati;
 
-        @FXML
-    public void handleNextClick(ActionEvent event)  {
-            try {
-                RiceAlternative riceAlternative = null;
-                if (checkSushi.isSelected()) {
-                    riceAlternative = RiceAlternative.SUSHI;
-                } else if (checkVenus.isSelected()) {
-                    riceAlternative = RiceAlternative.VENUS;
-                } else if (checkBasmati.isSelected()) {
-                    riceAlternative = RiceAlternative.BASMATI;
-                }
+//    @FXML
+//    public void handleNextClick(ActionEvent event)  {
+//            try {
+//                RiceAlternative riceAlternative = null;
+//                if (checkSushi.isSelected()) {
+//                    riceAlternative = RiceAlternative.SUSHI;
+//                } else if (checkVenus.isSelected()) {
+//                    riceAlternative = RiceAlternative.VENUS;
+//                } else if (checkBasmati.isSelected()) {
+//                    riceAlternative = RiceAlternative.BASMATI;
+//                }
+//
+//                AddIngredientBean addIngredientBean = new AddIngredientBean("rice", riceAlternative);
+//                pokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
+//
+//                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
+//            } catch (Exception e){
+//                throw new RuntimeException(e);
+//            }
+//        }
 
-                AddIngredientBean addIngredientBean = new AddIngredientBean("rice", riceAlternative);
-                pokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
-
-                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
-            } catch (Exception e){
-                throw new RuntimeException(e);
+    @FXML
+    public void handleNextClick(ActionEvent event) throws SystemException {
+        try {
+            RiceAlternative riceAlternative = null;
+            if (checkSushi.isSelected()) {
+                riceAlternative = RiceAlternative.SUSHI;
+            } else if (checkVenus.isSelected()) {
+                riceAlternative = RiceAlternative.VENUS;
+            } else if (checkBasmati.isSelected()) {
+                riceAlternative = RiceAlternative.BASMATI;
             }
+
+            AddIngredientBean addIngredientBean = new AddIngredientBean("rice", riceAlternative);
+            pokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
+            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
+
+        } catch (Exception e) {
+            throw new SystemException("Error while selecting rice ingredient" + e.getMessage());
         }
+    }
+
 
     @FXML
     public void handleBackClick(ActionEvent event) throws SystemException {
