@@ -8,24 +8,56 @@ import java.util.*;
 
 public class DBPokeWallDAO implements PokeWallDAO {
 
+//    @Override
+//    public void create(PokeWall pokeWall) throws SystemException {
+//        try (Connection connection = DBConnection.getDBConnection()) {
+//            connection.setAutoCommit(false);
+//            try {
+//                performCreateTransaction(connection, pokeWall);
+//                connection.commit();
+//            } catch (SQLException | SystemException e) {
+//                connection.rollback();
+//                System.out.println("Rollback della transazione: " + e.getMessage());
+//                throw new SystemException("Errore durante la creazione del post: " + e.getMessage());
+//            } finally {
+//                connection.setAutoCommit(true);
+//            }
+//        } catch (SQLException e) {
+//            throw new SystemException("Errore di connessione al database: " + e.getMessage());
+//        }
+//    }
+
     @Override
     public void create(PokeWall pokeWall) throws SystemException {
         try (Connection connection = DBConnection.getDBConnection()) {
             connection.setAutoCommit(false);
-            try {
-                performCreateTransaction(connection, pokeWall);
-                connection.commit();
-            } catch (SQLException | SystemException e) {
-                connection.rollback();
-                System.out.println("Rollback della transazione: " + e.getMessage());
-                throw new SystemException("Errore durante la creazione del post: " + e.getMessage());
-            } finally {
-                connection.setAutoCommit(true);
-            }
+            executeCreateTransaction(connection, pokeWall);
         } catch (SQLException e) {
             throw new SystemException("Errore di connessione al database: " + e.getMessage());
         }
     }
+
+    private void executeCreateTransaction(Connection connection, PokeWall pokeWall) throws SystemException {
+        try {
+            performCreateTransaction(connection, pokeWall);
+            connection.commit();
+        } catch (SQLException | SystemException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException rollbackEx) {
+                throw new SystemException("Errore durante il rollback: " + rollbackEx.getMessage());
+            }
+            throw new SystemException("Errore durante la creazione del post: " + e.getMessage());
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException autoCommitEx) {
+                throw new SystemException("Impossibile ripristinare autoCommit: " + autoCommitEx.getMessage());
+            }
+        }
+    }
+
+
 
     private void performCreateTransaction(Connection connection, PokeWall pokeWall) throws SQLException, SystemException {
         int postId = insertPostAndReturnId(connection, pokeWall);
