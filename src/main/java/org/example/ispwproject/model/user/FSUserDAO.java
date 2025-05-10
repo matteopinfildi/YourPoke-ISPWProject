@@ -27,9 +27,9 @@ public class FSUserDAO implements UserDAO{
                     break;
                 }
             }
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException _) {
             // Il file non esiste, verrà creato nel blocco di scrittura
-        } catch (IOException e) {
+        } catch (IOException _) {
             throw new SystemException("Failed to check user in FS");
         }
 
@@ -43,7 +43,7 @@ public class FSUserDAO implements UserDAO{
                     userA.getuType().name() + DELIMITER +
                     userA.getAddress() + DELIMITER +
                     "-1" + "\n");
-        } catch (IOException e) {
+        } catch (IOException _) {
             throw new SystemException("Failed to create user in FS");
         }
     }
@@ -64,7 +64,7 @@ public class FSUserDAO implements UserDAO{
                     return user;
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException _) {
             throw new SystemException("Failed to read user in FS");
         }
         return null;
@@ -85,7 +85,7 @@ public class FSUserDAO implements UserDAO{
                 }
                 users.add(String.join(DELIMITER, data));
             }
-        } catch (IOException e) {
+        } catch (IOException _) {
             throw new SystemException("Failed to read users in FS");
         }
 
@@ -95,7 +95,7 @@ public class FSUserDAO implements UserDAO{
             for (String user : users) {
                 bufferedWriter.write(user + "\n");
             }
-        } catch (IOException e) {
+        } catch (IOException _) {
             throw new SystemException("EFailed to update user in FS");
         }
     }
@@ -112,7 +112,7 @@ public class FSUserDAO implements UserDAO{
                     users.add(line);
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException _) {
             throw new SystemException("Failed to read user in FS");
         }
 
@@ -120,7 +120,7 @@ public class FSUserDAO implements UserDAO{
             for (String user : users) {
                 writer.write(user + "\n");
             }
-        } catch (IOException e) {
+        } catch (IOException _) {
             throw new SystemException("Failed to delete user in FS");
         }
     }
