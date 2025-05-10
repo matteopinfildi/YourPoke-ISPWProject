@@ -242,7 +242,7 @@ public class FSPokeWallDAO implements PokeWallDAO {
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            reader.readLine(); // Skip header
+            String header = reader.readLine(); // Skip header, but capture the value
 
             String line;
             while ((line = reader.readLine()) != null) {
