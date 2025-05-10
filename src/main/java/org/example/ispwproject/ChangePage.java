@@ -36,13 +36,30 @@ public class ChangePage {
             Stage stage = (Stage) node.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
-
             GraphicController controller = loader.getController();
             initController(controller, id, pokeLabBean);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Error loading FXML", e);
+        } catch (SystemException e) {
+            logger.log(Level.SEVERE, "Error initializing controller", e);
         }
     }
+
+
+//    public static void changeScene(Node node, String fxmlPath, PokeLabBean pokeLabBean, int id) {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(ChangePage.class.getResource(fxmlPath));
+//            Parent root = loader.load();
+//            Stage stage = (Stage) node.getScene().getWindow();
+//            stage.setScene(new Scene(root));
+//            stage.show();
+//
+//            GraphicController controller = loader.getController();
+//            initController(controller, id, pokeLabBean);
+//        } catch (IOException e) {
+//            logger.log(Level.SEVERE, "Error loading FXML", e);
+//        }
+//    }
 
     // Handle controller initialization with error handling
 //    private static void initController(GraphicController controller, int id, PokeLabBean pokeLabBean)  {
@@ -59,19 +76,18 @@ public class ChangePage {
 //        }
 //    }
 
-    private static void initController(GraphicController controller, int id, PokeLabBean pokeLabBean) {
+    private static void initController(GraphicController controller, int id, PokeLabBean pokeLabBean) throws SystemException {
         try {
             controller.init(id, pokeLabBean);
-        } catch (SystemException e) {
-            throw new RuntimeException(e); // puoi anche lasciarla così se SystemException è già significativa
         } catch (IOException e) {
-            throw new RuntimeException(new SystemException("IOException during controller initialization: " + e.getMessage()));
+            throw new SystemException("IOException during controller initialization: " + e.getMessage());
         } catch (javax.security.auth.login.LoginException e) {
-            throw new RuntimeException(new SystemException("Login error during controller initialization: " + e.getMessage()));
+            throw new SystemException("Login error during controller initialization: " + e.getMessage());
         } catch (java.sql.SQLException e) {
-            throw new RuntimeException(new SystemException("Database error during controller initialization: " + e.getMessage()));
+            throw new SystemException("Database error during controller initialization: " + e.getMessage());
         }
     }
+
 
 
     public void setStage(Stage stageParam){
