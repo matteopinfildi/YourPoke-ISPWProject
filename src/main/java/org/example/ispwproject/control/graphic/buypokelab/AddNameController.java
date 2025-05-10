@@ -131,7 +131,7 @@ public class AddNameController extends GraphicController {
             if (success) {
                 ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/pokeWall.fxml", pokeLabBean, id);
             }
-        } catch (SystemException e) {
+        } catch (SystemException _) {
             errorLabel.setText("Error during post creation");
         }
     }
