@@ -16,15 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public final class PokeWallAppController implements PokeWallObserver {
+public class PokeWallAppController implements PokeWallObserver {
 
     private final PokeWallDAO pokeWallDAO;
     private final UserDAO userDAO;
+    private static final PokeWallAppController instance = new PokeWallAppController();
     private final List<PokeWallObserver> observers = new ArrayList<>();
     private static final Logger logger = Logger.getLogger(PokeWallAppController.class.getName());
-
-    // Volatile to ensure thread safety in double-checked locking
-    private static volatile PokeWallAppController instance;
 
     private PokeWallAppController() {
         DAOFactory daoFactory = DAOFactory.getInstance();
@@ -33,31 +31,29 @@ public final class PokeWallAppController implements PokeWallObserver {
     }
 
     public static PokeWallAppController getInstance() {
-        if (instance == null) {
-            synchronized (PokeWallAppController.class) {
-                if (instance == null) {
-                    instance = new PokeWallAppController();
-                }
-            }
-        }
         return instance;
     }
 
     public void registerObserver(PokeWallObserver observer, int sessionId) {
         try {
             String username = getUsernameFromSession(sessionId);
+
             List<PokeWall> unseenPosts = pokeWallDAO.getUnseenPosts(username);
+
             for (PokeWall post : unseenPosts) {
-                post.registerObserver(observer);
-                observer.update(post);
-                pokeWallDAO.markPostAsSeen(post.getId(), username);
+                post.registerObserver(observer);     // Aggiungiamo observer a ogni post non visto
+                observer.update(post);               // Notifica immediata del post
+                pokeWallDAO.markPostAsSeen(post.getId(), username); // Segna come visto
             }
+
             if (!observers.contains(observer)) {
-                observers.add(observer);
+                observers.add(observer);  // Salviamo observer solo se non è già presente
             }
+
         } catch (SystemException e) {
+            // Loggare l'eccezione con il logger
             logger.severe("Error occurred while registering observer: " + e.getMessage());
-            e.printStackTrace();
+            e.printStackTrace();  // Opzionale, per visualizzare lo stack trace completo
         }
     }
 
@@ -71,11 +67,14 @@ public final class PokeWallAppController implements PokeWallObserver {
         if (user == null) {
             return false;
         }
+
         PokeWall pokeWall = new PokeWall(0, pokeWallBean.getPokeName(), pokeWallBean.getSize(),
                 user.getUsername(), pokeWallBean.getIngredients());
-        pokeWall.registerObserver(this);
+
+        pokeWall.registerObserver(this); // Questo controller osserva il post
         pokeWallDAO.create(pokeWall);
-        pokeWall.notifyObservers();
+        pokeWall.notifyObservers(); // Notifica tutti gli osservatori
+
         return true;
     }
 
@@ -91,6 +90,7 @@ public final class PokeWallAppController implements PokeWallObserver {
         pokeWallDAO.delete(postId);
         return true;
     }
+
 
     public PokeWall getPostById(int postId) throws SystemException {
         List<PokeWall> posts = pokeWallDAO.getAllPosts();
