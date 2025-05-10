@@ -74,10 +74,11 @@ public class SetUp {
                         uiFlag = -1;
                         break;
                 }
-            } catch (InputMismatchException e) {
+            } catch (InputMismatchException _) {
                 logger.warning("Invalid input! Please enter a valid number.");
-                scanner.nextLine();  // Consume the invalid input
+                scanner.nextLine();  // Consuma l'input errato
             }
+
         }
         return UI.fromInt(uiFlag);
     }
