@@ -90,7 +90,11 @@ public class DBPokeLabDAO implements PokeLabDAO {
                 return new PokeLab(price, plid, ingredients, size);
             }
         }catch (SQLException e) {
-            logger.log(Level.SEVERE, String.format("SQL error while reading PokeLab entry with ID %d", plid), e);
+//            logger.log(Level.SEVERE, String.format("SQL error while reading PokeLab entry with ID %d", plid), e);
+            if (logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, String.format("SQL error while reading PokeLab entry with ID %d", plid), e);
+            }
+
             throw new SystemException("Error reading PokeLab from database");
         }
         return null;
@@ -146,11 +150,22 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
             int rowsUpdated = preparedStatement.executeUpdate();
 
+//            if (rowsUpdated == 0) {
+//                logger.info(String.format("Nessun record trovato con ID: %d", plid));
+//            } else {
+//                logger.info(String.format("Bowl size aggiornato per ID: %d", plid));
+//            }
+
             if (rowsUpdated == 0) {
-                logger.info(String.format("Nessun record trovato con ID: %d", plid));
+                if (logger.isLoggable(Level.INFO)) {
+                    logger.info(String.format("Nessun record trovato con ID: %d", plid));
+                }
             } else {
-                logger.info(String.format("Bowl size aggiornato per ID: %d", plid));
+                if (logger.isLoggable(Level.INFO)) {
+                    logger.info(String.format("Bowl size aggiornato per ID: %d", plid));
+                }
             }
+
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, String.format("SQL error while updating bowl size for PokeLab with ID %d", plid), e);
