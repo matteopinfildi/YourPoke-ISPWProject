@@ -16,10 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-/**
- * Singleton controller for managing the PokeWall.
- * Uses eager initialization (thread-safe).
- */
 public final class PokeWallAppController implements PokeWallObserver {
 
     private final PokeWallDAO pokeWallDAO;
@@ -27,8 +23,8 @@ public final class PokeWallAppController implements PokeWallObserver {
     private final List<PokeWallObserver> observers = new ArrayList<>();
     private static final Logger logger = Logger.getLogger(PokeWallAppController.class.getName());
 
-    // Singleton instance - eager initialization
-    private static final PokeWallAppController instance = new PokeWallAppController();
+    // Volatile to ensure thread safety in double-checked locking
+    private static volatile PokeWallAppController instance;
 
     private PokeWallAppController() {
         DAOFactory daoFactory = DAOFactory.getInstance();
@@ -37,6 +33,13 @@ public final class PokeWallAppController implements PokeWallObserver {
     }
 
     public static PokeWallAppController getInstance() {
+        if (instance == null) {
+            synchronized (PokeWallAppController.class) {
+                if (instance == null) {
+                    instance = new PokeWallAppController();
+                }
+            }
+        }
         return instance;
     }
 
@@ -115,4 +118,3 @@ public final class PokeWallAppController implements PokeWallObserver {
         }
     }
 }
-
