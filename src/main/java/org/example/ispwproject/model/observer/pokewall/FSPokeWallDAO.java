@@ -163,7 +163,7 @@ public class FSPokeWallDAO implements PokeWallDAO {
         List<PokeWall> unseenPosts = allPosts.stream()
                 .filter(post -> !seenPostIds.contains(post.getId()))
                 .sorted(Comparator.comparingInt(PokeWall::getId).reversed())
-                .collect(Collectors.toList());
+                .toList();
 
         return unseenPosts;
     }
