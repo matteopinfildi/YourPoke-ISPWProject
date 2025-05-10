@@ -80,26 +80,6 @@ public class BuyPokeLabRiceController extends GraphicController {
 
     @FXML private CheckBox checkBasmati;
 
-//    @FXML
-//    public void handleNextClick(ActionEvent event)  {
-//            try {
-//                RiceAlternative riceAlternative = null;
-//                if (checkSushi.isSelected()) {
-//                    riceAlternative = RiceAlternative.SUSHI;
-//                } else if (checkVenus.isSelected()) {
-//                    riceAlternative = RiceAlternative.VENUS;
-//                } else if (checkBasmati.isSelected()) {
-//                    riceAlternative = RiceAlternative.BASMATI;
-//                }
-//
-//                AddIngredientBean addIngredientBean = new AddIngredientBean("rice", riceAlternative);
-//                pokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
-//
-//                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
-//            } catch (Exception e){
-//                throw new RuntimeException(e);
-//            }
-//        }
 
     @FXML
     public void handleNextClick(ActionEvent event) throws SystemException {
