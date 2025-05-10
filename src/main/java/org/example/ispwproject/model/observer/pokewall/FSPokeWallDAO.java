@@ -186,11 +186,8 @@ public class FSPokeWallDAO implements PokeWallDAO {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\" + DELIMITER, -1);
                 if (parts.length >= 2 && parts[1].equals(username)) {
-                    try {
-                        seenPostIds.add(Integer.parseInt(parts[0]));
-                    } catch (NumberFormatException e) {
-                        // Ignora riga con formato errato
-                    }
+                    tryAddSeenPostId(seenPostIds, parts[0]);
+
                 }
             }
         } catch (IOException e) {
@@ -199,6 +196,15 @@ public class FSPokeWallDAO implements PokeWallDAO {
 
         return seenPostIds;
     }
+
+    private void tryAddSeenPostId(Set<Integer> seenPostIds, String idStr) {
+        try {
+            seenPostIds.add(Integer.parseInt(idStr));
+        } catch (NumberFormatException e) {
+            // Ignora riga con formato errato
+        }
+    }
+
 
     @Override
     public void markPostAsSeen(int postId, String username) throws SystemException {
