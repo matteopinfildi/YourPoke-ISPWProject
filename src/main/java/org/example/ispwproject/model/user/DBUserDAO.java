@@ -32,7 +32,7 @@ public class DBUserDAO implements UserDAO{
                 preparedStatementInsert.setString(5, user.getAddress());
                 preparedStatementInsert.executeUpdate();
             }
-        } catch (SQLException e) {
+        } catch (SQLException _) {
             throw new SystemException("Error create!");
         }
     }
@@ -71,7 +71,7 @@ public class DBUserDAO implements UserDAO{
             } else {
                 return null;  // L'utente non è stato trovato
             }
-        } catch (SQLException e) {
+        } catch (SQLException _) {
             throw new SystemException("Errore nella lettura dell'utente");
         }
     }
@@ -83,7 +83,7 @@ public class DBUserDAO implements UserDAO{
             try {
                 // Se plid è valido, prova a caricare il PokeLab
                 return new DBPokeLabDAO().read(plid);
-            } catch (SystemException e) {
+            } catch (SystemException _) {
                 // Se non riesci a trovare il PokeLab, logga l'errore o gestisci la situazione
                 System.err.println("Attenzione: PokeLab con plid " + plid + " non trovato.");
                 return null;  // Nessun PokeLab trovato, ma non lanciare eccezioni
@@ -135,7 +135,7 @@ public class DBUserDAO implements UserDAO{
         try (Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatement = connection.prepareStatement(queryDelete)){
             preparedStatement.setString(1, uid);
             preparedStatement.executeUpdate();
-        }catch (SQLException e) {
+        }catch (SQLException _) {
             throw new SystemException("Errore delete user!");
         }
     }
