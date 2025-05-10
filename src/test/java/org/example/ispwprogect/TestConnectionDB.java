@@ -4,6 +4,8 @@ import org.example.ispwproject.utils.database.DBConnection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+// @author Matteo Pinfildi
+
 class TestConnectionDB {
 
     @Test
