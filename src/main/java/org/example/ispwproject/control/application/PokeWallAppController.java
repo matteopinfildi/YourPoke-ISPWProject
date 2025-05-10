@@ -83,17 +83,14 @@ public class PokeWallAppController implements PokeWallObserver {
     }
 
     public boolean deletePost(int postId, String requestingUsername) throws SystemException {
-        try {
-            PokeWall postToDelete = getPostById(postId);
-            if (postToDelete == null || !postToDelete.getUsername().equals(requestingUsername)) {
-                return false;
-            }
-            pokeWallDAO.delete(postId);
-            return true;
-        } catch (SystemException e) {
-            throw e;
+        PokeWall postToDelete = getPostById(postId);
+        if (postToDelete == null || !postToDelete.getUsername().equals(requestingUsername)) {
+            return false;
         }
+        pokeWallDAO.delete(postId);
+        return true;
     }
+
 
     public PokeWall getPostById(int postId) throws SystemException {
         List<PokeWall> posts = pokeWallDAO.getAllPosts();
