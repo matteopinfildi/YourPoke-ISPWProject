@@ -3,7 +3,6 @@ package org.example.ispwproject.model.observer.pokewall;
 import org.example.ispwproject.utils.exception.SystemException;
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class FSPokeWallDAO implements PokeWallDAO {
     private static final String POSTS_FILE = "poke_wall_posts.csv";
@@ -151,22 +150,36 @@ public class FSPokeWallDAO implements PokeWallDAO {
         }
     }
 
+//    @Override
+//    public List<PokeWall> getUnseenPosts(String username) throws SystemException {
+//        List<PokeWall> allPosts = getAllPosts();
+//        if (allPosts.isEmpty()) {
+//            return Collections.emptyList();
+//        }
+//
+//        Set<Integer> seenPostIds = getSeenPostIds(username);
+//
+//        List<PokeWall> unseenPosts = allPosts.stream()
+//                .filter(post -> !seenPostIds.contains(post.getId()))
+//                .sorted(Comparator.comparingInt(PokeWall::getId).reversed())
+//                .toList();
+//
+//        return unseenPosts;
+//    }
+
     @Override
     public List<PokeWall> getUnseenPosts(String username) throws SystemException {
         List<PokeWall> allPosts = getAllPosts();
         if (allPosts.isEmpty()) {
             return Collections.emptyList();
         }
-
         Set<Integer> seenPostIds = getSeenPostIds(username);
-
-        List<PokeWall> unseenPosts = allPosts.stream()
+        return allPosts.stream()
                 .filter(post -> !seenPostIds.contains(post.getId()))
                 .sorted(Comparator.comparingInt(PokeWall::getId).reversed())
                 .toList();
-
-        return unseenPosts;
     }
+
 
     private Set<Integer> getSeenPostIds(String username) throws SystemException {
         Set<Integer> seenPostIds = new HashSet<>();
@@ -242,7 +255,6 @@ public class FSPokeWallDAO implements PokeWallDAO {
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String header = reader.readLine(); // Skip header, but capture the value
 
             String line;
             while ((line = reader.readLine()) != null) {
