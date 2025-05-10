@@ -45,18 +45,17 @@ public class DBPokeWallDAO implements PokeWallDAO {
             try {
                 connection.rollback();
             } catch (SQLException rollbackEx) {
-                throw new SystemException("Errore durante il rollback: " + rollbackEx.getMessage());
+                System.err.println("Errore durante il rollback: " + rollbackEx.getMessage());
             }
             throw new SystemException("Errore durante la creazione del post: " + e.getMessage());
         } finally {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException autoCommitEx) {
-                throw new SystemException("Impossibile ripristinare autoCommit: " + autoCommitEx.getMessage());
+                System.err.println("Impossibile ripristinare autoCommit: " + autoCommitEx.getMessage());
             }
         }
     }
-
 
 
     private void performCreateTransaction(Connection connection, PokeWall pokeWall) throws SQLException, SystemException {
