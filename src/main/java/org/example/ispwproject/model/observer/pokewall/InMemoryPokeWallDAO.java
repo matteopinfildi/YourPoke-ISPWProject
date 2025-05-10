@@ -4,7 +4,6 @@ import org.example.ispwproject.utils.exception.SystemException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class InMemoryPokeWallDAO implements PokeWallDAO {
     private static InMemoryPokeWallDAO instance;

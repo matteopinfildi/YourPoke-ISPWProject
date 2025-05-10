@@ -150,22 +150,6 @@ public class FSPokeWallDAO implements PokeWallDAO {
         }
     }
 
-//    @Override
-//    public List<PokeWall> getUnseenPosts(String username) throws SystemException {
-//        List<PokeWall> allPosts = getAllPosts();
-//        if (allPosts.isEmpty()) {
-//            return Collections.emptyList();
-//        }
-//
-//        Set<Integer> seenPostIds = getSeenPostIds(username);
-//
-//        List<PokeWall> unseenPosts = allPosts.stream()
-//                .filter(post -> !seenPostIds.contains(post.getId()))
-//                .sorted(Comparator.comparingInt(PokeWall::getId).reversed())
-//                .toList();
-//
-//        return unseenPosts;
-//    }
 
     @Override
     public List<PokeWall> getUnseenPosts(String username) throws SystemException {
