@@ -49,7 +49,7 @@ public class InMemoryPokeWallDAO implements PokeWallDAO {
         // Filtra i post che l'utente non ha ancora visto (ipotesi: implementare un attributo 'seen' nel PokeWall)
         return posts.stream()
                 .filter(post -> !post.getSeenByUsers().contains(username))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
