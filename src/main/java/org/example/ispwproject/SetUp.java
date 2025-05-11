@@ -3,12 +3,11 @@ package org.example.ispwproject;
 import org.example.ispwproject.utils.dao.DAOFactory;
 import org.example.ispwproject.utils.enumeration.PersistenceProvider;
 import org.example.ispwproject.utils.enumeration.UI;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 public class SetUp {
-    private static final Logger logger = Logger.getLogger(SetUp.class.getName());
 
     public boolean setUpPersistenceProvider() {
         Scanner scanner = new Scanner(System.in);
@@ -17,8 +16,8 @@ public class SetUp {
 
         while (!flag) {
             try {
-                logger.info("Select a Persistence Provider (1-4): \n1. File System\n2. DBMS\n3. In Memory\n4. Exit");
-                int selection = Integer.parseInt(String.valueOf(scanner.nextInt()));
+                System.out.println("Select a Persistence Provider (1-4): \n1. File System\n2. DBMS\n3. In Memory\n4. Exit");
+                int selection = scanner.nextInt();
                 flag = true;
 
                 switch (selection) {
@@ -32,20 +31,20 @@ public class SetUp {
                         persistenceProvider = PersistenceProvider.IN_MEMORY;
                         break;
                     case 4:
-                        logger.info("Exit");
+                        System.out.println("Exit");
                         scanner.close();
                         return false;
                     default:
-                        logger.warning("Invalid choice. Please try again.");
+                        System.err.println("Invalid choice. Please try again.");
                         flag = false;
                 }
-            } catch (InputMismatchException _) {  // Replaced with unnamed pattern
-                logger.warning("Invalid input! Please enter a valid number.");
+            } catch (InputMismatchException _) {
+                System.err.println("Invalid input! Please enter a valid number.");
                 scanner.nextLine();  // Consume the invalid input
             }
         }
 
-        logger.info("Using " + persistenceProvider.name() + " Persistence Provider\n");
+        System.out.println("Using " + persistenceProvider.name() + " Persistence Provider\n");
         DAOFactory.setPersistenceProvider(persistenceProvider);
         return true;
     }
@@ -56,30 +55,30 @@ public class SetUp {
 
         while (uiFlag == -1) {
             try {
-                logger.info("Select a UI (1-3): \n1. GUI\n2. CLI\n3. Exit");
+                System.out.println("Select a UI (1-3): \n1. GUI\n2. CLI\n3. Exit");
                 uiFlag = scanner.nextInt();
 
                 switch (uiFlag) {
                     case 1:
-                        logger.info("Using GUI\n");
+                        System.out.println("Using GUI\n");
                         break;
                     case 2:
-                        logger.info("Using CLI\n");
+                        System.out.println("Using CLI\n");
                         break;
                     case 3:
-                        logger.info("Exiting...");
+                        System.out.println("Exiting...");
                         return UI.NONE;
                     default:
-                        logger.warning("Invalid choice. Please try again.");
+                        System.err.println("Invalid choice. Please try again.");
                         uiFlag = -1;
                         break;
                 }
             } catch (InputMismatchException _) {
-                logger.warning("Invalid input! Please enter a valid number.");
-                scanner.nextLine();  // Consuma l'input errato
+                System.err.println("Invalid input! Please enter a valid number.");
+                scanner.nextLine();  // Consume the invalid input
             }
-
         }
+
         return UI.fromInt(uiFlag);
     }
 }
