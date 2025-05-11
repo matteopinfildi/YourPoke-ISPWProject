@@ -77,7 +77,7 @@ public class PokeWallController extends GraphicController {
                         alert.setHeaderText("A new poke lab has been created!");
                         alert.setContentText(message);
                         alert.showAndWait();
-                    } catch (SystemException e) {
+                    } catch (SystemException _) {
                             logger.log(Level.SEVERE, "Error");
                     }
                 });
