@@ -34,14 +34,12 @@ public class SidebarController {
 
     @FXML
     public void handleHomeCLick(MouseEvent event) {
-        System.out.println("Vai alla home");
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/homePage.fxml", null, id);
     }
 
 
     @FXML
     public void handleLogInCLick(MouseEvent event) {
-        System.out.println("Logging in...");
         ChangePage.changeScene((Node) event.getSource(), LOGIN_SCENE_PATH, null, id);
     }
 

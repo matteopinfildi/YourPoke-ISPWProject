@@ -67,14 +67,10 @@ public class AddNameController extends GraphicController {
             SaveBean saveBean = new SaveBean(userId);
 
             if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
-                System.out.println("Save failed");
                 return;
-            } else {
-                System.out.println("Save successfull");
             }
 
-            errorLabel.setText(""); // Rimuove eventuali messaggi di errore
-            System.out.println("Poké name set to: " + name);
+            errorLabel.setText("");
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/orderPokeLab.fxml", pokeLabBean, id);
         }
     }

@@ -15,6 +15,9 @@ import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class BowlSizeController extends GraphicController {
 
     @FXML private RadioButton smallSize;
@@ -22,10 +25,11 @@ public class BowlSizeController extends GraphicController {
     @FXML private RadioButton largeSize;
     @FXML private Button confirmButton;
 
-    private ToggleGroup sizeToggleGroup; // Non è più @FXML, viene gestito manualmente
+    private ToggleGroup sizeToggleGroup;
     private PokeLabBean pokeLabBean;
     private BuyPokeLabAppController buyPokeLabAppController;
     private int sessionId;
+    private static final Logger LOGGER = Logger.getLogger(BowlSizeController.class.getName());
 
     @Override
     public void init(int sessionId, PokeLabBean pokeLabBean) {
@@ -103,12 +107,11 @@ public class BowlSizeController extends GraphicController {
 
             try {
                 if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
-                    System.out.println("Error saving bowl size");
+                    LOGGER.warning("Error saving bowl size");
                     return;
                 }
-                System.out.println("Bowl size saved: " + selectedSize);
             } catch (Exception e) {
-                System.out.println("Error saving bowl size: " + e.getMessage());
+                LOGGER.log(Level.SEVERE, "Error saving bowl size", e);
             }
         }
 

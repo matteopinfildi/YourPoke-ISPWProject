@@ -30,7 +30,6 @@ public class FortuneCookieController extends GraphicController {
     public void init(int sessionId, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
         this.pokeLabBean = pokeLabBean;
         this.id = sessionId;
-        System.out.println("FortuneController initialized with session ID: " + sessionId);
     }
 
     @FXML
