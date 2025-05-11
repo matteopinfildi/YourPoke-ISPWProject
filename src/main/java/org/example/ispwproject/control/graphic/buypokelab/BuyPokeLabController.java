@@ -21,6 +21,7 @@ import org.example.ispwproject.utils.exception.SystemException;
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class BuyPokeLabController extends GraphicController{
 
@@ -51,6 +52,7 @@ public class BuyPokeLabController extends GraphicController{
     private BuyPokeLabAppController pokeLabAppController;
     private PokeLabBean pokeLabBean;
     private int id;
+    private static final Logger LOGGER = Logger.getLogger(BuyPokeLabController.class.getName());
 
     @FXML private Label totalPriceLabel;
     @FXML private Pane popup;
@@ -221,7 +223,7 @@ public class BuyPokeLabController extends GraphicController{
                 throw new SystemException("Error while recovering PokèLab" + e.getMessage());
             }
         } else {
-            System.out.println("Pokè Lab not found");
+            LOGGER.warning("Pokè Lab not found");
         }
     }
 

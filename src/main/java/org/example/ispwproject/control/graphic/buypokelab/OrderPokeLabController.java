@@ -61,12 +61,6 @@ public class OrderPokeLabController extends GraphicController {
             return;
         }
 
-        // Simulazione della conferma dell'ordine
-        System.out.println("Ordine Confermato!");
-        System.out.println("Indirizzo: " + address);
-        System.out.println("Metodo di Pagamento: " + paymentMethod);
-        System.out.println("Note Extra: " + notes);
-
         // Messaggio di conferma
         showAlert("Ordine Confermato", "Grazie per il tuo ordine!");
     }

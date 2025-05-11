@@ -115,9 +115,7 @@ public class PokeWallController extends GraphicController {
 
         pokeWallListView.setItems(postObservableList);
 
-        if (postObservableList.isEmpty()) {
-            System.out.println("No posts available!");
-        }
+
     }
 
     @FXML
@@ -152,7 +150,6 @@ public class PokeWallController extends GraphicController {
 
     private boolean canDeletePost(PokeWall selectedPost) {
         if (!selectedPost.getUsername().equals(currentUsername)) {
-            System.out.println("You can only delete your own posts!");
             return false;
         }
         return true;
@@ -165,9 +162,9 @@ public class PokeWallController extends GraphicController {
             int selectedId = selectedPost.getId();
             refreshPosts();
             restoreSelection(selectedId);
-            System.out.println("Post deleted successfully!");
         } else {
-            System.out.println("Failed to delete post.");
+            logger.log(Level.SEVERE, "Error deleting post");
+
         }
     }
 
