@@ -1,6 +1,6 @@
 package org.example.ispwproject.model.user;
 
-import org.example.ispwproject.model.decorator.pokelab.PokeLab;
+import org.example.ispwproject.model.pokelab.PokeLab;
 import org.example.ispwproject.utils.bean.UserBean;
 import org.example.ispwproject.utils.enumeration.UserType;
 

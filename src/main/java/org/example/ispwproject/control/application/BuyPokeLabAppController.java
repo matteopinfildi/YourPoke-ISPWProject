@@ -1,8 +1,8 @@
 package org.example.ispwproject.control.application;
 
 import org.example.ispwproject.model.Ingredient;
-import org.example.ispwproject.model.decorator.pokelab.PokeLab;
-import org.example.ispwproject.model.decorator.pokelab.PokeLabDAO;
+import org.example.ispwproject.model.pokelab.PokeLab;
+import org.example.ispwproject.model.pokelab.PokeLabDAO;
 import org.example.ispwproject.model.user.User;
 import org.example.ispwproject.model.user.UserDAO;
 import org.example.ispwproject.utils.bean.AddIngredientBean;

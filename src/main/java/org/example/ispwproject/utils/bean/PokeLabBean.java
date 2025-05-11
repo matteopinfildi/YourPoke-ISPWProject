@@ -1,7 +1,7 @@
 package org.example.ispwproject.utils.bean;
 
 import org.example.ispwproject.SessionManager;
-import org.example.ispwproject.model.decorator.pokelab.PokeLab;
+import org.example.ispwproject.model.pokelab.PokeLab;
 import org.example.ispwproject.utils.enumeration.ingredient.GenericAlternative;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package org.example.ispwproject.model.decorator.pokelab;
+package org.example.ispwproject.model.pokelab;
 
 import org.example.ispwproject.utils.enumeration.ingredient.*;
 import org.example.ispwproject.utils.exception.SystemException;

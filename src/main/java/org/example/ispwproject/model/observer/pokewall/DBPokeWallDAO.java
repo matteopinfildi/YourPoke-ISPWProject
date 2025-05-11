@@ -60,8 +60,7 @@ public class DBPokeWallDAO implements PokeWallDAO {
             }
             try (ResultSet rs = postStmt.getGeneratedKeys()) {
                 if (rs.next()) {
-                    int postId = rs.getInt(1);
-                    return postId;
+                    return rs.getInt(1);
                 } else {
                     throw new SystemException("Impossibile ottenere l'ID del post generato.");
                 }

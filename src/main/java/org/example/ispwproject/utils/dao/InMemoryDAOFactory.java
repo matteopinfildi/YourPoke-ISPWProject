@@ -1,8 +1,8 @@
 package org.example.ispwproject.utils.dao;
 
 
-import org.example.ispwproject.model.decorator.pokelab.InMemoryPokeLabDAO;
-import org.example.ispwproject.model.decorator.pokelab.PokeLabDAO;
+import org.example.ispwproject.model.pokelab.InMemoryPokeLabDAO;
+import org.example.ispwproject.model.pokelab.PokeLabDAO;
 import org.example.ispwproject.model.observer.pokewall.InMemoryPokeWallDAO;
 import org.example.ispwproject.model.observer.pokewall.PokeWallDAO;
 import org.example.ispwproject.model.user.InMemoryUserDAO;

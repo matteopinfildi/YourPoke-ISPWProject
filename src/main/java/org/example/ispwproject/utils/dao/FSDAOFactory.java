@@ -1,7 +1,7 @@
 package org.example.ispwproject.utils.dao;
 
-import org.example.ispwproject.model.decorator.pokelab.FSPokeLabDAO;
-import org.example.ispwproject.model.decorator.pokelab.PokeLabDAO;
+import org.example.ispwproject.model.pokelab.FSPokeLabDAO;
+import org.example.ispwproject.model.pokelab.PokeLabDAO;
 import org.example.ispwproject.model.observer.pokewall.FSPokeWallDAO;
 import org.example.ispwproject.model.observer.pokewall.PokeWallDAO;
 import org.example.ispwproject.model.user.FSUserDAO;
