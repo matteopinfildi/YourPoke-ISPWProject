@@ -59,7 +59,6 @@ public class ChangePage {
     }
 
 
-
     public void setStage(Stage stageParam){
         this.stage=stageParam;
     }
