@@ -138,7 +138,7 @@ public class PokeWallController extends GraphicController {
                 try {
                     deleteAndRefreshPosts(selectedPost);
                 } catch (SystemException e) {
-                    System.err.println("Error deleting post: " + e.getMessage());
+                    logger.log(Level.SEVERE, "Error deleting post", e);
                 }
             }
         }
@@ -149,11 +149,9 @@ public class PokeWallController extends GraphicController {
     }
 
     private boolean canDeletePost(PokeWall selectedPost) {
-        if (!selectedPost.getUsername().equals(currentUsername)) {
-            return false;
-        }
-        return true;
+        return selectedPost.getUsername().equals(currentUsername);
     }
+
 
     private void deleteAndRefreshPosts(PokeWall selectedPost) throws SystemException {
         boolean success = pokeWallAppController.deletePost(selectedPost.getId(), currentUsername);
@@ -163,7 +161,7 @@ public class PokeWallController extends GraphicController {
             refreshPosts();
             restoreSelection(selectedId);
         } else {
-            logger.log(Level.SEVERE, "Error deleting post");
+            logger.warning("Failed to delete post.");
 
         }
     }

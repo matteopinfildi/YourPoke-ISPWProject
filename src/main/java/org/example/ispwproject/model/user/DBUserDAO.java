@@ -10,8 +10,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class DBUserDAO implements UserDAO{
+
+    private static final Logger LOGGER = Logger.getLogger(DBUserDAO.class.getName());
+
 
     @Override
     public void create (User user) throws SystemException{
@@ -84,8 +88,7 @@ public class DBUserDAO implements UserDAO{
                 // Se plid è valido, prova a caricare il PokeLab
                 return new DBPokeLabDAO().read(plid);
             } catch (SystemException _) {
-                // Se non riesci a trovare il PokeLab, logga l'errore o gestisci la situazione
-                System.err.println("Attenzione: PokeLab con plid " + plid + " non trovato.");
+                LOGGER.warning("Attenzione: PokeLab con plid " + plid + " non trovato.");
                 return null;  // Nessun PokeLab trovato, ma non lanciare eccezioni
             }
         }

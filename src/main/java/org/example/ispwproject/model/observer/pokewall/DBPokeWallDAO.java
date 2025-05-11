@@ -5,9 +5,11 @@ import org.example.ispwproject.utils.exception.SystemException;
 
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class DBPokeWallDAO implements PokeWallDAO {
 
+    private static final Logger logger = Logger.getLogger(DBPokeWallDAO.class.getName());
 
     @Override
     public void create(PokeWall pokeWall) throws SystemException {
@@ -27,14 +29,14 @@ public class DBPokeWallDAO implements PokeWallDAO {
             try {
                 connection.rollback();
             } catch (SQLException rollbackEx) {
-                System.err.println("Errore durante il rollback: " + rollbackEx.getMessage());
+                logger.severe("Errore durante il rollback: " + rollbackEx.getMessage());
             }
             throw new SystemException("Errore durante la creazione del post: " + e.getMessage());
         } finally {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException autoCommitEx) {
-                System.err.println("Impossibile ripristinare autoCommit: " + autoCommitEx.getMessage());
+                logger.severe("Impossibile ripristinare autoCommit: " + autoCommitEx.getMessage());
             }
         }
     }
@@ -59,7 +61,6 @@ public class DBPokeWallDAO implements PokeWallDAO {
             try (ResultSet rs = postStmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     int postId = rs.getInt(1);
-                    System.out.println("Post creato con ID: " + postId);
                     return postId;
                 } else {
                     throw new SystemException("Impossibile ottenere l'ID del post generato.");

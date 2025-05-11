@@ -39,15 +39,6 @@ public class OrderPokeLabController extends GraphicController {
     @FXML
     private void handleConfirmOrder() {
         String address = addressField.getText();
-        String paymentMethod;
-        if (cashRadioButton.isSelected()) {
-            paymentMethod = "Payment on delivery";
-        } else if (cardRadioButton.isSelected()) {
-            paymentMethod = "Credit card";
-        } else {
-            paymentMethod = "PayPal";
-        }
-        String notes = notesArea.getText();
 
         // Controllo se l'indirizzo è stato inserito
         if (address.isEmpty()) {

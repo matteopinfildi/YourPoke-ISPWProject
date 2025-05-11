@@ -21,7 +21,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
         try {
             lastId = findMaxIdFromFile();  // Chiamata al metodo estratto
         } catch (SystemException e) {
-            System.err.println("Error initializing lastId: " + e.getMessage());
+            LOGGER.severe("Error initializing lastId: " + e.getMessage());
             lastId = 0; // Fallback
         }
     }
@@ -203,9 +203,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
             throw new SystemException("Could not replace original file during bowl size update");
         }
         if (!updated) {
-            System.out.println("Nessun record trovato con ID: " + plid);
-        } else {
-            System.out.println("Bowl size aggiornato per ID: " + plid);
+            LOGGER.warning("Nessun record trovato con ID: " + plid);
         }
     }
 }
