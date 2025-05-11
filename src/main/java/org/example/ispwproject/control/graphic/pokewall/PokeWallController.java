@@ -66,7 +66,7 @@ public class PokeWallController extends GraphicController {
                                     notificationLabel.setText("");
                                 });
                             } catch (InterruptedException e) {
-                                logger.log(Level.SEVERE, "Thread was interrupted during sleep", e);
+                                throw new RuntimeException("Thread was interrupted during sleep", e);
 
                             }
                         });
