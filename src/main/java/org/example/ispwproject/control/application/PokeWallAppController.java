@@ -53,7 +53,6 @@ public class PokeWallAppController implements PokeWallObserver {
         } catch (SystemException e) {
             // Loggare l'eccezione con il logger
             logger.severe("Error occurred while registering observer: " + e.getMessage());
-            e.printStackTrace();  // Opzionale, per visualizzare lo stack trace completo
         }
     }
 
