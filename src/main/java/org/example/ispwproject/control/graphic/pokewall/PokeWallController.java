@@ -24,6 +24,8 @@ import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PokeWallController extends GraphicController {
 
@@ -32,7 +34,8 @@ public class PokeWallController extends GraphicController {
     private String currentUsername;
     private List<PokeWall> currentPosts;
     private PokeWallAppController pokeWallAppController;
-    private PokeWallObserver observerInstance; // ✅ Salviamo l’observer
+    private PokeWallObserver observerInstance;
+    private static final Logger logger = Logger.getLogger(PokeWallController.class.getName());
 
     @FXML private ListView<String> pokeWallListView;
     @FXML private Button deleteButton;
@@ -46,7 +49,6 @@ public class PokeWallController extends GraphicController {
         pokeWallAppController = PokeWallAppController.getInstance();
         this.currentUsername = SessionManager.getSessionManager().getSessionFromId(id).getUserId();
 
-        // ✅ Salviamo l’observer in una variabile per poterlo poi rimuovere
         observerInstance = new PokeWallObserver() {
             @Override
             public void update(PokeWall newPost) {
@@ -64,7 +66,8 @@ public class PokeWallController extends GraphicController {
                                     notificationLabel.setText("");
                                 });
                             } catch (InterruptedException e) {
-                                e.printStackTrace();
+                                logger.log(Level.SEVERE, "Thread was interrupted during sleep", e);
+
                             }
                         });
                         hideThread.setDaemon(true);
@@ -82,7 +85,7 @@ public class PokeWallController extends GraphicController {
             }
         };
 
-        pokeWallAppController.registerObserver(observerInstance, id); // ✅ Registrazione
+        pokeWallAppController.registerObserver(observerInstance, id);
 
         pokeWallListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         deleteButton.setDisable(true);
@@ -121,7 +124,7 @@ public class PokeWallController extends GraphicController {
     @FXML
     public void handleBackClick(ActionEvent event) throws SystemException {
         if (observerInstance != null) {
-            pokeWallAppController.removeObserver(observerInstance); // ✅ Rimozione corretta
+            pokeWallAppController.removeObserver(observerInstance);
         }
 
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/homePage.fxml", pokeLabBean, id);
