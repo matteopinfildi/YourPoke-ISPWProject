@@ -182,7 +182,6 @@ public class FSPokeLabDAO implements PokeLabDAO {
     public void updateBowlSize(int plid, String bowlSize) throws SystemException {
         File original = new File(FILE_LAB);
         File temp = new File("temp_lab.csv");
-        boolean updated = false;
         try (BufferedReader reader = new BufferedReader(new FileReader(original));
              BufferedWriter writer = new BufferedWriter(new FileWriter(temp))) {
             String line;
@@ -190,7 +189,6 @@ public class FSPokeLabDAO implements PokeLabDAO {
                 String[] parts = line.split(DELIMITER);
                 if (Integer.parseInt(parts[0]) == plid) {
                     writer.write(parts[0] + DELIMITER + parts[1] + DELIMITER + bowlSize);
-                    updated = true;
                 } else {
                     writer.write(line);
                 }
