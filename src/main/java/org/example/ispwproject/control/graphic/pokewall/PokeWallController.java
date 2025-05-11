@@ -189,4 +189,5 @@ public class PokeWallController extends GraphicController {
     public void handleFortuneClick(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/fortuneCookie.fxml", pokeLabBean, id);
     }
+
 }
