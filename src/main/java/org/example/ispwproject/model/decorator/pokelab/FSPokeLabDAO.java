@@ -202,8 +202,5 @@ public class FSPokeLabDAO implements PokeLabDAO {
         if (!original.delete() || !temp.renameTo(original)) {
             throw new SystemException("Could not replace original file during bowl size update");
         }
-        if (!updated) {
-            LOGGER.warning("Nessun record trovato con ID: " + plid);
-        }
     }
 }
