@@ -65,9 +65,8 @@ public class PokeWallController extends GraphicController {
                                     notificationLabel.setVisible(false);
                                     notificationLabel.setText("");
                                 });
-                            } catch (InterruptedException e) {
-                                logger.log(Level.SEVERE, "Thread was interrupted during sleep" + e.getMessage());
-
+                            } catch (InterruptedException _) {
+                                logger.log(Level.SEVERE, "Thread was interrupted during sleep");
                             }
                         });
                         hideThread.setDaemon(true);
@@ -79,7 +78,7 @@ public class PokeWallController extends GraphicController {
                         alert.setContentText(message);
                         alert.showAndWait();
                     } catch (SystemException e) {
-                        System.err.println("Error " + e.getMessage());
+                            logger.log(Level.SEVERE, "Error");
                     }
                 });
             }
