@@ -126,7 +126,7 @@ public class BuyPokeLabController extends GraphicController{
 
     public static void setRecover (boolean value) {recover = value;}
 
-    //metodo per controllare se tutti gli ingredienti sono stati selezionati
+    //metodo per controllare se tutti gli ingredienti sono stati selezionati e in caso attiva il bottone della bowl size
     private void checkIngredientSelection(){
         boolean allSelected = pokeLabBean.getIngredient("rice") != null &&
                 pokeLabBean.getIngredient("protein") != null &&
@@ -178,7 +178,7 @@ public class BuyPokeLabController extends GraphicController{
     }
 
     @FXML
-    public void handleBowlSizeClick(ActionEvent event) throws SystemException{
+    public void handleBowlSizeClick(ActionEvent event){
         if (!bowlSizeButton.isDisabled()){ // Controlla se il pulsante è attivo prima di cambiare scena
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/bowlSize.fxml", pokeLabBean, id);
         }
