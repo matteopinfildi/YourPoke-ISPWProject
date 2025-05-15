@@ -45,35 +45,40 @@ public class AddNameController extends GraphicController {
     }
 
 
+
     @FXML
-    public void handleNextClick(ActionEvent event) throws SystemException {
+    public void handleNextClick(ActionEvent event) {
         String name = pokeNameField.getText().trim();
 
+        // 1. Recupero la sessione corrente
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(id);
         String userId = session.getUserId();
 
-        if (name.length() < 4) {
-            errorLabel.setText("The name must be at least 4 characters long!");
-        } else {
-            // Se il nome è lo stesso di prima, non serve salvare di nuovo
-            if (name.equals(pokeLabBean.getPokeName())) {
-                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/orderPokeLab.fxml", pokeLabBean, id);
-                return;
+        try {
+            // 2. Invoco il metodo di business che valida e salva il nome
+            boolean ok = buyPokeLabAppController.setPokeName(
+                    pokeLabBean,
+                    name,
+                    new SaveBean(userId)
+            );
+
+            // 3. Se tutto ok, cambio scena
+            if (ok) {
+                ChangePage.changeScene(
+                        (Node) event.getSource(),
+                        "/org/example/ispwproject/view/orderPokeLab.fxml",
+                        pokeLabBean, id
+                );
             }
-            //associo il nome del poke alla rispettiva bean
-            pokeLabBean.setPokeName(name);
-
-            SaveBean saveBean = new SaveBean(userId);
-
-            if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
-                return;
-            }
-
-            errorLabel.setText("");
-            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/orderPokeLab.fxml", pokeLabBean, id);
+        } catch (SystemException se) {
+            // 4. Mostro l’errore in UI
+            errorLabel.setText(se.getMessage());
         }
     }
+
+
+
 
 
     @FXML

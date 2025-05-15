@@ -148,31 +148,31 @@ public class BuyPokeLabController extends GraphicController{
 
 
     @FXML
-    public void handleRice(ActionEvent event) throws SystemException{
+    public void handleRice(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabRice.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
     @FXML
-    public void handleProtein(ActionEvent event) throws SystemException{
+    public void handleProtein(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabProtein.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
     @FXML
-    public void handleFruit(ActionEvent event) throws SystemException{
+    public void handleFruit(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabFruit.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
     @FXML
-    public void handleCrunchy(ActionEvent event) throws SystemException{
+    public void handleCrunchy(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabCrunchy.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
     @FXML
-    public void handleSauces(ActionEvent event) throws SystemException{
+    public void handleSauces(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabSauces.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
@@ -192,7 +192,7 @@ public class BuyPokeLabController extends GraphicController{
 
 
     @FXML
-    public void handleAddNameClick(ActionEvent event) throws SystemException{
+    public void handleAddNameClick(ActionEvent event) {
         if (!addNameButton.isDisabled()) { // Controlla se il pulsante è attivo prima di cambiare scena
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addName.fxml", pokeLabBean, id);
         }

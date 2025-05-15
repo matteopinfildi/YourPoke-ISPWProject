@@ -14,16 +14,21 @@ import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
+import org.example.ispwproject.utils.exception.SystemException;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BowlSizeController extends GraphicController {
 
-    @FXML private RadioButton smallSize;
-    @FXML private RadioButton mediumSize;
-    @FXML private RadioButton largeSize;
-    @FXML private Button confirmButton;
+    @FXML
+    private RadioButton smallSize;
+    @FXML
+    private RadioButton mediumSize;
+    @FXML
+    private RadioButton largeSize;
+    @FXML
+    private Button confirmButton;
 
     private ToggleGroup sizeToggleGroup;
     private PokeLabBean pokeLabBean;
@@ -80,42 +85,42 @@ public class BowlSizeController extends GraphicController {
     @FXML
     private void handleConfirmSelection(ActionEvent event) {
         String selectedSize = null;
+        if (smallSize.isSelected()) selectedSize = "Small";
+        else if (mediumSize.isSelected()) selectedSize = "Medium";
+        else if (largeSize.isSelected()) selectedSize = "Large";
 
-        // Verifica quale radio button è selezionato
-        if (smallSize.isSelected()) {
-            selectedSize = "Small";
-        } else if (mediumSize.isSelected()) {
-            selectedSize = "Medium";
-        } else if (largeSize.isSelected()) {
-            selectedSize = "Large";
+        if (selectedSize == null || pokeLabBean == null) {
+            return;
         }
 
-        // Se la selezione è valida, aggiorna il bean
-        if (selectedSize != null && pokeLabBean != null) {
-            if (selectedSize.equals(pokeLabBean.getBowlSize())) {
-                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, pokeLabBean.getId());
+        // 1. Recupera Session e userId
+        Session session = SessionManager
+                .getSessionManager()
+                .getSessionFromId(sessionId);
+        String userId = session.getUserId();
+        SaveBean saveBean = new SaveBean(userId);
+
+        try {
+            // 2. Chiamo il nuovo metodo di business
+            boolean ok = buyPokeLabAppController
+                    .setBowlSize(pokeLabBean, selectedSize, saveBean);
+
+            if (!ok) {
+                LOGGER.warning("ChangeBowlSize returned false");
                 return;
             }
 
-            pokeLabBean.setBowlSize(selectedSize);  // Aggiorna solo il bean
-
-            SessionManager sessionManager = SessionManager.getSessionManager();
-            Session session = sessionManager.getSessionFromId(sessionId);
-            String userId = session.getUserId();
-
-            SaveBean saveBean = new SaveBean(userId);
-
-            try {
-                if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
-                    LOGGER.warning("Error saving bowl size");
-                    return;
-                }
-            } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "Error saving bowl size", e);
-            }
+            // 3. Cambio scena
+            ChangePage.changeScene(
+                    (Node) event.getSource(),
+                    "/org/example/ispwproject/view/buyPokeLab.fxml",
+                    pokeLabBean,
+                    sessionId
+            );
+        } catch (SystemException e) {
+            LOGGER.log(Level.SEVERE, "Error saving bowl size", e);
         }
-
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, pokeLabBean.getId());
     }
 }
+
 

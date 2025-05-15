@@ -107,4 +107,39 @@ public class BuyPokeLabAppController {
         }
         return null;
     }
+
+    public boolean setPokeName(PokeLabBean pokeLabBean,
+                                  String name,
+                                  SaveBean saveBean) throws SystemException {
+        // 1. Validazione
+        if (name == null || name.trim().length() < 4) {
+            throw new SystemException("The name must be at least 4 characters long!");
+        }
+        // 2. Se non cambia, esci subito
+        if (name.equals(pokeLabBean.getPokeName())) {
+            return true;
+        }
+        // 3. Applica il nuovo nome sulla bean
+        pokeLabBean.setPokeName(name);
+        // 4. Salva tutta la bean richiamando il metodo esistente
+        return savePokeLab(pokeLabBean, saveBean);
+    }
+
+    public boolean setBowlSize(PokeLabBean pokeLabBean,
+                                  String bowlSize,
+                                  SaveBean saveBean) throws SystemException {
+        // (1) Validazione minima: ad esempio, non vuoto
+        if (bowlSize == null || bowlSize.isEmpty()) {
+            throw new SystemException("Bowl size cannot be empty");
+        }
+        // (2) Se non cambia, esci subito
+        if (bowlSize.equals(pokeLabBean.getBowlSize())) {
+            return true;
+        }
+        // (3) Applica sulla bean
+        pokeLabBean.setBowlSize(bowlSize);
+        // (4) Salva con il metodo esistente
+        return savePokeLab(pokeLabBean, saveBean);
+    }
+
 }
