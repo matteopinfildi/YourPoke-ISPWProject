@@ -1,6 +1,5 @@
 package org.example.ispwproject.control.application;
 
-import org.example.ispwproject.model.Ingredient;
 import org.example.ispwproject.model.pokelab.PokeLab;
 import org.example.ispwproject.model.pokelab.PokeLabDAO;
 import org.example.ispwproject.model.user.User;
@@ -42,9 +41,6 @@ public class BuyPokeLabAppController {
         }
     }
 
-    private Ingredient allIngredient;
-
-    public void registerPokeLab(Ingredient ingredient){this.allIngredient = ingredient;}
 
 
     public boolean savePokeLab(PokeLabBean pokeLabBean, SaveBean saveBean) throws SystemException {
