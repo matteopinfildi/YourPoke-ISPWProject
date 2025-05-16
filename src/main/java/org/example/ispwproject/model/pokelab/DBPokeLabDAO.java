@@ -165,6 +165,4 @@ public class DBPokeLabDAO implements PokeLabDAO {
             throw new SystemException("Error updating PokeLab bowl size");
         }
     }
-
-
 }

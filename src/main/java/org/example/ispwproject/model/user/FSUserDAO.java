@@ -1,6 +1,6 @@
 package org.example.ispwproject.model.user;
 
-import org.example.ispwproject.model.pokelab.DBPokeLabDAO;
+import org.example.ispwproject.model.pokelab.FSPokeLabDAO;
 import org.example.ispwproject.model.pokelab.PokeLab;
 import org.example.ispwproject.utils.enumeration.UserType;
 import org.example.ispwproject.utils.exception.SystemException;
@@ -8,120 +8,139 @@ import org.example.ispwproject.utils.exception.SystemException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
-public class FSUserDAO implements UserDAO{
+public class FSUserDAO implements UserDAO {
     private static final String FILE_PATH = "user.csv";
     private static final String DELIMITER = ",";
+    private static final Logger LOGGER = Logger.getLogger(FSUserDAO.class.getName());
 
     @Override
-    public void create(User userA) throws SystemException {
-        boolean exists = false;
-
-        // Primo blocco: controllo esistenza
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] data = line.split(DELIMITER);
-                if (data[0].equals(userA.getUsername())) {
-                    exists = true;
-                    break;
-                }
-            }
-        } catch (FileNotFoundException _) {
-            // Il file non esiste, verrà creato nel blocco di scrittura
-        } catch (IOException _) {
-            throw new SystemException("Failed to check user in FS");
+    public void create(User user) throws SystemException {
+        if (userExists(user.getUsername())) {
+            return;
         }
 
-        if (exists) return;
-
-        // Secondo blocco: scrittura
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-            bufferedWriter.write(userA.getUsername() + DELIMITER +
-                    userA.getPassword() + DELIMITER +
-                    userA.getEmail() + DELIMITER +
-                    userA.getuType().name() + DELIMITER +
-                    userA.getAddress() + DELIMITER +
-                    "-1" + "\n");
-        } catch (IOException _) {
-            throw new SystemException("Failed to create user in FS");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+            String line = String.join(DELIMITER,
+                    user.getUsername(),
+                    user.getPassword(),
+                    user.getEmail(),
+                    user.getuType().name(),
+                    user.getAddress(),
+                    "-1");
+            writer.write(line);
+            writer.newLine();
+        } catch (IOException e) {
+            throw new SystemException("Failed to create user: " + e.getMessage());
         }
     }
 
-
-    @Override
-    public User read(String uId) throws SystemException {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] data = line.split(DELIMITER);
-                if (data[0].equals(uId)) {
-                    int plid = Integer.parseInt(data[5]);
-                    PokeLab pokeLab = (plid != -1) ? new DBPokeLabDAO().read(plid) : null;
-
-                    User user = new User(data[0], data[1], data[2], UserType.valueOf(data[3]), data[4]);
-                    user.setPokeLab(pokeLab);
-                    return user;
-                }
-            }
-        } catch (IOException _) {
-            throw new SystemException("Failed to read user in FS");
-        }
-        return null;
-    }
-
-    @Override
-    public void update(User userA, int plid) throws SystemException {
-        List<String> users = new ArrayList<>();
-        boolean updated = false;
-
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] data = line.split(DELIMITER);
-                if (data[0].equals(userA.getUsername())) {
-                    data[5] = String.valueOf(plid);
-                    updated = true;
-                }
-                users.add(String.join(DELIMITER, data));
-            }
-        } catch (IOException _) {
-            throw new SystemException("Failed to read users in FS");
-        }
-
-        if (!updated) return; // L'utente non esiste, nessun aggiornamento
-
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILE_PATH))) {
-            for (String user : users) {
-                bufferedWriter.write(user + "\n");
-            }
-        } catch (IOException _) {
-            throw new SystemException("EFailed to update user in FS");
+    private boolean userExists(String username) throws SystemException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            return reader.lines()
+                    .anyMatch(line -> line.split(DELIMITER)[0].equals(username));
+        } catch (IOException e) {
+            throw new SystemException("Error checking user existence: " + e.getMessage());
         }
     }
 
     @Override
-    public void delete(String userId) throws SystemException {
-        List<String> users = new ArrayList<>();
-
+    public User read(String username) throws SystemException {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] data = line.split(DELIMITER);
-                if (!data[0].equals(userId)) {
-                    users.add(line);
+                String[] parts = line.split(DELIMITER);
+                if (parts[0].equals(username)) {
+                    return createUserFromParts(parts);
                 }
             }
-        } catch (IOException _) {
-            throw new SystemException("Failed to read user in FS");
+            return null;
+        } catch (IOException e) {
+            throw new SystemException("Error reading user: " + e.getMessage());
+        }
+    }
+
+    private User createUserFromParts(String[] parts) throws SystemException {
+        try {
+            int plid = Integer.parseInt(parts[5]);
+            PokeLab pokeLab = (plid != -1) ? new FSPokeLabDAO().read(plid) : null;
+
+            User user = new User(
+                    parts[0],
+                    parts[1],
+                    parts[2],
+                    UserType.valueOf(parts[3]),
+                    parts[4]
+            );
+            user.setPokeLab(pokeLab);
+            return user;
+
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            LOGGER.warning("Invalid user data format: " + String.join(DELIMITER, parts));
+            throw new SystemException("Corrupted user data");
+        }
+    }
+
+    @Override
+    public void update(User user, int plid) throws SystemException {
+        validatePokeLabExistence(plid);
+
+        List<String> users = readAllUsers();
+        boolean updated = false;
+
+        for (int i = 0; i < users.size(); i++) {
+            String[] parts = users.get(i).split(DELIMITER);
+            if (parts[0].equals(user.getUsername())) {
+                parts[5] = String.valueOf(plid);
+                users.set(i, String.join(DELIMITER, parts));
+                updated = true;
+                break;
+            }
         }
 
+        if (updated) {
+            writeAllUsers(users);
+        }
+    }
+
+    private void validatePokeLabExistence(int plid) throws SystemException {
+        if (plid != -1 && new FSPokeLabDAO().read(plid) == null) {
+            throw new SystemException("PokeLab with ID " + plid + " does not exist");
+        }
+    }
+
+    private List<String> readAllUsers() throws SystemException {
+        List<String> users = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                users.add(line);
+            }
+            return users;
+        } catch (IOException e) {
+            throw new SystemException("Error reading users: " + e.getMessage());
+        }
+    }
+
+    private void writeAllUsers(List<String> users) throws SystemException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (String user : users) {
-                writer.write(user + "\n");
+                writer.write(user);
+                writer.newLine();
             }
-        } catch (IOException _) {
-            throw new SystemException("Failed to delete user in FS");
+        } catch (IOException e) {
+            throw new SystemException("Error updating users: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(String username) throws SystemException {
+        List<String> users = readAllUsers();
+        boolean removed = users.removeIf(line -> line.split(DELIMITER)[0].equals(username));
+
+        if (removed) {
+            writeAllUsers(users);
         }
     }
 }
