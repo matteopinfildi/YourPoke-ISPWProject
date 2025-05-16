@@ -76,7 +76,7 @@ public class FSUserDAO implements UserDAO {
             user.setPokeLab(pokeLab);
             return user;
 
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException _) {
             LOGGER.warning("Invalid user data format: " + String.join(DELIMITER, parts));
             throw new SystemException("Corrupted user data");
         }
