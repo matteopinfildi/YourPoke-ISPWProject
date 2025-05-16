@@ -197,6 +197,7 @@ public class DBPokeWallDAO implements PokeWallDAO {
 
             stmt.setInt(1, postId);
             stmt.setString(2, username);
+            stmt.executeUpdate();
 
 
         } catch (SQLException e) {
