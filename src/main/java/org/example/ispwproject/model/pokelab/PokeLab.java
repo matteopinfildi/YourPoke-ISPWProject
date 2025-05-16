@@ -9,18 +9,19 @@ import java.util.Map;
 public class PokeLab  {
 
     private int id;
-
+    private double price;
     private Map<String, GenericAlternative> items=new HashMap<>();
     private String bowlSize;
 
 
     public PokeLab(PokeLabBean pokeLab){
-        this.id = pokeLab.getId();;
+        this.id = pokeLab.getId();
         this.items = new HashMap<>(pokeLab.getAllIngredients());
         this.bowlSize = pokeLab.getBowlSize();
     }
 
     public PokeLab(double price, int id, Map<String, GenericAlternative> items, String bowlSize) {
+        this.price = price;
         this.id = id;
         this.items = items;
         this.bowlSize = bowlSize;
