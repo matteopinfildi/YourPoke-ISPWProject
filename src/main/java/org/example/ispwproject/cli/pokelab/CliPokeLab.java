@@ -36,34 +36,40 @@ public class CliPokeLab extends CliController{
 
     public static void setRecover (boolean value) {recover =  value;}
 
-    private void popup() throws SystemException{
+    private void popup() throws SystemException {
         Scanner scanner = new Scanner(System.in);
         int selection = -1;
-        boolean validInput = false;
-        do {
+        boolean validSelection = false;
+
+        while (!validSelection) {
             System.out.println("1) Recover Pokè Lab");
             System.out.println("2) New Pokè Lab");
-            System.out.println("\nSelect an option: ");
+            System.out.print("\nSelect an option: ");
 
-            validInput = scanner.hasNextInt();
-            if (!validInput) {
+            if (!scanner.hasNextInt()) {
                 System.out.println("Invalid input. Please enter a number.");
-                scanner.next(); // Consuma l'input non valido
+                scanner.next(); // Consuma input non valido
                 continue;
             }
 
             selection = scanner.nextInt();
-            switch (selection) {
-                case 1 -> recoverPokeLab();
-                case 2 -> System.out.println("Creating a new Pokè Lab...");
-                default -> {
-                    System.out.println("Invalid option. Please select 1 or 2.");
-                    validInput = false;
-                }
-            }
+            scanner.nextLine(); // Pulisce il buffer
 
-        }while (validInput) ;
+            switch (selection) {
+                case 1 -> {
+                    recoverPokeLab();
+                    validSelection = true;
+                }
+                case 2 -> {
+                    System.out.println("Creating a new Pokè Lab...");
+                    this.pokeLabBean = new PokeLabBean(); // <--- CREA NUOVO OGGETTO QUI
+                    validSelection = true;
+                }
+                default -> System.out.println("Invalid option. Please select 1 or 2.");
+            }
+        }
     }
+
 
     private void recoverPokeLab() throws SystemException{
         SessionManager sessionManager = SessionManager.getSessionManager();
