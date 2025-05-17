@@ -26,11 +26,11 @@ public class CliBowlSize extends CliController {
         this.pokeLabBean = pokeLabBean;
         this.id = sID;
 
-        try{
+        try {
             String selectedSize = null;
             boolean flag = true;
 
-            do{
+            do {
                 int selection = userSelection("Select a size for your bowl: ");
                 switch (selection) {
                     case 1:
@@ -49,32 +49,29 @@ public class CliBowlSize extends CliController {
                         System.out.println("Select a valid option!");
                         flag = false;
                 }
+            } while (!flag);
 
-            }while (!flag);
+            SessionManager sessionManager = SessionManager.getSessionManager();
+            Session session = sessionManager.getSessionFromId(sID);
+            String userId = session.getUserId();
 
-            if (!selectedSize.equals(pokeLabBean.getBowlSize())) {
-                pokeLabBean.setBowlSize(selectedSize);
+            SaveBean saveBean = new SaveBean(userId);
 
-                SessionManager sessionManager = SessionManager.getSessionManager();
-                Session session = sessionManager.getSessionFromId(sID);
-                String userId = session.getUserId();
+            boolean success = buyPokeLabAppController.setBowlSize(pokeLabBean, selectedSize, saveBean);
 
-                SaveBean saveBean = new SaveBean(userId);
-                if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
-                    System.out.println("Error saving bowl size");
-                } else {
-                    System.out.println("Bowl size saved successfully: " + selectedSize);
-                }
+            if (!success) {
+                System.out.println("Error saving bowl size");
+            } else {
+                System.out.println("Bowl size saved successfully: " + selectedSize);
             }
 
             new CliPokeLab().init(sID, pokeLabBean);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new CliException("An error occurred while selecting the bowl size", e);
         }
-
-
     }
+
 
     @Override
     protected List<String> getAlternative() {

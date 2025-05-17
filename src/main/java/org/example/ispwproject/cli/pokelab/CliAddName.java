@@ -28,27 +28,26 @@ public class CliAddName extends CliController {
         processPokeName();
     }
 
-    private void processPokeName() throws SystemException, IOException, LoginException, SQLException, CliException {
-        Scanner scanner = new Scanner(System.in);
-        boolean validName = false;
 
-        while (!validName) {
-            displayCurrentName();
-            System.out.println("Enter name (or 'back' to return): ");
-            String name = scanner.nextLine().trim();
+private void processPokeName() throws SystemException, IOException, LoginException, SQLException, CliException {
+    Scanner scanner = new Scanner(System.in);
+    boolean validName = false;
 
-            if (handleBackCommand(name)) return;
-            if (!isValidName(name)) continue;
+    while (!validName) {
+        displayCurrentName();
+        System.out.println("Enter name (or 'back' to return): ");
+        String name = scanner.nextLine().trim();
 
-            if (updatePokeName(name)) {
-                if (!name.equals(pokeLabBean.getPokeName())) {
-                    System.out.println(String.format("Poké name set to: %s", name));
-                    }
-                validName = true;
-                new CliPokeLab().init(id, pokeLabBean);
-            }
+        if (handleBackCommand(name)) return;
+
+        if (updatePokeName(name)) {
+            System.out.println(String.format("Poké name set to: %s", pokeLabBean.getPokeName()));
+            validName = true;
+            new CliPokeLab().init(id, pokeLabBean);
         }
     }
+}
+
 
     private void displayCurrentName() {
         System.out.println("\n--- Set your Poké name ---");
@@ -70,27 +69,19 @@ public class CliAddName extends CliController {
         return false;
     }
 
-    private boolean isValidName(String name) {
-        if (name.length() < 4) {
-            System.out.println("Error: The name must be at least 4 characters long!");
-            return false;
-        }
-        return true;
-    }
 
-    private boolean updatePokeName(String name) throws SystemException {
-        if (!name.equals(pokeLabBean.getPokeName())) {
+
+    private boolean updatePokeName(String name) {
+        try {
             Session session = SessionManager.getSessionManager().getSessionFromId(id);
             SaveBean saveBean = new SaveBean(session.getUserId());
-            pokeLabBean.setPokeName(name);
-
-            if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
-                System.out.println("Save failed!");
-                return false;
-            }
+            return buyPokeLabAppController.setPokeName(pokeLabBean, name, saveBean);
+        } catch (SystemException e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
         }
-        return true;
     }
+
 
     @Override
     protected List<String> getAlternative() {
