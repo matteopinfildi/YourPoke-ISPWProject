@@ -1,7 +1,5 @@
 package org.example.ispwproject.utils.bean;
 
-import org.example.ispwproject.model.observer.pokewall.PokeWall;
-
 import java.util.List;
 
 public class PokeWallBean {
@@ -10,8 +8,10 @@ public class PokeWallBean {
     private String username;
     private List<String> ingredients;
 
-    // Costruttore vuoto
-    public PokeWallBean() {}
+
+    public PokeWallBean() {
+        // Costruttore vuoto
+    }
 
 
     // Getter e Setter
