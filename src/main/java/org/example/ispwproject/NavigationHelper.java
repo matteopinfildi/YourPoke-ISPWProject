@@ -20,7 +20,8 @@ public class NavigationHelper {
         // Costruttore vuoto
     }
 
-
+    /* verifica sessione e tipo di utente, se e' premium prepara una nuova PokeLabBean
+     e imposta il flag di recupero nel controller e cambia scena */
     public static void handleSceneChange(ActionEvent event, Session session, String scenePath, int id) throws SystemException, LoginException {
         LoginAppController loginAppController = new LoginAppController();
         if (session != null) {

@@ -43,7 +43,6 @@ public class BowlSizeController extends GraphicController {
         this.sessionId = sessionId;
 
 
-        // Imposta la selezione corrente in base al valore salvato
         if (pokeLabBean != null) {
             String currentSize = pokeLabBean.getBowlSize();
             if ("Small".equals(currentSize)) {
@@ -58,24 +57,19 @@ public class BowlSizeController extends GraphicController {
 
     @FXML
     private void initialize() {
-        // Creazione del ToggleGroup
         sizeToggleGroup = new ToggleGroup();
 
-        // Associa il ToggleGroup ai RadioButton
         smallSize.setToggleGroup(sizeToggleGroup);
         mediumSize.setToggleGroup(sizeToggleGroup);
         largeSize.setToggleGroup(sizeToggleGroup);
 
-        // Disabilita il bottone di conferma inizialmente
         confirmButton.setDisable(true);
 
-        // Aggiungi l'evento per attivare/disattivare il bottone quando si seleziona un RadioButton
         smallSize.setOnAction(e -> updateConfirmButtonState());
         mediumSize.setOnAction(e -> updateConfirmButtonState());
         largeSize.setOnAction(e -> updateConfirmButtonState());
     }
 
-    // Metodo per abilitare/disabilitare il bottone di conferma
     private void updateConfirmButtonState() {
         confirmButton.setDisable(
                 !smallSize.isSelected() && !mediumSize.isSelected() && !largeSize.isSelected()
@@ -93,7 +87,6 @@ public class BowlSizeController extends GraphicController {
             return;
         }
 
-        // 1. Recupera Session e userId
         Session session = SessionManager
                 .getSessionManager()
                 .getSessionFromId(sessionId);
@@ -101,7 +94,6 @@ public class BowlSizeController extends GraphicController {
         SaveBean saveBean = new SaveBean(userId);
 
         try {
-            // 2. Chiamo il nuovo metodo di business
             boolean ok = buyPokeLabAppController
                     .setBowlSize(pokeLabBean, selectedSize, saveBean);
 
@@ -110,7 +102,6 @@ public class BowlSizeController extends GraphicController {
                 return;
             }
 
-            // 3. Cambio scena
             ChangePage.changeScene(
                     (Node) event.getSource(),
                     "/org/example/ispwproject/view/buyPokeLab.fxml",

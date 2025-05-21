@@ -16,6 +16,7 @@ public class SessionManager {
         // costruttore vuoto
     }
 
+    // restituisce l'istanza
     public static SessionManager getSessionManager() {
         if (SessionManager.instance == null) {
             SessionManager.instance = new SessionManager();
@@ -23,11 +24,13 @@ public class SessionManager {
         return instance;
     }
 
+    // genera una nuova sessione
     public Session createSession(String username) {
         nextId++;
         return new Session(nextId, username);
     }
 
+    // recupera la sessione relativa all'ID passato (se esiste)
     public Session getSessionFromId(int id){
         for (Session session : activeSessions) {
             if(session.getSessionId() == id){
@@ -39,6 +42,6 @@ public class SessionManager {
 
    public int getCurrentId() {return nextId;}
     public int curPokeId() {return ++pokeId;}
-    public void addSession(Session session) {activeSessions.add(session);}
+    public void addSession(Session session) {activeSessions.add(session);} // aggiunge una sessione all'elenco delle sessioni attive
     public void removeSession(int id) {activeSessions.removeIf(session -> session.getSessionId() == id);}
 }

@@ -22,7 +22,6 @@ public class FortuneCookieController extends GraphicController {
 
     @FXML
     private void showFortune() {
-        // Get a random motivational quote and display it in the Label
         fortuneLabel.setText(FortuneMessage.getRandomFortune().getMessage());
     }
 

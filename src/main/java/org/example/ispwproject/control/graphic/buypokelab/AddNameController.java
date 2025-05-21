@@ -50,20 +50,17 @@ public class AddNameController extends GraphicController {
     public void handleNextClick(ActionEvent event) {
         String name = pokeNameField.getText().trim();
 
-        // 1. Recupero la sessione corrente
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(id);
         String userId = session.getUserId();
 
         try {
-            // 2. Invoco il metodo di business che valida e salva il nome
             boolean ok = buyPokeLabAppController.setPokeName(
                     pokeLabBean,
                     name,
                     new SaveBean(userId)
             );
 
-            // 3. Se tutto ok, cambio scena
             if (ok) {
                 ChangePage.changeScene(
                         (Node) event.getSource(),
@@ -72,7 +69,6 @@ public class AddNameController extends GraphicController {
                 );
             }
         } catch (SystemException se) {
-            // 4. Mostro l’errore in UI
             errorLabel.setText(se.getMessage());
         }
     }
@@ -94,17 +90,14 @@ public class AddNameController extends GraphicController {
 
         String name = pokeNameField.getText().trim();
 
-        // Controllo sul nome
         if (name.length() < 4) {
             errorLabel.setText("The name must be at least 4 characters long!");
             return;
         }
 
-        // Recupera la sessione
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(id);
 
-        // Aggiungi il controllo se la sessione è null
         if (session == null) {
             errorLabel.setText("Session not found. Please log in again.");
             return;
@@ -112,7 +105,6 @@ public class AddNameController extends GraphicController {
 
         String userId = session.getUserId();
 
-        // Crea il PokeWallBean
         PokeWallBean pokeWallBean = new PokeWallBean();
         pokeWallBean.setPokeName(name);
         pokeWallBean.setSize(pokeLabBean.getBowlSize());
@@ -126,7 +118,7 @@ public class AddNameController extends GraphicController {
             // Utilizza il metodo createPost tramite l'istanza singleton di PokeWallAppController
             boolean success = pokeWallAppController.createPost(
                     new SaveBean(userId),
-                    pokeWallBean // Passa l'intero bean invece dei singoli campi
+                    pokeWallBean
             );
 
             if (success) {

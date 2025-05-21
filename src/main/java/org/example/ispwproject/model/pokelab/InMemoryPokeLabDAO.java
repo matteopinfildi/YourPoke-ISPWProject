@@ -26,7 +26,6 @@ public class InMemoryPokeLabDAO implements PokeLabDAO {
             throw new SystemException("PokeLab cannot be null");
         }
 
-        // Genera e assegna ID come nella versione DB
         int newId = idCounter.getAndIncrement();
         pokeLab.setId(newId);
 

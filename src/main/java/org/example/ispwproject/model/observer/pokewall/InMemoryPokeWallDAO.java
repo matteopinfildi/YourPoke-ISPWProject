@@ -22,7 +22,6 @@ public class InMemoryPokeWallDAO implements PokeWallDAO {
     @Override
     public void create(PokeWall pokeWall) throws SystemException {
         synchronized (InMemoryPokeWallDAO.class) {
-            // Assicurati che l'ID sia univoco e incrementale
             if (pokeWall.getId() <= lastId) {
                 lastId++;
                 pokeWall.setId(lastId);
@@ -43,17 +42,19 @@ public class InMemoryPokeWallDAO implements PokeWallDAO {
         posts.removeIf(post -> post.getId() == postId);
     }
 
+
+    // Filtra i post che l'utente non ha ancora visto
     @Override
     public List<PokeWall> getUnseenPosts(String username) throws SystemException {
-        // Filtra i post che l'utente non ha ancora visto (ipotesi: implementare un attributo 'seen' nel PokeWall)
         return posts.stream()
                 .filter(post -> !post.getSeenByUsers().contains(username))
                 .toList();
     }
 
+
+    // Trova il post e aggiungi l'username alla lista degli utenti che lo hanno visto
     @Override
     public void markPostAsSeen(int postId, String username) throws SystemException {
-        // Trova il post e aggiungi l'username alla lista degli utenti che lo hanno visto
         PokeWall post = posts.stream()
                 .filter(p -> p.getId() == postId)
                 .findFirst()

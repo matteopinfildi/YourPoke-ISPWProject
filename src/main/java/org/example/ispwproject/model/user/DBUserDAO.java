@@ -80,7 +80,7 @@ public class DBUserDAO implements UserDAO{
         }
     }
 
-    // Estrazione del blocco di codice che recupera il PokeLab
+    // blocco di codice che recupera il PokeLab
     private PokeLab fetchPokeLab(int plid) throws SystemException {
         // Verifica che plid non sia nullo (o zero)
         if (plid > 0) {
@@ -99,7 +99,6 @@ public class DBUserDAO implements UserDAO{
 
     @Override
     public void update(User user, int plid) throws SystemException {
-        // Prima verifica che il PokeLab esista
         String checkPokeLabQuery = "SELECT COUNT(*) FROM poke_lab WHERE id = ?";
         String updateUserQuery = "UPDATE users SET plid = ? WHERE username = ?";
 
@@ -117,7 +116,6 @@ public class DBUserDAO implements UserDAO{
                 throw new SystemException("PokeLab with ID " + plid + " does not exist");
             }
 
-            // Se esiste, procedi con l'update
             updateStmt.setInt(1, plid);
             updateStmt.setString(2, user.getUsername());
 

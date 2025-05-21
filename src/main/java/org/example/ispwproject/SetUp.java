@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class SetUp {
 
+    // mostra un menu per selezionare il provider di persistenza
     public boolean setUpPersistenceProvider() {
         Scanner scanner = new Scanner(System.in);
         PersistenceProvider persistenceProvider = null;
@@ -49,6 +50,7 @@ public class SetUp {
         return true;
     }
 
+    // mostra un menu per selezionare il tipo di interfaccia
     public UI setUI() {
         Scanner scanner = new Scanner(System.in);
         int uiFlag = -1;
@@ -79,7 +81,7 @@ public class SetUp {
             }
         }
 
-        return UI.fromInt(uiFlag);
+        return UI.fromInt(uiFlag); // ritorna il valore numerico relativo all'enum dell'interfaccia scelta
     }
 }
 

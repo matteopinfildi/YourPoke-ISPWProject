@@ -10,16 +10,9 @@ public class PokeWallBean {
     private String username;
     private List<String> ingredients;
 
-    // Costruttore vuoto (per deserializzazione/UI)
+    // Costruttore vuoto
     public PokeWallBean() {}
 
-    // Costruttore da PokeWall (model)
-    public PokeWallBean(PokeWall pokeWall) {
-        this.pokeName = pokeWall.getPokeName();
-        this.size = pokeWall.getSize();
-        this.username = pokeWall.getUsername();
-        this.ingredients = pokeWall.getIngredients();
-    }
 
     // Getter e Setter
     public String getPokeName() { return pokeName; }

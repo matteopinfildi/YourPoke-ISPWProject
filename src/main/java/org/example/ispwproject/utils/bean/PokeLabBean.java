@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PokeLabBean {
-    private Map<String, GenericAlternative> ingredients=new HashMap<>(); //sfrutto una hash map per memorizzare tutti gli ingredienti
+    private Map<String, GenericAlternative> ingredients=new HashMap<>(); // hash map per memorizzare tutti gli ingredienti
     private int plId;
     private double price;
     private String pokeName;
@@ -46,14 +46,13 @@ public class PokeLabBean {
 
     public GenericAlternative getIngredient(String ingredientName) {return ingredients.get(ingredientName);}
 
+    // aggiunge un nuovo ingrediente
     public void setIngredient(String ingredientName, GenericAlternative alternative) {
-        //aggiunge il nuovo ingrediente (ho solo un alternativa per ingrediente)
         ingredients.put(ingredientName, alternative);
     }
 
     public Map<String, GenericAlternative> getAllIngredients(){return ingredients;}
 
-    public boolean isFull() {return ingredients.size() == 5;} //controllo se ho inserito tutti gli ingredienti
 
     public double getPrice() {return price;}
     public void setPrice(double price) {this.price = price;}

@@ -165,7 +165,6 @@ public class DBPokeWallDAO implements PokeWallDAO {
                     String postUsername = rs.getString("username");
                     String ingredient = rs.getString("ingredient");
 
-                    // Passa 5 argomenti: postId, pokeName, size, postUsername, e lista di ingredienti vuota
                     postMap.computeIfAbsent(postId, k -> new PokeWall(postId, pokeName, size, postUsername, new ArrayList<>()));
 
                     if (ingredient != null) {

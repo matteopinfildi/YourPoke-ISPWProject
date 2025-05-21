@@ -4,7 +4,6 @@ import org.example.ispwproject.utils.enumeration.UserType;
 
 public class UserBean {
     private String uid;
-    private String plid;
     private String email;
     private String password;
     private UserType uType;

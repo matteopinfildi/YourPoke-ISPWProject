@@ -23,8 +23,10 @@ public class BuyPokeLabAppController {
         pokeLabDAO = daoFactory.getPokeLabDAO();
     }
 
+    // crea e restituisce una nuova istanza vuota della bean
     public PokeLabBean newPokeLab() {return new PokeLabBean();}
 
+    // aggiunge/sostituisce un ingrediente al poke e aggiorna il totale del prezzo
     public void addIngredient(PokeLabBean pokeLabBean, AddIngredientBean addIngredientBean){
         String ingredient = addIngredientBean.getIngredientName();
         GenericAlternative genericAlternative = addIngredientBean.getGenericAlternative();
@@ -42,31 +44,26 @@ public class BuyPokeLabAppController {
     }
 
 
-
+    // salva il poke lab nuovo, associandolo all'utente ed eliminando quello vecchio
     public boolean savePokeLab(PokeLabBean pokeLabBean, SaveBean saveBean) throws SystemException {
         try {
-            // 1. Crea il PokeLab (il DAO gestirà la transazione internamente)
             PokeLab pokeLab = new PokeLab(pokeLabBean);
-            pokeLabDAO.create(pokeLab); // Senza passare la connection
+            pokeLabDAO.create(pokeLab);
 
-            // 2. Verifica che l'ID sia stato generato
             if (pokeLab.id() <= 0) {
                 throw new SystemException("Invalid PokeLab ID generated");
             }
 
-            // 3. Recupera l'utente
             User user = userDAO.read(saveBean.getUid());
             if (user == null) {
                 throw new SystemException("User not found: " + saveBean.getUid());
             }
 
-            // 4. Elimina eventuale PokeLab precedente
             if (user.getPokeLab() != null) {
-                pokeLabDAO.delete(user.getPokeLab().id());
+                pokeLabDAO.delete(user.getPokeLab().id()); // elimina il vecchio poke (se esiste)
             }
 
-            // 5. Aggiorna riferimento al nuovo PokeLab
-            userDAO.update(user, pokeLab.id());
+            userDAO.update(user, pokeLab.id()); // aggiorna nuovo poke
 
             return true;
 
@@ -75,6 +72,7 @@ public class BuyPokeLabAppController {
         }
     }
 
+    // verifica se l'utente ha già un poke salvato
     public boolean checkPokeLab(SaveBean saveBean) throws SystemException {
         User user = null;
         String id = saveBean.getUid();
@@ -88,6 +86,7 @@ public class BuyPokeLabAppController {
         return pokeLab != null;
     }
 
+    // recupera il poke precedentemente salvato per l'utente
     public PokeLabBean recoverPokeLab(SaveBean saveBean) throws SystemException {
         User user = null;
         String uID = saveBean.getUid();
@@ -104,37 +103,27 @@ public class BuyPokeLabAppController {
         return null;
     }
 
-    public boolean setPokeName(PokeLabBean pokeLabBean,
-                                  String name,
-                                  SaveBean saveBean) throws SystemException {
-        // 1. Validazione
+    // imposta/aggiorna il nome del poke, se ha almeno 4 lettere e se è diverso dal nome assegnato in precedenza
+    public boolean setPokeName(PokeLabBean pokeLabBean, String name, SaveBean saveBean) throws SystemException {
         if (name == null || name.trim().length() < 4) {
             throw new SystemException("The name must be at least 4 characters long!");
         }
-        // 2. Se non cambia, esci subito
         if (name.equals(pokeLabBean.getPokeName())) {
             return true;
         }
-        // 3. Applica il nuovo nome sulla bean
         pokeLabBean.setPokeName(name);
-        // 4. Salva tutta la bean richiamando il metodo esistente
         return savePokeLab(pokeLabBean, saveBean);
     }
 
-    public boolean setBowlSize(PokeLabBean pokeLabBean,
-                                  String bowlSize,
-                                  SaveBean saveBean) throws SystemException {
-        // (1) Validazione minima: ad esempio, non vuoto
+    // imposta/aggiorna la size della bowl se è diverso dal nome assegnato in precedenza
+    public boolean setBowlSize(PokeLabBean pokeLabBean, String bowlSize, SaveBean saveBean) throws SystemException {
         if (bowlSize == null || bowlSize.isEmpty()) {
             throw new SystemException("Bowl size cannot be empty");
         }
-        // (2) Se non cambia, esci subito
         if (bowlSize.equals(pokeLabBean.getBowlSize())) {
             return true;
         }
-        // (3) Applica sulla bean
         pokeLabBean.setBowlSize(bowlSize);
-        // (4) Salva con il metodo esistente
         return savePokeLab(pokeLabBean, saveBean);
     }
 

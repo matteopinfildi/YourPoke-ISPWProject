@@ -22,7 +22,7 @@ public class PokeWall implements PokeWallSubject {
         this.ingredients = Objects.requireNonNull(ingredients, "Ingredients list cannot be null");
     }
 
-
+    // registra l'observer
     @Override
     public void registerObserver(PokeWallObserver observer) {
         if (observer != null) {
@@ -30,6 +30,7 @@ public class PokeWall implements PokeWallSubject {
         }
     }
 
+    // rimuove l'observer
     @Override
     public void removeObserver(PokeWallObserver observer) {
         if (observer != null) {
@@ -37,6 +38,7 @@ public class PokeWall implements PokeWallSubject {
         }
     }
 
+    // notifica tutti gli observer registrati, passando se stesso come subject osservato
     @Override
     public void notifyObservers() {
         for (PokeWallObserver observer : observers) {

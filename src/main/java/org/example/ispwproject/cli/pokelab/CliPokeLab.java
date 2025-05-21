@@ -48,12 +48,12 @@ public class CliPokeLab extends CliController{
 
             if (!scanner.hasNextInt()) {
                 System.out.println("Invalid input. Please enter a number.");
-                scanner.next(); // Consuma input non valido
+                scanner.next();
                 continue;
             }
 
             selection = scanner.nextInt();
-            scanner.nextLine(); // Pulisce il buffer
+            scanner.nextLine();
 
             switch (selection) {
                 case 1 -> {
@@ -62,7 +62,7 @@ public class CliPokeLab extends CliController{
                 }
                 case 2 -> {
                     System.out.println("Creating a new Pokè Lab...");
-                    this.pokeLabBean = new PokeLabBean(); // <--- CREA NUOVO OGGETTO QUI
+                    this.pokeLabBean = new PokeLabBean();
                     validSelection = true;
                 }
                 default -> System.out.println("Invalid option. Please select 1 or 2.");

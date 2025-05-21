@@ -94,9 +94,9 @@ public class FSPokeWallDAO implements PokeWallDAO {
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String header = reader.readLine(); // Skip header, but capture the value
+            String header = reader.readLine();
             if (header == null) {
-                return; // File is empty or only contains header line
+                return;
             }
 
 
@@ -126,9 +126,9 @@ public class FSPokeWallDAO implements PokeWallDAO {
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String header = reader.readLine(); // Skip header, but capture the value
+            String header = reader.readLine();
             if (header == null) {
-                return; // File is empty or only contains header line
+                return;
             }
 
             String line;
@@ -174,9 +174,9 @@ public class FSPokeWallDAO implements PokeWallDAO {
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String header = reader.readLine(); // Skip header
+            String header = reader.readLine();
             if (header == null) {
-                return seenPostIds; // File vuoto
+                return seenPostIds;
             }
 
             String line;

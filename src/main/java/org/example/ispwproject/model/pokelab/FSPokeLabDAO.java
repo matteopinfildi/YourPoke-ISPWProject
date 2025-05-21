@@ -44,7 +44,6 @@ public class FSPokeLabDAO implements PokeLabDAO {
         return maxId;
     }
 
-    // Metodo estratto per analizzare una riga e aggiornare maxId
     private static int updateMaxIdIfValid(String line, int currentMaxId) {
         String[] parts = line.split(DELIMITER);
         if (parts.length > 0) {
@@ -72,7 +71,6 @@ public class FSPokeLabDAO implements PokeLabDAO {
                 // Aggiorna lastId se viene passato un ID maggiore
                 lastId = pokeLab.id();
             }
-            // Se l'ID è valido e <= lastId, non fare nulla
         }
         try (BufferedWriter writerLab = new BufferedWriter(new FileWriter(FILE_LAB, true));
              BufferedWriter writerIng = new BufferedWriter(new FileWriter(FILE_INGREDIENTS, true))) {

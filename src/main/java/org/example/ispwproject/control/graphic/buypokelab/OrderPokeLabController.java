@@ -52,11 +52,9 @@ public class OrderPokeLabController extends GraphicController {
             return;
         }
 
-        // Messaggio di conferma
         showAlert("Ordine Confermato", "Grazie per il tuo ordine!");
     }
 
-    // Metodo per mostrare una finestra di avviso
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
