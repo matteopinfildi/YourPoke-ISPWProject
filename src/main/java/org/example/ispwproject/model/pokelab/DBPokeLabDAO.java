@@ -149,10 +149,8 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
             int rowsUpdated = preparedStatement.executeUpdate();
 
-            if (rowsUpdated == 0) {
-                if (logger.isLoggable(Level.INFO)) {
-                    logger.info(String.format("Nessun record trovato con ID: %d", plid));
-                }
+            if (rowsUpdated == 0 && logger.isLoggable(Level.INFO)) {
+                logger.info(String.format("Nessun record trovato con ID: %d", plid));
             }
 
 
