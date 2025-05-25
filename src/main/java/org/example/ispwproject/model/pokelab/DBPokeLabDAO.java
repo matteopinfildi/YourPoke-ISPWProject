@@ -153,10 +153,6 @@ public class DBPokeLabDAO implements PokeLabDAO {
                 if (logger.isLoggable(Level.INFO)) {
                     logger.info(String.format("Nessun record trovato con ID: %d", plid));
                 }
-            } else {
-                if (logger.isLoggable(Level.INFO)) {
-                    logger.info(String.format("Bowl size aggiornato per ID: %d", plid));
-                }
             }
 
 

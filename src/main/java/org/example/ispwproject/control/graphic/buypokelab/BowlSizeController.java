@@ -6,14 +6,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.stage.Stage;
 import org.example.ispwproject.ChangePage;
-import org.example.ispwproject.Session;
-import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
-import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import java.util.logging.Level;
@@ -87,15 +83,10 @@ public class BowlSizeController extends GraphicController {
             return;
         }
 
-        Session session = SessionManager
-                .getSessionManager()
-                .getSessionFromId(sessionId);
-        String userId = session.getUserId();
-        SaveBean saveBean = new SaveBean(userId);
 
         try {
             boolean ok = buyPokeLabAppController
-                    .setBowlSize(pokeLabBean, selectedSize, saveBean);
+                    .setBowlSize(pokeLabBean, selectedSize);
 
             if (!ok) {
                 LOGGER.warning("ChangeBowlSize returned false");

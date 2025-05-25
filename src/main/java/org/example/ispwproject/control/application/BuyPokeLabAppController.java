@@ -31,6 +31,7 @@ public class BuyPokeLabAppController {
         String ingredient = addIngredientBean.getIngredientName();
         GenericAlternative genericAlternative = addIngredientBean.getGenericAlternative();
 
+        // elimina un vecchio ingrediente andando a modificare anche il prezzo
         if (genericAlternative != null) {
             GenericAlternative oldIngredient = pokeLabBean.getIngredient(ingredient);
             if (oldIngredient != null) {
@@ -46,30 +47,23 @@ public class BuyPokeLabAppController {
 
     // salva il poke lab nuovo, associandolo all'utente ed eliminando quello vecchio
     public boolean savePokeLab(PokeLabBean pokeLabBean, SaveBean saveBean) throws SystemException {
-        try {
-            PokeLab pokeLab = new PokeLab(pokeLabBean);
-            pokeLabDAO.create(pokeLab);
-
-            if (pokeLab.id() <= 0) {
-                throw new SystemException("Invalid PokeLab ID generated");
-            }
-
-            User user = userDAO.read(saveBean.getUid());
-            if (user == null) {
-                throw new SystemException("User not found: " + saveBean.getUid());
-            }
-
-            if (user.getPokeLab() != null) {
-                pokeLabDAO.delete(user.getPokeLab().id()); // elimina il vecchio poke (se esiste)
-            }
-
-            userDAO.update(user, pokeLab.id()); // aggiorna nuovo poke
-
+        if (pokeLabBean.getId() > 0) {
+            // già salvato in precedenza: niente create
             return true;
-
-        } catch (SystemException e) {
-            throw new SystemException("Failed to save PokeLab: " + e.getMessage());
         }
+        // altrimenti crea il primo PokeLab
+        PokeLab pokeLab = new PokeLab(pokeLabBean);
+        pokeLabDAO.create(pokeLab);
+        if (pokeLab.id() <= 0) {
+            throw new SystemException("Invalid PokeLab ID generated");
+        }
+        pokeLabBean.setId(pokeLab.id());  // indispensabile
+        User user = userDAO.read(saveBean.getUid());
+        if (user == null) {
+            throw new SystemException("User not found: " + saveBean.getUid());
+        }
+        userDAO.update(user, pokeLab.id());
+        return true;
     }
 
     // verifica se l'utente ha già un poke salvato
@@ -116,7 +110,7 @@ public class BuyPokeLabAppController {
     }
 
     // imposta/aggiorna la size della bowl se è diverso dal nome assegnato in precedenza
-    public boolean setBowlSize(PokeLabBean pokeLabBean, String bowlSize, SaveBean saveBean) throws SystemException {
+    public boolean setBowlSize(PokeLabBean pokeLabBean, String bowlSize) throws SystemException {
         if (bowlSize == null || bowlSize.isEmpty()) {
             throw new SystemException("Bowl size cannot be empty");
         }
@@ -124,7 +118,11 @@ public class BuyPokeLabAppController {
             return true;
         }
         pokeLabBean.setBowlSize(bowlSize);
-        return savePokeLab(pokeLabBean, saveBean);
+        // se il poke esiste già in DB, aggiorno
+        if (pokeLabBean.getId() > 0) {
+            pokeLabDAO.updateBowlSize(pokeLabBean.getId(), bowlSize);
+        }
+        return true;
     }
 
 }
