@@ -52,7 +52,7 @@ public class OrderPokeLabController extends GraphicController {
             return;
         }
 
-        showAlert("Ordine Confermato", "Thank you for your order!");
+        showAlert("Confirm order", "Thank you for your order!");
     }
 
     private void showAlert(String title, String message) {
