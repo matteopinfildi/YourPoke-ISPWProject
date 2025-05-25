@@ -42,17 +42,17 @@ public class OrderPokeLabController extends GraphicController {
 
         // Controllo se l'indirizzo è stato inserito
         if (address.isEmpty()) {
-            showAlert("Errore", "Inserisci un indirizzo valido.");
+            showAlert("Error", "Please enter a valid address.");
             return;
         }
 
         // Controllo se è stato selezionato un metodo di pagamento
         if (!cashRadioButton.isSelected() && !cardRadioButton.isSelected() && !paypalRadioButton.isSelected()) {
-            showAlert("Errore", "Seleziona un metodo di pagamento.");
+            showAlert("Error", "Please select a payment method.");
             return;
         }
 
-        showAlert("Ordine Confermato", "Grazie per il tuo ordine!");
+        showAlert("Ordine Confermato", "Thank you for your order!");
     }
 
     private void showAlert(String title, String message) {
