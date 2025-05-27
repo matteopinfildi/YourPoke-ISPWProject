@@ -12,12 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TestPokeWallObserver {
 
+    // verifica del comportamento di base del pattern observer
     @Test
     void testBasicObserverPattern() {
         List<String> ingredients = List.of("rice", "tuna", "avocado");
         PokeWall pokeWall = new PokeWall(1, "Tuna Poke", "Medium", "user1", ingredients);
 
-        // Mock observer usando una semplice classe interna
+        // Mock observer usando una semplice classe interna che implementa l'interfaccia observer
         class TestObserver implements PokeWallObserver {
             public int updateCount = 0;
             public PokeWall lastReceived;
