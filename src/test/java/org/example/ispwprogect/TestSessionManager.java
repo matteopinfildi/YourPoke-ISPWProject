@@ -19,7 +19,6 @@ class TestSessionManager {
         // Inizializza il SessionManager
         sessionManager = SessionManager.getSessionManager();
 
-        // Resetta lo stato del SessionManager per evitare conflitti tra test
         sessionManager = new SessionManager(); // Inizializza di nuovo un'istanza di SessionManager per ogni test
     }
 

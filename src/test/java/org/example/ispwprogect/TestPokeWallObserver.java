@@ -14,7 +14,6 @@ class TestPokeWallObserver {
 
     @Test
     void testBasicObserverPattern() {
-        // 1. Setup
         List<String> ingredients = List.of("rice", "tuna", "avocado");
         PokeWall pokeWall = new PokeWall(1, "Tuna Poke", "Medium", "user1", ingredients);
 
@@ -32,15 +31,12 @@ class TestPokeWallObserver {
 
         TestObserver observer = new TestObserver();
 
-        // 2. Esecuzione
         pokeWall.registerObserver(observer);
         pokeWall.notifyObservers();
 
-        // 3. Verifiche
         assertEquals(1, observer.updateCount, "L'observer dovrebbe essere notificato una volta");
         assertSame(pokeWall, observer.lastReceived, "L'observer dovrebbe ricevere l'oggetto PokeWall corretto");
 
-        // Pulizia
         pokeWall.removeObserver(observer);
         pokeWall.notifyObservers();
 
