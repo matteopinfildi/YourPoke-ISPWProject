@@ -14,6 +14,7 @@ class TestSessionManager {
     private SessionManager sessionManager;
     private Session session;
 
+    // metodo effettuato prima di ogni test
     @BeforeEach
     void setUp() {
         // Inizializza il SessionManager
