@@ -15,7 +15,7 @@ class TestPokeWallObserver {
     // verifica del comportamento di base del pattern observer
     @Test
     void testBasicObserverPattern() {
-        List<String> ingredients = List.of("rice", "tuna", "avocado");
+        List<String> ingredients = List.of("sushi rice", "tuna", "avocado", "nuts", "wasabi");
         PokeWall pokeWall = new PokeWall(1, "Tuna Poke", "Medium", "user1", ingredients);
 
         // Mock observer usando una semplice classe interna che implementa l'interfaccia observer
