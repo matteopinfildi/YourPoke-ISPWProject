@@ -48,7 +48,7 @@ public class BuyPokeLabAppController {
     // salva il poke lab nuovo, associandolo all'utente ed eliminando quello vecchio
     public boolean savePokeLab(PokeLabBean pokeLabBean, SaveBean saveBean) throws SystemException {
         if (pokeLabBean.getId() > 0) {
-            // già salvato in precedenza
+            // già salvato in precedenza, VEDERE SE LEVARE
             return true;
         }
         // altrimenti crea il primo PokeLab

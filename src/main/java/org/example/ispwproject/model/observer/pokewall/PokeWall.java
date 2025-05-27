@@ -88,13 +88,14 @@ public class PokeWall implements PokeWallSubject {
     }
 
 
-
+    // indica il metodo setter per lo stato del subject (ovvero il post)
     public void addSeenUser(String username) {
         if (!seenByUsers.contains(username)) {
             seenByUsers.add(username);
         }
     }
 
+    // indica il metodo getter per lo stato del subject (ovvero il post)
     public List<String> getSeenByUsers() {
         return seenByUsers;
     }
