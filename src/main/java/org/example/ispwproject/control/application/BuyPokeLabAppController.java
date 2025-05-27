@@ -48,7 +48,7 @@ public class BuyPokeLabAppController {
     // salva il poke lab nuovo, associandolo all'utente ed eliminando quello vecchio
     public boolean savePokeLab(PokeLabBean pokeLabBean, SaveBean saveBean) throws SystemException {
         if (pokeLabBean.getId() > 0) {
-            // già salvato in precedenza: niente create
+            // già salvato in precedenza
             return true;
         }
         // altrimenti crea il primo PokeLab
@@ -57,7 +57,7 @@ public class BuyPokeLabAppController {
         if (pokeLab.id() <= 0) {
             throw new SystemException("Invalid PokeLab ID generated");
         }
-        pokeLabBean.setId(pokeLab.id());  // indispensabile
+        pokeLabBean.setId(pokeLab.id());
         User user = userDAO.read(saveBean.getUid());
         if (user == null) {
             throw new SystemException("User not found: " + saveBean.getUid());
@@ -99,9 +99,12 @@ public class BuyPokeLabAppController {
 
     // imposta/aggiorna il nome del poke, se ha almeno 4 lettere e se è diverso dal nome assegnato in precedenza
     public boolean setPokeName(PokeLabBean pokeLabBean, String name, SaveBean saveBean) throws SystemException {
+        // il metodo trim() è un metodo che rimuove gli spazi bianchi iniziali e finali da una stringa
         if (name == null || name.trim().length() < 4) {
             throw new SystemException("The name must be at least 4 characters long!");
         }
+        /* controllo se il nome inserito è già uguale ad un eventuale altro nome già assegnato allo stesso poke
+           così da non fare altri salvataggi inutili*/
         if (name.equals(pokeLabBean.getPokeName())) {
             return true;
         }
@@ -114,11 +117,13 @@ public class BuyPokeLabAppController {
         if (bowlSize == null || bowlSize.isEmpty()) {
             throw new SystemException("Bowl size cannot be empty");
         }
+        /* controllo se la size inserita è già uguale ad un eventuale altra size già assegnata allo stesso poke
+           così da non fare altri salvataggi inutili*/
         if (bowlSize.equals(pokeLabBean.getBowlSize())) {
             return true;
         }
         pokeLabBean.setBowlSize(bowlSize);
-        // se il poke esiste già in DB, aggiorno
+        // se il poke esiste già in DB effettuo solo un update
         if (pokeLabBean.getId() > 0) {
             pokeLabDAO.updateBowlSize(pokeLabBean.getId(), bowlSize);
         }
