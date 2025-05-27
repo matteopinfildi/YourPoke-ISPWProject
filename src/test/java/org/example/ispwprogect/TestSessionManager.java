@@ -27,7 +27,7 @@ class TestSessionManager {
         // Crea una nuova sessione con un username
         session = sessionManager.createSession("pinfoM");
 
-        // Verifica che l'ID della sessione sia stato correttamente assegnato (inizia da 0)
+        // Verifica che l'ID della sessione sia stato correttamente assegnato
         assertEquals(0, session.getSessionId(), "L'ID della sessione dovrebbe essere 0");
 
         // Verifica che il uid della sessione sia corretto
