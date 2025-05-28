@@ -199,4 +199,52 @@ public class FSPokeLabDAO implements PokeLabDAO {
             throw new SystemException("Could not replace original file during bowl size update");
         }
     }
+
+    @Override
+    public void update(PokeLab pokeLab) throws SystemException {
+        // 1) aggiorna il record in poke_lab.csv (price e size)
+        File origLab = new File(FILE_LAB), tmpLab = new File("temp_lab.csv");
+        try (BufferedReader r = new BufferedReader(new FileReader(origLab));
+             BufferedWriter w = new BufferedWriter(new FileWriter(tmpLab))) {
+            String line;
+            while ((line = r.readLine()) != null) {
+                String[] p = line.split(DELIMITER);
+                if (Integer.parseInt(p[0]) == pokeLab.id()) {
+                    w.write(pokeLab.id() + DELIMITER + pokeLab.price() + DELIMITER + pokeLab.getBowlSize());
+                } else {
+                    w.write(line);
+                }
+                w.newLine();
+            }
+        } catch (IOException|NumberFormatException e) {
+            throw new SystemException("Error updating PokeLab file: " + e.getMessage());
+        }
+        if (!origLab.delete() || !tmpLab.renameTo(origLab)) {
+            throw new SystemException("Could not replace poke_lab.csv during update");
+        }
+
+        // 2) aggiorna poke_lab_ingredients.csv: elimina e reinserisci
+        File origIng = new File(FILE_INGREDIENTS), tmpIng = new File("temp_ing.csv");
+        try (BufferedReader r = new BufferedReader(new FileReader(origIng));
+             BufferedWriter w = new BufferedWriter(new FileWriter(tmpIng))) {
+            String line;
+            while ((line = r.readLine()) != null) {
+                if (!line.startsWith(pokeLab.id() + DELIMITER)) {
+                    w.write(line);
+                    w.newLine();
+                }
+            }
+            // ora append dei nuovi ingredienti
+            for (var e : pokeLab.allIngredients().entrySet()) {
+                w.write(pokeLab.id() + DELIMITER + e.getKey() + DELIMITER + ((Enum<?>) e.getValue()).name());
+                w.newLine();
+            }
+        } catch (IOException e) {
+            throw new SystemException("Error updating ingredients file: " + e.getMessage());
+        }
+        if (!origIng.delete() || !tmpIng.renameTo(origIng)) {
+            throw new SystemException("Could not replace poke_lab_ingredients.csv during update");
+        }
+    }
+
 }

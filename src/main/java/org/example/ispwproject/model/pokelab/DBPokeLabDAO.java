@@ -159,4 +159,38 @@ public class DBPokeLabDAO implements PokeLabDAO {
             throw new SystemException("Error updating PokeLab bowl size");
         }
     }
+
+    @Override
+    public void update(PokeLab pokeLab) throws SystemException {
+        String updatePokeLab = "UPDATE poke_lab SET price = ?, size = ? WHERE id = ?";
+        String deleteIngredients = "DELETE FROM poke_lab_ingredients WHERE plid = ?";
+        String insertIngredient = "INSERT INTO poke_lab_ingredients (plid, ingredient_name, ingredient_alternative) VALUES (?, ?, ?)";
+        try (Connection conn = DBConnection.getDBConnection()) {
+            // 1) aggiorna price e size
+            try (PreparedStatement ps = conn.prepareStatement(updatePokeLab)) {
+                ps.setDouble(1, pokeLab.price());
+                ps.setString(2, pokeLab.getBowlSize());
+                ps.setInt(3, pokeLab.id());
+                ps.executeUpdate();
+            }
+            // 2) elimina tutte le righe ingredienti esistenti
+            try (PreparedStatement ps = conn.prepareStatement(deleteIngredients)) {
+                ps.setInt(1, pokeLab.id());
+                ps.executeUpdate();
+            }
+            // 3) reinserisci gli ingredienti correnti
+            try (PreparedStatement ps = conn.prepareStatement(insertIngredient)) {
+                for (var e : pokeLab.allIngredients().entrySet()) {
+                    ps.setInt(1, pokeLab.id());
+                    ps.setString(2, e.getKey());
+                    ps.setString(3, ((Enum<?>) e.getValue()).name());
+                    ps.addBatch();
+                }
+                ps.executeBatch();
+            }
+        } catch (SQLException ex) {
+            throw new SystemException("Error updating PokeLab: " + ex.getMessage());
+        }
+    }
+
 }

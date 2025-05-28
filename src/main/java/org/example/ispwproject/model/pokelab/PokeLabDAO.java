@@ -7,4 +7,5 @@ public interface PokeLabDAO {
     PokeLab read(int plid) throws  SystemException;
     public void delete(int plid) throws SystemException;
     void updateBowlSize(int plid, String bowlSize) throws SystemException;
+    void update(PokeLab pokeLab) throws SystemException;
 }

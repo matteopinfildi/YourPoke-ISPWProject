@@ -54,7 +54,7 @@ public class InMemoryPokeLabDAO implements PokeLabDAO {
         }
     }
 
-    // In InMemoryPokeLabDAO
+
     @Override
     public void updateBowlSize(int plid, String bowlSize) throws SystemException {
         PokeLab pokeLab = read(plid);
@@ -64,6 +64,16 @@ public class InMemoryPokeLabDAO implements PokeLabDAO {
         pokeLab.setBowlSize(bowlSize);
     }
 
+    @Override
+    public void update(PokeLab pokeLab) throws SystemException {
+        if (pokeLab == null || pokeLab.id() <= 0) {
+            throw new SystemException("Invalid PokeLab for update");
+        }
+        PokeLab existing = read(pokeLab.id());
+        if (existing == null) {
+            throw new SystemException("PokéLab con id " + pokeLab.id() + " non trovato.");
+        }
+    }
 }
 
 

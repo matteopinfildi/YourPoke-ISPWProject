@@ -28,6 +28,7 @@ public class BuyPokeLabAppController {
 
     // aggiunge/sostituisce un ingrediente al poke e aggiorna il totale del prezzo
     public void addIngredient(PokeLabBean pokeLabBean, AddIngredientBean addIngredientBean){
+        // prendo l'ingrediente su cui voglio agire e l'eventuale alternativa già esistente
         String ingredient = addIngredientBean.getIngredientName();
         GenericAlternative genericAlternative = addIngredientBean.getGenericAlternative();
 
@@ -45,23 +46,29 @@ public class BuyPokeLabAppController {
     }
 
 
-    // salva il poke lab nuovo, associandolo all'utente ed eliminando quello vecchio
+    // salva il poke lab nuovo, associandolo all'utente ed eliminando un eventuale poke vecchio
     public boolean savePokeLab(PokeLabBean pokeLabBean, SaveBean saveBean) throws SystemException {
         if (pokeLabBean.getId() > 0) {
-            // già salvato in precedenza, VEDERE SE LEVARE
+            // già salvato in precedenza, allora effettua update
+            PokeLab poke = new PokeLab(pokeLabBean);
+            pokeLabDAO.update(poke);
             return true;
+
         }
         // altrimenti crea il primo PokeLab
         PokeLab pokeLab = new PokeLab(pokeLabBean);
         pokeLabDAO.create(pokeLab);
+        // recupero l'id generato dallo strato di persistenza per controllare se è valido
         if (pokeLab.id() <= 0) {
             throw new SystemException("Invalid PokeLab ID generated");
         }
         pokeLabBean.setId(pokeLab.id());
+        // lettura dell'utente e controllo validità
         User user = userDAO.read(saveBean.getUid());
         if (user == null) {
             throw new SystemException("User not found: " + saveBean.getUid());
         }
+        // aggiornamento coppia (user, pokeLab)
         userDAO.update(user, pokeLab.id());
         return true;
     }
