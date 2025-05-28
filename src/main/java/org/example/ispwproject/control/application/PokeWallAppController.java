@@ -40,16 +40,16 @@ public class PokeWallAppController implements PokeWallObserver {
         try {
             String username = getUsernameFromSession(sessionId);
 
-            List<PokeWall> unseenPosts = pokeWallDAO.getUnseenPosts(username);
+            List<PokeWall> unseenPosts = pokeWallDAO.getUnseenPosts(username); // lista di post non ancora visualizzati dall'utente
 
             for (PokeWall post : unseenPosts) {
-                post.registerObserver(observer);     // Aggiungiamo observer a ogni post non visto
+                post.registerObserver(observer);     // Aggiunta observer a ogni post non visto
                 observer.update(post);               // Notifica immediata del post
-                pokeWallDAO.markPostAsSeen(post.getId(), username); // Segna come visto
+                pokeWallDAO.markPostAsSeen(post.getId(), username); // Segna post come visto
             }
 
             if (!observers.contains(observer)) {
-                observers.add(observer);  // Salviamo observer solo se non è già presente
+                observers.add(observer);  // Salvataggio observer solo se non è già presente
             }
 
         } catch (SystemException e) {
@@ -64,18 +64,20 @@ public class PokeWallAppController implements PokeWallObserver {
 
     // crea un nuovo post nella PokeWall associato all'utente e notifica gli observer
     public boolean createPost(SaveBean saveBean, PokeWallBean pokeWallBean) throws SystemException {
+        // recupero utente e controllo
         String userId = saveBean.getUid();
         User user = userDAO.read(userId);
         if (user == null) {
             return false;
         }
 
+        // creazione istanza del PokeWall
         PokeWall pokeWall = new PokeWall(0, pokeWallBean.getPokeName(), pokeWallBean.getSize(),
                 user.getUsername(), pokeWallBean.getIngredients());
 
-        pokeWall.registerObserver(this); // Questo controller "osserva" il post
+        pokeWall.registerObserver(this); // registrazione di un observer
         pokeWallDAO.create(pokeWall);
-        pokeWall.notifyObservers(); // Notifica tutti gli observer
+        pokeWall.notifyObservers(); // notifica tutti gli observer
 
         return true;
     }
@@ -88,9 +90,11 @@ public class PokeWallAppController implements PokeWallObserver {
     // elimina un post solo se l'utente che lo richiede è anche l'autore
     public boolean deletePost(int postId, String requestingUsername) throws SystemException {
         PokeWall postToDelete = getPostById(postId);
+        // controllo sull'esistenza del post e sul fatto che il post sia relativo all'utente che lo vuole eliminare
         if (postToDelete == null || !postToDelete.getUsername().equals(requestingUsername)) {
             return false;
         }
+        // eliminazione post
         pokeWallDAO.delete(postId);
         return true;
     }
@@ -98,9 +102,9 @@ public class PokeWallAppController implements PokeWallObserver {
 
     // restituisce il post associato ad un determinato ID
     public PokeWall getPostById(int postId) throws SystemException {
-        List<PokeWall> posts = pokeWallDAO.getAllPosts();
+        List<PokeWall> posts = pokeWallDAO.getAllPosts(); // lista di tutti i post nel PokeWall
         for (PokeWall pokeWall : posts) {
-            if (pokeWall.getId() == postId) {
+            if (pokeWall.getId() == postId) { // cerco il post relativo all'ID che mi interessa
                 return pokeWall;
             }
         }
