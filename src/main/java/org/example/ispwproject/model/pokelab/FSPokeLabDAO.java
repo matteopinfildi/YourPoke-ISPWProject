@@ -11,6 +11,8 @@ public class FSPokeLabDAO implements PokeLabDAO {
 
     private static final String FILE_LAB = "poke_lab.csv";
     private static final String FILE_INGREDIENTS = "poke_lab_ingredients.csv";
+    private static final String TEMP_LAB =  "temp_lab.csv";
+    private static final String TEMP_ING = "temp_ingredients.csv";
     private static final String DELIMITER = ",";
     private static int lastId = -1; // Inizializzato a -1
     private static final Logger LOGGER = Logger.getLogger(FSPokeLabDAO.class.getName());
@@ -141,7 +143,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
         try {
             // Rimuovi da poke_lab.csv
             File originalLab = new File(FILE_LAB);
-            File tempLab = new File("temp_lab.csv");
+            File tempLab = new File(TEMP_LAB);
             try (BufferedReader reader = new BufferedReader(new FileReader(originalLab));
                  BufferedWriter writer = new BufferedWriter(new FileWriter(tempLab))) {
                 String line;
@@ -157,7 +159,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
             }
             // Rimuovi da poke_lab_ingredients.csv
             File originalIng = new File(FILE_INGREDIENTS);
-            File tempIng = new File("temp_ingredients.csv");
+            File tempIng = new File(TEMP_ING);
             try (BufferedReader reader = new BufferedReader(new FileReader(originalIng));
                  BufferedWriter writer = new BufferedWriter(new FileWriter(tempIng))) {
                 String line;
@@ -179,7 +181,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
     @Override
     public void updateBowlSize(int plid, String bowlSize) throws SystemException {
         File original = new File(FILE_LAB);
-        File temp = new File("temp_lab.csv");
+        File temp = new File(TEMP_LAB);
         try (BufferedReader reader = new BufferedReader(new FileReader(original));
              BufferedWriter writer = new BufferedWriter(new FileWriter(temp))) {
             String line;
@@ -203,7 +205,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
     @Override
     public void update(PokeLab pokeLab) throws SystemException {
         // 1) aggiorna il record in poke_lab.csv (price e size)
-        File origLab = new File(FILE_LAB), tmpLab = new File("temp_lab.csv");
+        File origLab = new File(FILE_LAB), tmpLab = new File(TEMP_LAB);
         try (BufferedReader r = new BufferedReader(new FileReader(origLab));
              BufferedWriter w = new BufferedWriter(new FileWriter(tmpLab))) {
             String line;
@@ -224,7 +226,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
         }
 
         // 2) aggiorna poke_lab_ingredients.csv: elimina e reinserisci
-        File origIng = new File(FILE_INGREDIENTS), tmpIng = new File("temp_ing.csv");
+        File origIng = new File(FILE_INGREDIENTS), tmpIng = new File(TEMP_ING);
         try (BufferedReader r = new BufferedReader(new FileReader(origIng));
              BufferedWriter w = new BufferedWriter(new FileWriter(tmpIng))) {
             String line;
