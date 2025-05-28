@@ -178,29 +178,6 @@ public class FSPokeLabDAO implements PokeLabDAO {
         }
     }
 
-    @Override
-    public void updateBowlSize(int plid, String bowlSize) throws SystemException {
-        File original = new File(FILE_LAB);
-        File temp = new File(TEMP_LAB);
-        try (BufferedReader reader = new BufferedReader(new FileReader(original));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(temp))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(DELIMITER);
-                if (Integer.parseInt(parts[0]) == plid) {
-                    writer.write(parts[0] + DELIMITER + parts[1] + DELIMITER + bowlSize);
-                } else {
-                    writer.write(line);
-                }
-                writer.newLine();
-            }
-        } catch (IOException | NumberFormatException _) {
-            throw new SystemException("Error updating PokeLab bowl size");
-        }
-        if (!original.delete() || !temp.renameTo(original)) {
-            throw new SystemException("Could not replace original file during bowl size update");
-        }
-    }
 
     @Override
     public void update(PokeLab pokeLab) throws SystemException {

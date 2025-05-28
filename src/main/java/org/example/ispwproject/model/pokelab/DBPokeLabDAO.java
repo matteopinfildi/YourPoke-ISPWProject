@@ -137,28 +137,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
         }
     }
 
-    @Override
-    public void updateBowlSize(int plid, String bowlSize) throws SystemException {
-        String query = "UPDATE poke_lab SET size = ? WHERE id = ?";
 
-        try (Connection connection = DBConnection.getDBConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, bowlSize);
-            preparedStatement.setInt(2, plid);
-
-            int rowsUpdated = preparedStatement.executeUpdate();
-
-            if (rowsUpdated == 0 && logger.isLoggable(Level.INFO)) {
-                logger.info(String.format("Nessun record trovato con ID: %d", plid));
-            }
-
-
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, String.format("SQL error while updating bowl size for PokeLab with ID %d", plid), e);
-            throw new SystemException("Error updating PokeLab bowl size");
-        }
-    }
 
     @Override
     public void update(PokeLab pokeLab) throws SystemException {

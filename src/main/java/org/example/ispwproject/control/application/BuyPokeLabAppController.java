@@ -130,10 +130,6 @@ public class BuyPokeLabAppController {
             return true;
         }
         pokeLabBean.setBowlSize(bowlSize);
-        // se il poke esiste già in DB effettuo solo un update
-        if (pokeLabBean.getId() > 0) {
-            pokeLabDAO.updateBowlSize(pokeLabBean.getId(), bowlSize);
-        }
         return true;
     }
 
