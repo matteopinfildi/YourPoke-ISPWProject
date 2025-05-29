@@ -1,4 +1,4 @@
-package org.example.ispwproject.model;
+package org.example.ispwproject.control;
 
 import org.example.ispwproject.model.observer.pokewall.PokeWall;
 

@@ -2,7 +2,7 @@ package org.example.ispwproject.control.application;
 
 import org.example.ispwproject.Session;
 import org.example.ispwproject.SessionManager;
-import org.example.ispwproject.model.PokeWallObserver;
+import org.example.ispwproject.control.PokeWallObserver;
 import org.example.ispwproject.model.observer.pokewall.PokeWall;
 import org.example.ispwproject.model.observer.pokewall.PokeWallDAO;
 import org.example.ispwproject.model.user.User;

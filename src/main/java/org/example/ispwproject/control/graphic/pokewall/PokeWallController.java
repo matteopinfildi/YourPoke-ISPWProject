@@ -15,7 +15,7 @@ import org.example.ispwproject.ChangePage;
 import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.PokeWallAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
-import org.example.ispwproject.model.PokeWallObserver;
+import org.example.ispwproject.control.PokeWallObserver;
 import org.example.ispwproject.model.observer.pokewall.PokeWall;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.exception.SystemException;

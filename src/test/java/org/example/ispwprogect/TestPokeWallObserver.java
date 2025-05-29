@@ -1,6 +1,6 @@
 package org.example.ispwprogect;
 
-import org.example.ispwproject.model.PokeWallObserver;
+import org.example.ispwproject.control.PokeWallObserver;
 import org.example.ispwproject.model.observer.pokewall.PokeWall;
 import org.junit.jupiter.api.Test;
 

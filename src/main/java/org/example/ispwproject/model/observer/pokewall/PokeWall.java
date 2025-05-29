@@ -1,6 +1,6 @@
 package org.example.ispwproject.model.observer.pokewall;
 
-import org.example.ispwproject.model.PokeWallObserver;
+import org.example.ispwproject.control.PokeWallObserver;
 import org.example.ispwproject.model.PokeWallSubject;
 
 import java.util.*;
