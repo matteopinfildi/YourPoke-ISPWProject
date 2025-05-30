@@ -12,91 +12,89 @@ import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.AddIngredientBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
-import org.example.ispwproject.utils.enumeration.ingredient.ProteinAlternative;
+import org.example.ispwproject.utils.enumeration.ingredient.CrunchyAlternative;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class BuyPokeLabProteinController extends GraphicController {
+public class AddCrunchyController extends GraphicController{
+    @FXML
+    private ImageView onionImage;
 
     @FXML
-    private ImageView salmonImage;
+    private ImageView nutsImage;
 
     @FXML
-    private ImageView shrimpImage;
-
-    @FXML
-    private ImageView tunaImage;
+    private ImageView almondsImage;
 
     private BuyPokeLabAppController pokeLabAppController;
     private PokeLabBean pokeLabBean;
     private int id;
 
     public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
-        Image salmon = new Image(getClass().getResource("/org/example/ispwproject/image/salmon.jpg").toExternalForm());
-        salmonImage.setImage(salmon);
+        Image onion = new Image(getClass().getResource("/org/example/ispwproject/image/onion.jpg").toExternalForm());
+        onionImage.setImage(onion);
 
-        Image shrimp = new Image(getClass().getResource("/org/example/ispwproject/image/shrimp.jpg").toExternalForm());
-        shrimpImage.setImage(shrimp);
+        Image nuts = new Image(getClass().getResource("/org/example/ispwproject/image/nuts.jpg").toExternalForm());
+        nutsImage.setImage(nuts);
 
-        Image tuna = new Image(getClass().getResource("/org/example/ispwproject/image/tuna.jpg").toExternalForm());
-        tunaImage.setImage(tuna);
+        Image almonds = new Image(getClass().getResource("/org/example/ispwproject/image/almonds.jpg").toExternalForm());
+        almondsImage.setImage(almonds);
 
         pokeLabAppController = new BuyPokeLabAppController();
         this.pokeLabBean = pokeLabBean;
         this.id = id;
+
     }
 
 
     @FXML
-    private VBox salmonNutritionalValues;
+    private VBox onionNutritionalValues;
 
     @FXML
-    private VBox shrimpNutritionalValues;
+    private VBox nutsNutritionalValues;
 
     @FXML
-    private VBox tunaNutritionalValues;
+    private VBox almondsNutritionalValues;
 
     @FXML
-    private void toggleSalmonNutritional() {
-        salmonNutritionalValues.setVisible(!salmonNutritionalValues.isVisible());
+    private void toggleOnionNutritional() {
+        onionNutritionalValues.setVisible(!onionNutritionalValues.isVisible());
     }
 
     @FXML
-    private void toggleShrimpNutritional() {
-        shrimpNutritionalValues.setVisible(!shrimpNutritionalValues.isVisible());
+    private void toggleNutsNutritional() {
+        nutsNutritionalValues.setVisible(!nutsNutritionalValues.isVisible());
     }
 
     @FXML
-    private void toggleTunaNutritional() {
-        tunaNutritionalValues.setVisible(!tunaNutritionalValues.isVisible());
+    private void toggleAlmondsNutritional() {
+        almondsNutritionalValues.setVisible(!almondsNutritionalValues.isVisible());
     }
 
+    @FXML private CheckBox checkOnion;
 
-    @FXML private CheckBox checkSalmon;
+    @FXML private CheckBox checkNuts;
 
-    @FXML private CheckBox checkShrimp;
-
-    @FXML private CheckBox checkTuna;
-
+    @FXML private CheckBox checkAlmonds;
 
     @FXML
     public void handleNextClick(ActionEvent event) throws SystemException {
-        try{
-            ProteinAlternative proteinAlternative = null;
-            if (checkSalmon.isSelected()) {
-                proteinAlternative = ProteinAlternative.SALMON;
-            } else if (checkShrimp.isSelected()) {
-                proteinAlternative = ProteinAlternative.SHRIMP;
-            } else if (checkTuna.isSelected()) {
-                proteinAlternative = ProteinAlternative.TUNA;
+        try {
+            CrunchyAlternative crunchyAlternative = null;
+            if (checkOnion.isSelected()) {
+                crunchyAlternative = CrunchyAlternative.ONION;
+            } else if (checkNuts.isSelected()) {
+                crunchyAlternative = CrunchyAlternative.NUTS;
+            } else if (checkAlmonds.isSelected()) {
+                crunchyAlternative = CrunchyAlternative.ALMONDS;
             }
 
-            AddIngredientBean addIngredientBean = new AddIngredientBean("protein", proteinAlternative);
+            AddIngredientBean addIngredientBean = new AddIngredientBean("crunchy", crunchyAlternative);
             pokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
-
+            
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
         } catch (Exception e){
             throw new SystemException("Error" + e.getMessage());

@@ -19,7 +19,7 @@ import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class BuyPokeLabFruitController  extends GraphicController{
+public class AddFruitController extends GraphicController{
     @FXML
     private ImageView avocadoImage;
 

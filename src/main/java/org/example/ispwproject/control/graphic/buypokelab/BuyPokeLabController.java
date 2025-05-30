@@ -149,31 +149,31 @@ public class BuyPokeLabController extends GraphicController{
 
     @FXML
     public void handleRice(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabRice.fxml", pokeLabBean, id);
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addRice.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
     @FXML
     public void handleProtein(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabProtein.fxml", pokeLabBean, id);
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addProtein.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
     @FXML
     public void handleFruit(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabFruit.fxml", pokeLabBean, id);
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addFruit.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
     @FXML
     public void handleCrunchy(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabCrunchy.fxml", pokeLabBean, id);
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addCrunchy.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
     @FXML
     public void handleSauces(ActionEvent event) {
-        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLabSauces.fxml", pokeLabBean, id);
+        ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/addSauces.fxml", pokeLabBean, id);
         checkIngredientSelection();
     }
 
