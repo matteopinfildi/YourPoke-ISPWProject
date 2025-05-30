@@ -6,18 +6,57 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="300.0" prefWidth="300.0" spacing="20" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ispwproject.control.graphic.LoginController">
-    <AnchorPane prefHeight="260.0" prefWidth="300.0">
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="350.0" spacing="20"
+      style="-fx-background-color: #f5f7fa;"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.ispwproject.control.graphic.LoginController">
+
+    <AnchorPane prefHeight="360.0" prefWidth="350.0">
         <children>
-            <TextField fx:id="usernameField" layoutX="19.0" layoutY="71.0" prefHeight="25.0" prefWidth="262.0" promptText="Username" />
-            <PasswordField fx:id="passwordField" layoutX="19.0" layoutY="118.0" prefHeight="25.0" prefWidth="262.0" promptText="Password" />
-            <Button layoutX="19.0" layoutY="166.0" onAction="#handleLogin" prefHeight="25.0" prefWidth="262.0" style="-fx-background-color: #333; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="Sign In" />
-            <Button layoutX="19.0" layoutY="234.0" onAction="#handleBackToHome" prefHeight="25.0" prefWidth="262.0" text="Back Home" />
-            <Label alignment="CENTER" prefHeight="63.0" prefWidth="300.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Sign In" />
-            <Label layoutX="55.0" layoutY="207.0" text="Don't have an account yet? Register" underline="true" />
+            <Label layoutX="75.0" layoutY="30.0" text="Sign In" textFill="#2d3748">
+                <font>
+                    <Font name="System Bold" size="28.0" />
+                </font>
+                <effect>
+                    <DropShadow color="rgba(45,55,72,0.2)" radius="3" offsetY="2" />
+                </effect>
+            </Label>
+
+            <TextField fx:id="usernameField" layoutX="44.0" layoutY="90.0" prefHeight="40.0" prefWidth="262.0"
+                       promptText="Username" style="-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-border-radius: 10; -fx-text-fill: #2d3748; -fx-prompt-text-fill: #a0aec0; -fx-padding: 0 15 0 15; -fx-border-color: #cbd5e0; -fx-border-width: 1;">
+                <effect>
+                    <DropShadow color="rgba(0,0,0,0.05)" radius="3" />
+                </effect>
+            </TextField>
+
+            <PasswordField fx:id="passwordField" layoutX="44.0" layoutY="150.0" prefHeight="40.0" prefWidth="262.0"
+                           promptText="Password" style="-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-border-radius: 10; -fx-text-fill: #2d3748; -fx-prompt-text-fill: #a0aec0; -fx-padding: 0 15 0 15; -fx-border-color: #cbd5e0; -fx-border-width: 1;">
+                <effect>
+                    <DropShadow color="rgba(0,0,0,0.05)" radius="3" />
+                </effect>
+            </PasswordField>
+
+            <Button layoutX="44.0" layoutY="210.0" onAction="#handleLogin" prefHeight="40.0" prefWidth="262.0"
+                    style="-fx-background-color: #4a5568; -fx-background-radius: 10; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-font-size: 14;"
+                    text="Sign In">
+                <effect>
+                    <DropShadow color="rgba(0,0,0,0.1)" radius="5" />
+                </effect>
+            </Button>
+
+            <Button layoutX="44.0" layoutY="300.0" onAction="#handleBackToHome" prefHeight="35.0" prefWidth="262.0"
+                    style="-fx-background-color: transparent; -fx-text-fill: #4a5568; -fx-border-color: #cbd5e0; -fx-border-radius: 10; -fx-border-width: 1; -fx-cursor: hand;"
+                    text="Back Home" />
+
+            <Label layoutX="60.0" layoutY="265.0" text="Don't have an account yet?" textFill="#718096" />
+            <Label layoutX="220.0" layoutY="265.0" text="Register" textFill="#4a5568" style="-fx-font-weight: bold; -fx-underline: true;" />
         </children>
     </AnchorPane>
-    <Label fx:id="errorLabel" prefHeight="17.0" prefWidth="400.0" textFill="red" />
+
+    <Label fx:id="errorLabel" prefHeight="17.0" prefWidth="400.0" textFill="#e53e3e" style="-fx-font-weight: bold;" />
 </VBox>
 
