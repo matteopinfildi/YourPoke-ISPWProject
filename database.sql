@@ -99,7 +99,8 @@ CREATE TABLE IF NOT EXISTS `your_poke`.`poke_post_views` (
   INDEX `username` (`username` ASC) VISIBLE,
   CONSTRAINT `poke_post_views_ibfk_1`
     FOREIGN KEY (`post_id`)
-    REFERENCES `your_poke`.`poke_wall_posts` (`id`),
+    REFERENCES `your_poke`.`poke_wall_posts` (`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `poke_post_views_ibfk_2`
     FOREIGN KEY (`username`)
     REFERENCES `your_poke`.`users` (`username`))
