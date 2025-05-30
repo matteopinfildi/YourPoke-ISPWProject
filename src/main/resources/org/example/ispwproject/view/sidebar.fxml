@@ -1,21 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.ispwproject.control.graphic.SidebarController"
+            stylesheets="@../style.css">
+    <!-- Sidebar container -->
+    <VBox fx:id="sidebar"
+          layoutX="0" layoutY="0"
+          prefWidth="220" prefHeight="681"
+          styleClass="sidebar"
+          spacing="20">
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ispwproject.control.graphic.SidebarController">
-    <VBox  id="sidebar" layoutX="0" layoutY="0" prefHeight="681.0" prefWidth="200">
-        <Label fx:id="userLabel" text="Guest" />
-        <ListView id="menuList" prefHeight="550">
-            <Label onMouseClicked="#handleHomeCLick" text="Home"  />
-            <Label onMouseClicked="#handleLogInCLick" text="Log-In" />
-            <Label text="Buy Classic Pokè"  />
-            <Label onMouseClicked="#handleBuyPokeLabCLick" text="Buy Pokè Lab"  />
-            <Label onMouseClicked="#handlePokeWallCLick" text="Pokè Wall"  />
-            <Label  text="Leave rating"  />
-        </ListView>
+        <!-- Padding for VBox -->
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10" />
+        </padding>
+
+        <!-- Header: Username -->
+        <HBox alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-header">
+            <Label fx:id="userLabel"
+                   text="Guest"
+                   styleClass="user-label" />
+        </HBox>
+
+        <!-- Menu items -->
+        <VBox spacing="10" VBox.vgrow="ALWAYS" styleClass="menu-container">
+            <Label fx:id="homeLabel"
+                   text="Home"
+                   onMouseClicked="#handleHomeCLick"
+                   styleClass="menu-label" />
+
+            <Label fx:id="loginLabel"
+                   text="Log In"
+                   onMouseClicked="#handleLogInCLick"
+                   styleClass="menu-label" />
+
+            <Label text="Buy Classic Pokè"
+                   styleClass="menu-label" />
+
+            <Label fx:id="buyPokeLabLabel"
+                   text="Buy Pokè Lab"
+                   onMouseClicked="#handleBuyPokeLabCLick"
+                   styleClass="menu-label" />
+
+            <Label fx:id="pokeWallLabel"
+                   text="Pokè Wall"
+                   onMouseClicked="#handlePokeWallCLick"
+                   styleClass="menu-label" />
+
+            <Label fx:id="leaveRatingLabel"
+            text="Leave Rating"
+            styleClass="footer-label" />
+        </VBox>
+
+
+
     </VBox>
 </AnchorPane>
