@@ -58,26 +58,7 @@ Label {
     -fx-border-radius: 10px;
 }
 
-/* Stili testi */
-.menuHeader {
-    -fx-text-fill: #3498db;
-    -fx-font-weight: bold;
-    -fx-padding: 15 0 5 10;
-    -fx-font-size: 13px;
-}
 
-.menuItem {
-    -fx-text-fill: #ecf0f1;
-    -fx-font-size: 14px;
-    -fx-padding: 10 15;
-    -fx-background-radius: 5px;
-    -fx-cursor: hand;
-}
-
-.menuItem:hover {
-    -fx-background-color: rgba(52, 152, 219, 0.3);
-    -fx-text-fill: white;
-}
 
 /* Effetti di transizione */
 .menuItem {
