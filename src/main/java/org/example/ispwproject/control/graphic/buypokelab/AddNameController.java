@@ -84,7 +84,7 @@ public class AddNameController extends GraphicController {
 
 
     @FXML
-    public void handlePostToPokeWall(ActionEvent event) {
+    public void handlePostOnPokeWall(ActionEvent event) {
         // Ottieni l'istanza singleton di PokeWallAppController
         PokeWallAppController pokeWallAppController = PokeWallAppController.getInstance();
 
