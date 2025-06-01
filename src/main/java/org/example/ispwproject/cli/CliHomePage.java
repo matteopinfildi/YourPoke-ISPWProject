@@ -79,7 +79,7 @@ public class CliHomePage extends CliController{
 
         SaveBean saveBean = new SaveBean(session.getUserId());
         boolean v = buyPokeLabAppController.checkPokeLab(saveBean);
-        CliPokeLab.setRecover(v);
+        CliPokeLab.setRetrieve(v);
     }
 
     @Override

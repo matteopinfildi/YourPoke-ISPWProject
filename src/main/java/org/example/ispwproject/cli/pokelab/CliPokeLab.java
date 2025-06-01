@@ -23,7 +23,7 @@ public class CliPokeLab extends CliController{
     private PokeLabBean pokeLabBean;
     private BuyPokeLabAppController buyPokeLabAppController;
     private String total = "Total = 0.0 $";
-    private static boolean recover = false;
+    private static boolean retrieve = false;
     private static final String NO_SELECTION = "No selection";
 
     String riceName;
@@ -34,7 +34,7 @@ public class CliPokeLab extends CliController{
     String bowlSize;
     String pokeName;
 
-    public static void setRecover (boolean value) {recover =  value;}
+    public static void setRetrieve (boolean value) {retrieve =  value;}
 
     private void popup() throws SystemException {
         Scanner scanner = new Scanner(System.in);
@@ -42,7 +42,7 @@ public class CliPokeLab extends CliController{
         boolean validSelection = false;
 
         while (!validSelection) {
-            System.out.println("1) Recover Pokè Lab");
+            System.out.println("1) Retrieve Pokè Lab");
             System.out.println("2) New Pokè Lab");
             System.out.print("\nSelect an option: ");
 
@@ -57,11 +57,11 @@ public class CliPokeLab extends CliController{
 
             switch (selection) {
                 case 1 -> {
-                    recoverPokeLab();
+                    retrievePokeLab();
                     validSelection = true;
                 }
                 case 2 -> {
-                    System.out.println("Creating a new Pokè Lab...");
+                    System.out.println("Creating a new Pokè Lab!");
                     this.pokeLabBean = new PokeLabBean();
                     validSelection = true;
                 }
@@ -71,7 +71,7 @@ public class CliPokeLab extends CliController{
     }
 
 
-    private void recoverPokeLab() throws SystemException{
+    private void retrievePokeLab() throws SystemException{
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(id);
         String userId = session.getUserId();
@@ -80,7 +80,7 @@ public class CliPokeLab extends CliController{
 
         if (oldPokeLabBean != null) {
             this.pokeLabBean = oldPokeLabBean;
-            System.out.println("Pokè Lab successfully recovered.");
+            System.out.println("Pokè Lab retrieved successfully.");
         } else {
             System.out.println("Pokè Lab not found!");
         }
@@ -94,9 +94,9 @@ public class CliPokeLab extends CliController{
         this.id = sID;
 
         // Recupero se necessario
-        if (recover) {
+        if (retrieve) {
             popup();
-            setRecover(false);
+            setRetrieve(false);
         }
 
         // Aggiorna il totale se esiste un pokeLabBean
