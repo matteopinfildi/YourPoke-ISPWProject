@@ -90,10 +90,6 @@ public class AddNameController extends GraphicController {
 
         String name = pokeNameField.getText().trim();
 
-        if (name.length() < 4) {
-            errorLabel.setText("The name must be at least 4 characters long!");
-            return;
-        }
 
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(id);
