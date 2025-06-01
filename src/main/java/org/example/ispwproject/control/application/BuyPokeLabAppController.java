@@ -88,7 +88,7 @@ public class BuyPokeLabAppController {
     }
 
     // recupera il poke precedentemente salvato per l'utente
-    public PokeLabBean recoverPokeLab(SaveBean saveBean) throws SystemException {
+    public PokeLabBean retrievePokeLab(SaveBean saveBean) throws SystemException {
         User user = null;
         String uID = saveBean.getUid();
         try{

@@ -57,7 +57,7 @@ public class BuyPokeLabController extends GraphicController{
     @FXML private Label totalPriceLabel;
     @FXML private Pane popup;
 
-     private static boolean recover = false; // se è false è perchè non ho poke da recuperare
+     private static boolean retrieve = false; // se è false è perchè non ho poke da recuperare
 
 
     public void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException {
@@ -115,16 +115,16 @@ public class BuyPokeLabController extends GraphicController{
         checkIngredientSelection();
         checkBowlSizeSelection();
 
-        if (recover){
+        if (retrieve){
             showPopUp();
             boolean value = false;
-            setRecover(value);
+            setRetrieve(value);
         }
 
         updateSizeLabel();
     }
 
-    public static void setRecover (boolean value) {recover = value;}
+    public static void setRetrieve (boolean value) {retrieve = value;}
 
     //metodo per controllare se tutti gli ingredienti sono stati selezionati e in caso attiva il bottone della bowl size
     private void checkIngredientSelection(){
@@ -208,19 +208,19 @@ public class BuyPokeLabController extends GraphicController{
 
 
     @FXML
-    private void handleRecover() throws SystemException {
+    private void handleRetrieve() throws SystemException {
         popup.setVisible(false);
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(id);
         String userId = session.getUserId();
         SaveBean saveBean = new SaveBean(userId);
-        PokeLabBean oldPokeLabBean = pokeLabAppController.recoverPokeLab(saveBean);
+        PokeLabBean oldPokeLabBean = pokeLabAppController.retrievePokeLab(saveBean);
 
         if (oldPokeLabBean != null) {
             try {
                 init(id, oldPokeLabBean);
             } catch (IOException | LoginException | SQLException e) {
-                throw new SystemException("Error while recovering PokèLab" + e.getMessage());
+                throw new SystemException("Error while retrieving PokèLab" + e.getMessage());
             }
         } else {
             LOGGER.warning("Pokè Lab not found");

@@ -31,7 +31,7 @@ public class NavigationHelper {
                 PokeLabBean pokeLabBean = buyPokeLabAppController.newPokeLab();
                 SaveBean saveBean = new SaveBean(session.getUserId());
                 boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
-                BuyPokeLabController.setRecover(value);
+                BuyPokeLabController.setRetrieve(value);
                 ChangePage.changeScene((Node) event.getSource(), scenePath, pokeLabBean, id);
             }
         } else {
@@ -48,7 +48,7 @@ public class NavigationHelper {
                 PokeLabBean pokeLabBean = buyPokeLabAppController.newPokeLab();
                 SaveBean saveBean = new SaveBean(session.getUserId());
                 boolean value = buyPokeLabAppController.checkPokeLab(saveBean);
-                BuyPokeLabController.setRecover(value);
+                BuyPokeLabController.setRetrieve(value);
                 ChangePage.changeScene((Node) event.getSource(), scenePath, pokeLabBean, id);
             }
         } else {

@@ -87,11 +87,11 @@
                         </effect>
                     </Rectangle>
                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="176.0" layoutX="182.0" layoutY="223.0" stroke="#00000036" strokeType="INSIDE" width="310.0" />
-                    <Label layoutX="206.0" layoutY="243.0" style="-fx-font-weight: bold;" text="You already have an old Pokè Lab, &#10;do you want to recover it?" textAlignment="CENTER" />
-                    <Label layoutX="230.0" layoutY="344.0" text="Press YES to recover the Pokè Lab &#10;Press NO to continue with a new Pokè Lab" textAlignment="CENTER" />
+                    <Label layoutX="206.0" layoutY="243.0" style="-fx-font-weight: bold;" text="You already have an old Pokè Lab, &#10;do you want to retrieve it?" textAlignment="CENTER" />
+                    <Label layoutX="230.0" layoutY="344.0" text="Press YES to retrieve the Pokè Lab &#10;Press NO to continue with a new Pokè Lab" textAlignment="CENTER" />
                     <HBox alignment="TOP_CENTER" layoutX="182.0" layoutY="297.0" prefHeight="25.0" prefWidth="310.0" style="-fx-spacing: 10;">
                         <children>
-                            <Button fx:id="yesButton" onAction="#handleRecover" mnemonicParsing="false" text="Yes" />
+                            <Button fx:id="yesButton" onAction="#handleRetrieve" mnemonicParsing="false" text="Yes" />
                             <Button fx:id="noButton" onAction="#handleNewPoke" mnemonicParsing="false" text="No" />
                         </children>
                     </HBox>

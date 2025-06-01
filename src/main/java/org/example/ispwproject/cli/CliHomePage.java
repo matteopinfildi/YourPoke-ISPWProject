@@ -55,7 +55,7 @@ public class CliHomePage extends CliController{
 
                     buyPokeLabAppController = new BuyPokeLabAppController();
                     pokeLabBean = buyPokeLabAppController.newPokeLab();
-                    checkRecover();
+                    checkRetrieve();
                     new CliPokeLab().init(sID, pokeLabBean);
                     break;
 
@@ -73,7 +73,7 @@ public class CliHomePage extends CliController{
         }while(condition);
     }
 
-    public void checkRecover() throws SystemException {
+    public void checkRetrieve() throws SystemException {
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(sID);
 

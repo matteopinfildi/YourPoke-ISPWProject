@@ -76,7 +76,7 @@ public class CliPokeLab extends CliController{
         Session session = sessionManager.getSessionFromId(id);
         String userId = session.getUserId();
         SaveBean saveBean = new SaveBean(userId);
-        PokeLabBean oldPokeLabBean = buyPokeLabAppController.recoverPokeLab(saveBean);
+        PokeLabBean oldPokeLabBean = buyPokeLabAppController.retrievePokeLab(saveBean);
 
         if (oldPokeLabBean != null) {
             this.pokeLabBean = oldPokeLabBean;
