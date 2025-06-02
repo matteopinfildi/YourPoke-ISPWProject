@@ -63,7 +63,7 @@ public class CliPokeLab extends CliController{
                 }
                 case 2 -> {
                     System.out.println("Creating a new Pokè Lab!");
-                    this.pokeLabBean = new PokeLabBean();
+//                    this.pokeLabBean = buyPokeLabAppController.newPokeLab();
                     validSelection = true;
                 }
                 default -> System.out.println("Invalid option. Please select 1 or 2.");
@@ -91,8 +91,14 @@ public class CliPokeLab extends CliController{
     @Override
     public void init(int sID, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException {
         buyPokeLabAppController = new BuyPokeLabAppController();
-        this.pokeLabBean = pokeLabBean;
         this.id = sID;
+
+        if (pokeLabBean == null) {
+            this.pokeLabBean = buyPokeLabAppController.newPokeLab();
+        } else {
+            this.pokeLabBean = pokeLabBean;
+        }
+
 
         // Recupero se necessario
         if (retrieve) {
@@ -125,6 +131,11 @@ public class CliPokeLab extends CliController{
         saucesName = getIngredientName("sauces");
         bowlSize = (pokeLabBean.getBowlSize() != null) ? pokeLabBean.getBowlSize() : NO_SELECTION;
         pokeName = (pokeLabBean.getPokeName() != null) ? pokeLabBean.getPokeName() : "No name set";
+
+        System.out.println("----------------------------------");
+        System.out.print(total);
+        System.out.print(calories);
+        System.out.println("----------------------------------");
     }
 
     private String getIngredientName(String ingredientType) {
@@ -174,6 +185,8 @@ public class CliPokeLab extends CliController{
         Session session = sessionManager.getSessionFromId(id);
         String userId = session.getUserId();
         SaveBean saveBean = new SaveBean(userId);
+
+
 
         if (!buyPokeLabAppController.savePokeLab(pokeLabBean, saveBean)) {
             System.out.println("Save failed\n");
