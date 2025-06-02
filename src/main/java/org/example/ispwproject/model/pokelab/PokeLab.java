@@ -23,12 +23,12 @@ public class PokeLab  {
         this.calories = pokeLab.getCalories();
     }
 
-    public PokeLab(double price, int id, Map<String, GenericAlternative> items, String bowlSize/*, int calories*/) {
+    public PokeLab(double price, int id, Map<String, GenericAlternative> items, String bowlSize, int calories) {
         this.price = price;
         this.id = id;
         this.items = items;
         this.bowlSize = bowlSize;
-//        this.calories = calories;
+        this.calories = calories;
     }
 
     public double price() {

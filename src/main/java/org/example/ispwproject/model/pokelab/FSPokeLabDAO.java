@@ -77,7 +77,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
         try (BufferedWriter writerLab = new BufferedWriter(new FileWriter(FILE_LAB, true));
              BufferedWriter writerIng = new BufferedWriter(new FileWriter(FILE_INGREDIENTS, true))) {
             // Salva PokeLab
-            writerLab.write(pokeLab.id() + DELIMITER + pokeLab.price() + DELIMITER + pokeLab.getBowlSize());
+            writerLab.write(pokeLab.id() + DELIMITER + pokeLab.price() + DELIMITER + pokeLab.getBowlSize() + DELIMITER + pokeLab.calories() );
             writerLab.newLine();
             // Salva ingredienti
             for (Map.Entry<String, GenericAlternative> entry : pokeLab.allIngredients().entrySet()) {
@@ -93,6 +93,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
     public PokeLab read(int plid) throws SystemException {
         double price = 0;
         String size = null;
+        int calories = 0;
         Map<String, GenericAlternative> ingredients = new HashMap<>();
         boolean found = false;
         try (BufferedReader readerLab = new BufferedReader(new FileReader(FILE_LAB))) {
@@ -102,6 +103,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
                 if (Integer.parseInt(parts[0]) == plid) {
                     price = Double.parseDouble(parts[1]);
                     size = parts[2];
+                    calories = Integer.parseInt(parts[3]);
                     found = true;
                     break;
                 }
@@ -135,7 +137,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
         } catch (IOException | NumberFormatException _) {
             throw new SystemException("Error reading PokeLab ingredients file");
         }
-        return new PokeLab(price, plid, ingredients, size);
+        return new PokeLab(price, plid, ingredients, size, calories);
     }
 
     @Override
@@ -190,7 +192,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
             while ((line = r.readLine()) != null) {
                 String[] p = line.split(DELIMITER);
                 if (Integer.parseInt(p[0]) == pokeLab.id()) {
-                    w.write(pokeLab.id() + DELIMITER + pokeLab.price() + DELIMITER + pokeLab.getBowlSize());
+                    w.write(pokeLab.id() + DELIMITER + pokeLab.price() + DELIMITER + pokeLab.getBowlSize() + DELIMITER + pokeLab.calories());
                 } else {
                     w.write(line);
                 }

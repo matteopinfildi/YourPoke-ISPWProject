@@ -29,7 +29,6 @@ public class InMemoryPokeLabDAO implements PokeLabDAO {
         int newId = idCounter.getAndIncrement();
         pokeLab.setId(newId);
 
-        listOfPokeLab.add(pokeLab);
         if (pokeLab == null) {
             throw new SystemException("Error");
         }
@@ -65,6 +64,9 @@ public class InMemoryPokeLabDAO implements PokeLabDAO {
         if (existing == null) {
             throw new SystemException("PokéLab con id " + pokeLab.id() + " non trovato.");
         }
+
+        listOfPokeLab.remove(existing);
+        listOfPokeLab.add(pokeLab);
     }
 }
 

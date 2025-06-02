@@ -15,7 +15,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
     @Override
     public void create(PokeLab pokeLab) throws SystemException {
-        String insertPokeLabQuery = "INSERT INTO poke_lab (price, size) VALUES (?, ?)";
+        String insertPokeLabQuery = "INSERT INTO poke_lab (price, size, calories) VALUES (?, ?, ?)";
         String insertIngredientQuery = "INSERT INTO poke_lab_ingredients (plid, ingredient_name, ingredient_alternative) VALUES (?, ?, ?)";
 
         try (Connection connection = DBConnection.getDBConnection();
@@ -25,6 +25,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
             // 1. Inserisci il PokeLab principale
             preparedStatementPoke.setDouble(1, pokeLab.price());
             preparedStatementPoke.setString(2, pokeLab.getBowlSize());
+            preparedStatementPoke.setInt(3, pokeLab.calories());
             preparedStatementPoke.executeUpdate();
 
             // 2. Ottieni l'ID generato
@@ -52,7 +53,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
     @Override
     public PokeLab read(int plid) throws SystemException {
-        String selectPokeLabQuery = "SELECT price, size FROM poke_lab WHERE id = ?";
+        String selectPokeLabQuery = "SELECT price, size, calories FROM poke_lab WHERE id = ?";
         String selectIngredientQuery = "SELECT ingredient_name, ingredient_alternative FROM poke_lab_ingredients WHERE plid = ?";
 
         try (Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatementPoke = connection.prepareStatement(selectPokeLabQuery); PreparedStatement preparedStatementIngredient = connection.prepareStatement(selectIngredientQuery)){
@@ -62,6 +63,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
             if (resultSetPoke.next()){
                 double price = resultSetPoke.getDouble("price");
                 String size = resultSetPoke.getString("size");
+                int calories = resultSetPoke.getInt("calories");
                 Map<String, GenericAlternative> ingredients =new HashMap<>();
 
                 preparedStatementIngredient.setInt(1, plid);
@@ -87,7 +89,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
                     }
                 }
 
-                return new PokeLab(price, plid, ingredients, size);
+                return new PokeLab(price, plid, ingredients, size, calories);
             }
         }catch (SQLException e) {
             if (logger.isLoggable(Level.SEVERE)) {
@@ -141,7 +143,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
     @Override
     public void update(PokeLab pokeLab) throws SystemException {
-        String updatePokeLab = "UPDATE poke_lab SET price = ?, size = ? WHERE id = ?";
+        String updatePokeLab = "UPDATE poke_lab SET price = ?, size = ?, calories = ? WHERE id = ?";
         String deleteIngredients = "DELETE FROM poke_lab_ingredients WHERE plid = ?";
         String insertIngredient = "INSERT INTO poke_lab_ingredients (plid, ingredient_name, ingredient_alternative) VALUES (?, ?, ?)";
         try (Connection conn = DBConnection.getDBConnection()) {
@@ -149,7 +151,8 @@ public class DBPokeLabDAO implements PokeLabDAO {
             try (PreparedStatement ps = conn.prepareStatement(updatePokeLab)) {
                 ps.setDouble(1, pokeLab.price());
                 ps.setString(2, pokeLab.getBowlSize());
-                ps.setInt(3, pokeLab.id());
+                ps.setInt(3, pokeLab.calories());
+                ps.setInt(4, pokeLab.id());
                 ps.executeUpdate();
             }
             // 2) elimina tutte le righe ingredienti esistenti
