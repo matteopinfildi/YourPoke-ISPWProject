@@ -1,5 +1,7 @@
 package org.example.ispwproject.control.application;
 
+import org.example.ispwproject.Session;
+import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.model.pokelab.PokeLab;
 import org.example.ispwproject.model.pokelab.PokeLabDAO;
 import org.example.ispwproject.model.user.User;
@@ -105,7 +107,7 @@ public class BuyPokeLabAppController {
     }
 
     // imposta/aggiorna il nome del poke, se ha almeno 4 lettere e se è diverso dal nome assegnato in precedenza
-    public boolean setPokeName(PokeLabBean pokeLabBean, String name, SaveBean saveBean) throws SystemException {
+    public boolean setPokeName(PokeLabBean pokeLabBean, String name, int sessionId) throws SystemException {
         // il metodo trim() è un metodo che rimuove gli spazi bianchi iniziali e finali da una stringa
         if (name == null || name.trim().length() < 4) {
             throw new SystemException("The name must be at least 4 characters long!");
@@ -116,7 +118,14 @@ public class BuyPokeLabAppController {
             return true;
         }
         pokeLabBean.setPokeName(name);
-        return savePokeLab(pokeLabBean, saveBean);
+        // ricava userId dalla sessione
+        Session session = SessionManager.getSessionManager().getSessionFromId(sessionId);
+        if (session == null) {
+            throw new SystemException("Session not found. Please log in again.");
+        }
+        String userId = session.getUserId();
+
+        return savePokeLab(pokeLabBean, new SaveBean(userId));
     }
 
     // imposta/aggiorna la size della bowl se è diverso dal nome assegnato in precedenza

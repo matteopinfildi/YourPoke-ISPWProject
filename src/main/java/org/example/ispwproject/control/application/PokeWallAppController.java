@@ -7,6 +7,7 @@ import org.example.ispwproject.model.observer.pokewall.PokeWall;
 import org.example.ispwproject.model.observer.pokewall.PokeWallDAO;
 import org.example.ispwproject.model.user.User;
 import org.example.ispwproject.model.user.UserDAO;
+import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.PokeWallBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.dao.DAOFactory;
@@ -63,19 +64,40 @@ public class PokeWallAppController implements PokeWallObserver {
     }
 
     // crea un nuovo post nella PokeWall associato all'utente e notifica gli observer
-    public boolean createPost(SaveBean saveBean, PokeWallBean pokeWallBean) throws SystemException {
-        // recupero utente e controllo
-        String userId = saveBean.getUid();
-        User user = userDAO.read(userId);
-        if (user == null) {
-            return false;
+    public boolean createPost(int sessionId, String pokeName, PokeLabBean pokeLabBean) throws SystemException {
+        //  controllo lunghezza minima (almeno 4 caratteri)
+        if (pokeName == null || pokeName.trim().length() < 4) {
+            throw new SystemException("The poke name must be at least 4 characters long!");
         }
 
-        // creazione istanza del PokeWall
-        PokeWall pokeWall = new PokeWall(0, pokeWallBean.getPokeName(), pokeWallBean.getSize(),
-                user.getUsername(), pokeWallBean.getIngredients());
+        Session session = SessionManager.getSessionManager().getSessionFromId(sessionId);
+        if (session == null) {
+            throw new SystemException("Session not found. Please log in again.");
+        }
+        String userId = session.getUserId();
+        User user = userDAO.read(userId);
+        if (user == null) {
+            throw new SystemException("User not found: " + userId);
+        }
 
-        pokeWall.registerObserver(this); // registrazione di un observer
+        PokeWallBean pokeWallBean = new PokeWallBean();
+        pokeWallBean.setPokeName(pokeName);
+        pokeWallBean.setSize(pokeLabBean.getBowlSize());
+        pokeWallBean.setIngredients(
+                pokeLabBean.getAllIngredients().entrySet().stream()
+                        .map(entry -> entry.getKey() + ": " + entry.getValue().toString().toLowerCase())
+                        .toList()
+        );
+
+        PokeWall pokeWall = new PokeWall(
+                0,
+                pokeWallBean.getPokeName(),
+                pokeWallBean.getSize(),
+                user.getUsername(),
+                pokeWallBean.getIngredients()
+        );
+
+        pokeWall.registerObserver(this);
         pokeWallDAO.create(pokeWall);
         pokeWall.notifyObservers(); // notifica tutti gli observer
 

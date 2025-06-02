@@ -72,9 +72,7 @@ private void processPokeName() throws SystemException, IOException, LoginExcepti
 
     private boolean updatePokeName(String name) {
         try {
-            Session session = SessionManager.getSessionManager().getSessionFromId(id);
-            SaveBean saveBean = new SaveBean(session.getUserId());
-            return buyPokeLabAppController.setPokeName(pokeLabBean, name, saveBean);
+            return buyPokeLabAppController.setPokeName(pokeLabBean, name, id);
         } catch (SystemException e) {
             System.out.println("Error: " + e.getMessage());
             return false;
