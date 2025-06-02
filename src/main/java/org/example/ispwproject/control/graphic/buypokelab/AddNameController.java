@@ -6,8 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.example.ispwproject.ChangePage;
-import org.example.ispwproject.Session;
-import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.application.PokeWallAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
@@ -48,8 +46,6 @@ public class AddNameController extends GraphicController {
     public void handleNextClick(ActionEvent event) {
         String name = pokeNameField.getText().trim();
 
-        SessionManager sessionManager = SessionManager.getSessionManager();
-        Session session = sessionManager.getSessionFromId(id);
         try {
             boolean ok = buyPokeLabAppController.setPokeName(pokeLabBean, name, id);
 
