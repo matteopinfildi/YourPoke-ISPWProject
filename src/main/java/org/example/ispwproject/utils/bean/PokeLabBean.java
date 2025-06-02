@@ -5,9 +5,7 @@ import org.example.ispwproject.model.pokelab.PokeLab;
 import org.example.ispwproject.utils.enumeration.ingredient.GenericAlternative;
 import org.example.ispwproject.utils.exception.SystemException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PokeLabBean {

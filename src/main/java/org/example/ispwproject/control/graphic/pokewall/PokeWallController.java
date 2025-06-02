@@ -149,17 +149,6 @@ public class PokeWallController extends GraphicController {
 
 
 
-    private void restoreSelection(int selectedId) {
-        for (int i = 0; i < currentPosts.size(); i++) {
-            if (currentPosts.get(i).getId() == selectedId) {
-                pokeWallListView.getSelectionModel().select(i);
-                break;
-            }
-        }
-    }
-
-
-
     @FXML
     public void handleFortuneClick(ActionEvent event) {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/fortuneCookie.fxml", pokeLabBean, id);
