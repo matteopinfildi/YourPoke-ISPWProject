@@ -2,24 +2,21 @@ package org.example.ispwproject.utils.enumeration.ingredient;
 
 public enum FruitAlternative implements GenericAlternative{
 
-    AVOCADO(2.00, "Creamy, nutritious, versatile fruit."),
-    MANGO(1.50, "Sweet, tropical, juicy, vibrant."),
-    STRAWBARRIES(1.00, "Red, juicy, sweet, refreshing.");
+    AVOCADO(2.00, 160),
+    MANGO(1.50, 60),
+    STRAWBARRIES(1.00, 32);
 
     private final double price;
-    private static final String ALTERNATIVE="Fruit";
-    private final String description;
+    private final int calories;
 
-    FruitAlternative(double price, String description){
-        this.price= price;
-        this.description= description;
+    FruitAlternative(double price, int calories){
+        this.price = price;
+        this.calories = calories;
     }
 
     @Override
     public double price(){return price;}
 
-    public String alternative() {return ALTERNATIVE;}
-
     @Override
-    public String description() {return description;}
+    public int calories(){return calories;}
 }

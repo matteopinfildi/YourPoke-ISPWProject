@@ -10,7 +10,8 @@ public class PokeLab  {
 
     private int id;
     private double price;
-    private Map<String, GenericAlternative> items=new HashMap<>();
+    private int calories;
+    private Map<String, GenericAlternative> items = new HashMap<>();
     private String bowlSize;
 
 
@@ -18,6 +19,8 @@ public class PokeLab  {
         this.id = pokeLab.getId();
         this.items = new HashMap<>(pokeLab.getAllIngredients());
         this.bowlSize = pokeLab.getBowlSize();
+        this.price = pokeLab.getPrice();
+        this.calories = pokeLab.getCalories();
     }
 
     public PokeLab(double price, int id, Map<String, GenericAlternative> items, String bowlSize) {
@@ -25,12 +28,17 @@ public class PokeLab  {
         this.id = id;
         this.items = items;
         this.bowlSize = bowlSize;
+        this.calories = calories;
     }
 
     public double price() {
-        return items.values().stream()
-                .mapToDouble(GenericAlternative::price).sum();
+        return items.values().stream().mapToDouble(GenericAlternative::price).sum();
     }
+
+    public int calories(){
+        return items.values().stream().mapToInt(GenericAlternative::calories).sum();
+    }
+
     public int id(){return this.id;}
 
     public Map<String, GenericAlternative> allIngredients(){return items;}

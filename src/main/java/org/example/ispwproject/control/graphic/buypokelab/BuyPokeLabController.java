@@ -55,6 +55,7 @@ public class BuyPokeLabController extends GraphicController{
     private static final Logger LOGGER = Logger.getLogger(BuyPokeLabController.class.getName());
 
     @FXML private Label totalPriceLabel;
+    @FXML private Label caloriesLabel;
     @FXML private Pane popup;
 
      private static boolean retrieve = false; // se è false è perchè non ho poke da recuperare
@@ -83,6 +84,7 @@ public class BuyPokeLabController extends GraphicController{
 
         if(totalPriceLabel != null && pokeLabBean != null){
             totalPriceLabel.setText("TOT = " + pokeLabBean.getPrice() + "$");
+            caloriesLabel.setText("CAL = " + pokeLabBean.getCalories() + " cal");
 
             GenericAlternative genericAlternative;
 

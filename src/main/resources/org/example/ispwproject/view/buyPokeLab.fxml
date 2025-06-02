@@ -63,8 +63,13 @@
     </VBox>
 
     <HBox alignment="BOTTOM_RIGHT" layoutX="199.0" layoutY="580" spacing="10">
-        <Label fx:id="totalPriceLabel" text="Total: $0.00"
-               style="-fx-font-size: 18px; -fx-text-fill: black; -fx-font-weight: bold;"/>
+        <VBox alignment="CENTER_RIGHT" spacing="5">
+            <!-- Label delle calorie, sopra -->
+            <Label fx:id="caloriesLabel" text="Calories: 0 cal"
+                   style="-fx-font-size: 18px; -fx-text-fill: black; -fx-font-weight: bold;"/>
+            <Label fx:id="totalPriceLabel" text="Total: $0.00"
+                   style="-fx-font-size: 18px; -fx-text-fill: black; -fx-font-weight: bold;"/>
+        </VBox>
     </HBox>
 
     <HBox alignment="CENTER" layoutX="199.0" layoutY="650" spacing="10">

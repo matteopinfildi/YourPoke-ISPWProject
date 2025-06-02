@@ -13,6 +13,7 @@ public class PokeLabBean {
     private Map<String, GenericAlternative> ingredients=new HashMap<>(); // hash map per memorizzare tutti gli ingredienti
     private int plId;
     private double price;
+    private int calories;
     private String pokeName;
     private String bowlSize;
     private List<String> posts = new ArrayList<>();
@@ -25,6 +26,7 @@ public class PokeLabBean {
     public PokeLabBean(PokeLab pokeLab){
         this.plId = pokeLab.id();
         this.price = pokeLab.price();
+        this.calories = pokeLab.calories();
         this.ingredients =new HashMap<>(pokeLab.allIngredients());
     }
 
@@ -56,6 +58,9 @@ public class PokeLabBean {
 
     public double getPrice() {return price;}
     public void setPrice(double price) {this.price = price;}
+
+    public int getCalories() {return calories;}
+    public void setCalories(int calories) {this.calories = calories;}
 
     public int getId() {return plId;}
     public void setId(int id) {this.plId = id;}

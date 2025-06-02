@@ -38,12 +38,16 @@ public class BuyPokeLabAppController {
         if (genericAlternative != null) {
             GenericAlternative oldIngredient = pokeLabBean.getIngredient(ingredient);
             if (oldIngredient != null) {
+                // sottraggo il prezzo
                 pokeLabBean.setPrice(pokeLabBean.getPrice() - oldIngredient.price());
+                // sottraggo le calorie
+                pokeLabBean.setCalories(pokeLabBean.getCalories() - oldIngredient.calories());
             }
 
-            // aggiungo la nuova alternativa e aggiorno il prezzo
+            // aggiungo la nuova alternativa, aggiorno il prezzo e le calorie totali
             pokeLabBean.setIngredient(ingredient, genericAlternative);
             pokeLabBean.setPrice(pokeLabBean.getPrice() + genericAlternative.price());
+            pokeLabBean.setCalories(pokeLabBean.getCalories() + genericAlternative.calories());
         }
     }
 
