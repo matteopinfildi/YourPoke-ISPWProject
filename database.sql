@@ -25,9 +25,10 @@ CREATE TABLE IF NOT EXISTS `your_poke`.`poke_lab` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `price` DOUBLE NOT NULL,
   `size` VARCHAR(45) NOT NULL,
+  `calories` INT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 33
+AUTO_INCREMENT = 97
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -84,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `your_poke`.`poke_wall_posts` (
     REFERENCES `your_poke`.`users` (`username`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 33
+AUTO_INCREMENT = 79
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -123,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `your_poke`.`poke_wall_ingredients` (
     REFERENCES `your_poke`.`poke_wall_posts` (`id`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 351
+AUTO_INCREMENT = 581
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
