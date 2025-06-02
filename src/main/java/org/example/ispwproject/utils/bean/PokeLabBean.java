@@ -56,9 +56,6 @@ public class PokeLabBean {
         return bowlSize != null;
     }
 
-    public boolean hasBowlSize() {
-        return bowlSize != null;
-    }
 
 
     public GenericAlternative getIngredient(String ingredientName) {return ingredients.get(ingredientName);}
@@ -80,16 +77,16 @@ public class PokeLabBean {
     public int getId() {return plId;}
     public void setId(int id) {this.plId = id;}
 
+    private boolean hasIngredient(String type) {
+        return getIngredient(type) != null;
+    }
+
     public boolean isComplete() {
         return hasIngredient("rice") &&
                 hasIngredient("protein") &&
                 hasIngredient("fruit") &&
                 hasIngredient("crunchy") &&
                 hasIngredient("sauces");
-    }
-
-    private boolean hasIngredient(String type) {
-        return getIngredient(type) != null;
     }
 
 }
