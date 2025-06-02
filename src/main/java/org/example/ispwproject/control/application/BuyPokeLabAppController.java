@@ -129,7 +129,7 @@ public class BuyPokeLabAppController {
     }
 
     // imposta/aggiorna la size della bowl se è diverso dal nome assegnato in precedenza
-    public boolean setBowlSize(PokeLabBean pokeLabBean, String bowlSize) throws SystemException {
+    public boolean setBowlSize(PokeLabBean pokeLabBean, String bowlSize, int sessionId) throws SystemException {
         if (bowlSize == null || bowlSize.isEmpty()) {
             throw new SystemException("Bowl size cannot be empty");
         }
@@ -139,6 +139,12 @@ public class BuyPokeLabAppController {
             return true;
         }
         pokeLabBean.setBowlSize(bowlSize);
+
+        Session session = SessionManager.getSessionManager().getSessionFromId(sessionId);
+        if (session == null) {
+            throw new SystemException("Session not found. Please log in again.");
+        }
+        String userId = session.getUserId();
         return true;
     }
 

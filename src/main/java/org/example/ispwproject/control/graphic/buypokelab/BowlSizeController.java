@@ -86,19 +86,14 @@ public class BowlSizeController extends GraphicController {
 
         try {
             boolean ok = buyPokeLabAppController
-                    .setBowlSize(pokeLabBean, selectedSize);
+                    .setBowlSize(pokeLabBean, selectedSize, sessionId);
 
             if (!ok) {
                 LOGGER.warning("ChangeBowlSize returned false");
                 return;
             }
 
-            ChangePage.changeScene(
-                    (Node) event.getSource(),
-                    "/org/example/ispwproject/view/buyPokeLab.fxml",
-                    pokeLabBean,
-                    sessionId
-            );
+            ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, sessionId);
         } catch (SystemException e) {
             LOGGER.log(Level.SEVERE, "Error saving bowl size", e);
         }

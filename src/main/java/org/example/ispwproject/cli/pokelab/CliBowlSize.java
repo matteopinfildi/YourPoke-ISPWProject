@@ -48,7 +48,7 @@ public class CliBowlSize extends CliController {
                 }
             } while (!flag);
 
-            boolean success = buyPokeLabAppController.setBowlSize(pokeLabBean, selectedSize);
+            boolean success = buyPokeLabAppController.setBowlSize(pokeLabBean, selectedSize, id);
 
             if (!success) {
                 System.out.println("Error saving bowl size");
