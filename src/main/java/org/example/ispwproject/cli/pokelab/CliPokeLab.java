@@ -63,7 +63,6 @@ public class CliPokeLab extends CliController{
                 }
                 case 2 -> {
                     System.out.println("Creating a new Pokè Lab!");
-//                    this.pokeLabBean = buyPokeLabAppController.newPokeLab();
                     validSelection = true;
                 }
                 default -> System.out.println("Invalid option. Please select 1 or 2.");
