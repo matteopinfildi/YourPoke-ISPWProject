@@ -112,15 +112,6 @@ public class BuyPokeLabAppController {
 
     // imposta/aggiorna il nome del poke, se ha almeno 4 lettere e se è diverso dal nome assegnato in precedenza
     public boolean setPokeName(PokeLabBean pokeLabBean, String name, int sessionId) throws SystemException {
-        // il metodo trim() è un metodo che rimuove gli spazi bianchi iniziali e finali da una stringa
-        if (name == null || name.trim().length() < 4) {
-            throw new SystemException("The name must be at least 4 characters long!");
-        }
-        /* controllo se il nome inserito è già uguale ad un eventuale altro nome già assegnato allo stesso poke
-           così da non fare altri salvataggi inutili*/
-        if (name.equals(pokeLabBean.getPokeName())) {
-            return true;
-        }
         pokeLabBean.setPokeName(name);
         // ricava userId dalla sessione
         Session session = SessionManager.getSessionManager().getSessionFromId(sessionId);

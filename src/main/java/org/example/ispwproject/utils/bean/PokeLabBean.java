@@ -3,6 +3,7 @@ package org.example.ispwproject.utils.bean;
 import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.model.pokelab.PokeLab;
 import org.example.ispwproject.utils.enumeration.ingredient.GenericAlternative;
+import org.example.ispwproject.utils.exception.SystemException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +17,6 @@ public class PokeLabBean {
     private int calories;
     private String pokeName;
     private String bowlSize;
-    private List<String> posts = new ArrayList<>();
 
     public PokeLabBean(){
         plId= SessionManager.getSessionManager().curPokeId();
@@ -34,7 +34,10 @@ public class PokeLabBean {
         return pokeName;
     }
 
-    public void setPokeName(String pokeName){
+    public void setPokeName(String pokeName) throws SystemException{
+        if (pokeName == null || pokeName.trim().length() < 4) {
+            throw new SystemException("The name must be at least 4 characters long!");
+        }
         this.pokeName = pokeName;
     }
 
@@ -42,9 +45,21 @@ public class PokeLabBean {
         return bowlSize;
     }
 
-    public void setBowlSize(String bowlSize) {
+    public void setBowlSize(String bowlSize) throws SystemException{
+        if (bowlSize == null || bowlSize.trim().isEmpty()) {
+            throw new SystemException("Bowl size cannot be empty");
+        }
         this.bowlSize = bowlSize;
     }
+
+    public boolean isBowlSizeSelected() {
+        return bowlSize != null;
+    }
+
+    public boolean hasBowlSize() {
+        return bowlSize != null;
+    }
+
 
     public GenericAlternative getIngredient(String ingredientName) {return ingredients.get(ingredientName);}
 
@@ -65,6 +80,17 @@ public class PokeLabBean {
     public int getId() {return plId;}
     public void setId(int id) {this.plId = id;}
 
+    public boolean isComplete() {
+        return hasIngredient("rice") &&
+                hasIngredient("protein") &&
+                hasIngredient("fruit") &&
+                hasIngredient("crunchy") &&
+                hasIngredient("sauces");
+    }
+
+    private boolean hasIngredient(String type) {
+        return getIngredient(type) != null;
+    }
 
 }
 

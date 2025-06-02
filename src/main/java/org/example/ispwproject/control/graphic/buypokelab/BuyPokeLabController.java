@@ -130,22 +130,13 @@ public class BuyPokeLabController extends GraphicController{
 
     //metodo per controllare se tutti gli ingredienti sono stati selezionati e in caso attiva il bottone della bowl size
     private void checkIngredientSelection(){
-        boolean allSelected = pokeLabBean.getIngredient("rice") != null &&
-                pokeLabBean.getIngredient("protein") != null &&
-                pokeLabBean.getIngredient("fruit") != null &&
-                pokeLabBean.getIngredient("crunchy") != null &&
-                pokeLabBean.getIngredient("sauces") != null;
-
-        bowlSizeButton.setDisable(!allSelected); // Disabilita se manca almeno un ingrediente
+        bowlSizeButton.setDisable(!pokeLabBean.isComplete()); // Disabilita se manca almeno un ingrediente
 
     }
 
     private void checkBowlSizeSelection() {
-        // Verifica se la dimensione della bowl è stata selezionata
-        boolean sizeSelected = pokeLabBean.getBowlSize() != null && !pokeLabBean.getBowlSize().isEmpty();
-
         // Disabilita il pulsante se la bowl size non è selezionata
-        addNameButton.setDisable(!sizeSelected);
+        addNameButton.setDisable(!pokeLabBean.isBowlSizeSelected());
     }
 
 
@@ -186,8 +177,8 @@ public class BuyPokeLabController extends GraphicController{
         }
     }
 
-    private void updateSizeLabel() throws SystemException{
-        if (sizeLabel != null && pokeLabBean.getBowlSize() != null) {
+    private void updateSizeLabel() {
+        if (sizeLabel != null && pokeLabBean.isBowlSizeSelected()) {
             sizeLabel.setText("Bowl Size: " + pokeLabBean.getBowlSize());
         }
     }
