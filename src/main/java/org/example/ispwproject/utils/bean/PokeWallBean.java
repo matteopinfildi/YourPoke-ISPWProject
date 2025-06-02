@@ -1,5 +1,7 @@
 package org.example.ispwproject.utils.bean;
 
+import org.example.ispwproject.utils.exception.SystemException;
+
 import java.util.List;
 
 public class PokeWallBean {
@@ -16,7 +18,12 @@ public class PokeWallBean {
 
     // Getter e Setter
     public String getPokeName() { return pokeName; }
-    public void setPokeName(String pokeName) { this.pokeName = pokeName; }
+    public void setPokeName(String pokeName) throws SystemException{
+        if (pokeName == null || pokeName.trim().length() < 4) {
+            throw new SystemException("Il nome del poke deve essere lungo almeno 4 caratteri!");
+        }
+        this.pokeName = pokeName;
+    }
 
     public String getSize() { return size; }
     public void setSize(String size) { this.size = size; }

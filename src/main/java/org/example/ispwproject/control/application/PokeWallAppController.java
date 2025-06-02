@@ -64,10 +64,6 @@ public class PokeWallAppController implements PokeWallObserver {
 
     // crea un nuovo post nella PokeWall associato all'utente e notifica gli observer
     public boolean createPost(int sessionId, String pokeName, PokeLabBean pokeLabBean) throws SystemException {
-        //  controllo lunghezza minima (almeno 4 caratteri)
-        if (pokeName == null || pokeName.trim().length() < 4) {
-            throw new SystemException("The poke name must be at least 4 characters long!");
-        }
 
         Session session = SessionManager.getSessionManager().getSessionFromId(sessionId);
         if (session == null) {
@@ -108,14 +104,16 @@ public class PokeWallAppController implements PokeWallObserver {
         return pokeWallDAO.getAllPosts();
     }
 
+    public boolean canUserDeletePost(String username, int postId) throws SystemException {
+        PokeWall post = getPostById(postId);
+        return post != null && post.getUsername().equals(username);
+    }
+
     // elimina un post solo se l'utente che lo richiede è anche l'autore
     public boolean deletePost(int postId, String requestingUsername) throws SystemException {
-        PokeWall postToDelete = getPostById(postId);
-        // controllo sull'esistenza del post e sul fatto che il post sia relativo all'utente che lo vuole eliminare
-        if (postToDelete == null || !postToDelete.getUsername().equals(requestingUsername)) {
+        if (!canUserDeletePost(requestingUsername, postId)) {
             return false;
         }
-        // eliminazione post
         pokeWallDAO.delete(postId);
         return true;
     }
@@ -140,6 +138,29 @@ public class PokeWallAppController implements PokeWallObserver {
             throw new SystemException("User not found for session id: " + sessionId);
         }
         return user.getUsername();
+    }
+
+    public String formatPostForDisplay(PokeWall post) {
+        StringBuilder postText = new StringBuilder();
+        postText.append(post.getUsername())
+                .append(" created the Poke Lab: ")
+                .append(post.getPokeName())
+                .append("\n");
+
+        String pokeSize = (post.getSize() == null || post.getSize().isEmpty())
+                ? "Unknown size"
+                : post.getSize();
+        postText.append("Poke size: ").append(pokeSize).append("\n");
+
+        for (String ingredient : post.getIngredients()) {
+            postText.append("- ").append(ingredient).append("\n");
+        }
+
+        return postText.toString();
+    }
+
+    public String generateNotificationMessage(PokeWall newPost) {
+        return "New post by " + newPost.getUsername() + ": " + newPost.getPokeName();
     }
 
     // notifica tutti gli observer dell'aggiunta di un nuovo post

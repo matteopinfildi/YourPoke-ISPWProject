@@ -55,7 +55,7 @@ public class PokeWallController extends GraphicController {
                 Platform.runLater(() -> {
                     try {
                         refreshPosts();
-                        String message = "New post by " + newPost.getUsername() + ": " + newPost.getPokeName();
+                        String message = pokeWallAppController.generateNotificationMessage(newPost);
                         notificationLabel.setText(message);
                         notificationLabel.setVisible(true);
                         Thread hideThread = new Thread(() -> {
@@ -100,21 +100,11 @@ public class PokeWallController extends GraphicController {
         ObservableList<String> postObservableList = FXCollections.observableArrayList();
 
         for (PokeWall pokeWall : currentPosts) {
-            StringBuilder postText = new StringBuilder();
-            postText.append(pokeWall.getUsername()).append(" created the Poke Lab: ").append(pokeWall.getPokeName()).append("\n");
-
-            String pokeSize = (pokeWall.getSize() == null || pokeWall.getSize().isEmpty()) ? "Unknown size" : pokeWall.getSize();
-            postText.append("Poke size: ").append(pokeSize).append("\n");
-
-            for (String ingredient : pokeWall.getIngredients()) {
-                postText.append("- ").append(ingredient).append("\n");
-            }
-
-            postObservableList.add(postText.toString());
+            String formattedPost = pokeWallAppController.formatPostForDisplay(pokeWall);
+            postObservableList.add(formattedPost);
         }
 
         pokeWallListView.setItems(postObservableList);
-
 
     }
 
@@ -134,12 +124,21 @@ public class PokeWallController extends GraphicController {
         if (isValidSelection(selectedIndex)) {
             PokeWall selectedPost = currentPosts.get(selectedIndex);
 
-            if (canDeletePost(selectedPost)) {
-                try {
-                    deleteAndRefreshPosts(selectedPost);
-                } catch (SystemException e) {
-                    logger.log(Level.SEVERE, "Error deleting post", e);
+            try {
+                // Utilizza il metodo dell'app controller per verificare l'autorizzazione
+                boolean canDelete = pokeWallAppController.canUserDeletePost(currentUsername, selectedPost.getId());
+
+                if (canDelete) {
+                    boolean success = pokeWallAppController.deletePost(selectedPost.getId(), currentUsername);
+
+                    if (success) {
+                        refreshPosts();
+                    } else {
+                        logger.warning("Failed to delete post.");
+                    }
                 }
+            } catch (SystemException e) {
+                logger.log(Level.SEVERE, "Error deleting post", e);
             }
         }
     }
@@ -148,23 +147,7 @@ public class PokeWallController extends GraphicController {
         return selectedIndex >= 0 && selectedIndex < currentPosts.size();
     }
 
-    private boolean canDeletePost(PokeWall selectedPost) {
-        return selectedPost.getUsername().equals(currentUsername);
-    }
 
-
-    private void deleteAndRefreshPosts(PokeWall selectedPost) throws SystemException {
-        boolean success = pokeWallAppController.deletePost(selectedPost.getId(), currentUsername);
-
-        if (success) {
-            int selectedId = selectedPost.getId();
-            refreshPosts();
-            restoreSelection(selectedId);
-        } else {
-            logger.warning("Failed to delete post.");
-
-        }
-    }
 
     private void restoreSelection(int selectedId) {
         for (int i = 0; i < currentPosts.size(); i++) {
@@ -175,9 +158,6 @@ public class PokeWallController extends GraphicController {
         }
     }
 
-    public void setCurrentUsername(String username) {
-        this.currentUsername = username;
-    }
 
 
     @FXML
