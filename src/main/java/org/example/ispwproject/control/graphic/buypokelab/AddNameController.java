@@ -12,8 +12,6 @@ import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.application.PokeWallAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
-import org.example.ispwproject.utils.bean.PokeWallBean;
-import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -52,8 +50,6 @@ public class AddNameController extends GraphicController {
 
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSessionFromId(id);
-        String userId = session.getUserId();
-
         try {
             boolean ok = buyPokeLabAppController.setPokeName(pokeLabBean, name, id);
 
@@ -74,46 +70,6 @@ public class AddNameController extends GraphicController {
     }
 
 
-//    @FXML
-//    public void handlePostOnPokeWall(ActionEvent event) {
-//        // Ottieni l'istanza singleton di PokeWallAppController
-//        PokeWallAppController pokeWallAppController = PokeWallAppController.getInstance();
-//
-//        String name = pokeNameField.getText().trim();
-//
-//        SessionManager sessionManager = SessionManager.getSessionManager();
-//        Session session = sessionManager.getSessionFromId(id);
-//
-//        if (session == null) {
-//            errorLabel.setText("Session not found. Please log in again.");
-//            return;
-//        }
-//
-//        String userId = session.getUserId();
-//
-//        PokeWallBean pokeWallBean = new PokeWallBean();
-//        pokeWallBean.setPokeName(name);
-//        pokeWallBean.setSize(pokeLabBean.getBowlSize());
-//        pokeWallBean.setIngredients(
-//                pokeLabBean.getAllIngredients().entrySet().stream()
-//                        .map(entry -> entry.getKey() + ": " + entry.getValue().toString().toLowerCase())
-//                        .toList()
-//        );
-//
-//        try {
-//            // Utilizza il metodo createPost tramite l'istanza singleton di PokeWallAppController
-//            boolean success = pokeWallAppController.createPost(
-//                    new SaveBean(userId),
-//                    pokeWallBean
-//            );
-//
-//            if (success) {
-//                ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/pokeWall.fxml", pokeLabBean, id);
-//            }
-//        } catch (SystemException _) {
-//            errorLabel.setText("Error during post creation");
-//        }
-//    }
 
     @FXML
     public void handlePostOnPokeWall(ActionEvent event) {

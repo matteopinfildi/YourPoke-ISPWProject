@@ -144,7 +144,6 @@ public class BuyPokeLabAppController {
         if (session == null) {
             throw new SystemException("Session not found. Please log in again.");
         }
-        String userId = session.getUserId();
         return true;
     }
 

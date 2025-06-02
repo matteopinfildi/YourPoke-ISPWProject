@@ -1,11 +1,8 @@
 package org.example.ispwproject.cli.pokelab;
 
-import org.example.ispwproject.Session;
-import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.cli.CliController;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
-import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.exception.CliException;
 import org.example.ispwproject.utils.exception.SystemException;
 

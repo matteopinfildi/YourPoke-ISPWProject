@@ -9,7 +9,6 @@ import org.example.ispwproject.model.user.User;
 import org.example.ispwproject.model.user.UserDAO;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.PokeWallBean;
-import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.dao.DAOFactory;
 import org.example.ispwproject.utils.exception.SystemException;
 
