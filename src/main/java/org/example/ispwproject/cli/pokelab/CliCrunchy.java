@@ -9,8 +9,8 @@ public class CliCrunchy extends CliIngredient<CrunchyAlternative> {
                         CrunchyAlternative.ONION,
                         CrunchyAlternative.NUTS,
                         CrunchyAlternative.ALMONDS),
-                List.of("Onion: 2.00 $",
-                        "Nuts: 1.00 $",
-                        "Almonds: 1.50 $"));
+                List.of("Onion: 2.00 $, 450 cal",
+                        "Nuts: 1.00 $, 600 cal",
+                        "Almonds: 1.50 $, 580 cal"));
     }
 }

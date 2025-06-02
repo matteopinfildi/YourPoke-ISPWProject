@@ -9,8 +9,8 @@ public class CliSauces extends CliIngredient<SaucesAlternative> {
                         SaucesAlternative.TERIYAKI,
                         SaucesAlternative.SOY,
                         SaucesAlternative.WASABI),
-                List.of("Teriyaki: 2.00 $",
-                        "Soy: 1.00 $",
-                        "Wasabi: 1.50 $"));
+                List.of("Teriyaki: 2.00 $, 450 cal",
+                        "Soy: 1.00 $, 600 cal",
+                        "Wasabi: 1.50 $, 580 cal"));
     }
 }

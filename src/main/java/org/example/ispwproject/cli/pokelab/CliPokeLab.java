@@ -23,6 +23,7 @@ public class CliPokeLab extends CliController{
     private PokeLabBean pokeLabBean;
     private BuyPokeLabAppController buyPokeLabAppController;
     private String total = "Total = 0.0 $";
+    private String calories = "Calories = 0 cal";
     private static boolean retrieve = false;
     private static final String NO_SELECTION = "No selection";
 
@@ -99,9 +100,10 @@ public class CliPokeLab extends CliController{
             setRetrieve(false);
         }
 
-        // Aggiorna il totale se esiste un pokeLabBean
+        // Aggiorna il totale del prezzo e delle calorie se esiste un pokeLabBean
         if (pokeLabBean != null) {
-            total = "Total = " + pokeLabBean.getPrice() + " $";
+            total = "Total = " + pokeLabBean.getPrice() + " $\n";
+            calories = "Calories = " + pokeLabBean.getCalories() + " cal\n";
         }
 
         // Seleziona gli ingredienti

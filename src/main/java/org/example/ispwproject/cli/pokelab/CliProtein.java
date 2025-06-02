@@ -9,8 +9,8 @@ public class CliProtein extends CliIngredient<ProteinAlternative> {
                         ProteinAlternative.SALMON,
                         ProteinAlternative.SHRIMP,
                         ProteinAlternative.TUNA),
-                List.of("Salmon: 4.00 $",
-                        "Shrimp: 3.00 $",
-                        "Tuna: 3.50 $"));
+                List.of("Salmon: 4.00 $, 208 cal",
+                        "Shrimp: 3.00 $, 85 cal",
+                        "Tuna: 3.50 $, 144 cal"));
     }
 }

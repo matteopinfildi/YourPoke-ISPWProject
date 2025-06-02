@@ -9,8 +9,8 @@ public class CliFruit extends CliIngredient<FruitAlternative> {
                         FruitAlternative.AVOCADO,
                         FruitAlternative.MANGO,
                         FruitAlternative.STRAWBARRIES),
-                List.of("Avocado: 2.00 $",
-                        "Mango: 1.50 $",
-                        "Strawbarries: 1.00 $"));
+                List.of("Avocado: 2.00 $, 160 cal",
+                        "Mango: 1.50 $, 60 cal",
+                        "Strawbarries: 1.00 $, 32 cal"));
     }
 }

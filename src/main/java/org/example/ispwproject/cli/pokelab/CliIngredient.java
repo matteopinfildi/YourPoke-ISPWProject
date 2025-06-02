@@ -18,6 +18,7 @@ public abstract class CliIngredient<T extends Enum<T>> extends CliController {
     private PokeLabBean pokeLabBean;
     private BuyPokeLabAppController buyPokeLabAppController;
     private String total = "Total = 0.0 $";
+    private String calories = "Calories = 0 cal";
     private final String ingredientType;
     private final List<T> alternatives;
     private final List<String> alternativeDescriptions;
@@ -43,6 +44,7 @@ public abstract class CliIngredient<T extends Enum<T>> extends CliController {
             throw new CliException("An error occurred while selecting " + ingredientType, e);
         }
         updateTotal();
+        updateCalories();
         new CliPokeLab().init(sID, pokeLabBean);
     }
 
@@ -67,9 +69,16 @@ public abstract class CliIngredient<T extends Enum<T>> extends CliController {
 
     private void updateTotal() {
         if (pokeLabBean != null) {
-            total = "Total = " + pokeLabBean.getPrice() + " $\n";
+            total = "Total = " + pokeLabBean.getPrice() + " $";
         }
         System.out.println(total);
+    }
+
+    private void updateCalories(){
+        if (pokeLabBean!= null){
+            calories = "Calories = " + pokeLabBean.getCalories() + " cal\n";
+        }
+        System.out.println(calories);
     }
 
     @Override

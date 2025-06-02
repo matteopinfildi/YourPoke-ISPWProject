@@ -9,8 +9,8 @@ public class CliRice extends CliIngredient<RiceAlternative> {
                         RiceAlternative.SUSHI,
                         RiceAlternative.VENUS,
                         RiceAlternative.BASMATI),
-                List.of("Sushi rice: 3.00 $",
-                        "Venus rice: 4.00 $",
-                        "Basmati rice: 3.50 $"));
+                List.of("Sushi rice: 3.00 $, 340 cal",
+                        "Venus rice: 4.00 $, 360 cal",
+                        "Basmati rice: 3.50 $, 350 cal"));
     }
 }
