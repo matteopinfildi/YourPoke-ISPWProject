@@ -20,7 +20,7 @@ public class PokeWallBean {
     public String getPokeName() { return pokeName; }
     public void setPokeName(String pokeName) throws SystemException{
         if (pokeName == null || pokeName.trim().length() < 4) {
-            throw new SystemException("Il nome del poke deve essere lungo almeno 4 caratteri!");
+            throw new SystemException("The name must be at least 4 characters long!");
         }
         this.pokeName = pokeName;
     }
