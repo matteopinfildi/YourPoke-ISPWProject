@@ -203,22 +203,18 @@ public class BuyPokeLabController extends GraphicController{
     @FXML
     private void handleRetrieve() throws SystemException {
         popup.setVisible(false);
-        SessionManager sessionManager = SessionManager.getSessionManager();
-        Session session = sessionManager.getSessionFromId(id);
-        String userId = session.getUserId();
-        SaveBean saveBean = new SaveBean(userId);
-        PokeLabBean oldPokeLabBean = pokeLabAppController.retrievePokeLab(saveBean);
-
+        PokeLabBean oldPokeLabBean = pokeLabAppController.retrievePokeLabBySession(id);
         if (oldPokeLabBean != null) {
             try {
                 init(id, oldPokeLabBean);
             } catch (IOException | LoginException | SQLException e) {
-                throw new SystemException("Error while retrieving PokèLab" + e.getMessage());
+                throw new SystemException("Error while retrieving PokèLab: " + e.getMessage());
             }
         } else {
             LOGGER.warning("Pokè Lab not found");
         }
     }
+
 
 
     @FXML

@@ -136,4 +136,14 @@ public class BuyPokeLabAppController {
         return savePokeLab(pokeLabBean, new SaveBean(userId));
     }
 
+    public PokeLabBean retrievePokeLabBySession(int sessionId) throws SystemException {
+        Session session = SessionManager.getSessionManager().getSessionFromId(sessionId);
+        if (session == null) {
+            throw new SystemException("Session not found");
+        }
+        String userId = session.getUserId();
+        return retrievePokeLab(new SaveBean(userId));
+    }
+
+
 }
