@@ -9,12 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import org.example.ispwproject.ChangePage;
-import org.example.ispwproject.Session;
-import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.PokeLabBean;
-import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.enumeration.ingredient.*;
 import org.example.ispwproject.utils.exception.SystemException;
 

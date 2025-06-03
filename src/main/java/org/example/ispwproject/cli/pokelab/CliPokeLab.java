@@ -72,11 +72,7 @@ public class CliPokeLab extends CliController{
 
 
     private void retrievePokeLab() throws SystemException{
-        SessionManager sessionManager = SessionManager.getSessionManager();
-        Session session = sessionManager.getSessionFromId(id);
-        String userId = session.getUserId();
-        SaveBean saveBean = new SaveBean(userId);
-        PokeLabBean oldPokeLabBean = buyPokeLabAppController.retrievePokeLab(saveBean);
+        PokeLabBean oldPokeLabBean = buyPokeLabAppController.retrievePokeLabBySession(id);
 
         if (oldPokeLabBean != null) {
             this.pokeLabBean = oldPokeLabBean;

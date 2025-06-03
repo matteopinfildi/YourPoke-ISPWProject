@@ -144,6 +144,4 @@ public class BuyPokeLabAppController {
         String userId = session.getUserId();
         return retrievePokeLab(new SaveBean(userId));
     }
-
-
 }
