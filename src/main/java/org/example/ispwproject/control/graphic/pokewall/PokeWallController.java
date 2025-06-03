@@ -136,6 +136,12 @@ public class PokeWallController extends GraphicController {
                     } else {
                         logger.warning("Failed to delete post.");
                     }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Operation Not Allowed");
+                    alert.setHeaderText("Cannot Delete Post");
+                    alert.setContentText("You do not have permission to delete this post.");
+                    alert.showAndWait();
                 }
             } catch (SystemException e) {
                 logger.log(Level.SEVERE, "Error deleting post", e);
