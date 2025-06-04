@@ -46,17 +46,23 @@ public class PokeWallController extends GraphicController {
         this.pokeLabBean = pokeLabBean;
         this.id = id;
 
+        // ottengo l'istanza singleton del controller applicativo
         pokeWallAppController = PokeWallAppController.getInstance();
+        // recuperiamo quale utente è loggato
         this.currentUsername = SessionManager.getSessionManager().getSessionFromId(id).getUserId();
 
 
+        // implamentazione anonima di PokeWallObserver
         observerInstance = new PokeWallObserver() {
             @Override
             public void update(PokeWall newPost) {
                 Platform.runLater(() -> {
                     try {
+                        // recupero tutti i post e li ricarico
                         refreshPosts();
+                        // viene costruita una notifica testuale
                         String message = generateNotificationMessage(newPost);
+                        // viene mostrata la label della notifica
                         notificationLabel.setText(message);
                         notificationLabel.setVisible(true);
                         Thread hideThread = new Thread(() -> {
@@ -85,9 +91,11 @@ public class PokeWallController extends GraphicController {
             }
         };
 
+        // registra l’istanza di PokeWallObserver appena creata presso il controller applicativo
         pokeWallAppController.registerObserver(observerInstance, id);
 
-        pokeWallListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE); // post che vengono visualizzati
+        // imposta la ListView in modo che l’utente possa selezionare al massimo un solo elemento per volta (utile per gestire l'eliminazione dei post)
+        pokeWallListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         deleteButton.setDisable(true);
         refreshPosts();
 
@@ -96,22 +104,31 @@ public class PokeWallController extends GraphicController {
         });
     }
 
+    // metodo che recupera tutti i post con i testi formattati in modo corretto
     private void refreshPosts() throws SystemException {
+        // viene chiamato il metodo sul controller applicativo per ottenere tutti i post presenti sul poke wall
         currentPosts = pokeWallAppController.getAllPosts();
+        // lista di stringhe visualizzabili
         ObservableList<String> postObservableList = FXCollections.observableArrayList();
 
+        // scorriamo tutti i post presenti
         for (PokeWall pokeWall : currentPosts) {
+            // per ogni post vengono trasformati i campi del post in un unica stringa strutturata
             String formattedPost = formatPostForDisplay(pokeWall);
+            // aggiunge il post formattato alla lista
             postObservableList.add(formattedPost);
         }
 
+        // vengono mostrati esattamente gli elementi presenti nella lista di post visualizzabili
         pokeWallListView.setItems(postObservableList);
 
     }
 
     @FXML
     public void handleBackClick(ActionEvent event) throws SystemException {
+        // controllo che ci sia effettivamente un istanza di PokeWallObserver registrata
         if (observerInstance != null) {
+            // rimuovo l'istanza dalla lista degli observer
             pokeWallAppController.removeObserver(observerInstance);
         }
 
@@ -120,20 +137,26 @@ public class PokeWallController extends GraphicController {
 
     @FXML
     public void handleDeletePost(ActionEvent event) {
+        // recupera l'indice del post selezionato all'interno della lista
         int selectedIndex = pokeWallListView.getSelectionModel().getSelectedIndex();
 
+        // chiama il metodo per controllare se l'indice è valido
         if (isValidSelection(selectedIndex)) {
+            // viene estratta dalla lista currentPosts l'oggetto PokeWall (quindi il post) corrispondente all'indice selezionato
             PokeWall selectedPost = currentPosts.get(selectedIndex);
 
             try {
-                // Utilizza il metodo dell'app controller per verificare l'autorizzazione
+                // utilizza il metodo dell controller applicativo per verificare se l'utente può eliminare il post
                 boolean canDelete = pokeWallAppController.canUserDeletePost(currentUsername, selectedPost.getId());
 
                 if (canDelete) {
+                    // se lo può eliminare, allora il post viene eliminato, sfruttando il metodo sul controller applicativo
                     boolean success = pokeWallAppController.deletePost(selectedPost.getId(), currentUsername);
 
                     if (success) {
+                        // se l'eliminazione è andata a buon fine, viene riaggiornata la ListView che non mostrerà più il post eliminato
                         refreshPosts();
+                        // alert per avvisare che è stato eliminato un post
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Post eliminated");
                         alert.setHeaderText("Post eliminated");
@@ -143,6 +166,7 @@ public class PokeWallController extends GraphicController {
                         logger.warning("Failed to delete post.");
                     }
                 } else {
+                    // alert per avvisare che non può eliminare un post che non è suo
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Operation Not Allowed");
                     alert.setHeaderText("Cannot Delete Post");
@@ -155,6 +179,7 @@ public class PokeWallController extends GraphicController {
         }
     }
 
+    // viene verificato che l'indice passato sia compreso tra 0 e la lunghezza della lista dei post meno 1
     private boolean isValidSelection(int selectedIndex) {
         return selectedIndex >= 0 && selectedIndex < currentPosts.size();
     }

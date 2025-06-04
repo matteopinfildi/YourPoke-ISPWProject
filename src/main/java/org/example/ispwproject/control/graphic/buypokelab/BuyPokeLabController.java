@@ -127,12 +127,13 @@ public class BuyPokeLabController extends GraphicController{
 
     //metodo per controllare se tutti gli ingredienti sono stati selezionati e in caso attiva il bottone della bowl size
     private void checkIngredientSelection(){
-        bowlSizeButton.setDisable(!pokeLabBean.isComplete()); // Disabilita se manca almeno un ingrediente
+        // Disabilita il pulsante della bowl size se manca almeno un ingrediente
+        bowlSizeButton.setDisable(!pokeLabBean.isComplete());
 
     }
 
     private void checkBowlSizeSelection() {
-        // Disabilita il pulsante se la bowl size non è selezionata
+        // Disabilita il pulsante dell'aggiunta del nome se la bowl size non è ancora selezionata
         addNameButton.setDisable(!pokeLabBean.isBowlSizeSelected());
     }
 
@@ -200,9 +201,11 @@ public class BuyPokeLabController extends GraphicController{
     @FXML
     private void handleRetrieve() throws SystemException {
         popup.setVisible(false);
+        // recupera il poke lab salvato
         PokeLabBean oldPokeLabBean = pokeLabAppController.retrievePokeLabBySession(id);
         if (oldPokeLabBean != null) {
             try {
+                // viene richiamata init per ricaricare l'interfaccia, se l'utente vuole recuperare un vecchio poke
                 init(id, oldPokeLabBean);
             } catch (IOException | LoginException | SQLException e) {
                 throw new SystemException("Error while retrieving PokèLab: " + e.getMessage());
