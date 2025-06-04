@@ -36,7 +36,10 @@ public class User {
     public void setuType(UserType uType) {this.uType = uType;}
 
     public String getUsername() {return username;}
+
     public String getPassword() {return password;}
+
     public String getEmail() {return email;}
+
     public String getAddress() {return address;}
 }

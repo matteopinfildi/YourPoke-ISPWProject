@@ -44,9 +44,11 @@ public class AddNameController extends GraphicController {
 
     @FXML
     public void handleNextClick(ActionEvent event) {
+        // viene letto il testo inserito in input
         String name = pokeNameField.getText().trim();
 
         try {
+            // viene invocato il metodo per settare il nome nel controller applicativo
             boolean ok = buyPokeLabAppController.setPokeName(pokeLabBean, name, id);
 
             if (ok) {

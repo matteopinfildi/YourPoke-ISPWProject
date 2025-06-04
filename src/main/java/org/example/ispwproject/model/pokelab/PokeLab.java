@@ -31,10 +31,12 @@ public class PokeLab  {
         this.calories = calories;
     }
 
+    // restituisce la somma di tutti i prezzi degli ingredienti di un poke lab
     public double price() {
         return items.values().stream().mapToDouble(GenericAlternative::price).sum();
     }
 
+    // restituisce la somma di tutte le calorie degli ingredienti di un poke lab
     public int calories(){
         return items.values().stream().mapToInt(GenericAlternative::calories).sum();
     }
@@ -52,6 +54,7 @@ public class PokeLab  {
     }
 
     public void setId(int id) {
+        // controllo che l'id non sia negativo
         if(id <= 0) {
             throw new IllegalArgumentException("ID must be positive");
         }

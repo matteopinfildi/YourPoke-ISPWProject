@@ -35,18 +35,24 @@ public class LoginController extends GraphicController{
     }
 
     public void registerUser(String uid, String password, String email, UserType uType, String address) throws LoginException {
+        // viene instanziato un nuovo UserBean
         UserBean userBean = new UserBean(uid, password, email, uType, address);
+        // viene creata un'istanza del controller applicativo
         LoginAppController loginAppController = new LoginAppController();
         loginAppController.register(userBean);
     }
 
     public void handleLogin(ActionEvent event) throws LoginException {
+        // viene letto il testo del campo username e password
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        LoginAppController loginAppController =new LoginAppController();
+
+        LoginAppController loginAppController = new LoginAppController();
         CredentialBean credentialBean = new CredentialBean(username, password);
+        // viene chiamato il metodo login nel controller applicativo, passando la bean appena creata
         sessionId = loginAppController.login(credentialBean);
+        // se il login è valido si può andare avanti
         if(sessionId != -1){
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/homePage.fxml", null, sessionId);
         } else{

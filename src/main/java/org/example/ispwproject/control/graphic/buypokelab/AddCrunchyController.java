@@ -84,6 +84,7 @@ public class AddCrunchyController extends GraphicController{
     public void handleNextClick(ActionEvent event) throws SystemException {
         try {
             CrunchyAlternative crunchyAlternative = null;
+            // viene verificato cosa viene cliccato dall'utente
             if (checkOnion.isSelected()) {
                 crunchyAlternative = CrunchyAlternative.ONION;
             } else if (checkNuts.isSelected()) {
@@ -92,6 +93,7 @@ public class AddCrunchyController extends GraphicController{
                 crunchyAlternative = CrunchyAlternative.ALMONDS;
             }
 
+            // viene costruito un nuovo AddIngredientBean, passando il nome dell'ingrediente e l'alternativa selezionata
             AddIngredientBean addIngredientBean = new AddIngredientBean("crunchy", crunchyAlternative);
             pokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
             
