@@ -34,8 +34,9 @@ public class BuyPokeLabAppController {
         String ingredient = addIngredientBean.getIngredientName();
         GenericAlternative genericAlternative = addIngredientBean.getGenericAlternative();
 
-        // elimina un vecchio ingrediente andando a modificare anche il prezzo
+        // elimina un vecchio ingrediente andando a modificare anche il prezzo e le calorie
         if (genericAlternative != null) {
+            // recupero una alternativa vecchia e controllo se esiste
             GenericAlternative oldIngredient = pokeLabBean.getIngredient(ingredient);
             if (oldIngredient != null) {
                 // sottraggo il prezzo
@@ -44,9 +45,11 @@ public class BuyPokeLabAppController {
                 pokeLabBean.setCalories(pokeLabBean.getCalories() - oldIngredient.calories());
             }
 
-            // aggiungo la nuova alternativa, aggiorno il prezzo e le calorie totali
+            // aggiungo/aggiorno la nuova alternativa
             pokeLabBean.setIngredient(ingredient, genericAlternative);
+            // aggiorno il prezzo totale
             pokeLabBean.setPrice(pokeLabBean.getPrice() + genericAlternative.price());
+            // aggiorno le calorie totali
             pokeLabBean.setCalories(pokeLabBean.getCalories() + genericAlternative.calories());
         }
     }
@@ -54,27 +57,28 @@ public class BuyPokeLabAppController {
 
     // salva il poke lab nuovo, associandolo all'utente ed eliminando un eventuale poke vecchio
     public boolean savePokeLab(PokeLabBean pokeLabBean, SaveBean saveBean) throws SystemException {
+        PokeLab pokeLab = new PokeLab(pokeLabBean);
+
         if (pokeLabBean.getId() > 0) {
             // già salvato in precedenza, allora effettua update
-            PokeLab poke = new PokeLab(pokeLabBean);
-            pokeLabDAO.update(poke);
+            pokeLabDAO.update(pokeLab);
             return true;
 
         }
-        // altrimenti crea il primo PokeLab
-        PokeLab pokeLab = new PokeLab(pokeLabBean);
+        // altrimenti crea il nuovo PokeLab
         pokeLabDAO.create(pokeLab);
         // recupero l'id generato dallo strato di persistenza per controllare se è valido
         if (pokeLab.id() <= 0) {
             throw new SystemException("Invalid PokeLab ID generated");
         }
+        // aggiorno la bean con l'id appena creato
         pokeLabBean.setId(pokeLab.id());
-        // lettura dell'utente e controllo validità
+        // lettura dell'utente e controllo se esiste
         User user = userDAO.read(saveBean.getUid());
         if (user == null) {
             throw new SystemException("User not found: " + saveBean.getUid());
         }
-        // aggiornamento coppia (user, pokeLab)
+        // aggiornamento coppia (user, pokeLab), per cui associo un nuovo PokeLab all'utente
         userDAO.update(user, pokeLab.id());
         return true;
     }
@@ -82,27 +86,34 @@ public class BuyPokeLabAppController {
     // verifica se l'utente ha già un poke salvato
     public boolean checkPokeLab(SaveBean saveBean) throws SystemException {
         User user = null;
+        // recupero l'id dell'utente a cui vogliamo controllare se ha già un poke salvato
         String id = saveBean.getUid();
         try{
+            // recupero l'utente dallo strato di persistenza
             user = userDAO.read(id);
         } catch (SystemException e){
             throw new SystemException("Error" + e.getMessage());
         }
-
+        /* se l'utente ha già un poke salvato, questo campo conterrà un riferimento ad un'istanza di PokeLab,
+         altrimenti conterrà null */
         PokeLab pokeLab = user.getPokeLab();
+        // restituisce true se pokeLab != null, altrimenti restituisce false
         return pokeLab != null;
     }
 
     // recupera il poke precedentemente salvato per l'utente
     public PokeLabBean retrievePokeLab(SaveBean saveBean) throws SystemException {
         User user = null;
+        // recupero l'id dell'utente a cui vogliamo recuperare il poke già salvato
         String uID = saveBean.getUid();
         try{
+            // recupero l'utente dallo strato di persistenza
             user = userDAO.read(uID);
         } catch (SystemException e){
             throw new SystemException("Error" + e.getMessage());
         }
 
+        // dall'oggetto user, recupero il campo PokeLab, che se non esiste, ci darà null
         PokeLab pokeLab = user.getPokeLab();
         if (pokeLab != null) {
             return new PokeLabBean(pokeLab);
@@ -110,14 +121,28 @@ public class BuyPokeLabAppController {
         return null;
     }
 
+    // recupera la PokeLabBean associata all’utente loggato nella sessione specificata
+    public PokeLabBean retrievePokeLabBySession(int sessionId) throws SystemException {
+        // recupero la sessione
+        Session session = SessionManager.getSessionManager().getSessionFromId(sessionId);
+        if (session == null) {
+            throw new SystemException("Session not found");
+        }
+        // estraggo l'id dell'utente dalla sessione
+        String userId = session.getUserId();
+        return retrievePokeLab(new SaveBean(userId));
+    }
+
     // imposta/aggiorna il nome del poke, se ha almeno 4 lettere e se è diverso dal nome assegnato in precedenza
     public boolean setPokeName(PokeLabBean pokeLabBean, String name, int sessionId) throws SystemException {
+        // si assegna alla bean il nuovo nome passato come parametro
         pokeLabBean.setPokeName(name);
-        // ricava userId dalla sessione
+        // recupero la sessione
         Session session = SessionManager.getSessionManager().getSessionFromId(sessionId);
         if (session == null) {
             throw new SystemException("Session not found. Please log in again.");
         }
+        // estraggo l'id dell'utente dalla sessione
         String userId = session.getUserId();
 
         return savePokeLab(pokeLabBean, new SaveBean(userId));
@@ -125,23 +150,17 @@ public class BuyPokeLabAppController {
 
     // imposta/aggiorna la size della bowl se è diverso dal nome assegnato in precedenza
     public boolean setBowlSize(PokeLabBean pokeLabBean, String bowlSize, int sessionId) throws SystemException {
+        // si assegna alla bean la nuova size
         pokeLabBean.setBowlSize(bowlSize);
-
+        // recupero la sessione
         Session session = SessionManager.getSessionManager().getSessionFromId(sessionId);
         if (session == null) {
             throw new SystemException("Session not found. Please log in again.");
         }
+        // estraggo l'id dell'utente dalla sessione
         String userId = session.getUserId();
 
         return savePokeLab(pokeLabBean, new SaveBean(userId));
     }
 
-    public PokeLabBean retrievePokeLabBySession(int sessionId) throws SystemException {
-        Session session = SessionManager.getSessionManager().getSessionFromId(sessionId);
-        if (session == null) {
-            throw new SystemException("Session not found");
-        }
-        String userId = session.getUserId();
-        return retrievePokeLab(new SaveBean(userId));
-    }
 }

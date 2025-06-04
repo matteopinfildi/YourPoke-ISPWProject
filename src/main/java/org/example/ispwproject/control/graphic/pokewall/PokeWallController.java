@@ -49,6 +49,7 @@ public class PokeWallController extends GraphicController {
         pokeWallAppController = PokeWallAppController.getInstance();
         this.currentUsername = SessionManager.getSessionManager().getSessionFromId(id).getUserId();
 
+
         observerInstance = new PokeWallObserver() {
             @Override
             public void update(PokeWall newPost) {
@@ -86,7 +87,7 @@ public class PokeWallController extends GraphicController {
 
         pokeWallAppController.registerObserver(observerInstance, id);
 
-        pokeWallListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        pokeWallListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE); // post che vengono visualizzati
         deleteButton.setDisable(true);
         refreshPosts();
 
@@ -133,6 +134,11 @@ public class PokeWallController extends GraphicController {
 
                     if (success) {
                         refreshPosts();
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Post eliminated");
+                        alert.setHeaderText("Post eliminated");
+                        alert.setContentText("The post has been successfully deleted.");
+                        alert.showAndWait();
                     } else {
                         logger.warning("Failed to delete post.");
                     }
