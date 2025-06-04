@@ -56,7 +56,7 @@ public class PokeWallController extends GraphicController {
                 Platform.runLater(() -> {
                     try {
                         refreshPosts();
-                        String message = pokeWallAppController.generateNotificationMessage(newPost);
+                        String message = generateNotificationMessage(newPost);
                         notificationLabel.setText(message);
                         notificationLabel.setVisible(true);
                         Thread hideThread = new Thread(() -> {
@@ -101,7 +101,7 @@ public class PokeWallController extends GraphicController {
         ObservableList<String> postObservableList = FXCollections.observableArrayList();
 
         for (PokeWall pokeWall : currentPosts) {
-            String formattedPost = pokeWallAppController.formatPostForDisplay(pokeWall);
+            String formattedPost = formatPostForDisplay(pokeWall);
             postObservableList.add(formattedPost);
         }
 
@@ -166,4 +166,34 @@ public class PokeWallController extends GraphicController {
         ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/fortuneCookie.fxml", pokeLabBean, id);
     }
 
+
+    // metodo che definisce la rappresentazione testuale di un post
+    public String formatPostForDisplay(PokeWall post) {
+        // creo un oggetto StringBuilder vuoto e ci vado ad aggiungere tutti i vari "pezzi"
+        StringBuilder postText = new StringBuilder();
+        // aggiungo username e pokeName
+        postText.append(post.getUsername())
+                .append(" created the Poke Lab: ")
+                .append(post.getPokeName())
+                .append("\n");
+
+        String pokeSize = (post.getSize() == null || post.getSize().isEmpty())
+                ? "Unknown size"
+                : post.getSize();
+        // aggiungo la size
+        postText.append("Poke size: ").append(pokeSize).append("\n");
+
+        // aggiungo tutti gli ingredienti
+        for (String ingredient : post.getIngredients()) {
+            postText.append("- ").append(ingredient).append("\n");
+        }
+
+        // si converte il contenuto dello StringBuilder in una vera e propria stringa
+        return postText.toString();
+    }
+
+    // metodo che definisce come deve essere rappresentata la notifica
+    public String generateNotificationMessage(PokeWall newPost) {
+        return "New post by " + newPost.getUsername() + ": " + newPost.getPokeName();
+    }
 }
