@@ -22,21 +22,24 @@ public class DBPokeLabDAO implements PokeLabDAO {
              PreparedStatement preparedStatementPoke = connection.prepareStatement(
                      insertPokeLabQuery, Statement.RETURN_GENERATED_KEYS)) {
 
-            // 1. Inserisci il PokeLab principale
+            // vengono assegnati i valori alla query per il prezzo, la size e le calorie ottenute dal PokeLab
             preparedStatementPoke.setDouble(1, pokeLab.price());
             preparedStatementPoke.setString(2, pokeLab.getBowlSize());
             preparedStatementPoke.setInt(3, pokeLab.calories());
             preparedStatementPoke.executeUpdate();
 
-            // 2. Ottieni l'ID generato
+            // generatedKeys contiene i valori automatici generati dall'insert
             try (ResultSet generatedKeys = preparedStatementPoke.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
+                    // viene letto l'id generato e viene assegnato alla variabile plid
                     int plid = generatedKeys.getInt(1);
+                    // viene settato l'id all'oggetto pokeLab
                     pokeLab.setId(plid);
 
-                    // 3. Inserisci gli ingredienti
+                    // vengono inseriti anche gli ingredienti, sfruttando il plid generato prima
                     try (PreparedStatement stmtIngredients = connection.prepareStatement(insertIngredientQuery)) {
                         stmtIngredients.setInt(1, plid);
+                        // si sfrutta un ciclo for per inserire tutti gli ingredienti
                         for (Map.Entry<String, GenericAlternative> entry : pokeLab.allIngredients().entrySet()) {
                             stmtIngredients.setString(2, entry.getKey());
                             stmtIngredients.setString(3, ((Enum<?>) entry.getValue()).name());
@@ -57,23 +60,26 @@ public class DBPokeLabDAO implements PokeLabDAO {
         String selectIngredientQuery = "SELECT ingredient_name, ingredient_alternative FROM poke_lab_ingredients WHERE plid = ?";
 
         try (Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatementPoke = connection.prepareStatement(selectPokeLabQuery); PreparedStatement preparedStatementIngredient = connection.prepareStatement(selectIngredientQuery)){
-            preparedStatementPoke.setInt(1, plid);
+            preparedStatementPoke.setInt(1, plid); // viene impostato il valore della prima query con il valore plid passato al metodo
             ResultSet resultSetPoke = preparedStatementPoke.executeQuery();
 
             if (resultSetPoke.next()){
+                // vengono letti tutti i valori dal db e vengono associati a delle variabili
                 double price = resultSetPoke.getDouble("price");
                 String size = resultSetPoke.getString("size");
                 int calories = resultSetPoke.getInt("calories");
                 Map<String, GenericAlternative> ingredients =new HashMap<>();
 
-                preparedStatementIngredient.setInt(1, plid);
+                preparedStatementIngredient.setInt(1, plid); // viene impostato il valore della seconda query con il valore plid passato al metodo
                 ResultSet resultSetIngredient = preparedStatementIngredient.executeQuery();
 
                 while(resultSetIngredient.next()){
+                    // associa i valori per ogni ingrediente e ogni alternativa lette sul db ad una variabile
                     String ingredientName = resultSetIngredient.getString("ingredient_name");
                     String ingredientAlternative = resultSetIngredient.getString("ingredient_alternative");
 
                     GenericAlternative genericAlternative = null;
+                    // usiamo uno switch sul nome dell'ingrediente per determinare a quale classe di enum corrisponde l'alternativa
                     switch (ingredientName){
                         case "rice" -> genericAlternative = Enum.valueOf(RiceAlternative.class, ingredientAlternative);
                         case "protein" -> genericAlternative = Enum.valueOf(ProteinAlternative.class, ingredientAlternative);
@@ -85,6 +91,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
                         }
                     }
                     if (genericAlternative != null){
+                        // se il valore dell'enum è stato creato correttamente, viene messo nella mappa ingredients
                         ingredients.put(ingredientName, genericAlternative);
                     }
                 }
@@ -103,23 +110,23 @@ public class DBPokeLabDAO implements PokeLabDAO {
 
     @Override
     public void delete(int plid) throws SystemException {
-        // Prima elimina gli ingredienti (figli) e poi il PokeLab (padre)
+        // prima elimina gli ingredienti (figli) e poi il PokeLab (padre)
         String deleteIngredientsQuery = "DELETE FROM poke_lab_ingredients WHERE plid = ?";
         String deletePokeLabQuery = "DELETE FROM poke_lab WHERE id = ?";
 
         try (Connection connection = DBConnection.getDBConnection()) {
-            // Disabilita temporaneamente i vincoli di foreign key
+            // disabilita temporaneamente i vincoli di foreign key
             try (Statement disableFK = connection.createStatement()) {
                 disableFK.execute("SET FOREIGN_KEY_CHECKS=0");
             }
 
-            // 1. Elimina prima gli ingredienti associati
+            // vengono eliminati prima gli ingredienti associati ad un poke lab
             try (PreparedStatement stmtIngredients = connection.prepareStatement(deleteIngredientsQuery)) {
                 stmtIngredients.setInt(1, plid);
                 stmtIngredients.executeUpdate();
             }
 
-            // 2. Poi elimina il PokeLab
+            // successivamente viene eliminato il poke lab
             try (PreparedStatement stmtPokeLab = connection.prepareStatement(deletePokeLabQuery)) {
                 stmtPokeLab.setInt(1, plid);
                 int rowsAffected = stmtPokeLab.executeUpdate();
@@ -129,7 +136,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
                 }
             }
 
-            // Riabilita i vincoli di foreign key
+            // riabilita i vincoli di foreign key
             try (Statement enableFK = connection.createStatement()) {
                 enableFK.execute("SET FOREIGN_KEY_CHECKS=1");
             }
@@ -147,7 +154,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
         String deleteIngredients = "DELETE FROM poke_lab_ingredients WHERE plid = ?";
         String insertIngredient = "INSERT INTO poke_lab_ingredients (plid, ingredient_name, ingredient_alternative) VALUES (?, ?, ?)";
         try (Connection conn = DBConnection.getDBConnection()) {
-            // 1) aggiorna price e size
+            // vengono aggiornati price, size e calories per un determinato poke lab
             try (PreparedStatement ps = conn.prepareStatement(updatePokeLab)) {
                 ps.setDouble(1, pokeLab.price());
                 ps.setString(2, pokeLab.getBowlSize());
@@ -155,20 +162,20 @@ public class DBPokeLabDAO implements PokeLabDAO {
                 ps.setInt(4, pokeLab.id());
                 ps.executeUpdate();
             }
-            // 2) elimina tutte le righe ingredienti esistenti
+            // vengono eliminate tutte le righe per gli ingredienti esistenti
             try (PreparedStatement ps = conn.prepareStatement(deleteIngredients)) {
                 ps.setInt(1, pokeLab.id());
                 ps.executeUpdate();
             }
-            // 3) reinserisci gli ingredienti correnti
+            // vengono reinseriti gli ingredienti correnti (per cui quelli aggiornati)
             try (PreparedStatement ps = conn.prepareStatement(insertIngredient)) {
                 for (var e : pokeLab.allIngredients().entrySet()) {
                     ps.setInt(1, pokeLab.id());
                     ps.setString(2, e.getKey());
                     ps.setString(3, ((Enum<?>) e.getValue()).name());
-                    ps.addBatch();
+                    ps.addBatch();// accumula tutte le insert
                 }
-                ps.executeBatch();
+                ps.executeBatch(); // esegue tutte le insert accumulate
             }
         } catch (SQLException ex) {
             throw new SystemException("Error updating PokeLab: " + ex.getMessage());

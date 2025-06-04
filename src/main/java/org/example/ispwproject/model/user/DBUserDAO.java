@@ -26,9 +26,10 @@ public class DBUserDAO implements UserDAO{
             preparedStatementCheck.setString(1, user.getUsername());
             ResultSet resultSet = preparedStatementCheck.executeQuery();
             resultSet.next();
-            int counter = resultSet.getInt(1);
+            int counter = resultSet.getInt(1); // rappresenta quante righe con quello username esistono già
 
             if (counter == 0){
+                // se le righe con quello username non esistono, allora vengono inseriti tutti i valori relativi ad uno user
                 preparedStatementInsert.setString(1, user.getUsername());
                 preparedStatementInsert.setString(2, user.getPassword());
                 preparedStatementInsert.setString(3, user.getEmail());
@@ -53,27 +54,27 @@ public class DBUserDAO implements UserDAO{
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                // Leggi plid
+                // prende il valore del plid dal db e lo associa ad una variabile
                 int plid = resultSet.getInt("plid");
 
-                // Recupera il PokeLab in un metodo separato
+                // recupera il PokeLab in un metodo separato
                 PokeLab pokeLab = fetchPokeLab(plid);
 
-                // Leggi i dati dell'utente
+                // prende i valori dei dati dell'utente e li associa a delle variabili
                 String username = resultSet.getString("username");
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
                 UserType userType = UserType.valueOf(resultSet.getString("utype"));
                 String address = resultSet.getString("address");
 
-                // Crea l'oggetto User
+                // costruisce un nuovo oggetto user, passandogli i parametri recuperati in precedenza
                 User user = new User(username, password, email, userType, address);
 
-                // Imposta il PokeLab, se presente
+                // associa il poke lab allo user
                 user.setPokeLab(pokeLab);
-                return user;
+                return user; // ritorna lo user
             } else {
-                return null;  // L'utente non è stato trovato
+                return null;  // lo user non è stato trovato
             }
         } catch (SQLException _) {
             throw new SystemException("Errore nella lettura dell'utente");
@@ -82,10 +83,10 @@ public class DBUserDAO implements UserDAO{
 
     // blocco di codice che recupera il PokeLab
     private PokeLab fetchPokeLab(int plid) throws SystemException {
-        // Verifica che plid non sia nullo (o zero)
+        // verifica che plid non sia nullo
         if (plid > 0) {
             try {
-                // Se plid è valido, prova a caricare il PokeLab
+                // se il plid è valido, allora viene instanziato un oggetto che restituisce un poke lab associato all'utente
                 return new DBPokeLabDAO().read(plid);
             } catch (SystemException _) {
                 LOGGER.warning("Attenzione: PokeLab con plid " + plid + " non trovato.");
@@ -97,6 +98,7 @@ public class DBUserDAO implements UserDAO{
 
 
 
+    // metodo che permette d aggiornare il valore di un plid associato ad uno user
     @Override
     public void update(User user, int plid) throws SystemException {
         String checkPokeLabQuery = "SELECT COUNT(*) FROM poke_lab WHERE id = ?";
@@ -106,7 +108,7 @@ public class DBUserDAO implements UserDAO{
              PreparedStatement checkStmt = connection.prepareStatement(checkPokeLabQuery);
              PreparedStatement updateStmt = connection.prepareStatement(updateUserQuery)) {
 
-            // Verifica l'esistenza del PokeLab
+            // si contano quanti poke lab hanno l'id passato al metodo (quindi controlliamo se esiste)
             checkStmt.setInt(1, plid);
             ResultSet rs = checkStmt.executeQuery();
             rs.next();
@@ -116,9 +118,10 @@ public class DBUserDAO implements UserDAO{
                 throw new SystemException("PokeLab with ID " + plid + " does not exist");
             }
 
-            updateStmt.setInt(1, plid);
-            updateStmt.setString(2, user.getUsername());
+            updateStmt.setInt(1, plid); // aggiorna il valore del plid
+            updateStmt.setString(2, user.getUsername()); // imposta il valore dello username a cui è stato aggiornato il plid
 
+            // viene eseguuito l’update su users, assegnando plid al record corrispondente a username
             int affectedRows = updateStmt.executeUpdate();
 
             if (affectedRows == 0) {
@@ -134,7 +137,7 @@ public class DBUserDAO implements UserDAO{
     public void delete (String uid) throws SystemException {
         String queryDelete = "DELETE FROM users WHERE username = ?";
         try (Connection connection = DBConnection.getDBConnection(); PreparedStatement preparedStatement = connection.prepareStatement(queryDelete)){
-            preparedStatement.setString(1, uid);
+            preparedStatement.setString(1, uid); // imposta il parametro della query con l'id dello user da eliminare (che viene passato al metodo)
             preparedStatement.executeUpdate();
         }catch (SQLException _) {
             throw new SystemException("Errore delete user!");
