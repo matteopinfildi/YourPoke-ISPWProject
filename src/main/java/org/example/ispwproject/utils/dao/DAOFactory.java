@@ -22,6 +22,7 @@ public abstract class DAOFactory {
     public static DAOFactory getInstance() throws PersistenceProviderNotFoundException {
         if (daoFactoryIstance == null) {
             try {
+                // viene creata un'istanza per la dao factory
                 daoFactoryIstance = persistenceProvider.getDaoFactoryClass().getConstructor().newInstance();
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
                      InvocationTargetException | NoSuchMethodException | SecurityException e ) {
