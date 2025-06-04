@@ -11,23 +11,24 @@ public class FSPokeLabDAO implements PokeLabDAO {
 
     private static final String FILE_LAB = "poke_lab.csv";
     private static final String FILE_INGREDIENTS = "poke_lab_ingredients.csv";
-    private static final String TEMP_LAB =  "temp_lab.csv";
-    private static final String TEMP_ING = "temp_ingredients.csv";
+    private static final String TEMP_LAB =  "temp_lab.csv"; // file temporanei usati per l'aggiornamento e la cancellazione
+    private static final String TEMP_ING = "temp_ingredients.csv"; // file temporanei usati per l'aggiornamento e la cancellazione
     private static final String DELIMITER = ",";
-    private static int lastId = -1; // Inizializzato a -1
+    private static int lastId = -1; // inizializzato a -1, ma verrà aggiornato leggendo il file
     private static final Logger LOGGER = Logger.getLogger(FSPokeLabDAO.class.getName());
 
 
-    // Carica l'ultimo ID all'avvio
+    // carica l'ultimo id all'avvio, per cui chiama l'id maggiore
     static {
         try {
-            lastId = findMaxIdFromFile();  // Chiamata al metodo estratto
+            lastId = findMaxIdFromFile();
         } catch (SystemException e) {
             LOGGER.severe("Error initializing lastId: " + e.getMessage());
             lastId = 0; // Fallback
         }
     }
 
+    // metodo che trova l'id maggiore presente nel file
     private static int findMaxIdFromFile() throws SystemException {
         if (!new File(FILE_LAB).exists()) {
             return 0;
@@ -37,7 +38,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_LAB))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                maxId = updateMaxIdIfValid(line, maxId);
+                maxId = updateMaxIdIfValid(line, maxId); // viene richiamato per ciascuna riga ed estrae l'id di ogni poke
             }
         } catch (IOException _) {
             throw new SystemException("Error reading PokeLab file to find max ID");
@@ -46,18 +47,21 @@ public class FSPokeLabDAO implements PokeLabDAO {
         return maxId;
     }
 
+    // metodo che serve ad aggiornare l'id piu grande presente nel file
     private static int updateMaxIdIfValid(String line, int currentMaxId) {
         String[] parts = line.split(DELIMITER);
         if (parts.length > 0) {
             try {
                 int currentId = Integer.parseInt(parts[0]);
                 if (currentId > currentMaxId) {
+                    // se il nuovo id è maggiore rispetto all'id massimo attuale, allora viene ritornato
                     return currentId;
                 }
             } catch (NumberFormatException _) {
                 LOGGER.warning("ID non numerico trovato nella riga: " + line);
             }
         }
+        // altrimenti si returna il vecchio id massimo
         return currentMaxId;
     }
 
@@ -65,21 +69,23 @@ public class FSPokeLabDAO implements PokeLabDAO {
     @Override
     public void create(PokeLab pokeLab) throws SystemException {
         synchronized (FSPokeLabDAO.class) {
-            // Assegna un nuovo ID solo se non è già stato assegnato
+            // assegna un nuovo id solo se non è già stato assegnato
             if (pokeLab.id() <= 0) {
+                // se entra qua vuol dire che il poke lab non ha ancora un id valito assegnato
                 lastId++;
                 pokeLab.setId(lastId);
             } else if (pokeLab.id() > lastId) {
-                // Aggiorna lastId se viene passato un ID maggiore
+                // aggiorna lastId se viene passato un ID maggiore
                 lastId = pokeLab.id();
             }
         }
+        // apriamo i file in modalità append, così da scrivere in coda
         try (BufferedWriter writerLab = new BufferedWriter(new FileWriter(FILE_LAB, true));
              BufferedWriter writerIng = new BufferedWriter(new FileWriter(FILE_INGREDIENTS, true))) {
-            // Salva PokeLab
+            // salva PokeLab, inserendo tutte le caratteristiche associate
             writerLab.write(pokeLab.id() + DELIMITER + pokeLab.price() + DELIMITER + pokeLab.getBowlSize() + DELIMITER + pokeLab.calories() );
-            writerLab.newLine();
-            // Salva ingredienti
+            writerLab.newLine(); // va a capo
+            // salva ingredienti relativi al poke lab
             for (Map.Entry<String, GenericAlternative> entry : pokeLab.allIngredients().entrySet()) {
                 writerIng.write(pokeLab.id() + DELIMITER + entry.getKey() + DELIMITER + ((Enum<?>) entry.getValue()).name());
                 writerIng.newLine();
@@ -91,6 +97,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
 
     @Override
     public PokeLab read(int plid) throws SystemException {
+        // sono delle variabili che mantengono temporaneamente i valori letti dal file poke_lab
         double price = 0;
         String size = null;
         int calories = 0;
@@ -98,9 +105,12 @@ public class FSPokeLabDAO implements PokeLabDAO {
         boolean found = false;
         try (BufferedReader readerLab = new BufferedReader(new FileReader(FILE_LAB))) {
             String line;
+            // scorriamo su tutte le righe del file
             while ((line = readerLab.readLine()) != null) {
                 String[] parts = line.split(DELIMITER);
+                // viene convertito il primo campo (quello del plid) e viene confrontato con quello passato al metodo
                 if (Integer.parseInt(parts[0]) == plid) {
+                    // se corrisponde si salvano il prezzo, la size e le calorie e si pone il flag found = true
                     price = Double.parseDouble(parts[1]);
                     size = parts[2];
                     calories = Integer.parseInt(parts[3]);
@@ -114,11 +124,15 @@ public class FSPokeLabDAO implements PokeLabDAO {
         if (!found) {
             return null;
         }
+        // si fa la stessa cosa fatta per il file poke_lab.csv, anche per il file degli ingredienti
         try (BufferedReader readerIng = new BufferedReader(new FileReader(FILE_INGREDIENTS))) {
             String line;
+            // si scorrono tutte le righe del gile
             while ((line = readerIng.readLine()) != null) {
                 String[] parts = line.split(DELIMITER);
+                // viene convertito il primo campo (quello del plid) e viene confrontato con quello passato al metodo
                 if (Integer.parseInt(parts[0]) == plid) {
+                    // se corrispondono si salvano gli ingredienti con le relative alternative
                     String name = parts[1];
                     String alternative = parts[2];
                     GenericAlternative value = switch (name) {
@@ -143,35 +157,41 @@ public class FSPokeLabDAO implements PokeLabDAO {
     @Override
     public void delete(int plid) throws SystemException {
         try {
-            // Rimuovi da poke_lab.csv
+            // rimuovi da poke_lab.csv
             File originalLab = new File(FILE_LAB);
             File tempLab = new File(TEMP_LAB);
             try (BufferedReader reader = new BufferedReader(new FileReader(originalLab));
                  BufferedWriter writer = new BufferedWriter(new FileWriter(tempLab))) {
                 String line;
+                // si scorrono tutte le righe del file poke_lab.csv
                 while ((line = reader.readLine()) != null) {
                     if (!line.startsWith(plid + DELIMITER)) {
+                        //  se una riga non inizia con plid+DELIMITERviene copiata nel file temporaneo
                         writer.write(line);
                         writer.newLine();
                     }
                 }
             }
+            // con la prima condizione si cancella il file originale e si rinomina quello temporaneo, come file originale
             if (!originalLab.delete() || !tempLab.renameTo(originalLab)) {
                 throw new IOException("Error updating poke_lab file");
             }
-            // Rimuovi da poke_lab_ingredients.csv
+            // rimuovi da poke_lab_ingredients.csv
             File originalIng = new File(FILE_INGREDIENTS);
             File tempIng = new File(TEMP_ING);
             try (BufferedReader reader = new BufferedReader(new FileReader(originalIng));
                  BufferedWriter writer = new BufferedWriter(new FileWriter(tempIng))) {
                 String line;
+                // si scorrono tutte le righe del file poke_lab_ingredients.csv
                 while ((line = reader.readLine()) != null) {
                     if (!line.startsWith(plid + DELIMITER)) {
+                        //  se una riga non inizia con plid+DELIMITERviene copiata nel file temporaneo
                         writer.write(line);
                         writer.newLine();
                     }
                 }
             }
+            // con la prima condizione si cancella il file originale e si rinomina quello temporaneo, come file originale
             if (!originalIng.delete() || !tempIng.renameTo(originalIng)) {
                 throw new IOException("Error updating poke_lab_ingredients file");
             }
@@ -189,14 +209,17 @@ public class FSPokeLabDAO implements PokeLabDAO {
         try (BufferedReader r = new BufferedReader(new FileReader(origLab));
              BufferedWriter w = new BufferedWriter(new FileWriter(tmpLab))) {
             String line;
+            // si scorrono tutte le righe
             while ((line = r.readLine()) != null) {
                 String[] p = line.split(DELIMITER);
                 if (Integer.parseInt(p[0]) == pokeLab.id()) {
+                    // controlla se gli id corrispondono, se è cosi, scrive nel file temporaneo una nuova riga con i campi aggiornati
                     w.write(pokeLab.id() + DELIMITER + pokeLab.price() + DELIMITER + pokeLab.getBowlSize() + DELIMITER + pokeLab.calories());
                 } else {
+                    // altrimenti copia la riga così come è
                     w.write(line);
                 }
-                w.newLine();
+                w.newLine(); // va a capo
             }
         } catch (IOException|NumberFormatException e) {
             throw new SystemException("Error updating PokeLab file: " + e.getMessage());
@@ -225,6 +248,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
         } catch (IOException e) {
             throw new SystemException("Error updating ingredients file: " + e.getMessage());
         }
+        // con la prima condizione si cancella il file originale e si rinomina quello temporaneo, come file originale
         if (!origIng.delete() || !tmpIng.renameTo(origIng)) {
             throw new SystemException("Could not replace poke_lab_ingredients.csv during update");
         }
