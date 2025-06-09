@@ -134,7 +134,7 @@ public class CliPokeLab extends CliController{
     }
 
     private String getIngredientName(String ingredientType) {
-        GenericAlternative ingredient = pokeLabBean.getIngredient(ingredientType);
+        GenericOption ingredient = pokeLabBean.getIngredient(ingredientType);
         return (ingredient != null) ? ingredient.toString() : NO_SELECTION;
     }
     // Metodo per gestire la selezione dell'utente

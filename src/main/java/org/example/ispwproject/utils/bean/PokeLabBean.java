@@ -2,14 +2,14 @@ package org.example.ispwproject.utils.bean;
 
 import org.example.ispwproject.SessionManager;
 import org.example.ispwproject.model.pokelab.PokeLab;
-import org.example.ispwproject.utils.enumeration.ingredient.GenericAlternative;
+import org.example.ispwproject.utils.enumeration.ingredient.GenericOption;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class PokeLabBean {
-    private Map<String, GenericAlternative> ingredients=new HashMap<>(); // hash map per memorizzare tutti gli ingredienti
+    private Map<String, GenericOption> ingredients=new HashMap<>(); // hash map per memorizzare tutti gli ingredienti
     private int plId;
     private double price;
     private int calories;
@@ -56,14 +56,14 @@ public class PokeLabBean {
 
 
 
-    public GenericAlternative getIngredient(String ingredientName) {return ingredients.get(ingredientName);}
+    public GenericOption getIngredient(String ingredientName) {return ingredients.get(ingredientName);}
 
     // aggiunge un nuovo ingrediente
-    public void setIngredient(String ingredientName, GenericAlternative alternative) {
+    public void setIngredient(String ingredientName, GenericOption alternative) {
         ingredients.put(ingredientName, alternative);
     }
 
-    public Map<String, GenericAlternative> getAllIngredients(){return ingredients;}
+    public Map<String, GenericOption> getAllIngredients(){return ingredients;}
 
 
     public double getPrice() {return price;}

@@ -12,7 +12,7 @@ import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.AddIngredientBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
-import org.example.ispwproject.utils.enumeration.ingredient.CrunchyAlternative;
+import org.example.ispwproject.utils.enumeration.ingredient.CrunchyOption;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -83,14 +83,14 @@ public class AddCrunchyController extends GraphicController{
     @FXML
     public void handleNextClick(ActionEvent event) throws SystemException {
         try {
-            CrunchyAlternative crunchyAlternative = null;
+            CrunchyOption crunchyAlternative = null;
             // viene verificato cosa viene cliccato dall'utente
             if (checkOnion.isSelected()) {
-                crunchyAlternative = CrunchyAlternative.ONION;
+                crunchyAlternative = CrunchyOption.ONION;
             } else if (checkNuts.isSelected()) {
-                crunchyAlternative = CrunchyAlternative.NUTS;
+                crunchyAlternative = CrunchyOption.NUTS;
             } else if (checkAlmonds.isSelected()) {
-                crunchyAlternative = CrunchyAlternative.ALMONDS;
+                crunchyAlternative = CrunchyOption.ALMONDS;
             }
 
             // viene costruito un nuovo AddIngredientBean, passando il nome dell'ingrediente e l'alternativa selezionata

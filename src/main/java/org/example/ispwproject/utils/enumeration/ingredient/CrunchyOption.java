@@ -1,15 +1,15 @@
 package org.example.ispwproject.utils.enumeration.ingredient;
 
-public enum RiceAlternative implements GenericAlternative {
+public enum CrunchyOption implements GenericOption {
 
-    SUSHI(3.00, 340),
-    VENUS(4.00, 360),
-    BASMATI(3.50, 350);
+    ONION(2.00, 450),
+    NUTS(1.00, 600),
+    ALMONDS(1.50, 580);
 
     private final double price;
     private final int calories;
 
-    RiceAlternative(double price, int calories){
+    CrunchyOption(double price, int calories){
         this.price = price;
         this.calories = calories;
     }
@@ -20,4 +20,3 @@ public enum RiceAlternative implements GenericAlternative {
     @Override
     public int calories(){return calories;}
 }
-

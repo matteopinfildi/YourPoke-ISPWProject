@@ -1,6 +1,6 @@
 package org.example.ispwproject.utils.enumeration.ingredient;
 
-public interface GenericAlternative {
+public interface GenericOption {
     double price();
     int calories();
 }

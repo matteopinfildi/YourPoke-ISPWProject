@@ -83,31 +83,31 @@ public class BuyPokeLabController extends GraphicController{
             totalPriceLabel.setText("TOT = " + pokeLabBean.getPrice() + "$");
             caloriesLabel.setText("CAL = " + pokeLabBean.getCalories() + " cal");
 
-            GenericAlternative genericAlternative;
+            GenericOption genericOption;
 
-            genericAlternative = pokeLabBean.getIngredient("rice");
-            if(genericAlternative != null){
-                riceButton.setText(((RiceAlternative)genericAlternative).name());
+            genericOption = pokeLabBean.getIngredient("rice");
+            if(genericOption != null){
+                riceButton.setText(((RiceOption) genericOption).name());
             }
 
-            genericAlternative = pokeLabBean.getIngredient("protein");
-            if(genericAlternative != null){
-                proteinButton.setText(((ProteinAlternative)genericAlternative).name());
+            genericOption = pokeLabBean.getIngredient("protein");
+            if(genericOption != null){
+                proteinButton.setText(((ProteinOption) genericOption).name());
             }
 
-            genericAlternative = pokeLabBean.getIngredient("fruit");
-            if(genericAlternative != null){
-                fruitButton.setText(((FruitAlternative)genericAlternative).name());
+            genericOption = pokeLabBean.getIngredient("fruit");
+            if(genericOption != null){
+                fruitButton.setText(((FruitOption) genericOption).name());
             }
 
-            genericAlternative = pokeLabBean.getIngredient("crunchy");
-            if(genericAlternative != null){
-                crunchyButton.setText(((CrunchyAlternative)genericAlternative).name());
+            genericOption = pokeLabBean.getIngredient("crunchy");
+            if(genericOption != null){
+                crunchyButton.setText(((CrunchyOption) genericOption).name());
             }
 
-            genericAlternative = pokeLabBean.getIngredient("sauces");
-            if(genericAlternative != null){
-                saucesButton.setText(((SaucesAlternative)genericAlternative).name());
+            genericOption = pokeLabBean.getIngredient("sauces");
+            if(genericOption != null){
+                saucesButton.setText(((SaucesOption) genericOption).name());
             }
         }
 

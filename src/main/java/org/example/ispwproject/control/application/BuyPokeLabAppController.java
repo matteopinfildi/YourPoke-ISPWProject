@@ -10,7 +10,7 @@ import org.example.ispwproject.utils.bean.AddIngredientBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
 import org.example.ispwproject.utils.bean.SaveBean;
 import org.example.ispwproject.utils.dao.DAOFactory;
-import org.example.ispwproject.utils.enumeration.ingredient.GenericAlternative;
+import org.example.ispwproject.utils.enumeration.ingredient.GenericOption;
 import org.example.ispwproject.utils.exception.SystemException;
 
 
@@ -32,12 +32,12 @@ public class BuyPokeLabAppController {
     public void addIngredient(PokeLabBean pokeLabBean, AddIngredientBean addIngredientBean){
         // prendo l'ingrediente su cui voglio agire e l'eventuale alternativa già esistente
         String ingredient = addIngredientBean.getIngredientName();
-        GenericAlternative genericAlternative = addIngredientBean.getGenericAlternative();
+        GenericOption genericOption = addIngredientBean.getGenericAlternative();
 
         // elimina un vecchio ingrediente andando a modificare anche il prezzo e le calorie
-        if (genericAlternative != null) {
+        if (genericOption != null) {
             // recupero una alternativa vecchia e controllo se esiste
-            GenericAlternative oldIngredient = pokeLabBean.getIngredient(ingredient);
+            GenericOption oldIngredient = pokeLabBean.getIngredient(ingredient);
             if (oldIngredient != null) {
                 // sottraggo il prezzo
                 pokeLabBean.setPrice(pokeLabBean.getPrice() - oldIngredient.price());
@@ -46,11 +46,11 @@ public class BuyPokeLabAppController {
             }
 
             // aggiungo/aggiorno la nuova alternativa
-            pokeLabBean.setIngredient(ingredient, genericAlternative);
+            pokeLabBean.setIngredient(ingredient, genericOption);
             // aggiorno il prezzo totale
-            pokeLabBean.setPrice(pokeLabBean.getPrice() + genericAlternative.price());
+            pokeLabBean.setPrice(pokeLabBean.getPrice() + genericOption.price());
             // aggiorno le calorie totali
-            pokeLabBean.setCalories(pokeLabBean.getCalories() + genericAlternative.calories());
+            pokeLabBean.setCalories(pokeLabBean.getCalories() + genericOption.calories());
         }
     }
 

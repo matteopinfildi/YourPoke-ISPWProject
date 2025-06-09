@@ -12,7 +12,7 @@ import org.example.ispwproject.control.application.BuyPokeLabAppController;
 import org.example.ispwproject.control.graphic.GraphicController;
 import org.example.ispwproject.utils.bean.AddIngredientBean;
 import org.example.ispwproject.utils.bean.PokeLabBean;
-import org.example.ispwproject.utils.enumeration.ingredient.FruitAlternative;
+import org.example.ispwproject.utils.enumeration.ingredient.FruitOption;
 import org.example.ispwproject.utils.exception.SystemException;
 
 import javax.security.auth.login.LoginException;
@@ -82,13 +82,13 @@ public class AddFruitController extends GraphicController{
     @FXML
     public void handleNextClick(ActionEvent event) throws SystemException {
         try{
-            FruitAlternative fruitAlternative = null;
+            FruitOption fruitAlternative = null;
             if (checkAvocado.isSelected()) {
-                fruitAlternative = FruitAlternative.AVOCADO;
+                fruitAlternative = FruitOption.AVOCADO;
             } else if (checkMango.isSelected()) {
-                fruitAlternative = FruitAlternative.MANGO;
+                fruitAlternative = FruitOption.MANGO;
             } else if (checkStrawbarries.isSelected()) {
-                fruitAlternative = FruitAlternative.STRAWBARRIES;
+                fruitAlternative = FruitOption.STRAWBARRIES;
             }
 
             AddIngredientBean addIngredientBean = new AddIngredientBean("fruit", fruitAlternative);

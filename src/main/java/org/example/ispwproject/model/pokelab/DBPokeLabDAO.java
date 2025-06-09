@@ -40,7 +40,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
                     try (PreparedStatement stmtIngredients = connection.prepareStatement(insertIngredientQuery)) {
                         stmtIngredients.setInt(1, plid);
                         // si sfrutta un ciclo for per inserire tutti gli ingredienti
-                        for (Map.Entry<String, GenericAlternative> entry : pokeLab.allIngredients().entrySet()) {
+                        for (Map.Entry<String, GenericOption> entry : pokeLab.allIngredients().entrySet()) {
                             stmtIngredients.setString(2, entry.getKey());
                             stmtIngredients.setString(3, ((Enum<?>) entry.getValue()).name());
                             stmtIngredients.addBatch();
@@ -68,7 +68,7 @@ public class DBPokeLabDAO implements PokeLabDAO {
                 double price = resultSetPoke.getDouble("price");
                 String size = resultSetPoke.getString("size");
                 int calories = resultSetPoke.getInt("calories");
-                Map<String, GenericAlternative> ingredients =new HashMap<>();
+                Map<String, GenericOption> ingredients =new HashMap<>();
 
                 preparedStatementIngredient.setInt(1, plid); // viene impostato il valore della seconda query con il valore plid passato al metodo
                 ResultSet resultSetIngredient = preparedStatementIngredient.executeQuery();
@@ -78,21 +78,21 @@ public class DBPokeLabDAO implements PokeLabDAO {
                     String ingredientName = resultSetIngredient.getString("ingredient_name");
                     String ingredientAlternative = resultSetIngredient.getString("ingredient_alternative");
 
-                    GenericAlternative genericAlternative = null;
+                    GenericOption genericOption = null;
                     // usiamo uno switch sul nome dell'ingrediente per determinare a quale classe di enum corrisponde l'alternativa
                     switch (ingredientName){
-                        case "rice" -> genericAlternative = Enum.valueOf(RiceAlternative.class, ingredientAlternative);
-                        case "protein" -> genericAlternative = Enum.valueOf(ProteinAlternative.class, ingredientAlternative);
-                        case "fruit" -> genericAlternative = Enum.valueOf(FruitAlternative.class, ingredientAlternative);
-                        case "crunchy" -> genericAlternative = Enum.valueOf(CrunchyAlternative.class, ingredientAlternative);
-                        case "sauces" -> genericAlternative = Enum.valueOf(SaucesAlternative.class, ingredientAlternative);
+                        case "rice" -> genericOption = Enum.valueOf(RiceOption.class, ingredientAlternative);
+                        case "protein" -> genericOption = Enum.valueOf(ProteinOption.class, ingredientAlternative);
+                        case "fruit" -> genericOption = Enum.valueOf(FruitOption.class, ingredientAlternative);
+                        case "crunchy" -> genericOption = Enum.valueOf(CrunchyOption.class, ingredientAlternative);
+                        case "sauces" -> genericOption = Enum.valueOf(SaucesOption.class, ingredientAlternative);
                         default -> {
                             //non succede nulla
                         }
                     }
-                    if (genericAlternative != null){
+                    if (genericOption != null){
                         // se il valore dell'enum è stato creato correttamente, viene messo nella mappa ingredients
-                        ingredients.put(ingredientName, genericAlternative);
+                        ingredients.put(ingredientName, genericOption);
                     }
                 }
 

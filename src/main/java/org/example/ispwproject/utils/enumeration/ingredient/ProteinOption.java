@@ -1,6 +1,6 @@
 package org.example.ispwproject.utils.enumeration.ingredient;
 
-public enum ProteinAlternative implements GenericAlternative{
+public enum ProteinOption implements GenericOption {
 
     SALMON(4.00, 208),
     SHRIMP(3.00, 85),
@@ -9,7 +9,7 @@ public enum ProteinAlternative implements GenericAlternative{
     private final double price;
     private final int calories;
 
-    ProteinAlternative(double price, int calories){
+    ProteinOption(double price, int calories){
         this.price = price;
         this.calories = calories;
     }

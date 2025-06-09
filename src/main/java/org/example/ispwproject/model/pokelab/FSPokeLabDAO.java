@@ -86,7 +86,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
             writerLab.write(pokeLab.id() + DELIMITER + pokeLab.price() + DELIMITER + pokeLab.getBowlSize() + DELIMITER + pokeLab.calories() );
             writerLab.newLine(); // va a capo
             // salva ingredienti relativi al poke lab
-            for (Map.Entry<String, GenericAlternative> entry : pokeLab.allIngredients().entrySet()) {
+            for (Map.Entry<String, GenericOption> entry : pokeLab.allIngredients().entrySet()) {
                 writerIng.write(pokeLab.id() + DELIMITER + entry.getKey() + DELIMITER + ((Enum<?>) entry.getValue()).name());
                 writerIng.newLine();
             }
@@ -101,7 +101,7 @@ public class FSPokeLabDAO implements PokeLabDAO {
         double price = 0;
         String size = null;
         int calories = 0;
-        Map<String, GenericAlternative> ingredients = new HashMap<>();
+        Map<String, GenericOption> ingredients = new HashMap<>();
         boolean found = false;
         try (BufferedReader readerLab = new BufferedReader(new FileReader(FILE_LAB))) {
             String line;
@@ -135,12 +135,12 @@ public class FSPokeLabDAO implements PokeLabDAO {
                     // se corrispondono si salvano gli ingredienti con le relative alternative
                     String name = parts[1];
                     String alternative = parts[2];
-                    GenericAlternative value = switch (name) {
-                        case "rice" -> Enum.valueOf(RiceAlternative.class, alternative);
-                        case "protein" -> Enum.valueOf(ProteinAlternative.class, alternative);
-                        case "fruit" -> Enum.valueOf(FruitAlternative.class, alternative);
-                        case "crunchy" -> Enum.valueOf(CrunchyAlternative.class, alternative);
-                        case "sauces" -> Enum.valueOf(SaucesAlternative.class, alternative);
+                    GenericOption value = switch (name) {
+                        case "rice" -> Enum.valueOf(RiceOption.class, alternative);
+                        case "protein" -> Enum.valueOf(ProteinOption.class, alternative);
+                        case "fruit" -> Enum.valueOf(FruitOption.class, alternative);
+                        case "crunchy" -> Enum.valueOf(CrunchyOption.class, alternative);
+                        case "sauces" -> Enum.valueOf(SaucesOption.class, alternative);
                         default -> null;
                     };
                     if (value != null) {

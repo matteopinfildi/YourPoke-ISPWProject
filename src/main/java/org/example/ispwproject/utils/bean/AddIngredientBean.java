@@ -1,16 +1,16 @@
 package org.example.ispwproject.utils.bean;
 
-import org.example.ispwproject.utils.enumeration.ingredient.GenericAlternative;
+import org.example.ispwproject.utils.enumeration.ingredient.GenericOption;
 
 public class AddIngredientBean {
     private String ingredientName;
-    private GenericAlternative genericAlternative;
+    private GenericOption genericOption;
 
-    public AddIngredientBean(String ingredientName, GenericAlternative genericAlternative){
+    public AddIngredientBean(String ingredientName, GenericOption genericOption){
         this.ingredientName = ingredientName;
-        this.genericAlternative = genericAlternative;
+        this.genericOption = genericOption;
     }
 
     public String getIngredientName() {return ingredientName;}
-    public GenericAlternative getGenericAlternative() {return genericAlternative;}
+    public GenericOption getGenericAlternative() {return genericOption;}
 }

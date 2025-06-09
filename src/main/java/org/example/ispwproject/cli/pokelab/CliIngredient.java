@@ -37,7 +37,7 @@ public abstract class CliIngredient<T extends Enum<T>> extends CliController {
         try {
             T selection = getUserSelection();
             if (selection != null) {
-                AddIngredientBean addIngredientBean = new AddIngredientBean(ingredientType, (GenericAlternative) selection);
+                AddIngredientBean addIngredientBean = new AddIngredientBean(ingredientType, (GenericOption) selection);
                 buyPokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
             }
         } catch (Exception e) {
