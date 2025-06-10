@@ -85,5 +85,5 @@ public class CliLogin extends CliController{
 
 
     @Override
-    protected List<String> getAlternative() {return List.of("Try again", " Exit");}
+    protected List<String> getOption() {return List.of("Try again", " Exit");}
 }

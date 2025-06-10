@@ -20,13 +20,13 @@ public abstract class CliIngredient<T extends Enum<T>> extends CliController {
     private String total = "Total = 0.0 $";
     private String calories = "Calories = 0 cal";
     private final String ingredientType;
-    private final List<T> alternatives;
-    private final List<String> alternativeDescriptions;
+    private final List<T> options;
+    private final List<String> optionDescriptions;
 
-    protected CliIngredient(String ingredientType, List<T> alternatives, List<String> alternativeDescriptions) {
+    protected CliIngredient(String ingredientType, List<T> options, List<String> optionDescriptions) {
         this.ingredientType = ingredientType;
-        this.alternatives = alternatives;
-        this.alternativeDescriptions = alternativeDescriptions;
+        this.options = options;
+        this.optionDescriptions = optionDescriptions;
     }
 
     @Override
@@ -50,13 +50,13 @@ public abstract class CliIngredient<T extends Enum<T>> extends CliController {
 
     private T getUserSelection() throws SystemException, CliException, SQLException, LoginException, IOException {
         boolean flag;
-        T selectedAlternative = null;
+        T selectedOption = null;
         do {
             flag = true;
             int selection = userSelection("Select a type of " + ingredientType);
-            if (selection >= 1 && selection <= alternatives.size()) {
-                selectedAlternative = alternatives.get(selection - 1);
-            } else if (selection == alternatives.size() + 1) {
+            if (selection >= 1 && selection <= options.size()) {
+                selectedOption = options.get(selection - 1);
+            } else if (selection == options.size() + 1) {
                 new CliHomePage().init(id, pokeLabBean);
                 return null;
             } else {
@@ -64,7 +64,7 @@ public abstract class CliIngredient<T extends Enum<T>> extends CliController {
                 flag = false;
             }
         } while (!flag);
-        return selectedAlternative;
+        return selectedOption;
     }
 
     private void updateTotal() {
@@ -82,7 +82,7 @@ public abstract class CliIngredient<T extends Enum<T>> extends CliController {
     }
 
     @Override
-    protected List<String> getAlternative() {
-        return alternativeDescriptions;
+    protected List<String> getOption() {
+        return optionDescriptions;
     }
 }

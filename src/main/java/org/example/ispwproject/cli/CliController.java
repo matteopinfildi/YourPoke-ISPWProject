@@ -17,24 +17,24 @@ public abstract class CliController extends CliGraphicController {
 
     public abstract void init(int id, PokeLabBean pokeLabBean) throws SystemException, IOException, LoginException, SQLException, CliException;
 
-    protected int menu(String title, List<String> alternative) {
+    protected int menu(String title, List<String> option) {
         Scanner scanner = new Scanner(System.in);
         int selection = 0;
 
         System.out.printf(title);
-        for (int i = 0; i < alternative.size(); i++) {
-            System.out.printf("%d) %s%n", i + 1, alternative.get(i));
+        for (int i = 0; i < option.size(); i++) {
+            System.out.printf("%d) %s%n", i + 1, option.get(i));
         }
 
 
         do {
             System.out.println();
-            System.out.printf("Select an alternative (1-%d): ", alternative.size());
+            System.out.printf("Select an alternative (1-%d): ", option.size());
 
             if (scanner.hasNextInt()) {
                 selection = scanner.nextInt();
-                if (selection < 1 || selection > alternative.size()) {
-                    System.out.printf("Please, select a number between (1-%d)%n", alternative.size());
+                if (selection < 1 || selection > option.size()) {
+                    System.out.printf("Please, select a number between (1-%d)%n", option.size());
                     selection = 0;
                 }
             } else {
@@ -46,10 +46,10 @@ public abstract class CliController extends CliGraphicController {
         return selection;
     }
 
-    protected abstract List<String> getAlternative();
+    protected abstract List<String> getOption();
 
     public int userSelection(String title) {
-        List<String> alternative = getAlternative();
-        return menu(title + "\n", alternative);
+        List<String> option = getOption();
+        return menu(title + "\n", option);
     }
 }

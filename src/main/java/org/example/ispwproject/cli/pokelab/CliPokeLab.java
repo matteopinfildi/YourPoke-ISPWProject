@@ -193,7 +193,7 @@ public class CliPokeLab extends CliController{
     }
 
     @Override
-    protected List<String> getAlternative() {
+    protected List<String> getOption() {
         return List.of(
                 "Rice: " + riceName,
                 "Protein: " + proteinName,

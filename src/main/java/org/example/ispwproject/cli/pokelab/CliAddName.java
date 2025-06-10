@@ -78,7 +78,7 @@ private void processPokeName() throws SystemException, IOException, LoginExcepti
 
 
     @Override
-    protected List<String> getAlternative() {
+    protected List<String> getOption() {
         return List.of();
     }
 }

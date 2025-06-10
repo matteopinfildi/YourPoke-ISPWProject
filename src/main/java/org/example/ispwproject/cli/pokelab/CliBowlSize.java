@@ -65,7 +65,7 @@ public class CliBowlSize extends CliController {
 
 
     @Override
-    protected List<String> getAlternative() {
+    protected List<String> getOption() {
         return List.of(
                 "Small: 250 grams",
                 "Medium: 400 grams",

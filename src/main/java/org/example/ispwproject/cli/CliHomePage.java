@@ -83,7 +83,7 @@ public class CliHomePage extends CliController{
     }
 
     @Override
-    protected List<String> getAlternative(){
+    protected List<String> getOption(){
         return List.of("Login", "Buy Classic Pokè", "Buy Pokè Lab", "Pokè Wall", "Exit");
     }
 
