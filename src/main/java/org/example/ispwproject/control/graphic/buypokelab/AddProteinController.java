@@ -85,16 +85,16 @@ public class AddProteinController extends GraphicController {
     @FXML
     public void handleNextClick(ActionEvent event) throws SystemException {
         try{
-            ProteinOption proteinAlternative = null;
+            ProteinOption proteinOption = null;
             if (checkSalmon.isSelected()) {
-                proteinAlternative = ProteinOption.SALMON;
+                proteinOption = ProteinOption.SALMON;
             } else if (checkShrimp.isSelected()) {
-                proteinAlternative = ProteinOption.SHRIMP;
+                proteinOption = ProteinOption.SHRIMP;
             } else if (checkTuna.isSelected()) {
-                proteinAlternative = ProteinOption.TUNA;
+                proteinOption = ProteinOption.TUNA;
             }
 
-            AddIngredientBean addIngredientBean = new AddIngredientBean("protein", proteinAlternative);
+            AddIngredientBean addIngredientBean = new AddIngredientBean("protein", proteinOption);
             pokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
 
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);

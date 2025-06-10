@@ -82,16 +82,16 @@ public class AddSaucesController extends GraphicController {
     @FXML
     public void handleNextClick(ActionEvent event) throws SystemException {
         try{
-            SaucesOption saucesAlternative = null;
+            SaucesOption saucesOption = null;
             if (checkTeriyaki.isSelected()) {
-                saucesAlternative = SaucesOption.TERIYAKI;
+                saucesOption = SaucesOption.TERIYAKI;
             } else if (checkSoy.isSelected()) {
-                saucesAlternative = SaucesOption.SOY;
+                saucesOption = SaucesOption.SOY;
             } else if (checkWasabi.isSelected()) {
-                saucesAlternative = SaucesOption.WASABI;
+                saucesOption = SaucesOption.WASABI;
             }
 
-            AddIngredientBean addIngredientBean = new AddIngredientBean("sauces", saucesAlternative);
+            AddIngredientBean addIngredientBean = new AddIngredientBean("sauces", saucesOption);
             pokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
 
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);

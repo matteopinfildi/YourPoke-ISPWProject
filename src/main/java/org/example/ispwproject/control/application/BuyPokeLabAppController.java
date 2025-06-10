@@ -30,13 +30,13 @@ public class BuyPokeLabAppController {
 
     // aggiunge/sostituisce un ingrediente al poke e aggiorna il totale del prezzo
     public void addIngredient(PokeLabBean pokeLabBean, AddIngredientBean addIngredientBean){
-        // prendo l'ingrediente su cui voglio agire e l'eventuale alternativa già esistente
+        // prendo l'ingrediente su cui voglio agire e l'eventuale opzione già esistente
         String ingredient = addIngredientBean.getIngredientName();
-        GenericOption genericOption = addIngredientBean.getGenericAlternative();
+        GenericOption genericOption = addIngredientBean.getGenericOption();
 
         // elimina un vecchio ingrediente andando a modificare anche il prezzo e le calorie
         if (genericOption != null) {
-            // recupero una alternativa vecchia e controllo se esiste
+            // recupero un'opzione vecchia e controllo se esiste
             GenericOption oldIngredient = pokeLabBean.getIngredient(ingredient);
             if (oldIngredient != null) {
                 // sottraggo il prezzo
@@ -45,7 +45,7 @@ public class BuyPokeLabAppController {
                 pokeLabBean.setCalories(pokeLabBean.getCalories() - oldIngredient.calories());
             }
 
-            // aggiungo/aggiorno la nuova alternativa
+            // aggiungo/aggiorno la nuova opzione
             pokeLabBean.setIngredient(ingredient, genericOption);
             // aggiorno il prezzo totale
             pokeLabBean.setPrice(pokeLabBean.getPrice() + genericOption.price());

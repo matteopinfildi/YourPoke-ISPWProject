@@ -132,15 +132,15 @@ public class FSPokeLabDAO implements PokeLabDAO {
                 String[] parts = line.split(DELIMITER);
                 // viene convertito il primo campo (quello del plid) e viene confrontato con quello passato al metodo
                 if (Integer.parseInt(parts[0]) == plid) {
-                    // se corrispondono si salvano gli ingredienti con le relative alternative
+                    // se corrispondono si salvano gli ingredienti con le relative opzioni
                     String name = parts[1];
-                    String alternative = parts[2];
+                    String option = parts[2];
                     GenericOption value = switch (name) {
-                        case "rice" -> Enum.valueOf(RiceOption.class, alternative);
-                        case "protein" -> Enum.valueOf(ProteinOption.class, alternative);
-                        case "fruit" -> Enum.valueOf(FruitOption.class, alternative);
-                        case "crunchy" -> Enum.valueOf(CrunchyOption.class, alternative);
-                        case "sauces" -> Enum.valueOf(SaucesOption.class, alternative);
+                        case "rice" -> Enum.valueOf(RiceOption.class, option);
+                        case "protein" -> Enum.valueOf(ProteinOption.class, option);
+                        case "fruit" -> Enum.valueOf(FruitOption.class, option);
+                        case "crunchy" -> Enum.valueOf(CrunchyOption.class, option);
+                        case "sauces" -> Enum.valueOf(SaucesOption.class, option);
                         default -> null;
                     };
                     if (value != null) {

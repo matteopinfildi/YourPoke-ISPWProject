@@ -83,18 +83,18 @@ public class AddCrunchyController extends GraphicController{
     @FXML
     public void handleNextClick(ActionEvent event) throws SystemException {
         try {
-            CrunchyOption crunchyAlternative = null;
+            CrunchyOption crunchyOption = null;
             // viene verificato cosa viene cliccato dall'utente
             if (checkOnion.isSelected()) {
-                crunchyAlternative = CrunchyOption.ONION;
+                crunchyOption = CrunchyOption.ONION;
             } else if (checkNuts.isSelected()) {
-                crunchyAlternative = CrunchyOption.NUTS;
+                crunchyOption = CrunchyOption.NUTS;
             } else if (checkAlmonds.isSelected()) {
-                crunchyAlternative = CrunchyOption.ALMONDS;
+                crunchyOption = CrunchyOption.ALMONDS;
             }
 
-            // viene costruito un nuovo AddIngredientBean, passando il nome dell'ingrediente e l'alternativa selezionata
-            AddIngredientBean addIngredientBean = new AddIngredientBean("crunchy", crunchyAlternative);
+            // viene costruito un nuovo AddIngredientBean, passando il nome dell'ingrediente e l'opzione selezionata
+            AddIngredientBean addIngredientBean = new AddIngredientBean("crunchy", crunchyOption);
             pokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
             
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);

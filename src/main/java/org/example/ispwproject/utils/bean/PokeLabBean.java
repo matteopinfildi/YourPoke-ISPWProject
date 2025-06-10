@@ -59,8 +59,8 @@ public class PokeLabBean {
     public GenericOption getIngredient(String ingredientName) {return ingredients.get(ingredientName);}
 
     // aggiunge un nuovo ingrediente
-    public void setIngredient(String ingredientName, GenericOption alternative) {
-        ingredients.put(ingredientName, alternative);
+    public void setIngredient(String ingredientName, GenericOption option) {
+        ingredients.put(ingredientName, option);
     }
 
     public Map<String, GenericOption> getAllIngredients(){return ingredients;}

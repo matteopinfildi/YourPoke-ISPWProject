@@ -84,16 +84,16 @@ public class AddRiceController extends GraphicController {
     @FXML
     public void handleNextClick(ActionEvent event) throws SystemException {
         try {
-            RiceOption riceAlternative = null;
+            RiceOption riceOption = null;
             if (checkSushi.isSelected()) {
-                riceAlternative = RiceOption.SUSHI;
+                riceOption = RiceOption.SUSHI;
             } else if (checkVenus.isSelected()) {
-                riceAlternative = RiceOption.VENUS;
+                riceOption = RiceOption.VENUS;
             } else if (checkBasmati.isSelected()) {
-                riceAlternative = RiceOption.BASMATI;
+                riceOption = RiceOption.BASMATI;
             }
 
-            AddIngredientBean addIngredientBean = new AddIngredientBean("rice", riceAlternative);
+            AddIngredientBean addIngredientBean = new AddIngredientBean("rice", riceOption);
             pokeLabAppController.addIngredient(pokeLabBean, addIngredientBean);
             ChangePage.changeScene((Node) event.getSource(), "/org/example/ispwproject/view/buyPokeLab.fxml", pokeLabBean, id);
 

@@ -12,5 +12,5 @@ public class AddIngredientBean {
     }
 
     public String getIngredientName() {return ingredientName;}
-    public GenericOption getGenericAlternative() {return genericOption;}
+    public GenericOption getGenericOption() {return genericOption;}
 }
