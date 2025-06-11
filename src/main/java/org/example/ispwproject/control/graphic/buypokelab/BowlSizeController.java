@@ -85,8 +85,7 @@ public class BowlSizeController extends GraphicController {
 
 
         try {
-            boolean ok = buyPokeLabAppController
-                    .setBowlSize(pokeLabBean, selectedSize, sessionId);
+            boolean ok = buyPokeLabAppController.setBowlSize(pokeLabBean, selectedSize, sessionId);
 
             if (!ok) {
                 LOGGER.warning("ChangeBowlSize returned false");
