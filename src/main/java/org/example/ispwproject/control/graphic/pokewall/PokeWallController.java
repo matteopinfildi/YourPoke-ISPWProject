@@ -52,7 +52,7 @@ public class PokeWallController extends GraphicController {
         this.currentUsername = SessionManager.getSessionManager().getSessionFromId(id).getUserId();
 
 
-        // implamentazione anonima di PokeWallObserver
+        // implamentazione anonima di PokeWallObserver, mi serve per sapere cosa fare in UI quando arriva un nuovo post
         observerInstance = new PokeWallObserver() {
             @Override
             public void update(PokeWall newPost) {
