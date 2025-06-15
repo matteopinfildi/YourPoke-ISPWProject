@@ -41,13 +41,13 @@ public class PokeWallAppController implements PokeWallObserver {
             // recupero dell'username dalla sessione
             String username = getUsernameFromSession(sessionId);
 
-            // recupero di tutti i post che l'utente con quell'username non ha ancora visualizzato
-            List<PokeWall> unseenPosts = pokeWallDAO.getUnseenPosts(username); // lista di post non ancora visualizzati dall'utente
+            // recupero di tutti i post che l'utente con quell'username non ha ancora visualizzato e li metto in una lista
+            List<PokeWall> unseenPosts = pokeWallDAO.getUnseenPosts(username);
 
             // si itera su ogni oggetto PokeWall presente nella lista
             for (PokeWall post : unseenPosts) {
                 post.registerObserver(observer);     // Aggiunta observer a ogni post non visto
-                observer.update(post);               // Notifica immediata del post
+                observer.update(post);               // Notifica immediata del post inviata sulla UI
                 pokeWallDAO.markPostAsSeen(post.getId(), username); // Segna post come visto
             }
 
@@ -69,26 +69,20 @@ public class PokeWallAppController implements PokeWallObserver {
     // crea un nuovo post nella PokeWall associato all'utente e notifica gli observer
     public boolean createPost(int sessionId, String pokeName, PokeLabBean pokeLabBean) throws SystemException {
 
-        // recupero della sessione e controllo
         Session session = SessionManager.getSessionManager().getSessionFromId(sessionId);
         if (session == null) {
             throw new SystemException("Session not found. Please log in again.");
         }
-        // estrazione dell'id dell'utente associato alla sessione recuperata
         String userId = session.getUserId();
-        // recupero user associato all'id dallo strato di persistenza e controllo
         User user = userDAO.read(userId);
         if (user == null) {
             throw new SystemException("User not found: " + userId);
         }
 
-        // instanziazione di un nuovo oggetto PokeWallBean
+        // instanziazione di un nuovo oggetto PokeWallBean con associazione degli elementi del post
         PokeWallBean pokeWallBean = new PokeWallBean();
-        // associo il nome fornito come parametro del metodo al campo PokeWallBean
         pokeWallBean.setPokeName(pokeName);
-        // associo la size al campo PokeWallBean, recuperandola dalla bean di pokeLab
         pokeWallBean.setSize(pokeLabBean.getBowlSize());
-        // associo tutti gli ingredienti al campo PokeWallBean, recuperandoli dalla bean di pokeLab
         pokeWallBean.setIngredients(
                 pokeLabBean.getAllIngredients().entrySet().stream()
                         .map(entry -> entry.getKey() + ": " + entry.getValue().toString().toLowerCase())
@@ -154,9 +148,7 @@ public class PokeWallAppController implements PokeWallObserver {
 
     // recupera lo username dell'utente associato ad una sessione
     private String getUsernameFromSession(int sessionId) throws SystemException {
-        // recupero la sessione
         Session session = SessionManager.getSessionManager().getSessionFromId(sessionId);
-        // recupero lo user associato a quella sessione e controllo
         User user = userDAO.read(session.getUserId());
         if (user == null) {
             throw new SystemException("User not found for session id: " + sessionId);
@@ -168,7 +160,6 @@ public class PokeWallAppController implements PokeWallObserver {
     // notifica tutti gli observer dell'aggiunta di un nuovo post
     @Override
     public void update(PokeWall newPost) {
-        // scorre la lista di observer
         for (PokeWallObserver observer : observers) {
             // propaga la notifica del nuovo post per ogni observer
             observer.update(newPost);
